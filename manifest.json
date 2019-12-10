@@ -1,0 +1,28 @@
+{
+
+    "manifest_version": 2,
+    "name": "Clean the mess",
+    "version": "0.1",
+  
+    "description": "Helps cleaning that great mess within once opened and never-seen-again tabs.",
+  
+    "permissions": [
+        "activeTab",
+        "tabs"
+    ],
+
+    "background": {
+        "scripts": ["src/background-script.js"]
+    },
+    
+    "browser_action": {
+        "default_icon": "icons/icon-32.png",
+        "default_title": "Clean the mess",
+        "default_popup": "src/popup/popup.html"
+    },
+    
+    "none": {
+        "page": "src/background-page.html"
+    }
+  
+  }
