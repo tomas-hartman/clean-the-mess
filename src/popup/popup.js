@@ -4,7 +4,7 @@
     const anchorMain = document.querySelector("#main");
     const anchorHeader = document.querySelector("#header");
 
-    anchorHeader.innerHTML = `<span>You have ${tabs.length} opened tabs.</span>`;
+    anchorHeader.innerHTML = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`;
     // console.log();
     console.log(tabs);
 
@@ -61,16 +61,32 @@
         ul.appendChild(li);
     }
 
-    const closeTabs = (id) => {
-        if(id.length > 10 && confirm(`Are you sure you want to close ${id.length} tabs?`)) {
+    const refreshData = (data) => {
+        let currentTabsNum = parseInt(document.querySelector("#open-tabs-count").innerText);
+        let tabsNum = tabsCountInfo[data].ids.length;
+        let newTabsNum = currentTabsNum - tabsNum;
+
+        document.querySelector(`li.url-${data}`).remove();
+        document.querySelector(`#header > span`).innerHTML = `You have <span id="open-tabs-count">${newTabsNum}</span> opened tabs.`;
+    }
+
+    const removeTabs = (data) => {
+        const id = tabsCountInfo[data].ids;
+        if(id.length > 10) {
+            if(confirm(`Are you sure you want to close ${id.length} tabs?`)){
+                browser.tabs.remove(id);
+                refreshData(data);
+            } else return;
+        } else {
             browser.tabs.remove(id);
-        } else browser.tabs.remove(id);
+            refreshData(data);
+        }
     }
 
     document.addEventListener("click", (e) => {
         if(e.target.className === "remove"){
             // sessions.restore()
-            closeTabs(tabsCountInfo[e.target.dataset.indexNumber].ids);
+            removeTabs(e.target.dataset.indexNumber);
             console.log("Tabs removed!");
         }
     });
