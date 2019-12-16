@@ -75,9 +75,10 @@ li>div {
     height: 100%;
 }
 
-#main {
+#main, .ul-container {
     overflow-y: scroll;
     max-height: 500px;
+    overflow-y: auto;
 }
 
 .url {
@@ -114,4 +115,69 @@ li>div {
     width: 100%;
     height: 100%;
     left: 350px;
+  }
+
+  /* DETAILS */
+
+  li > div.detail {
+    grid-template-columns: [title] 90% 20px [end];
+    grid-template-rows: 20px 20px;
+    /*! overflow-x: hidden; */
+    /*! text-overflow: ellipsis; */
+  }
+  
+  #header.control {
+    /*! background-color: red; */
+    display: grid;
+    grid-template-columns: 40px auto 40px;
+    /*! align-content: center; */
+    align-content: center;
+    /*! justify-content: center; */
+    height: 30px;
+    /* margin-top: 4px; */
+  }
+
+  .control .back {
+    justify-self: center;
+    grid-column: 1;
+    width: 32px;
+    height: 32px;
+    background-color: darkorchid;
+    align-self: center;
+    text-align: center;
+    font-size: 1.15em;
+    border-radius: 1px;
+    display: block;
+    line-height: 32px;
+  }
+
+  .control .back:hover {
+    background-color: #7373738a;
+  }
+
+  .control .back:active {
+    background-color: #737373c1;
+  }
+
+  .header-title {
+    justify-self: center;
+    align-self: center;
+  }
+
+  .title.detail {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    white-space: nowrap;
+  }
+
+  .url.detail {
+    grid-column-start: title;
+    grid-row-start: 2;
+    font-style: italic;
+    word-break: keep-all;
+  }
+
+  li.detail {
+    height: 40px;
   }
