@@ -1,97 +1,120 @@
 (async () => {
-    const tabs = await browser.tabs.query({currentWindow: true});
-    const tabsCountInfo = [];
+    let tabs = await browser.tabs.query({currentWindow: true});
+    let tabsOverview = []; // fills with getOverview
     const anchorMain = document.querySelector("#main");
     const anchorHeader = document.querySelector("#header");
 
     anchorHeader.innerHTML = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`;
-    // console.log();
     console.log(tabs);
 
-    tabs.forEach(tab => {
-        let url = new URL(tab.url);
-        
-        if(!tab.pinned){
-            if (tabsCountInfo.some(website => website.url === url.origin)) {
-                
-                const index = tabsCountInfo.findIndex( website => website.url === url.origin );
-                tabsCountInfo[index].count += 1;
-                tabsCountInfo[index].ids.push(tab.id);
+    const getOverview = (tabs) => {
+        const tabsOverview = [];
 
-            } else {
-                tabsCountInfo.push({ url: url.origin, count: 1, ids: [ tab.id ] });
+        tabs.forEach(tab => {
+            let url = new URL(tab.url);
+            
+            if(!tab.pinned){
+                if (tabsOverview.some(website => website.url === url.origin)) {
+                    
+                    const index = tabsOverview.findIndex( website => website.url === url.origin );
+                    tabsOverview[index].count += 1;
+                    tabsOverview[index].ids.push(tab.id);
+    
+                } else {
+                    tabsOverview.push({ url: url.origin, count: 1, ids: [ tab.id ] });
+                }
             }
+        });
+        
+        tabsOverview.sort((a,b) => b.count-a.count);
+
+        return tabsOverview;
+    }
+    tabsOverview = getOverview(tabs);
+
+    console.log(tabsOverview);
+
+    const getOverviewList = (tabsOverview) => {
+        const ul = document.createElement("ul");
+              ul.setAttribute("id", "list");
+    
+        for(let i = 0; i < tabsOverview.length; i++){
+            let tab = tabsOverview[i];
+            let li = document.createElement("li");
+                li.classList.add(`url-${i}`);
+                li.setAttribute("data-index-number", i);
+    
+            let container = document.createElement("div");
+                container.classList.add("url-container");
+    
+            let textDiv = document.createElement("div");
+                textDiv.classList.add("url");
+                textDiv.innerText = tab.url;
+    
+            let countDiv = document.createElement("div");
+                countDiv.classList.add("count");
+                countDiv.innerText = `(${tab.count})`;
+    
+            let closeButton = document.createElement("div");
+                closeButton.classList.add("remove");
+                closeButton.innerHTML = '&#10799;';
+    
+            container.appendChild(textDiv);
+            container.appendChild(countDiv);
+            container.appendChild(closeButton);
+            
+            li.appendChild(container);
+            ul.appendChild(li);
         }
 
-    });
-    
-    tabsCountInfo.sort((a,b) => b.count-a.count);
-
-    const ul = document.createElement("ul");
-    ul.setAttribute("id", "list");
-    anchorMain.appendChild(ul);
-    const anchorUl = document.getElementById("list");
-
-
-    for(let i = 0; i < tabsCountInfo.length; i++){
-        let tab = tabsCountInfo[i];
-        let li = document.createElement("li");
-            li.classList.add(`url-${i}`);
-            li.setAttribute("data-index-number", i);
-
-        let container = document.createElement("div");
-            container.classList.add("url-container");
-
-        let textDiv = document.createElement("div");
-            textDiv.classList.add("url");
-            textDiv.innerText = tab.url;
-
-        let countDiv = document.createElement("div");
-            countDiv.classList.add("count");
-            countDiv.innerText = `(${tab.count})`;
-
-        let closeButton = document.createElement("div");
-            closeButton.classList.add("remove");
-            closeButton.innerHTML = '&#10799;';
-
-        container.appendChild(textDiv);
-        container.appendChild(countDiv);
-        container.appendChild(closeButton);
-        
-        li.appendChild(container);
-        ul.appendChild(li);
+        return ul;
     }
+
+    anchorMain.appendChild(getOverviewList(tabsOverview));
 
     /**
      * Use only after removal!
-     * @param {string} data id of selected url from tabsCountInfo
+     * @param {string} data id of selected url from tabsOverview
      */
-    const refreshData = (data) => {
+    const refreshOverviewData = (data) => {
         let currentTabsNum = parseInt(document.querySelector("#open-tabs-count").innerText);
-        let tabsNum = tabsCountInfo[data].ids.length;
+        let tabsNum = tabsOverview[data].ids.length;
         let newTabsNum = currentTabsNum - tabsNum;
 
         document.querySelector(`li.url-${data}`).remove();
         document.querySelector(`#header > span`).innerHTML = `You have <span id="open-tabs-count">${newTabsNum}</span> opened tabs.`;
     }
 
+    /**
+     * Use only after details to overview transition (pressing back button)
+     */
+    const refreshOverviewScreen = async () => {
+        tabs = await browser.tabs.query({currentWindow: true});
+        tabsOverview = getOverview(tabs);
+
+        anchorHeader.innerHTML = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`;
+
+        anchorMain.removeChild(anchorMain.firstChild);
+        anchorMain.appendChild(getOverviewList(tabsOverview));
+    }
+
     const removeTabs = (target) => {
         const data = target.closest("li").dataset.indexNumber;
-        const id = tabsCountInfo[data].ids;
+        const id = tabsOverview[data].ids;
         if(id.length > 10) {
             if(confirm(`Are you sure you want to close ${id.length} tabs?`)){
                 browser.tabs.remove(id);
-                refreshData(data);
+                refreshOverviewData(data);
             } else return;
         } else {
             browser.tabs.remove(id);
-            refreshData(data);
+            refreshOverviewData(data);
         }
     }
 
     const getDetails = (target) => {
         const index = target.closest("li").dataset.indexNumber;
-        const ids = tabsCountInfo[index].ids;
+        const ids = tabsOverview[index].ids;
         let array = [];
 
         for(let i=0;i<ids.length;i++){
@@ -107,8 +130,14 @@
         /* position: absolute; background-color: blue; height: 100%; */
         // animace
         document.querySelector(".main-container").style.left = "-350px";
+        let headerTitle = "";
 
-        const headerTitle = (new URL(target.innerText)).host;
+        try {
+            headerTitle = (new URL(target.innerText)).host; 
+        } catch (error) {
+            headerTitle = "null";
+        }
+        
         const array = getDetails(target);
 
         const headerDiv = `<div id="header" class="control"><div class="back">&lt;</div>
@@ -149,6 +178,8 @@
                  * @todo Scratch, would need to reload previous page after deleted items and so on
                  * @todo animate
                  */
+                refreshOverviewScreen();
+
                 document.querySelector("#details").remove();
                 document.querySelector(".main-container").style.left = "0px";
             }
@@ -183,8 +214,8 @@
     }
 
 
-    // browser.tabs.remove(tabsCountInfo[35].ids); 
+    // browser.tabs.remove(tabsOverview[35].ids); 
     // document.write(tabUrlsArr);
-    console.log(tabsCountInfo);
+    console.log(tabsOverview);
     
 })();
