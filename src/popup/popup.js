@@ -49,6 +49,7 @@
     
             let textDiv = document.createElement("div");
                 textDiv.classList.add("url");
+                textDiv.setAttribute("title", tab.url);
                 textDiv.innerText = tab.url;
     
             let countDiv = document.createElement("div");
@@ -57,6 +58,7 @@
     
             let closeButton = document.createElement("div");
                 closeButton.classList.add("remove");
+                closeButton.setAttribute("title", "Close all tabs with this url");
                 closeButton.innerHTML = '&#10799;';
     
             container.appendChild(textDiv);
@@ -140,7 +142,7 @@
         
         const array = getDetails(target);
 
-        const headerDiv = `<div id="header" class="control"><div class="back">&lt;</div>
+        const headerDiv = `<div id="header" class="control"><div class="back" title="Back">&lt;</div>
                         <div class="header-title">${headerTitle}</div></div>
                         <div class="separator separator-bottom"></div>`;
         /**
@@ -148,7 +150,7 @@
          */
         const mainDetailsDiv = document.createElement("main");
               mainDetailsDiv.setAttribute("id", "details");
-              mainDetailsDiv.style = "position: absolute; height: 100%; width:100%; margin-top: 4px;";
+              mainDetailsDiv.style = "position: absolute; height: 100%; width:100%; margin-top: 4px; right: -100%;";
               mainDetailsDiv.innerHTML = headerDiv;
 
         const ul = document.createElement("ul");
@@ -159,9 +161,9 @@
             const text = `
             <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
                 <div class="item-container detail">
-                    <div class="title detail">${array[i].title}</div>
-                    <div class="url detail">${array[i].url}</div>
-                    <div class="remove detail">⨯</div>
+                    <div class="title detail" title="${array[i].title}">${array[i].title}</div>
+                    <div class="url detail" title="${array[i].url}">${array[i].url}</div>
+                    <div class="remove detail" title="Close tab">⨯</div>
                 </div>
             </li>
             `;
@@ -209,6 +211,8 @@
         if( e.target.closest("div.url-container") && !e.target.classList.contains("remove")){
             // getDetails(e.target);
             showDetailsScreen(e.target);
+            document.querySelector("#details").classList.add("slide-in");
+
             console.log("clicked");
         }
     }

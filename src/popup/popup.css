@@ -181,3 +181,13 @@ li>div {
   li.detail {
     height: 40px;
   }
+
+  /* ANIMATIONS */
+  .slide-in {
+    -webkit-transition: 5s cubic-bezier(.07,.95,0,1) 1s;
+    -moz-transition: 5s cubic-bezier(.07,.95,0,1) 1s;
+    transition: all 5s cubic-bezier(.07,.95,0,1) 1s;
+
+    /* animation: slide-in 5s cubic-bezier(.07,.95,0,1); */
+    right: 0 !important;
+  }
