@@ -5,23 +5,97 @@
     const anchorHeader = document.querySelector("#header");
 
     anchorHeader.innerHTML = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`;
-    console.log(tabs);
+    // console.log(tabs);
+
+    const getLatestUsed = async (tabs) => {
+        let newTabs = tabs.slice(0);
+
+
+        newTabs.sort((a,b) => a.lastAccessed - b.lastAccessed);
+
+        for(let i=0;i<10;i++){
+            // newTabs[i]
+            let date = new Date(newTabs[i].lastAccessed);
+            date = date.toLocaleString();
+            // date = `${date.getDate()}. ${date.getMonth()}. ${date.getFullYear()}`;
+            const string = `${i+1}. ${newTabs[i].title} shown on ${date}`;
+            console.log(string);
+        }
+
+        // console.log("pičo");
+        // console.log(newTabs);
+        /*
+        let listByLatestUsed = [];
+        console.log("ahoj");
+        // id, url, title, last used
+
+        newTabs.forEach(tab => {
+            let url = new URL(tab.url);
+            let originUrl = url.origin;
+
+            if(originUrl === "null"){
+                switch (url.protocol) {
+                    case "about:":
+                        originUrl = "about:pages"; 
+                        break;
+                    case "file:":
+                        originUrl = "Opened files";
+                        break;
+                    default:
+                        break;
+                }
+            };
+            
+            if(!tab.pinned){
+                let array = [];
+
+                if (tabsOverview.some(website => website.url === originUrl)) {
+                    
+                    const index = tabsOverview.findIndex( website => website.url === originUrl );
+
+                    tabsOverview[index].count += 1;
+                    tabsOverview[index].ids.push(tab.id);
+    
+                } else {
+                    tabsOverview.push({ url: originUrl, count: 1, ids: [ tab.id ] });
+                }
+            }
+        }); */
+
+    }
+
+    
 
     const getOverview = (tabs) => {
         const tabsOverview = [];
 
         tabs.forEach(tab => {
             let url = new URL(tab.url);
+            let originUrl = url.origin;
+
+            if(originUrl === "null"){
+                switch (url.protocol) {
+                    case "about:":
+                        originUrl = "about:pages"; 
+                        break;
+                    case "file:":
+                        originUrl = "Opened files";
+                        break;
+                    default:
+                        break;
+                }
+            };
             
             if(!tab.pinned){
-                if (tabsOverview.some(website => website.url === url.origin)) {
+                if (tabsOverview.some(website => website.url === originUrl)) {
                     
-                    const index = tabsOverview.findIndex( website => website.url === url.origin );
+                    const index = tabsOverview.findIndex( website => website.url === originUrl );
+
                     tabsOverview[index].count += 1;
                     tabsOverview[index].ids.push(tab.id);
     
                 } else {
-                    tabsOverview.push({ url: url.origin, count: 1, ids: [ tab.id ] });
+                    tabsOverview.push({ url: originUrl, count: 1, ids: [ tab.id ] });
                 }
             }
         });
@@ -32,7 +106,7 @@
     }
     tabsOverview = getOverview(tabs);
 
-    console.log(tabsOverview);
+    // console.log(tabsOverview);
 
     const getOverviewList = (tabsOverview) => {
         const ul = document.createElement("ul");
@@ -91,6 +165,13 @@
      * Use only after details to overview transition (pressing back button)
      */
     const refreshOverviewScreen = async () => {
+        document.querySelector("#main-container").classList.add("slide-in-reverse");
+        document.querySelector("#details").classList.add("slide-out-reverse");
+        
+        document.addEventListener("transitionend", () => {
+            document.querySelector("#main-container").classList = "";
+        }, { once: true });
+        
         tabs = await browser.tabs.query({currentWindow: true});
         tabsOverview = getOverview(tabs);
 
@@ -130,8 +211,6 @@
 
     const showDetailsScreen = (target) => {
         /* position: absolute; background-color: blue; height: 100%; */
-        // animace
-        document.querySelector(".main-container").style.left = "-350px";
         let headerTitle = "";
 
         try {
@@ -150,7 +229,6 @@
          */
         const mainDetailsDiv = document.createElement("main");
               mainDetailsDiv.setAttribute("id", "details");
-              mainDetailsDiv.style = "position: absolute; height: 100%; width:100%; margin-top: 4px; right: -100%;";
               mainDetailsDiv.innerHTML = headerDiv;
 
         const ul = document.createElement("ul");
@@ -183,7 +261,7 @@
                 refreshOverviewScreen();
 
                 document.querySelector("#details").remove();
-                document.querySelector(".main-container").style.left = "0px";
+                document.querySelector("#main-container").style.left = "0px";
             }
             if(e.target.classList.contains("remove")){
                 // remove tab
@@ -202,7 +280,7 @@
     }
 
     document.querySelector("#main").onclick = (e) => {
-        console.log(e.target);
+        // console.log(e.target);
 
         if(e.target.classList.contains("remove")){
             removeTabs(e.target);
@@ -211,15 +289,22 @@
         if( e.target.closest("div.url-container") && !e.target.classList.contains("remove")){
             // getDetails(e.target);
             showDetailsScreen(e.target);
-            document.querySelector("#details").classList.add("slide-in");
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, 10);
+            }).then(() => {
+                document.querySelector("#main-container").classList.add("slide-out");
+                document.querySelector("#details").classList.add("slide-in");
+            });
 
             console.log("clicked");
         }
     }
 
-
+    getLatestUsed(tabs);
     // browser.tabs.remove(tabsOverview[35].ids); 
     // document.write(tabUrlsArr);
-    console.log(tabsOverview);
+    // console.log(tabsOverview);
     
 })();
