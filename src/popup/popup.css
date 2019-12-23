@@ -51,10 +51,14 @@ li>div {
   align-items: center;
 }
 
-#header>span {
+#header>span, #ten-unused>span {
   padding: 4px 16px;
   display: inline-block;
   height: 16px;
+}
+
+#ten-unused {
+  margin-top: 4px;
 }
 
 .separator {
