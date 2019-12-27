@@ -7,21 +7,36 @@
     anchorHeader.innerHTML = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`;
     // console.log(tabs);
 
-    const getLatestUsed = async (tabs) => {
+    /**
+     * @todo Work on detailed and better filtered return array
+     * @param {array} tabs tabs query array 
+     * @param {number} numOfLatest optional, is equal to 10 normally 
+     */
+    const getLatestUsed = (tabs, numOfLatest = 10) => {
         let newTabs = tabs.slice(0);
+        let iterationsNum = numOfLatest;
+        let latest = [];
 
+        if(tabs.length < iterationsNum) iterationsNum = tabs.length; 
 
         newTabs.sort((a,b) => a.lastAccessed - b.lastAccessed);
 
-        for(let i=0;i<10;i++){
-            // newTabs[i]
+        for(let i=0;i<iterationsNum;i++){
+            let output = {};
             let date = new Date(newTabs[i].lastAccessed);
-            date = date.toLocaleString();
+            
+            output.date = date.toLocaleString();
             // date = `${date.getDate()}. ${date.getMonth()}. ${date.getFullYear()}`;
-            const string = `${i+1}. ${newTabs[i].title} shown on ${date}`;
-            console.log(string);
+            // const string = `${i+1}. ${newTabs[i].title} shown on ${date}`;
+
+            output.title = newTabs[i].title;
+            output.id = newTabs[i].id;
+            output.url = newTabs[i].url;
+
+            latest.push(output);
         }
 
+        return latest;
         // console.log("pičo");
         // console.log(newTabs);
         /*
@@ -105,8 +120,6 @@
         return tabsOverview;
     }
     tabsOverview = getOverview(tabs);
-
-    // console.log(tabsOverview);
 
     const getOverviewList = (tabsOverview) => {
         const ul = document.createElement("ul");
@@ -209,6 +222,61 @@
         return array;
     }
 
+    /**
+     * @todo REWRITE showLatestDisplayed and showDetailsScreen into one function + helpers
+     * @param {DOM target} target 
+     */
+    const showLatestDisplayed = (target, numOfLatest = 10) => {
+        const array = getLatestUsed(tabs, numOfLatest);
+        let headerTitle = `${numOfLatest} latest displayed tabs`;
+
+        const headerDiv = `<div id="header" class="control"><div class="back" title="Back">&lt;</div>
+                        <div class="header-title">${headerTitle}</div></div>
+                        <div class="separator separator-bottom"></div>`;
+
+        const mainDetailsDiv = document.createElement("main");
+              mainDetailsDiv.setAttribute("id", "details");
+              mainDetailsDiv.innerHTML = headerDiv;
+
+        const ul = document.createElement("ul");
+        const ulContainer = document.createElement("div");
+              ulContainer.classList.add("ul-container");
+
+        console.log(array);
+        for (let i = 0; i < array.length; i++) {
+            const text = `
+                <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
+                    <div class="item-container detail">
+                        <div class="title detail" title="${array[i].title}">${array[i].title}</div>
+                        <div class="url detail hidden" title="${array[i].url}">${array[i].url}</div>
+                        <div class="last-displayed detail" title="${array[i].date}">~ ${array[i].date}</div>
+                        <div class="remove detail" title="Close tab">⨯</div>
+                    </div>
+                </li>
+                `;
+
+            ul.innerHTML += text;
+        }
+            
+        ulContainer.appendChild(ul);
+        mainDetailsDiv.appendChild(ulContainer);
+
+        document.querySelector("body").appendChild(mainDetailsDiv);
+
+        mainDetailsDiv.onclick = (e) => {
+            if(e.target.classList.contains("back")){
+                /**
+                 * @todo Scratch, would need to reload previous page after deleted items and so on
+                 * @todo animate
+                 */
+                refreshOverviewScreen();
+
+                document.querySelector("#details").remove();
+                document.querySelector("#main-container").style.left = "0px";
+            }
+        }
+    }
+
     const showDetailsScreen = (target) => {
         /* position: absolute; background-color: blue; height: 100%; */
         let headerTitle = "";
@@ -279,7 +347,7 @@
         document.querySelector("body").appendChild(mainDetailsDiv);
     }
 
-    document.querySelector("#main").onclick = (e) => {
+    document.querySelector("#main-container").onclick = (e) => {
         // console.log(e.target);
 
         if(e.target.classList.contains("remove")){
@@ -299,6 +367,18 @@
             });
 
             console.log("clicked");
+        }
+        if(e.target.closest("#ten-unused")){
+            showLatestDisplayed(e.target);
+
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, 10);
+            }).then(() => {
+                document.querySelector("#main-container").classList.add("slide-out");
+                document.querySelector("#details").classList.add("slide-in");
+            });
         }
     }
 

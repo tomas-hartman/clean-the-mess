@@ -19,6 +19,10 @@ body {
   overflow: hidden;
 }
 
+.hidden {
+  display: none;
+}
+
 ul {
   list-style: none;
   margin-block-start: auto;
@@ -93,7 +97,7 @@ li>div {
   max-height: 494px;
 }
 
-.url {
+.url, .last-displayed {
   overflow-x: hidden;
   text-overflow: ellipsis;
 }
@@ -191,7 +195,7 @@ li>div.detail {
   white-space: nowrap;
 }
 
-.url.detail {
+.url.detail, .last-displayed.detail {
   grid-column-start: title;
   grid-row-start: 2;
   font-style: italic;
