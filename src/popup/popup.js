@@ -1,11 +1,18 @@
 (async () => {
+    const locale = {
+        string: "cs-CZ",
+        options: {
+            year: 'numeric', month: 'numeric', day: 'numeric',
+            hour: 'numeric', minute: 'numeric', second: 'numeric' 
+        }
+    }
+
     let tabs = await browser.tabs.query({currentWindow: true});
     let tabsOverview = []; // fills with getOverview
     const anchorMain = document.querySelector("#main");
     const anchorHeader = document.querySelector("#header");
 
     anchorHeader.innerHTML = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`;
-    // console.log(tabs);
 
     /**
      * @todo Work on detailed and better filtered return array
@@ -22,13 +29,12 @@
         newTabs.sort((a,b) => a.lastAccessed - b.lastAccessed);
 
         for(let i=0;i<iterationsNum;i++){
-            let output = {};
-            let date = new Date(newTabs[i].lastAccessed);
-            
-            output.date = date.toLocaleString();
-            // date = `${date.getDate()}. ${date.getMonth()}. ${date.getFullYear()}`;
-            // const string = `${i+1}. ${newTabs[i].title} shown on ${date}`;
+            if(newTabs[i].pinned) continue;
 
+            let output = {};
+            let date = new Intl.DateTimeFormat(locale.string, locale.options).format(new Date(newTabs[i].lastAccessed));
+            
+            output.date = date;
             output.title = newTabs[i].title;
             output.id = newTabs[i].id;
             output.url = newTabs[i].url;
@@ -37,49 +43,7 @@
         }
 
         return latest;
-        // console.log("pičo");
-        // console.log(newTabs);
-        /*
-        let listByLatestUsed = [];
-        console.log("ahoj");
-        // id, url, title, last used
-
-        newTabs.forEach(tab => {
-            let url = new URL(tab.url);
-            let originUrl = url.origin;
-
-            if(originUrl === "null"){
-                switch (url.protocol) {
-                    case "about:":
-                        originUrl = "about:pages"; 
-                        break;
-                    case "file:":
-                        originUrl = "Opened files";
-                        break;
-                    default:
-                        break;
-                }
-            };
-            
-            if(!tab.pinned){
-                let array = [];
-
-                if (tabsOverview.some(website => website.url === originUrl)) {
-                    
-                    const index = tabsOverview.findIndex( website => website.url === originUrl );
-
-                    tabsOverview[index].count += 1;
-                    tabsOverview[index].ids.push(tab.id);
-    
-                } else {
-                    tabsOverview.push({ url: originUrl, count: 1, ids: [ tab.id ] });
-                }
-            }
-        }); */
-
     }
-
-    
 
     const getOverview = (tabs) => {
         const tabsOverview = [];
@@ -222,14 +186,7 @@
         return array;
     }
 
-    /**
-     * @todo REWRITE showLatestDisplayed and showDetailsScreen into one function + helpers
-     * @param {DOM target} target 
-     */
-    const showLatestDisplayed = (target, numOfLatest = 10) => {
-        const array = getLatestUsed(tabs, numOfLatest);
-        let headerTitle = `${numOfLatest} latest displayed tabs`;
-
+    const createSlideScreen = (headerTitle) => {
         const headerDiv = `<div id="header" class="control"><div class="back" title="Back">&lt;</div>
                         <div class="header-title">${headerTitle}</div></div>
                         <div class="separator separator-bottom"></div>`;
@@ -242,14 +199,30 @@
         const ulContainer = document.createElement("div");
               ulContainer.classList.add("ul-container");
 
-        console.log(array);
+        ulContainer.appendChild(ul);
+        mainDetailsDiv.appendChild(ulContainer);
+
+        return mainDetailsDiv;
+    }
+
+    /**
+     * @param {DOM target} target 
+     */
+    const showLatestDisplayed = (target, numOfLatest = 10) => {
+        const array = getLatestUsed(tabs, numOfLatest);
+        let headerTitle = `${numOfLatest} latest displayed tabs`;
+
+        const screen = createSlideScreen(headerTitle);
+        const ul = screen.querySelector("ul");
+
+        // Fill in with content
         for (let i = 0; i < array.length; i++) {
             const text = `
                 <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
                     <div class="item-container detail">
                         <div class="title detail" title="${array[i].title}">${array[i].title}</div>
                         <div class="url detail hidden" title="${array[i].url}">${array[i].url}</div>
-                        <div class="last-displayed detail" title="${array[i].date}">~ ${array[i].date}</div>
+                        <div class="last-displayed detail" title="${array[i].date}">${array[i].date}</div>
                         <div class="remove detail" title="Close tab">⨯</div>
                     </div>
                 </li>
@@ -257,28 +230,24 @@
 
             ul.innerHTML += text;
         }
-            
-        ulContainer.appendChild(ul);
-        mainDetailsDiv.appendChild(ulContainer);
 
-        document.querySelector("body").appendChild(mainDetailsDiv);
-
-        mainDetailsDiv.onclick = (e) => {
+        // Set up events
+        screen.onclick = (e) => {
             if(e.target.classList.contains("back")){
-                /**
-                 * @todo Scratch, would need to reload previous page after deleted items and so on
-                 * @todo animate
-                 */
+
                 refreshOverviewScreen();
 
                 document.querySelector("#details").remove();
                 document.querySelector("#main-container").style.left = "0px";
             }
         }
+
+        document.querySelector("body").appendChild(screen);
     }
 
     const showDetailsScreen = (target) => {
         /* position: absolute; background-color: blue; height: 100%; */
+        const array = getDetails(target);
         let headerTitle = "";
 
         try {
@@ -287,22 +256,10 @@
             headerTitle = "null";
         }
         
-        const array = getDetails(target);
+        const screen = createSlideScreen(headerTitle);
+        const ul = screen.querySelector("ul");
 
-        const headerDiv = `<div id="header" class="control"><div class="back" title="Back">&lt;</div>
-                        <div class="header-title">${headerTitle}</div></div>
-                        <div class="separator separator-bottom"></div>`;
-        /**
-         * create div main-details
-         */
-        const mainDetailsDiv = document.createElement("main");
-              mainDetailsDiv.setAttribute("id", "details");
-              mainDetailsDiv.innerHTML = headerDiv;
-
-        const ul = document.createElement("ul");
-        const ulContainer = document.createElement("div");
-              ulContainer.classList.add("ul-container");
-
+        // Fill in with content
         for(let i=0; i < array.length; i++){
             const text = `
             <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
@@ -316,16 +273,10 @@
 
             ul.innerHTML += text;
         }
-        
-        ulContainer.appendChild(ul);
-        mainDetailsDiv.appendChild(ulContainer);
 
-        mainDetailsDiv.onclick = (e) => {
+        // Set up events
+        screen.onclick = (e) => {
             if(e.target.classList.contains("back")){
-                /**
-                 * @todo Scratch, would need to reload previous page after deleted items and so on
-                 * @todo animate
-                 */
                 refreshOverviewScreen();
 
                 document.querySelector("#details").remove();
@@ -344,7 +295,7 @@
             }
         }
         
-        document.querySelector("body").appendChild(mainDetailsDiv);
+        document.querySelector("body").appendChild(screen);
     }
 
     document.querySelector("#main-container").onclick = (e) => {
@@ -383,8 +334,5 @@
     }
 
     getLatestUsed(tabs);
-    // browser.tabs.remove(tabsOverview[35].ids); 
-    // document.write(tabUrlsArr);
-    // console.log(tabsOverview);
     
 })();
