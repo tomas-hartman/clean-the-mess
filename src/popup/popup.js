@@ -333,6 +333,10 @@
         }
     }
 
+    browser.theme.getCurrent().then((a) => {
+        console.log(a);
+    });
+
     getLatestUsed(tabs);
     
 })();

@@ -37,7 +37,6 @@
     document.write(tabUrlsArr);
     console.log(tabsCountInfo);
     console.log(tabUrlsArr);
-    console.log(set);
-    
+    console.log(set);   
 })();
 // main();

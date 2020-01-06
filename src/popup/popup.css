@@ -1,8 +1,30 @@
+:root {
+  --color-link-hover: #c169ffb9;
+  --color-emphasis-dark: #d7d7dbdc;
+  --color-emphasis-light: #ededf0d0;
+  --color-separator: #d7d7db;
+  --color-background: #ffffff;
+  --color-font: #0c0c0d;
+  --color-secondary-font: #737373;
+}
+
+@media (prefers-color-scheme: dark)  {
+  :root {
+    --color-link-hover: #663399;
+    --color-emphasis-dark: #737373c1;
+    --color-emphasis-light: #7373738a;
+    --color-separator: #7373738a;
+    --color-background: #4a4a4f;
+    --color-font: #ffffff;
+    --color-secondary-font: #f9f9fa;
+  }
+}
+
 html,
 body {
   padding: 10px;
-  background-color: #4a4a4f;
-  color: #ffffff;
+  background-color: var(--color-background);
+  color: var(--color-font);
 
   font-size: 12px;
   font-weight: 400;
@@ -41,7 +63,7 @@ li {
 
 li:hover {
   /* background-color: #6200a4c1; */
-  background-color: #663399;
+  background-color: var(--color-link-hover);
   /* background-color: #6200a48a; */
 }
 
@@ -66,7 +88,7 @@ li>div {
 }
 
 .separator {
-  border-bottom: 1px solid #7373738a;
+  border-bottom: 1px solid var(--color-separator);
   margin-bottom: 4px;
   margin-top: 4px;
 }
@@ -95,15 +117,6 @@ li>div {
   height: 100%;
 }
 
-#details > .ul-container {
-  /*! max-height: 494px; */
-  /*! flex-shrink: 0; */
-  /*! height: 100%; */
-  /*! display: flex; */
-  /*! flex-grow: 2; */
-  /*! flex-basis: 100%; */
-}
-
 .url, .last-displayed {
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -116,8 +129,6 @@ li>div {
 .remove {
   width: 20px;
   height: 20px;
-  /*! background-color: wheat; */
-  /*! justify-content: center; */
   align-self: center;
   text-align: center;
   font-size: 1.15em;
@@ -125,11 +136,11 @@ li>div {
 }
 
 .remove:hover {
-  background-color: #7373738a;
+  background-color: var(--color-emphasis-light);
 }
 
 .remove:active {
-  background-color: #737373c1;
+  background-color: var(--color-emphasis-dark);
 }
 
 .temporary {
@@ -186,11 +197,11 @@ li>div.detail {
 }
 
 .control .back:hover {
-  background-color: #7373738a;
+  background-color: var(--color-emphasis-light);
 }
 
 .control .back:active {
-  background-color: #737373c1;
+  background-color: var(--color-emphasis-dark);
 }
 
 .header-title {
