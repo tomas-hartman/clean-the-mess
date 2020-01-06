@@ -61,7 +61,7 @@ li {
   align-items: center;
 }
 
-li:hover {
+li:hover, #ten-unused:hover {
   /* background-color: #6200a4c1; */
   background-color: var(--color-link-hover);
   /* background-color: #6200a48a; */
@@ -83,8 +83,18 @@ li>div {
   height: 16px;
 }
 
+#ten-unused > span {
+  padding: initial;
+}
+
 #ten-unused {
   margin-top: 4px;
+  display: inline-grid;
+  grid-template-columns: [text] auto 20px [end];
+  width: 100%;
+  padding: 4px 16px;
+  box-sizing: border-box;
+  align-items: center;
 }
 
 .separator {
@@ -126,7 +136,7 @@ li>div {
   justify-self: end;
 }
 
-.remove {
+.remove, .get-in {
   width: 20px;
   height: 20px;
   align-self: center;
