@@ -2,9 +2,9 @@
 
     "manifest_version": 2,
     "name": "Clean the mess",
-    "version": "0.5",
+    "version": "1.0",
   
-    "description": "Helps with maintaining order within once opened and never-seen-again & way too often visited tabs.",
+    "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
   
     "permissions": [
         "activeTab",

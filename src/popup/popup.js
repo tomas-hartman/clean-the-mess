@@ -52,15 +52,17 @@
             let url = new URL(tab.url);
             let originUrl = url.origin;
 
-            if(originUrl === "null"){
+            if(originUrl === "null" || url.protocol === "moz-extension:"){
                 switch (url.protocol) {
                     case "about:":
-                        originUrl = "about:pages"; 
+                    case "moz-extension:":
+                        originUrl = "Browser tabs";
                         break;
                     case "file:":
                         originUrl = "Opened files";
                         break;
                     default:
+                        originUrl = "Other tabs";
                         break;
                 }
             };
@@ -110,7 +112,7 @@
             let closeButton = document.createElement("div");
                 closeButton.classList.add("remove");
                 closeButton.setAttribute("title", "Close all tabs with this url");
-                closeButton.innerHTML = '&#10799;';
+                // closeButton.innerHTML = '&#10799;';
     
             container.appendChild(textDiv);
             container.appendChild(countDiv);
@@ -187,7 +189,7 @@
     }
 
     const createSlideScreen = (headerTitle) => {
-        const headerDiv = `<div id="header" class="control"><div class="back" title="Back">&lt;</div>
+        const headerDiv = `<div id="header" class="control"><div class="back go-back" title="Back"></div>
                         <div class="header-title">${headerTitle}</div></div>
                         <div class="separator separator-bottom"></div>`;
 
@@ -210,7 +212,7 @@
      */
     const showLatestDisplayed = (target, numOfLatest = 10) => {
         const array = getLatestUsed(tabs, numOfLatest);
-        let headerTitle = `${numOfLatest} latest displayed tabs`;
+        let headerTitle = `${numOfLatest} longest unused tabs`;
 
         const screen = createSlideScreen(headerTitle);
         const ul = screen.querySelector("ul");
@@ -223,7 +225,7 @@
                         <div class="title detail" title="${array[i].title}">${array[i].title}</div>
                         <div class="url detail hidden" title="${array[i].url}">${array[i].url}</div>
                         <div class="last-displayed detail" title="${array[i].date}">${array[i].date}</div>
-                        <div class="remove detail" title="Close tab">⨯</div>
+                        <div class="remove detail" title="Close tab"></div>
                     </div>
                 </li>
                 `;
@@ -240,20 +242,32 @@
                 document.querySelector("#details").remove();
                 document.querySelector("#main-container").style.left = "0px";
             }
+            if(e.target.classList.contains("remove")){
+                // remove tab
+                const id = parseInt(e.target.closest("li").dataset.tabId);
+                browser.tabs.remove([id]);
+                e.target.closest("li").remove();
+            }
+            if(e.target.closest("li") && !e.target.classList.contains("remove")){
+                // switchTo tab
+                const id = parseInt(e.target.closest("li").dataset.tabId);
+                browser.tabs.update(id, {active: true});
+            }
         }
 
         document.querySelector("body").appendChild(screen);
     }
 
     const showDetailsScreen = (target) => {
-        /* position: absolute; background-color: blue; height: 100%; */
         const array = getDetails(target);
         let headerTitle = "";
 
+        console.log(target.innerText);
+
         try {
-            headerTitle = (new URL(target.innerText)).host; 
+            headerTitle = (new URL(target.innerText)).host;
         } catch (error) {
-            headerTitle = "null";
+            headerTitle = target.innerText;
         }
         
         const screen = createSlideScreen(headerTitle);
@@ -266,7 +280,7 @@
                 <div class="item-container detail">
                     <div class="title detail" title="${array[i].title}">${array[i].title}</div>
                     <div class="url detail" title="${array[i].url}">${array[i].url}</div>
-                    <div class="remove detail" title="Close tab">⨯</div>
+                    <div class="remove detail" title="Close tab"></div>
                 </div>
             </li>
             `;
@@ -307,7 +321,9 @@
         }
         if( e.target.closest("div.url-container") && !e.target.classList.contains("remove")){
             // getDetails(e.target);
-            showDetailsScreen(e.target);
+            const target = e.target.closest("div.url-container");
+
+            showDetailsScreen(target.firstChild);
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve();

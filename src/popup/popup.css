@@ -80,11 +80,13 @@ li>div {
 #header>span, #ten-unused>span {
   padding: 4px 16px;
   display: inline-block;
-  height: 16px;
+  height: 20px;
+  line-height: 20px;
 }
 
 #ten-unused > span {
   padding: initial;
+  height: initial;
 }
 
 #ten-unused {
@@ -130,6 +132,7 @@ li>div {
 .url, .last-displayed {
   overflow-x: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .count {
@@ -141,8 +144,13 @@ li>div {
   height: 20px;
   align-self: center;
   text-align: center;
-  font-size: 1.15em;
-  border-radius: 1px;
+}
+
+.remove {
+  background-image: url(../../icons/btn-remove.svg);
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .remove:hover {
@@ -151,6 +159,21 @@ li>div {
 
 .remove:active {
   background-color: var(--color-emphasis-dark);
+}
+
+.get-in {
+  background-image: url(../../icons/btn-bold-arrow.svg);
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.go-back {
+  background-image: url(../../icons/btn-big-arrow.svg);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(180deg);
 }
 
 .temporary {
