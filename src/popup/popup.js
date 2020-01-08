@@ -266,7 +266,7 @@
     }
 
     const showDetailsScreen = (target) => {
-        const array = getDetails(target);
+        let array = getDetails(target);
         let headerTitle = "";
 
         console.log(target.innerText);
@@ -306,8 +306,18 @@
             if(e.target.classList.contains("remove")){
                 // remove tab
                 const id = parseInt(e.target.closest("li").dataset.tabId);
+                
+                array.splice(array.findIndex(tab => tab.id === id), 1);
                 browser.tabs.remove([id]);
                 e.target.closest("li").remove();
+
+                // autoclose
+                if(array.length === 0){
+                    refreshOverviewScreen();
+
+                    document.querySelector("#details").remove();
+                    document.querySelector("#main-container").style.left = "0px";
+                }
             }
             if(e.target.closest("li") && !e.target.classList.contains("remove")){
                 // switchTo tab
@@ -361,5 +371,5 @@
     });
 
     getLatestUsed(tabs);
-    
+
 })();
