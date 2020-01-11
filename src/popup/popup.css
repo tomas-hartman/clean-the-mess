@@ -29,7 +29,7 @@ body {
   font-size: 12px;
   font-weight: 400;
   display: flex;
-  font-family: 'Segoe UI', 'San Francisco', 'Ubuntu', 'Roboto';
+  font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
   flex-direction: column;
   box-sizing: border-box;
   cursor: default;
