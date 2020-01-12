@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
+    <style>
+        .hidden {
+            display: unset !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,82 +28,158 @@
     <script src="popup.js"></script>
   
     <main id="details" class="slide-in"><div id="header" class="control"><div class="back go-back" title="Back"></div>
-        <div class="header-title">developer.mozilla.org(6)</div></div>
+        <div class="header-title">developer.mozilla.org</div></div>
         <div class="separator separator-bottom"></div><div class="ul-container"><ul>
-<li id="item-0" class="detail" data-tab-id="31">
+<li id="item-0" class="detail" data-tab-id="105">
 <div class="item-container detail">
     <div class="item-text-container">
-        <div class="title detail" title="windows.Window - Mozilla | MDN">windows.Window - Mozilla | MDN</div>
-        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/Window">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/Window</div>
+        <div class="title detail" title="bookmarks.update() - Mozilla | MDN">bookmarks.update() - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/update">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/update</div>
     </div>
     <div class="item-buttons-container">
-        <div class="bookmark detail" title="Bookmark and close tab">🟊</div>
-        <div class="remove detail" title="Close tab"></div>
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
     </div>
 </div>
 </li>
 
-<li id="item-1" class="detail" data-tab-id="33">
-<div class="item-container detail">
-    <div class="item-text-container">
-        <div class="title detail" title="bookmarks - Mozilla | MDN">bookmarks - Mozilla | MDN</div>
-        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks</div>
-    </div>
-    <div class="item-buttons-container">
-        <div class="bookmark detail" title="Bookmark and close tab"></div>
-        <div class="remove detail" title="Close tab"></div>
-    </div>
-</div>
-</li>
-
-<li id="item-2" class="detail" data-tab-id="34">
+<li id="item-1" class="detail" data-tab-id="104">
 <div class="item-container detail">
     <div class="item-text-container">
         <div class="title detail" title="bookmarks.search() - Mozilla | MDN">bookmarks.search() - Mozilla | MDN</div>
         <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/search">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/search</div>
     </div>
     <div class="item-buttons-container">
-        <div class="bookmark detail" title="Bookmark and close tab">🟊</div>
-        <div class="remove detail" title="Close tab"></div>
+        <div class="bookmark bookmark-close detail bookmarked hidden" title="This url is already bookmarked"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
     </div>
 </div>
 </li>
 
-<li id="item-3" class="detail" data-tab-id="30">
+<li id="item-2" class="detail" data-tab-id="102">
 <div class="item-container detail">
     <div class="item-text-container">
-        <div class="title detail" title="windows.getAll() - Mozilla | MDN">windows.getAll() - Mozilla | MDN</div>
-        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/getAll">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/getAll</div>
+        <div class="title detail" title="bookmarks.remove() - Mozilla | MDN">bookmarks.remove() - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/remove">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/remove</div>
     </div>
     <div class="item-buttons-container">
-        <div class="bookmark detail" title="Bookmark and close tab"></div>
-        <div class="remove detail" title="Close tab"></div>
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
     </div>
 </div>
 </li>
 
-<li id="item-4" class="detail" data-tab-id="38">
+<li id="item-3" class="detail" data-tab-id="103">
+<div class="item-container detail">
+    <div class="item-text-container">
+        <div class="title detail" title="bookmarks.removeTree() - Mozilla | MDN">bookmarks.removeTree() - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/removeTree">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/removeTree</div>
+    </div>
+    <div class="item-buttons-container">
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
+    </div>
+</div>
+</li>
+
+<li id="item-4" class="detail" data-tab-id="101">
+<div class="item-container detail">
+    <div class="item-text-container">
+        <div class="title detail" title="bookmarks.getRecent() - Mozilla | MDN">bookmarks.getRecent() - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/getRecent">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/getRecent</div>
+    </div>
+    <div class="item-buttons-container">
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
+    </div>
+</div>
+</li>
+
+<li id="item-5" class="detail" data-tab-id="38">
 <div class="item-container detail">
     <div class="item-text-container">
         <div class="title detail" title="bookmarks.getTree() - Mozilla | MDN">bookmarks.getTree() - Mozilla | MDN</div>
         <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/getTree">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/getTree</div>
     </div>
     <div class="item-buttons-container">
-        <div class="bookmark detail" title="Bookmark and close tab"></div>
-        <div class="remove detail" title="Close tab"></div>
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
     </div>
 </div>
 </li>
 
-<li id="item-5" class="detail" data-tab-id="36">
+<li id="item-6" class="detail" data-tab-id="31">
+<div class="item-container detail">
+    <div class="item-text-container">
+        <div class="title detail" title="windows.Window - Mozilla | MDN">windows.Window - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/Window">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/Window</div>
+    </div>
+    <div class="item-buttons-container">
+        <div class="bookmark bookmark-close detail bookmarked hidden" title="This url is already bookmarked"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
+    </div>
+</div>
+</li>
+
+<li id="item-7" class="detail" data-tab-id="33">
+<div class="item-container detail">
+    <div class="item-text-container">
+        <div class="title detail" title="bookmarks - Mozilla | MDN">bookmarks - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks</div>
+    </div>
+    <div class="item-buttons-container">
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
+    </div>
+</div>
+</li>
+
+<li id="item-8" class="detail" data-tab-id="34">
+<div class="item-container detail">
+    <div class="item-text-container">
+        <div class="title detail" title="bookmarks.search() - Mozilla | MDN">bookmarks.search() - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/search">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/search</div>
+    </div>
+    <div class="item-buttons-container">
+        <div class="bookmark bookmark-close detail bookmarked hidden" title="This url is already bookmarked"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
+    </div>
+</div>
+</li>
+
+<li id="item-9" class="detail" data-tab-id="30">
+<div class="item-container detail">
+    <div class="item-text-container">
+        <div class="title detail" title="windows.getAll() - Mozilla | MDN">windows.getAll() - Mozilla | MDN</div>
+        <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/getAll">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/getAll</div>
+    </div>
+    <div class="item-buttons-container">
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
+    </div>
+</div>
+</li>
+
+<li id="item-10" class="detail" data-tab-id="36">
 <div class="item-container detail">
     <div class="item-text-container">
         <div class="title detail" title="bookmarks.getSubTree() - Mozilla | MDN">bookmarks.getSubTree() - Mozilla | MDN</div>
         <div class="url detail" title="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/getSubTree">https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks/getSubTree</div>
     </div>
     <div class="item-buttons-container">
-        <div class="bookmark detail" title="Bookmark and close tab"></div>
-        <div class="remove detail" title="Close tab"></div>
+        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+        <div class="remove detail hidden" title="Close tab"></div>
+        <div class="get-in"></div>
     </div>
 </div>
 </li>

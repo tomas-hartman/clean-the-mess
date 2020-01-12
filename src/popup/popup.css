@@ -37,7 +37,9 @@ body {
   user-select: none;
   margin: 0;
   padding: 0;
-  width: 370px;
+  max-width: 370px;
+  min-width: 350px;
+  width: auto;
   overflow: hidden;
 }
 
@@ -190,9 +192,10 @@ li>div {
 
 .remove {
   background-image: url(../icons/btn-remove.svg);
-  background-size: 60%;
+  background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;
+  margin-left: 4px !important;
 }
 
 .remove:hover,
@@ -206,13 +209,20 @@ li>div {
 }
 
 .bookmark {
-  background-color: blue;
   border-radius: 1px;
+  background-image: url(../icons/btn-bookmark-star.svg);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.bookmark-remove.detail {
-  background-color: red;
+.bookmark.bookmark-close {
+  background-image: url(../icons/ico-bookmark-close.svg);
+  background-size: 70%;
+}
 
+.bookmark.bookmarked {
+  background-image: url(../icons/btn-bookmark-star-full.svg);
 }
 
 .get-in {

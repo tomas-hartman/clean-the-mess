@@ -104,7 +104,10 @@
                                     <div class="url" title="${tab.url}">${tab.url}</div>
                                     <div class="count">(${tab.count})</div>
                                 </div>
-                            <div class="remove" title="Close all tabs with this url"></div>
+                                <div class="item-buttons-container">
+                                    <div class="get-in"></div>
+                                    <div class="remove hidden" title="Close all tabs with this url"></div>
+                                </div>
                             </div>
                         </li>`;
             
@@ -189,7 +192,8 @@
 
         if(bookmarks.length > 0){
             // TBA After design is ready
-            elm.innerText = "🟊";
+            elm.classList.add("bookmarked");
+            elm.setAttribute("title", "This url is already bookmarked");
         }
     }
 
@@ -214,6 +218,7 @@
     }
 
     /**
+     * @todo Merge showLatestDisplayed() with showDetailsScreen()
      * @param {DOM target} target 
      */
     const showLatestDisplayed = (target, numOfLatest = 10) => {
@@ -234,7 +239,7 @@
                             <div class="last-displayed detail" title="${array[i].date}">${array[i].date}</div>
                         </div>
                         <div class="item-buttons-container">
-                            <div class="bookmark detail" title="Bookmark and close tab">☆</div>
+                            <div class="bookmark bookmark-close detail" title="Bookmark and close tab"></div>
                             <div class="remove detail" title="Close tab"></div>
                         </div>
                     </div>
@@ -274,12 +279,10 @@
         let array = getDetails(target);
         let headerTitle = "";
 
-        console.log(target.innerText);
-
         try {
-            headerTitle = (new URL(target.innerText)).host;
+            headerTitle = (new URL(target.querySelector('.url').innerText)).host;
         } catch (error) {
-            headerTitle = target.innerText;
+            headerTitle = target.querySelector('.url').innerText;
         }
         
         const screen = createSlideScreen(headerTitle);
@@ -295,8 +298,9 @@
                         <div class="url detail" title="${array[i].url}">${array[i].url}</div>
                     </div>
                     <div class="item-buttons-container">
-                        <div class="bookmark detail" title="Bookmark and close tab"></div>
-                        <div class="remove detail" title="Close tab"></div>
+                        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+                        <div class="remove detail hidden" title="Close tab"></div>
+                        <div class="get-in"></div>
                     </div>
                 </div>
             </li>
@@ -307,6 +311,25 @@
         }
 
         // Set up events
+        screen.onmouseover = (e) => {
+            if(e.target.closest("li")){
+    
+                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+                parentElm.children[0].classList.remove("hidden");
+                parentElm.children[1].classList.remove("hidden");
+                parentElm.children[2].classList.add("hidden");
+            }
+        }
+        screen.onmouseout = (e) => {
+            if(e.target.closest("li")){
+    
+                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+                parentElm.children[0].classList.add("hidden");
+                parentElm.children[1].classList.add("hidden");
+                parentElm.children[2].classList.remove("hidden");
+            }
+        }
+
         screen.onclick = (e) => {
             if(e.target.classList.contains("back")){
                 refreshOverviewScreen();
@@ -340,11 +363,22 @@
         document.querySelector("body").appendChild(screen);
     }
 
+    document.querySelector("#main-container").onmouseover = (e) => {
+        if(e.target.closest("li")){
+
+            const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+            parentElm.children[1].classList.remove("hidden");
+        }
+    }
+    document.querySelector("#main-container").onmouseout = (e) => {
+        if(e.target.closest("li")){
+
+            const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+            parentElm.children[0].classList.remove("hidden");
+            parentElm.children[1].classList.add("hidden");
+        }
+    }
     document.querySelector("#main-container").onclick = (e) => {
-        // console.log(e.target);
-
-        console.log(e.target);
-
         if(e.target.classList.contains("remove")){
             removeTabs(e.target);
             console.log("Tabs removed!");
