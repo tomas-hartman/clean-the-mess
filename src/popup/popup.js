@@ -8,10 +8,13 @@
     }
 
     let tabs = await browser.tabs.query({currentWindow: true});
+    console.log(tabs);
+    const windows = await browser.windows.getAll();
     let tabsOverview = []; // fills with getOverview
     const anchorMain = document.querySelector("#main");
     const anchorHeader = document.querySelector("#header");
-    const openedTabsStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`;
+    const windowStr = windows.length > 1 ? " in this window" : "";
+    const openedTabsStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>`;
 
     anchorHeader.appendChild(document.createRange().createContextualFragment(openedTabsStr));
 
@@ -135,7 +138,7 @@
         let currentTabsNum = parseInt(document.querySelector("#open-tabs-count").innerText);
         let tabsNum = tabsOverview[data].ids.length;
         let newTabsNum = currentTabsNum - tabsNum;
-        const openedTabsStr = `<span>You have <span id="open-tabs-count">${newTabsNum}</span> opened tabs.</span>`
+        const openedTabsStr = `<span>You have <span id="open-tabs-count">${newTabsNum}</span> opened tabs${windowStr}.</span>`
 
         document.querySelector(`li.url-${data}`).remove();
 
@@ -157,7 +160,7 @@
         tabs = await browser.tabs.query({currentWindow: true});
         tabsOverview = getOverview(tabs);
 
-        const openedTabsStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs.</span>`
+        const openedTabsStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>`
 
         anchorHeader.firstChild.remove();
         anchorHeader.appendChild(document.createRange().createContextualFragment(openedTabsStr));
@@ -192,6 +195,16 @@
         array.sort((a, b) => b.lastAccessed-a.lastAccessed)
 
         return array;
+    }
+
+    const addBookmarkStatus = async (item) => {
+        const bookmarks = await browser.bookmarks.search({url: item.url});
+        const elm = document.querySelector(`li[data-tab-id='${item.id}'] .title`);
+
+        if(bookmarks.length > 0){
+            // TBA After design is ready
+            elm.innerText += "*";
+        }
     }
 
     const createSlideScreen = (headerTitle) => {
@@ -238,6 +251,7 @@
                 `;
             
         ul.appendChild(document.createRange().createContextualFragment(text));
+        addBookmarkStatus(array[i]);
         }
 
         // Set up events
@@ -265,7 +279,7 @@
         document.querySelector("body").appendChild(screen);
     }
 
-    const showDetailsScreen = (target) => {
+    const showDetailsScreen = async (target) => {
         let array = getDetails(target);
         let headerTitle = "";
 
@@ -293,6 +307,7 @@
             `;
 
             ul.appendChild(document.createRange().createContextualFragment(text));
+            addBookmarkStatus(array[i]);
         }
 
         // Set up events
