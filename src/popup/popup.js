@@ -97,32 +97,18 @@
     
         for(let i = 0; i < tabsOverview.length; i++){
             let tab = tabsOverview[i];
-            let li = document.createElement("li");
-                li.classList.add(`url-${i}`);
-                li.setAttribute("data-index-number", i);
-    
-            let container = document.createElement("div");
-                container.classList.add("url-container");
-    
-            let textDiv = document.createElement("div");
-                textDiv.classList.add("url");
-                textDiv.setAttribute("title", tab.url);
-                textDiv.innerText = tab.url;
-    
-            let countDiv = document.createElement("div");
-                countDiv.classList.add("count");
-                countDiv.innerText = `(${tab.count})`;
-    
-            let closeButton = document.createElement("div");
-                closeButton.classList.add("remove");
-                closeButton.setAttribute("title", "Close all tabs with this url");
-    
-            container.appendChild(textDiv);
-            container.appendChild(countDiv);
-            container.appendChild(closeButton);
+
+            let text = `<li class="url-${i}" data-index-number="${i}">
+                            <div class="url-container">
+                                <div class="main-item-text-container">
+                                    <div class="url" title="${tab.url}">${tab.url}</div>
+                                    <div class="count">(${tab.count})</div>
+                                </div>
+                            <div class="remove" title="Close all tabs with this url"></div>
+                            </div>
+                        </li>`;
             
-            li.appendChild(container);
-            ul.appendChild(li);
+            ul.appendChild(document.createRange().createContextualFragment(text));
         }
 
         return ul;
@@ -199,11 +185,11 @@
 
     const addBookmarkStatus = async (item) => {
         const bookmarks = await browser.bookmarks.search({url: item.url});
-        const elm = document.querySelector(`li[data-tab-id='${item.id}'] .title`);
+        const elm = document.querySelector(`li[data-tab-id='${item.id}'] .bookmark`);
 
         if(bookmarks.length > 0){
             // TBA After design is ready
-            elm.innerText += "*";
+            elm.innerText = "🟊";
         }
     }
 
@@ -242,10 +228,15 @@
             const text = `
                 <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
                     <div class="item-container detail">
-                        <div class="title detail" title="${array[i].title}">${array[i].title}</div>
-                        <div class="url detail hidden" title="${array[i].url}">${array[i].url}</div>
-                        <div class="last-displayed detail" title="${array[i].date}">${array[i].date}</div>
-                        <div class="remove detail" title="Close tab"></div>
+                        <div class="item-text-container">
+                            <div class="title detail" title="${array[i].title}">${array[i].title}</div>
+                            <div class="url detail hidden" title="${array[i].url}">${array[i].url}</div>
+                            <div class="last-displayed detail" title="${array[i].date}">${array[i].date}</div>
+                        </div>
+                        <div class="item-buttons-container">
+                            <div class="bookmark detail" title="Bookmark and close tab">☆</div>
+                            <div class="remove detail" title="Close tab"></div>
+                        </div>
                     </div>
                 </li>
                 `;
@@ -299,9 +290,14 @@
             const text = `
             <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
                 <div class="item-container detail">
-                    <div class="title detail" title="${array[i].title}">${array[i].title}</div>
-                    <div class="url detail" title="${array[i].url}">${array[i].url}</div>
-                    <div class="remove detail" title="Close tab"></div>
+                    <div class="item-text-container">
+                        <div class="title detail" title="${array[i].title}">${array[i].title}</div>
+                        <div class="url detail" title="${array[i].url}">${array[i].url}</div>
+                    </div>
+                    <div class="item-buttons-container">
+                        <div class="bookmark detail" title="Bookmark and close tab"></div>
+                        <div class="remove detail" title="Close tab"></div>
+                    </div>
                 </div>
             </li>
             `;
@@ -347,6 +343,8 @@
     document.querySelector("#main-container").onclick = (e) => {
         // console.log(e.target);
 
+        console.log(e.target);
+
         if(e.target.classList.contains("remove")){
             removeTabs(e.target);
             console.log("Tabs removed!");
@@ -355,7 +353,7 @@
             // getDetails(e.target);
             const target = e.target.closest("div.url-container");
 
-            showDetailsScreen(target.firstChild);
+            showDetailsScreen(target);
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve();
