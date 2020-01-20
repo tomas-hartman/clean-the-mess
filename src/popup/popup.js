@@ -234,9 +234,16 @@
         if(isSupportedProtocol(url)){
             // check if folder exists and create special folder?
             await browser.bookmarks.create({title: title, url: url}).catch(err => console.log(err));
-            /**
-             * @todo notification!
-             */
+            await browser.browserAction.setIcon({
+                path: "../icons/btn-bookmark-star-blue.svg"
+            });
+
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    browser.browserAction.setIcon({});
+                    resolve();
+                }, 700);
+            })
             console.log("New bookmark created");
         }
     }
