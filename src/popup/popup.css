@@ -1,11 +1,13 @@
 :root {
-  --color-link-hover: #c169ffb9;
+  --color-link-hover-purple: #c169ffb9;
+  --color-link-hover: var(--color-emphasis-dark);
   --color-emphasis-dark: #d7d7dbdc;
   --color-emphasis-light: #ededf0d0;
   --color-separator: #d7d7db;
   --color-background: #ffffff;
   --color-font: #0c0c0d;
   --color-secondary-font: #737373;
+  --color-back-button: var(--color-background);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +19,7 @@
     --color-background: #4a4a4f;
     --color-font: #ffffff;
     --color-secondary-font: #f9f9fa;
+    --color-back-button: darkorchid;
   }
 }
 
@@ -154,7 +157,7 @@ li>div {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 250px;
+  min-height: 300px;
 }
 
 #main,
@@ -240,14 +243,6 @@ li>div {
   transform: rotate(180deg);
 }
 
-.temporary {
-  position: relative;
-  background-color: blue;
-  width: 100%;
-  height: 100%;
-  left: 350px;
-}
-
 /* DETAILS */
 
 #details {
@@ -283,7 +278,8 @@ li>div.detail {
   grid-column: 1;
   width: 32px;
   height: 32px;
-  background-color: darkorchid;
+  /* background-color: darkorchid; */
+  background-color: var(--color-back-button);
   align-self: center;
   text-align: center;
   font-size: 1.15em;
