@@ -199,6 +199,7 @@
         if(bookmarks.length > 0){
             // TBA After design is ready
             elm.classList.add("bookmarked");
+            elm.classList.remove("bookmark-close");
             elm.setAttribute("title", "This url is already bookmarked");
         }
     }
@@ -416,7 +417,11 @@
             if(e.target.classList.contains("remove")){
                 removeTab(e, array);
             }
-            if(e.target.closest("li") && !e.target.classList.contains("remove") && !e.target.classList.contains("bookmark-close")){
+            if(e.target.closest("li") 
+                && !e.target.classList.contains("remove") 
+                && !e.target.classList.contains("bookmark-close") 
+                || e.target.classList.contains("bookmarked")){
+    
                 // switchTo tab
                 const id = parseInt(e.target.closest("li").dataset.tabId);
                 browser.tabs.update(id, {active: true});
