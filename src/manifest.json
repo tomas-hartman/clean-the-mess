@@ -2,13 +2,14 @@
 
     "manifest_version": 2,
     "name": "Clean the mess",
-    "version": "1.0",
+    "version": "1.1",
   
     "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
   
     "permissions": [
         "activeTab",
-        "tabs"
+        "tabs",
+        "bookmarks"
     ],
     
     "browser_action": {
@@ -18,7 +19,7 @@
             "32": "icons/ico-light-32.svg"
         },
         "default_title": "Clean the mess",
-        "default_popup": "src/popup/popup.html",
+        "default_popup": "popup/popup.html",
         "theme_icons": [{
             "dark": "icons/ico-light-16.svg",
             "light": "icons/ico-dark-16.svg",

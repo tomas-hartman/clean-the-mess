@@ -7,547 +7,246 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
+    <style>
+        .hidden {
+            display: unset !important;
+        }
+    </style>
 </head>
 
 <body>
-    <main id="main-container">
-        <div id="header"><span>You have <span id="open-tabs-count">43</span> opened tabs.</span></div>
+    <main id="main-container" class="" style="left: 0px;">
+        <div id="header"><span>You have <span id="open-tabs-count">37</span> opened tabs in this window.</span></div>
         <div class="separator separator-bottom"></div>
         <div id="ten-unused">
-            <span>10 longest unused tabs</span>
-            <div class="get-in">&gt;</div>
+          <span>10 longest unused tabs</span>
+          <div class="get-in"></div>
         </div>
         <div class="separator separator-bottom"></div>
-        <div id="main">
-            <ul id="list">
-                <li class="url-0" data-index-number="0">
-                    <div class="url-container">
-                        <div class="url" title="https://en.wikipedia.org">https://en.wikipedia.org</div>
-                        <div class="count">(13)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-1" data-index-number="1">
-                    <div class="url-container">
-                        <div class="url" title="https://www.facebook.com">https://www.facebook.com</div>
-                        <div class="count">(5)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-2" data-index-number="2">
-                    <div class="url-container">
-                        <div class="url" title="https://developer.mozilla.org">https://developer.mozilla.org</div>
-                        <div class="count">(4)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-3" data-index-number="3">
-                    <div class="url-container">
-                        <div class="url" title="https://github.com">https://github.com</div>
-                        <div class="count">(3)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-4" data-index-number="4">
-                    <div class="url-container">
-                        <div class="url" title="https://uloz.to">https://uloz.to</div>
-                        <div class="count">(3)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-5" data-index-number="5">
-                    <div class="url-container">
-                        <div class="url" title="https://www.w3schools.com">https://www.w3schools.com</div>
-                        <div class="count">(2)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-6" data-index-number="6">
-                    <div class="url-container">
-                        <div class="url" title="https://www.seznamzpravy.cz">https://www.seznamzpravy.cz</div>
-                        <div class="count">(2)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-7" data-index-number="7">
-                    <div class="url-container">
-                        <div class="url" title="https://denikn.cz">https://denikn.cz</div>
-                        <div class="count">(2)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-8" data-index-number="8">
-                    <div class="url-container">
-                        <div class="url" title="https://www.tccb.gov.tr">https://www.tccb.gov.tr</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-9" data-index-number="9">
-                    <div class="url-container">
-                        <div class="url" title="https://twitter.com">https://twitter.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-10" data-index-number="10">
-                    <div class="url-container">
-                        <div class="url" title="https://www.geni.com">https://www.geni.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-11" data-index-number="11">
-                    <div class="url-container">
-                        <div class="url" title="https://video.aktualne.cz">https://video.aktualne.cz</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-12" data-index-number="12">
-                    <div class="url-container">
-                        <div class="url" title="https://ct24.ceskatelevize.cz">https://ct24.ceskatelevize.cz</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-13" data-index-number="13">
-                    <div class="url-container">
-                        <div class="url" title="https://stackoverflow.com">https://stackoverflow.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-14" data-index-number="14">
-                    <div class="url-container">
-                        <div class="url" title="https://support.mozilla.org">https://support.mozilla.org</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-16" data-index-number="16">
-                    <div class="url-container">
-                        <div class="url" title="moz-extension://b847d7df-50da-42e8-9779-4ed6f4fd5cc7">
-                            moz-extension://b847d7df-50da-42e8-9779-4ed6f4fd5cc7</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-                <li class="url-15" data-index-number="15">
-                    <div class="url-container">
-                        <div class="url" title="https://translate.google.com">https://translate.google.com</div>
-                        <div class="count">(1)</div>
-                        <div class="remove" title="Close all tabs with this url">⨯</div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </main>
+        <div id="main"><ul id="list"><li class="url-0" data-index-number="0">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://developer.mozilla.org">https://developer.mozilla.org</div>
+                                      <div class="count">(6)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-1" data-index-number="1">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://stackoverflow.com">https://stackoverflow.com</div>
+                                      <div class="count">(4)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-2" data-index-number="2">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://github.com">https://github.com</div>
+                                      <div class="count">(4)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-3" data-index-number="3">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://denikn.cz">https://denikn.cz</div>
+                                      <div class="count">(3)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-4" data-index-number="4">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://www.seznam.cz">https://www.seznam.cz</div>
+                                      <div class="count">(3)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-5" data-index-number="5">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://css-tricks.com">https://css-tricks.com</div>
+                                      <div class="count">(2)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-6" data-index-number="6">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://www.novinky.cz">https://www.novinky.cz</div>
+                                      <div class="count">(2)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-7" data-index-number="7">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://www.netflix.com">https://www.netflix.com</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-8" data-index-number="8">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://manipulatori.cz">https://manipulatori.cz</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-9" data-index-number="9">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://www.idnes.cz">https://www.idnes.cz</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-10" data-index-number="10">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://slovnik.seznam.cz">https://slovnik.seznam.cz</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-11" data-index-number="11">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://www.w3schools.com">https://www.w3schools.com</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-12" data-index-number="12">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="http://typedetail.com">http://typedetail.com</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-13" data-index-number="13">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://zpravy.aktualne.cz">https://zpravy.aktualne.cz</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-14" data-index-number="14">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://ct24.ceskatelevize.cz">https://ct24.ceskatelevize.cz</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-15" data-index-number="15">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://blog.logrocket.com">https://blog.logrocket.com</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-16" data-index-number="16">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://ponyfoo.com">https://ponyfoo.com</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-17" data-index-number="17">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://www.bbc.com">https://www.bbc.com</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-18" data-index-number="18">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="https://www.lupa.cz">https://www.lupa.cz</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li><li class="url-19" data-index-number="19">
+                              <div class="url-container">
+                                  <div class="main-item-text-container">
+                                      <div class="url" title="Browser tabs">Browser tabs</div>
+                                      <div class="count">(1)</div>
+                                  </div>
+                                  <div class="item-buttons-container">
+                                      <div class="remove hidden" title="Close all tabs with this url"></div>
+                                      <div class="get-in"></div>
+                                  </div>
+                              </div>
+                          </li></ul></div>
+      </main>
     <script src="popup.js"></script>
-
-    <main id="details" style="position: absolute; height: 100%; width: 100%; margin-top: 4px;">
-        <div id="header" class="control">
-            <div class="back">&lt;</div>
-            <div class="header-title">www.seznamzpravy.cz</div>
-        </div>
-        <div class="separator separator-bottom"></div>
-        <div class="ul-container">
-            <ul>
-                <li id="item-0" class="detail" data-tab-id="560">
-                    <div class="item-container detail">
-                        <div class="title detail">Území „bez LGBT” porušuje lidská práva, protestuje polský ombudsman -
-                            Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/uzemi-bez-lgbt-porusuje-lidska-prava-protestuje-polsky-ombudsman-84512
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-1" class="detail" data-tab-id="539">
-                    <div class="item-container detail">
-                        <div class="title detail">Z&nbsp;horníka ajťákem? Dělat těžkou práci hlavou vás unaví stejně
-                            jako práce na šachtě - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/20-let-v-okd-nikdo-se-se-mnou-nechtel-bavit-vypravi-hornik-ktery-je-dnes-ajtakem-84412
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-2" class="detail" data-tab-id="438">
-                    <div class="item-container detail">
-                        <div class="title detail">Erupce sopky na Zélandu má už pět obětí. Poblíž bylo až
-                            100&nbsp;turistů - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/na-novem-zelandu-vybuchla-sopka-urady-pohresuji-neurceny-pocet-lidi-84336?dop-ab-variant=100&amp;seq-no=1&amp;source=hp&amp;utm_source=www.seznam.cz&amp;utm_medium=z-boxiku&amp;utm_campaign=null
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-3" class="detail" data-tab-id="431">
-                    <div class="item-container detail">
-                        <div class="title detail">Babiš je úplně v&nbsp;pohodě. Uložil si Agrofert k&nbsp;Monice a my mu
-                            to zaplatíme - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/babis-je-uplne-v-pohode-ulozil-si-agrofert-k-monice-a-my-mu-to-zaplatime-84333
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-4" class="detail" data-tab-id="421">
-                    <div class="item-container detail">
-                        <div class="title detail">Vrah hvězdou. Z&nbsp;Kajínka se stal estrádní bavič a značka ze
-                            sociálních sítí - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/vrah-hvezdou-z-kajinka-se-stal-estradni-bavic-83843</div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-5" class="detail" data-tab-id="406">
-                    <div class="item-container detail">
-                        <div class="title detail">Sabina Slonková: Privatizace státu. Vedlejší efekty Babišova auditu -
-                            Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/komentar-privatizace-statu-vedlejsi-efekty-babisova-auditu-83826
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-6" class="detail" data-tab-id="366">
-                    <div class="item-container detail">
-                        <div class="title detail">HRA: Vyzkoušejte si život v&nbsp;totalitě, kdy život nebyl hrou -
-                            Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/hra-vyzkousejte-si-zivot-v-totalite-kdy-zivot-nebyl-hrou-82831?dop-ab-variant=100&amp;seq-no=1&amp;source=hp
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-7" class="detail" data-tab-id="371">
-                    <div class="item-container detail">
-                        <div class="title detail">První fastfood v&nbsp;Česku uvedl rostlinnou náhražku masa. Vegetarián
-                            si ji ale asi neobjedná - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/prvni-fastfood-v-cesku-uvedl-rostlinnou-nahrazku-masa-vegetarian-si-ji-ale-asi-neobjedna-82628?seq-no=1&amp;dop-ab-variant=&amp;source=clanky-home
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-8" class="detail" data-tab-id="308">
-                    <div class="item-container detail">
-                        <div class="title detail">Poučení z&nbsp;případu O2. Jak se Petr Kellner chová k&nbsp;menšinovým
-                            akcionářům - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/pouceni-z-pripadu-o2-jak-se-petr-kellner-chova-k-mensinovym-akcionarum-81871?dop-ab-variant=17&amp;seq-no=1&amp;source=hp
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-9" class="detail" data-tab-id="288">
-                    <div class="item-container detail">
-                        <div class="title detail">Z&nbsp;Můstku tramvají přímo na Muzeum. Podívejte se, jak se změní
-                            Václavské náměstí - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/z-mustku-tramvaji-primo-na-muzeum-podivejte-se-jak-se-ma-zmenit-vaclavske-namesti-81381?dop-ab-variant=15&amp;seq-no=1&amp;source=hp
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-10" class="detail" data-tab-id="266">
-                    <div class="item-container detail">
-                        <div class="title detail">V&nbsp;Černobylu po Černobylu. Co způsobil televizní hit v&nbsp;zóně
-                            smrti - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/v-cernobylu-po-cernobylu-co-zpusobil-televizni-hit-v-zone-smrti-81127?dop-ab-variant=17&amp;seq-no=2&amp;source=hp
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-11" class="detail" data-tab-id="216">
-                    <div class="item-container detail">
-                        <div class="title detail">Filip běží o&nbsp;život. Komunisté se chtějí zbavit svého lídra: Bude
-                            to oprátka, emigrace, nebo jen vyloučení? - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/filip-bezi-o-zivot-komuniste-se-chteji-zbavit-sveho-lidra-bude-to-opratka-emigrace-nebo-jen-vylouceni-80725?seq-no=1&amp;dop-ab-variant=&amp;source=clanky-home
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-12" class="detail" data-tab-id="187">
-                    <div class="item-container detail">
-                        <div class="title detail">Trump Turecku vyklízí cestu do Sýrie. Kurdové si podle něj musí
-                            poradit sami, USA už z&nbsp;boje nic nemají - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/trump-turecku-vyklizi-cestu-do-syrie-kurdove-si-podle-nej-musi-poradit-sami-usa-uz-z-boje-nic-nemaji-80244?seq-no=2&amp;dop-ab-variant=&amp;source=clanky-home
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-13" class="detail" data-tab-id="157">
-                    <div class="item-container detail">
-                        <div class="title detail">Tisíce studentů shánějí na začátku semestru marně bydlení. Na jednu
-                            nabídku jsou až stovky zájemců - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/tisice-studentu-shaneji-na-zacatku-semestru-marne-bydleni-na-jednu-nabidku-jsou-az-stovky-zajemcu-79701?seq-no=3&amp;dop-ab-variant=&amp;source=clanky-home
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-14" class="detail" data-tab-id="101">
-                    <div class="item-container detail">
-                        <div class="title detail">Vědci našli v&nbsp;amazonském pralese největší generátor bioelektřiny
-                            na světě - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/vedci-nasli-v-amazonskem-pralese-nejvetsi-generator-bioelektriny-na-svete-78719?dop-ab-variant=17&amp;seq-no=1&amp;source=hp
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-15" class="detail" data-tab-id="85">
-                    <div class="item-container detail">
-                        <div class="title detail">Experti v&nbsp;USA varují před e-cigaretami, tři lidé už zemřeli -
-                            Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/experti-v-usa-varuji-pred-e-cigaretami-tri-lide-uz-zemreli-78553?seq-no=3&amp;dop-ab-variant=2&amp;source=article-detail
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-16" class="detail" data-tab-id="79">
-                    <div class="item-container detail">
-                        <div class="title detail">Bahamy bojují s&nbsp;následky nevšedního jevu. Hurikán Dorian se nad
-                            nimi zastavil a pustoší je přes 24&nbsp;hodin - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/bahamy-bojuji-s-nasledky-nevsedniho-jevu-hurikan-dorian-se-nad-nimi-zastavil-a-pustosi-je-pres-24-hodin-78280?dop-ab-variant=17&amp;seq-no=1&amp;source=hp
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-
-                <li id="item-17" class="detail" data-tab-id="47">
-                    <div class="item-container detail">
-                        <div class="title detail">Jak se bojuje o&nbsp;stomilionovou dotaci? I&nbsp;větou, že Česko není
-                            Německo - Seznam Zprávy</div>
-                        <div class="url detail">
-                            https://www.seznamzpravy.cz/clanek/jak-se-bojuje-o-stomilionovou-dotaci-i-vetou-ze-cesko-neni-nemecko-77661?dop-ab-variant=5&amp;seq-no=2&amp;source=hp
-                        </div>
-                        <div class="remove detail">⨯</div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </main>
+  
 </body>
 
 </html>
