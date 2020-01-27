@@ -25,25 +25,27 @@
 
 html,
 body {
-  padding: 10px;
-  background-color: var(--color-background);
-  color: var(--color-font);
-
-  font-size: 12px;
-  font-weight: 400;
   display: flex;
-  font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
   flex-direction: column;
   box-sizing: border-box;
-  cursor: default;
-  -moz-user-select: none;
-  user-select: none;
+  padding: 10px;
   margin: 0;
   padding: 0;
   max-width: 370px;
   min-width: 350px;
   width: auto;
   overflow: hidden;
+  background-color: var(--color-background);
+  color: var(--color-font);
+  
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+  font: caption;
+  
+  cursor: default;
+  user-select: none;
+  -moz-user-select: none;
 }
 
 .hidden {
