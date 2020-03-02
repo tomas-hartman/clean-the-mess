@@ -275,9 +275,8 @@ li>div.detail {
   /* margin-top: 4px; */
 }
 
-.control .back {
+.control .back, .control .close-all {
   justify-self: center;
-  grid-column: 1;
   width: 32px;
   height: 32px;
   /* background-color: darkorchid; */
@@ -295,6 +294,22 @@ li>div.detail {
 }
 
 .control .back:active {
+  background-color: var(--color-emphasis-dark);
+}
+
+.control .close-all {
+  background-color: inherit;
+  background-image: url("../icons/btn-big-remove.svg");
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.control .close-all:hover {
+  background-color: var(--color-emphasis-light);
+}
+
+.control .close-all:active {
   background-color: var(--color-emphasis-dark);
 }
 

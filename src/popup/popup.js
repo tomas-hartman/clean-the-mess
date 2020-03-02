@@ -164,17 +164,21 @@
         anchorMain.appendChild(getOverviewList(tabsOverview));
     }
 
-    const removeTabs = async (target) => {
-        const data = target.closest("li").dataset.indexNumber;
-        const id = tabsOverview[data].ids;
+    /**
+     * @todo přepsat - vykleštit closest li
+     * @param {element} target
+     * @param {*} indexNumber tabsOverview index number
+     */
+    const removeTabsFromOverview = async (indexNumber) => {
+        const id = tabsOverview[indexNumber].ids;
         if(id.length > 10) {
             if(confirm(`Are you sure you want to close ${id.length} tabs?`)){
                 await browser.tabs.remove(id);
-                refreshOverviewData(data);
+                refreshOverviewData(indexNumber);
             } else return;
         } else {
             await browser.tabs.remove(id);
-            refreshOverviewData(data);
+            refreshOverviewData(indexNumber);
         }
     }
 
@@ -204,9 +208,13 @@
         }
     }
 
-    const createSlideScreenBody = (headerTitle) => {
-        const headerDivStr = `<div id="header" class="control"><div class="back go-back" title="Back"></div>
-                        <div class="header-title">${headerTitle}</div></div>
+    const createSlideScreenBody = (headerTitle, index) => {
+        const closeAllDiv = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`;
+        const closeAll = index ? closeAllDiv : "";
+        const headerDivStr = `<div id="header" class="control">
+                                <div class="back go-back" title="Back"></div>
+                        <div class="header-title">${headerTitle}</div>
+                        ${closeAll}</div>
                         <div class="separator separator-bottom"></div>`;
         const headerDiv = document.createRange().createContextualFragment(headerDivStr);
 
@@ -353,8 +361,10 @@
     const showScreen = (target, {latestCount = 10, type = "normal"} = {}) => {
         const array = getDetailedArray(type, {count: latestCount, target: target});
         const headerTitle = getHeaderTitle(type, {count: latestCount, target: target});
-        
-        const screen = createSlideScreenBody(headerTitle);
+
+        const index = !!target.closest("li") && target.closest("li").dataset.indexNumber;
+
+        const screen = createSlideScreenBody(headerTitle, index);
         const ul = screen.querySelector("ul");
     
         // Fill in with content
@@ -426,6 +436,16 @@
                 const id = parseInt(e.target.closest("li").dataset.tabId);
                 browser.tabs.update(id, {active: true});
             }
+            if(e.target.closest(".close-all")){
+                const index = e.target.closest(".close-all").dataset.indexNumber;
+                removeTabsFromOverview(index);
+
+                // autoclose
+                refreshOverviewScreen();
+
+                document.querySelector("#details").remove();
+                document.querySelector("#main-container").style.left = "0px";
+            }
         }
         
         document.querySelector("body").appendChild(screen);
@@ -448,7 +468,8 @@
     }
     document.querySelector("#main-container").onclick = (e) => {
         if(e.target.classList.contains("remove")){
-            removeTabs(e.target);
+            const index = e.target.closest("li").dataset.indexNumber;
+            removeTabsFromOverview(index);
             console.log("Tabs removed!");
         }
         if( e.target.closest("div.url-container") && !e.target.classList.contains("remove")){
