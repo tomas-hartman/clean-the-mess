@@ -234,7 +234,7 @@
         // append: header, append: body
         // return screen;
 
-        const screenStr = `<div id="overview" class="screen"></div>`;
+        const screenStr = `<div id="${screenId}" class="screen"></div>`;
         const screen = document.createRange().createContextualFragment(screenStr);
         
         screen.firstChild.append(createHeader(screenId));
@@ -260,9 +260,9 @@
         tabsOverview = getOverview(tabs);
 
         const initialDest = document.querySelector("#main-container"); 
-        const screenId = createScreen("overview");
+        const screen = createScreen("overview");
 
-        renderScreen(screenId, initialDest);
+        renderScreen(screen, initialDest);
     }
 
     init();
