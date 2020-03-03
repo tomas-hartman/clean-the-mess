@@ -11,12 +11,8 @@
     console.log(tabs);
     const windows = await browser.windows.getAll();
     let tabsOverview = []; // fills with getOverview
-    
-    
     const anchorMain = document.querySelector("#main");
-    const anchorMainContainer = document.querySelector("#main-container")
     const anchorHeader = document.querySelector("#header");
-
     const windowStr = windows.length > 1 ? " in this window" : "";
     const openedTabsStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>`;
 
@@ -95,8 +91,9 @@
 
         return tabsOverview;
     }
+    tabsOverview = getOverview(tabs);
 
-    const createOverviewList = (tabsOverview) => {
+    const getOverviewList = (tabsOverview) => {
         const ul = document.createElement("ul");
               ul.setAttribute("id", "list");
     
@@ -122,150 +119,7 @@
         return ul;
     }
 
-    anchorMain.appendChild(createOverviewList(tabsOverview));
-
-    /**
-     * Naming convention:
-     * 
-     * render - appending and manipulating DOM
-     * create - creating DOM
-     * get - getting data
-     */
-
-    /**
-     * Returns simple separator
-     * Used in createHeader*
-     */
-    const createSeparator = () => {
-        const separatorStr = `<div class="separator separator-bottom"></div>`;
-        const separator = document.createRange().createContextualFragment(separatorStr);
-
-        return separator;
-    }
-
-    const createHeaderOverview = () => {
-        // Header title
-        const windowStr = windows.length > 1 ? " in this window" : "";
-        const headerTitleContainerStr = `<div class="header-title"></div>`;
-        const headerTitleContainer = document.createRange().createContextualFragment(headerTitleContainerStr);
-
-        const headerTitleStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>`;
-        const headerTitle = document.createRange().createContextualFragment(headerTitleStr);
-
-        headerTitleContainer.firstChild.appendChild(headerTitle);
-
-        // Header link to latest
-        const unusedStr = `<div id="ten-unused">
-                                <span>10 longest unused tabs</span>
-                                <div class="get-in"></div>
-                            </div>`;
-        const unused = document.createRange().createContextualFragment(unusedStr);
-
-        console.log(headerTitleContainer);
-
-        return [headerTitleContainer, createSeparator(), unused, createSeparator()];
-    }
-
-    /**
-     * Creates screen header component
-     * returns node
-     */
-    const createHeader = (screenId) => {
-        // <div class="header-container"><!-- Content --></div>
-        // Zde se generuje header v závislosti na typu screeny
-        // returns header;
-
-        const headerStr = `<div class="header-container"></div>`;
-        const header = document.createRange().createContextualFragment(headerStr);
-
-        let contentArr = [];
-        
-        switch (screenId) {
-            case "overview":
-                contentArr = createHeaderOverview();
-                break;
-        
-            default:
-                break;
-        }
-
-        contentArr.forEach(elm => {
-            header.firstChild.append(elm);
-        });
-
-        return header;
-    }
-
-    /**
-     * Creates screen body component (with list of items)
-     * returns node
-     */
-    const createBody = (screenId) => {
-        // <div class="body-container"><!-- Content of body component - list --></div>
-        // Zde se přidávají rendering listy k jednotlivým typům
-        // returns body;
-
-        const bodyStr = `<div class="body-container"></div>`;
-        const body = document.createRange().createContextualFragment(bodyStr);
-
-        let content = "";
-        
-        switch (screenId) {
-            case "overview":
-                content = createOverviewList(tabsOverview);
-                break;
-        
-            default:
-                break;
-        }
-
-        body.firstChild.append(content);
-
-        return body;
-    }
-
-
-    /**
-     * Creates HTML Node with screen, that can be rendered with renderScreen
-     * returns node
-     */
-    const createScreen = (screenId) => {
-        // <div id="overview" class="screen"></div>
-        // append: header, append: body
-        // return screen;
-
-        const screenStr = `<div id="overview" class="screen"></div>`;
-        const screen = document.createRange().createContextualFragment(screenStr);
-        
-        screen.firstChild.append(createHeader(screenId));
-        screen.firstChild.append(createBody(screenId));
-
-        return screen;
-    }
-
-    /**
-     * Appends `screen` (html node) to `dest`
-     */
-    const renderScreen = (screen, dest) => {
-        // appends screen to where it should be
-        // check if dest === node !!
-
-        dest.appendChild(screen);
-    }
-
-    /**
-     * Handles first run events, creates overview screen and renders it
-     */
-    const init = () => {
-        tabsOverview = getOverview(tabs);
-
-        const initialDest = document.querySelector("#main-container"); 
-        const screenId = createScreen("overview");
-
-        renderScreen(screenId, initialDest);
-    }
-
-    init();
+    anchorMain.appendChild(getOverviewList(tabsOverview));
 
     /**
      * Use only after removal!
@@ -307,7 +161,7 @@
         anchorHeader.appendChild(document.createRange().createContextualFragment(openedTabsStr));
 
         anchorMain.removeChild(anchorMain.firstChild);
-        anchorMain.appendChild(createOverviewList(tabsOverview));
+        anchorMain.appendChild(getOverviewList(tabsOverview));
     }
 
     /**

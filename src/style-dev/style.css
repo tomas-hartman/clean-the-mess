@@ -1,11 +1,13 @@
 :root {
-  --color-link-hover: #c169ffb9;
+  --color-link-hover-purple: #c169ffb9;
+  --color-link-hover: var(--color-emphasis-dark);
   --color-emphasis-dark: #d7d7dbdc;
   --color-emphasis-light: #ededf0d0;
   --color-separator: #d7d7db;
   --color-background: #ffffff;
   --color-font: #0c0c0d;
   --color-secondary-font: #737373;
+  --color-back-button: var(--color-background);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,30 +19,33 @@
     --color-background: #4a4a4f;
     --color-font: #ffffff;
     --color-secondary-font: #f9f9fa;
+    --color-back-button: darkorchid;
   }
 }
 
 html,
 body {
-  padding: 10px;
-  background-color: var(--color-background);
-  color: var(--color-font);
-
-  font-size: 12px;
-  font-weight: 400;
   display: flex;
-  font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
   flex-direction: column;
   box-sizing: border-box;
-  cursor: default;
-  -moz-user-select: none;
-  user-select: none;
+  padding: 10px;
   margin: 0;
   padding: 0;
   max-width: 370px;
   min-width: 350px;
   width: auto;
   overflow: hidden;
+  background-color: var(--color-background);
+  color: var(--color-font);
+  
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+  font: caption;
+  
+  cursor: default;
+  user-select: none;
+  -moz-user-select: none;
 }
 
 .hidden {
@@ -116,7 +121,8 @@ li>div {
 }
 
 #header>span,
-#ten-unused>span {
+#ten-unused>span,
+.header-title > span {
   padding: 4px 16px;
   display: inline-block;
   height: 20px;
@@ -154,16 +160,15 @@ li>div {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 250px;
+  min-height: 300px;
 }
 
-#main,
-.ul-container {
+#main, .body-container, .ul-container {
   overflow-y: scroll;
   overflow-y: auto;
 }
 
-#main {
+#main, .body-container {
   max-height: 500px;
   height: 100%;
 }
@@ -240,14 +245,6 @@ li>div {
   transform: rotate(180deg);
 }
 
-.temporary {
-  position: relative;
-  background-color: blue;
-  width: 100%;
-  height: 100%;
-  left: 350px;
-}
-
 /* DETAILS */
 
 #details {
@@ -278,12 +275,12 @@ li>div.detail {
   /* margin-top: 4px; */
 }
 
-.control .back {
+.control .back, .control .close-all {
   justify-self: center;
-  grid-column: 1;
   width: 32px;
   height: 32px;
-  background-color: darkorchid;
+  /* background-color: darkorchid; */
+  background-color: var(--color-back-button);
   align-self: center;
   text-align: center;
   font-size: 1.15em;
@@ -297,6 +294,22 @@ li>div.detail {
 }
 
 .control .back:active {
+  background-color: var(--color-emphasis-dark);
+}
+
+.control .close-all {
+  background-color: inherit;
+  background-image: url("../icons/btn-big-remove.svg");
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.control .close-all:hover {
+  background-color: var(--color-emphasis-light);
+}
+
+.control .close-all:active {
   background-color: var(--color-emphasis-dark);
 }
 

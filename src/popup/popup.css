@@ -121,7 +121,8 @@ li>div {
 }
 
 #header>span,
-#ten-unused>span {
+#ten-unused>span,
+.header-title > span {
   padding: 4px 16px;
   display: inline-block;
   height: 20px;
@@ -162,15 +163,18 @@ li>div {
   min-height: 300px;
 }
 
-#main,
-.ul-container {
+#main, .body-container, .ul-container {
   overflow-y: scroll;
   overflow-y: auto;
 }
 
-#main {
+#main, .body-container {
   max-height: 500px;
   height: 100%;
+}
+
+#main {
+  height: 60px;
 }
 
 .url,
