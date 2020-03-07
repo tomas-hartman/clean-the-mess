@@ -8,19 +8,10 @@
     }
 
     let tabs = await browser.tabs.query({currentWindow: true});
-    console.log(tabs);
     const windows = await browser.windows.getAll();
     let tabsOverview = []; // fills with getOverview
     
-    
-    const anchorMain = document.querySelector("#main");
-    const anchorMainContainer = document.querySelector("#main-container")
-    const anchorHeader = document.querySelector("#header");
-
-    const windowStr = windows.length > 1 ? " in this window" : "";
-    const openedTabsStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>`;
-
-    anchorHeader.appendChild(document.createRange().createContextualFragment(openedTabsStr));
+    console.log(tabs);
 
     /**
      * @todo Work on detailed and better filtered return array
@@ -97,32 +88,32 @@
     }
 
     const createOverviewList = (tabsOverview) => {
-        const ul = document.createElement("ul");
-              ul.setAttribute("id", "list");
+        return new Promise((resolve, reject) => {
+            const ul = document.createElement("ul");
+                  ul.setAttribute("id", "list");
+        
+            for(let i = 0; i < tabsOverview.length; i++){
+                let tab = tabsOverview[i];
     
-        for(let i = 0; i < tabsOverview.length; i++){
-            let tab = tabsOverview[i];
-
-            let text = `<li class="url-${i}" data-index-number="${i}">
-                            <div class="url-container">
-                                <div class="main-item-text-container">
-                                    <div class="url" title="${tab.url}">${tab.url}</div>
-                                    <div class="count">(${tab.count})</div>
+                let text = `<li class="url-${i}" data-index-number="${i}">
+                                <div class="url-container">
+                                    <div class="main-item-text-container">
+                                        <div class="url" title="${tab.url}">${tab.url}</div>
+                                        <div class="count">(${tab.count})</div>
+                                    </div>
+                                    <div class="item-buttons-container">
+                                        <div class="get-in"></div>
+                                        <div class="remove hidden" title="Close all tabs with this url"></div>
+                                    </div>
                                 </div>
-                                <div class="item-buttons-container">
-                                    <div class="get-in"></div>
-                                    <div class="remove hidden" title="Close all tabs with this url"></div>
-                                </div>
-                            </div>
-                        </li>`;
-            
-            ul.appendChild(document.createRange().createContextualFragment(text));
-        }
+                            </li>`;
+                
+                ul.appendChild(document.createRange().createContextualFragment(text));
+            }
 
-        return ul;
+            resolve(ul);
+        });
     }
-
-    anchorMain.appendChild(createOverviewList(tabsOverview));
 
     /**
      * Naming convention:
@@ -200,7 +191,7 @@
      * Creates screen body component (with list of items)
      * returns node
      */
-    const createBody = (screenId) => {
+    const createBody = async (screenId) => {
         // <div class="body-container"><!-- Content of body component - list --></div>
         // Zde se přidávají rendering listy k jednotlivým typům
         // returns body;
@@ -212,7 +203,7 @@
         
         switch (screenId) {
             case "overview":
-                content = createOverviewList(tabsOverview);
+                content = await createOverviewList(tabsOverview);
                 break;
         
             default:
@@ -229,7 +220,7 @@
      * Creates HTML Node with screen, that can be rendered with renderScreen
      * returns node
      */
-    const createScreen = (screenId) => {
+    const createScreen = async (screenId) => {
         // <div id="overview" class="screen"></div>
         // append: header, append: body
         // return screen;
@@ -237,14 +228,25 @@
         const screenStr = `<div id="${screenId}" class="screen"></div>`;
         const screen = document.createRange().createContextualFragment(screenStr);
         
-        screen.firstChild.append(createHeader(screenId));
-        screen.firstChild.append(createBody(screenId));
+        const header = createHeader(screenId);
+        const body = await createBody(screenId);
+
+        screen.firstChild.append(header);
+        screen.firstChild.append(body);
 
         return screen;
     }
 
     /**
+     * .slide-out -> div#overview
+     * .slide-in -> #details
+     * .slide-out -> position: relative
+     */
+
+    /**
      * Appends `screen` (html node) to `dest`
+     * @param {HTML Node} screen Node created by createScreen()
+     * @param {HTML Node} dest Node found by querySelector
      */
     const renderScreen = (screen, dest) => {
         // appends screen to where it should be
@@ -256,11 +258,11 @@
     /**
      * Handles first run events, creates overview screen and renders it
      */
-    const init = () => {
+    const init = async () => {
         tabsOverview = getOverview(tabs);
 
         const initialDest = document.querySelector("#main-container"); 
-        const screen = createScreen("overview");
+        const screen = await createScreen("overview");
 
         renderScreen(screen, initialDest);
     }
@@ -276,38 +278,49 @@
         let currentTabsNum = parseInt(document.querySelector("#open-tabs-count").innerText);
         let tabsNum = tabsOverview[data].ids.length;
         let newTabsNum = currentTabsNum - tabsNum;
-        const openedTabsStr = `<span>You have <span id="open-tabs-count">${newTabsNum}</span> opened tabs${windowStr}.</span>`
+
+        refreshOpenTabsCount(newTabsNum);
 
         document.querySelector(`li.url-${data}`).remove();
+    }
 
-        anchorHeader.firstChild.remove();
-        anchorHeader.appendChild(document.createRange().createContextualFragment(openedTabsStr));
+    /**
+     * Změní číslo v headeru
+     * @param {number} newCount 
+     */
+    const refreshOpenTabsCount = (newCount) => {
+        const span = document.querySelector("#open-tabs-count");
+        span.innerText = newCount;
     }
 
     /**
      * Use only after details to overview transition (pressing back button)
      */
     const refreshOverviewScreen = async ({ deletedId } = {}) => {
-        document.querySelector("#main-container").classList.add("slide-in-reverse");
+        document.querySelector("#overview").classList.add("slide-in-reverse");
         document.querySelector("#details").classList.add("slide-out-reverse");
-        
+
         document.addEventListener("transitionend", () => {
-            document.querySelector("#main-container").classList = "";
+            // @todo which class I remove?
+            document.querySelector("#overview").classList = "";
         }, { once: true });
 
         if(deletedId) tabs.splice(tabs.findIndex(tab => tab.id === deletedId), 1);
 
-        // tabs.remove() is async
         tabs = await browser.tabs.query({currentWindow: true});
         tabsOverview = getOverview(tabs);
 
-        const openedTabsStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>`
+        const newBodyContainer = await createBody("overview");
 
-        anchorHeader.firstChild.remove();
-        anchorHeader.appendChild(document.createRange().createContextualFragment(openedTabsStr));
+        refreshOpenTabsCount(tabs.length);
 
-        anchorMain.removeChild(anchorMain.firstChild);
-        anchorMain.appendChild(createOverviewList(tabsOverview));
+        document.querySelector(".body-container").remove();
+        document.querySelector("#overview").appendChild(newBodyContainer);
+
+        // autoclose function
+        // document.querySelector(".screen").remove();
+        document.querySelector("#details").remove();
+        document.querySelector("#main-container").style.left = "0px";
     }
 
     /**
@@ -367,8 +380,9 @@
                         <div class="separator separator-bottom"></div>`;
         const headerDiv = document.createRange().createContextualFragment(headerDivStr);
 
-        const mainDetailsDiv = document.createElement("main");
+        const mainDetailsDiv = document.createElement("div");
               mainDetailsDiv.setAttribute("id", "details");
+              mainDetailsDiv.setAttribute("class", "screen");
               mainDetailsDiv.appendChild(headerDiv);
 
         const ul = document.createElement("ul");
@@ -424,20 +438,14 @@
         // autoclose
         if(autoclose && array.length === 0){
             refreshOverviewScreen({ deletedId: id });
-
-            document.querySelector("#details").remove();
-            document.querySelector("#main-container").style.left = "0px";
         }
     }
-
+    
     /**
      * Closes opened screen
      */
     const closeScreen = () => {
         refreshOverviewScreen();
-
-        document.querySelector("#details").remove();
-        document.querySelector("#main-container").style.left = "0px";
     }
 
     /**
@@ -591,13 +599,12 @@
 
                 // autoclose
                 refreshOverviewScreen();
-
-                document.querySelector("#details").remove();
-                document.querySelector("#main-container").style.left = "0px";
             }
         }
         
-        document.querySelector("body").appendChild(screen);
+        const destination = document.querySelector("#main-container");
+        renderScreen(screen, destination);
+        // document.querySelector("#main-container").appendChild(screen);
     }
 
     document.querySelector("#main-container").onmouseover = (e) => {
@@ -630,7 +637,7 @@
                     resolve();
                 }, 10);
             }).then(() => {
-                document.querySelector("#main-container").classList.add("slide-out");
+                document.querySelector("#overview").classList.add("slide-out");
                 document.querySelector("#details").classList.add("slide-in");
             });
 
@@ -644,7 +651,7 @@
                     resolve();
                 }, 10);
             }).then(() => {
-                document.querySelector("#main-container").classList.add("slide-out");
+                document.querySelector("#overview").classList.add("slide-out");
                 document.querySelector("#details").classList.add("slide-in");
             });
         }
