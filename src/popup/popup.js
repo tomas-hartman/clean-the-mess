@@ -216,7 +216,7 @@
                 contentArr = createHeaderScreen(index, screenId);
                 break;
             case "latest":
-                contentArr = ["ahoj"];
+                contentArr = createHeaderScreen(index, screenId);
                 break;
             default:
                 break;
@@ -245,6 +245,53 @@
         return header;
     }
 
+    const setListenersScreen = (node) => {
+        node.onmouseover = (e) => {
+            // not only .detail, but also .latest
+            if(e.target.closest("li.detail")){
+    
+                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+                parentElm.children[0].classList.remove("hidden");
+                parentElm.children[1].classList.remove("hidden");
+                parentElm.children[2].classList.add("hidden");
+            }
+        }
+        node.onmouseout = (e) => {
+            if(e.target.closest("li.detail")){
+    
+                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+                parentElm.children[0].classList.add("hidden");
+                parentElm.children[1].classList.add("hidden");
+                parentElm.children[2].classList.remove("hidden");
+            }
+        }
+
+        node.onclick = (e) => {
+            if(e.target.classList.contains("bookmark-close")){
+                // bookmark & remove tab
+                const id = parseInt(e.target.closest("li").dataset.tabId);
+                const arrItem = (array.filter(item => item.id === id))[0];
+                const url = arrItem.url;
+                const title = arrItem.title;
+
+                bookmarkTab(url, title, id);
+                removeTab(e, array);
+            }
+            if(e.target.classList.contains("remove")){
+                removeTab(e, array);
+            }
+            if(e.target.closest("li") 
+                && !e.target.classList.contains("remove") 
+                && !e.target.classList.contains("bookmark-close") 
+                || e.target.classList.contains("bookmarked")){
+    
+                // switchTo tab
+                const id = parseInt(e.target.closest("li").dataset.tabId);
+                browser.tabs.update(id, {active: true});
+            }
+        }
+    }
+
     /**
      * Creates screen body component (with list of items)
      * returns node
@@ -264,14 +311,16 @@
         switch (screenId) {
             case "overview":
                 content = await createOverviewList(tabsOverview);
+                // setListenersOverview(content);
                 break;
             case "details":
                 // TODO
                 content = await createList(screenId, index);
+                setListenersScreen(content);
                 break;
             case "latest":
                 // TODO
-                content = await createOverviewList(tabsOverview);
+                content = await createList(screenId, index);
                 break;
         
             default:
@@ -281,7 +330,6 @@
         body.firstChild.append(content);
 
         // listeners
-        // TODO
 
         return body;
     }
@@ -371,7 +419,7 @@
      */
     const refreshOverviewScreen = async ({ deletedId } = {}) => {
         document.querySelector("#overview").classList.add("slide-in-reverse");
-        document.querySelector("#details").classList.add("slide-out-reverse");
+        document.querySelector(".screen:not(#overview)").classList.add("slide-out-reverse");
 
         document.addEventListener("transitionend", () => {
             // @todo which class I remove?
@@ -391,8 +439,7 @@
         document.querySelector("#overview").appendChild(newBodyContainer);
 
         // autoclose function
-        // document.querySelector(".screen").remove();
-        document.querySelector("#details").remove();
+        document.querySelector(".screen:not(#overview)").remove();
         document.querySelector("#main-container").style.left = "0px";
     }
 
@@ -441,36 +488,6 @@
             elm.classList.remove("bookmark-close");
             elm.setAttribute("title", "This url is already bookmarked");
         }
-    }
-
-    /* 
-    New: createSlideScreebBody = (header)
-    */
-    const createSlideScreenBody = (headerTitle, index) => {
-        // const closeAllDiv = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`;
-        // const closeAll = index ? closeAllDiv : "";
-        // const headerDivStr = `<div id="header" class="control">
-        //                         <div class="back go-back" title="Back"></div>
-        //                 <div class="header-title">${headerTitle}</div>
-        //                 ${closeAll}</div>
-        //                 <div class="separator separator-bottom"></div>`;
-        // const headerDiv = document.createRange().createContextualFragment(headerDivStr);
-
-        // const mainDetailsDiv = document.createElement("div");
-        //       mainDetailsDiv.setAttribute("id", "details");
-        //       mainDetailsDiv.setAttribute("class", "screen");
-        //       mainDetailsDiv.appendChild(headerDiv);
-
-        // const ul = document.createElement("ul");
-        // const ulContainer = document.createElement("div");
-        //       ulContainer.classList.add("ul-container");
-
-        // ulContainer.appendChild(ul);
-        // mainDetailsDiv.appendChild(ulContainer);
-
-        // console.log(mainDetailsDiv);
-
-        // return mainDetailsDiv;
     }
 
     const bookmarkTab = async (url, title, id) => {
@@ -526,30 +543,8 @@
         refreshOverviewScreen();
     }
 
-    /**
-     * Returns headerTitle for secondary screens
-     * @param {string} type normal | latest | ??? 
-     * @param {*} param1 
-     * @returns {string} headerTitle
-     */
-    const _getHeaderTitle = (type, {target, count} = {}) => {
-        let headerTitle = "";
-        if(type === "details" && target){
-            try {
-                headerTitle = (new URL(target.querySelector('.url').innerText)).host;
-            } catch (error) {
-                headerTitle = target.querySelector('.url').innerText;
-            }
-        } else if (type === "latest" && count) {
-            headerTitle = `${count} longest unused tabs`;
-        } else {
-            console.log("Error: got wrong params on getHeaderTitle()");
-        }
-
-        return headerTitle;
-    }
-
     // NEW
+    // Returns headerTitle for secondary screens
     const getHeaderTitle = (id, type) => {
         let headerTitle = "";
 
@@ -606,11 +601,14 @@
         }
     }
 
-
+    /**
+     * Main function for generating secondary screens
+     * Replaces showScreen which replaced showLatestDisplayed() and showDetailedScreen()
+     * @param {string} type 
+     * @param {number} index 
+     * @returns {node} ul
+     */
     const createList = (type, index) => {
-
-        console.log(index);
-
         const array = getDetailedArray(type, {count: latestShownCount, index});
         const ul = document.createElement("ul");
 
@@ -640,116 +638,18 @@
         return ul;
     }
 
-     /**
-      * Main function for generating secondary screens
-      * Replaces showLatestDisplayed() and showDetailedScreen()
-      * @param {DOM target} target 
-      * @param {number} [latestCount = 10] Number of latest shown
-      * @param {string} [type = "normal"] normal | latest | ??? 
-      */
-    const _showScreen = (target, {latestCount = 10, type = "normal"} = {}) => {
-        const array = getDetailedArray(type, {count: latestCount, target: target});
-        const headerTitle = _getHeaderTitle(type, {count: latestCount, target: target});
-
-        const index = !!target.closest("li") && target.closest("li").dataset.indexNumber;
-
-        const screen = createSlideScreenBody(headerTitle, index);
-        const ul = screen.querySelector("ul");
-    
-        // Fill in with content
-        for(let i=0; i < array.length; i++){
-            const text = `
-            <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
-                <div class="item-container detail">
-                    <div class="item-text-container">
-                        <div class="title detail" title="${array[i].title}">${array[i].title}</div>
-                        <div class="url detail ${setClass(type, "url")}" title="${array[i].url}">${array[i].url}</div>
-                        <div class="last-displayed detail ${setClass(type, "lastDisplayed")}" title="${array[i].date}">${array[i].date}</div>
-                    </div>
-                    <div class="item-buttons-container">
-                        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
-                        <div class="remove detail hidden" title="Close tab"></div>
-                        <div class="get-in"></div>
-                    </div>
-                </div>
-            </li>
-            `;
-
-            ul.appendChild(document.createRange().createContextualFragment(text));
-            addBookmarkStatus(array[i]);
-        }
-
-        // Set up events
-        screen.onmouseover = (e) => {
-            if(e.target.closest("li")){
-    
-                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
-                parentElm.children[0].classList.remove("hidden");
-                parentElm.children[1].classList.remove("hidden");
-                parentElm.children[2].classList.add("hidden");
-            }
-        }
-        screen.onmouseout = (e) => {
-            if(e.target.closest("li")){
-    
-                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
-                parentElm.children[0].classList.add("hidden");
-                parentElm.children[1].classList.add("hidden");
-                parentElm.children[2].classList.remove("hidden");
-            }
-        }
-
-        screen.onclick = (e) => {
-            // if(e.target.classList.contains("back")){
-            //     closeScreen();
-            // }
-            if(e.target.classList.contains("bookmark-close")){
-                // bookmark & remove tab
-                const id = parseInt(e.target.closest("li").dataset.tabId);
-                const arrItem = (array.filter(item => item.id === id))[0];
-                const url = arrItem.url;
-                const title = arrItem.title;
-
-                bookmarkTab(url, title, id);
-                removeTab(e, array);
-            }
-            if(e.target.classList.contains("remove")){
-                removeTab(e, array);
-            }
-            if(e.target.closest("li") 
-                && !e.target.classList.contains("remove") 
-                && !e.target.classList.contains("bookmark-close") 
-                || e.target.classList.contains("bookmarked")){
-    
-                // switchTo tab
-                const id = parseInt(e.target.closest("li").dataset.tabId);
-                browser.tabs.update(id, {active: true});
-            }
-            // if(e.target.closest(".close-all")){
-            //     const index = e.target.closest(".close-all").dataset.indexNumber;
-            //     removeTabsFromOverview(index);
-
-            //     // autoclose
-            //     refreshOverviewScreen();
-            // }
-        }
-        
-        const destination = document.querySelector("#main-container");
-        renderScreen(screen, destination);
-        // document.querySelector("#main-container").appendChild(screen);
-    }
-
     // LISTENERS
     // @todo rewrite
+    // Fungují pro overview! => setListenersOverview()
     document.querySelector("#main-container").onmouseover = (e) => {
-        if(e.target.closest("li")){
+        if(e.target.closest("#overview li")){
 
             const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
             parentElm.children[1].classList.remove("hidden");
         }
     }
     document.querySelector("#main-container").onmouseout = (e) => {
-        if(e.target.closest("li")){
+        if(e.target.closest("#overview li")){
 
             const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
             parentElm.children[0].classList.remove("hidden");
@@ -781,7 +681,7 @@
                 }, 10);
             }).then(() => {
                 document.querySelector("#overview").classList.add("slide-out");
-                document.querySelector("#details").classList.add("slide-in");
+                document.querySelector(".screen:not(#overview)").classList.add("slide-in");
             });
 
             console.log("clicked");
@@ -792,15 +692,13 @@
             const dest = document.querySelector("#main-container");
             renderScreen(screen, dest);
 
-            // _showScreen(e.target, {type: "latest"});
-
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve();
                 }, 10);
             }).then(() => {
                 document.querySelector("#overview").classList.add("slide-out");
-                document.querySelector("#details").classList.add("slide-in");
+                document.querySelector(".screen:not(#overview)").classList.add("slide-in");
             });
         }
     }
