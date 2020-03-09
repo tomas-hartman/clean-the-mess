@@ -191,18 +191,19 @@
     }
 
     /**
-     * Creates screen header component
+     * 
      * returns node
      */
+    
+    /**
+     * Creates screen header component
+     * 
+     * @param {string} screenId 
+     * @param {object} props 
+     * @returns {node} <div class="header-container"><!-- Content --></div>
+     */
     const createHeader = (screenId, props = {}) => {
-        // <div class="header-container"><!-- Content --></div>
-        // Zde se generuje header v závislosti na typu screeny
-        // returns header;
-
         let  { index } = props;
-
-        console.log(index);
-
         const headerStr = `<div class="header-container"></div>`;
         const header = document.createRange().createContextualFragment(headerStr);
 
@@ -226,28 +227,79 @@
             header.firstChild.append(elm);
         });
 
-        // listeners!
-        header.firstChild.onclick = (e) => {
-            if(e.target.classList.contains("back")){
-                closeScreen();
-            }
-            if(e.target.closest(".close-all") && index){
-                // const index = e.target.closest(".close-all").dataset.indexNumber;
-                removeTabsFromOverview(index);
-
-                // autoclose
-                refreshOverviewScreen();
-            }
-        }
+        setListenersHeader(header, index);
 
         return header;
     }
 
-    const setListenersScreen = (node) => {
-        const array = tabs;
+    const setListenersHeader = (header, index) => {
+        header.firstChild.onclick = async (e) => {
+            if(e.target.classList.contains("back")){
+                closeScreen();
+            }
+            if(e.target.closest(".close-all") && index){
+                removeTabsFromOverview(index);
 
+                refreshOverviewScreen(); // autoclose
+            }
+            if(e.target.closest("#ten-unused")){
+                const screen = await createScreen("latest");
+                const dest = document.querySelector("#main-container");
+                renderScreen(screen, dest);
+    
+                playTransition();
+            }
+        }
+    }
+
+    const setListenersOverview = (node) => {
         node.onmouseover = (e) => {
-            // not only .detail, but also .latest
+            if(e.target.closest("#overview li")){
+    
+                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+                parentElm.children[1].classList.remove("hidden");
+            }
+        }
+        node.onmouseout = (e) => {
+            if(e.target.closest("#overview li")){
+    
+                const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
+                parentElm.children[0].classList.remove("hidden");
+                parentElm.children[1].classList.add("hidden");
+            }
+        }
+
+        node.onclick = async (e) => {
+            if(e.target.classList.contains("remove")){
+                const index = e.target.closest("li").dataset.indexNumber;
+                removeTabsFromOverview(index);
+                console.log("Tabs removed!");
+            }
+            if( !!e.target.closest(".overview-item") && !e.target.classList.contains("remove")){
+                const index = parseInt(e.target.closest("li").dataset.indexNumber);
+
+                const screen = await createScreen("details", { index });
+                const dest = document.querySelector("#main-container");
+                renderScreen(screen, dest);
+
+                playTransition();
+            }
+        }
+    }
+
+    const playTransition = () => {
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, 10);
+        }).then(() => {
+            document.querySelector("#overview").classList.add("slide-out");
+            document.querySelector(".screen:not(#overview)").classList.add("slide-in");
+        });
+    }
+
+    const setListenersScreen = (node, array) => {
+        node.onmouseover = (e) => {
             if(e.target.closest("li.detail")){
     
                 const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
@@ -294,59 +346,57 @@
     }
 
     /**
-     * Creates screen body component (with list of items)
+     * 
      * returns node
      */
+
+    /**
+     * Creates screen body component (with list of items). Adds list of items to container and returns it, based on its type.
+     * 
+     * @param {string} screenId 
+     * @param {object} props
+     * @returns {node} <div class="body-container"><!-- Content of body component - ul --></div>
+     */
     const createBody = async (screenId, props = {}) => {
-        // <div class="body-container"><!-- Content of body component - list --></div>
-        // Zde se přidávají rendering listy k jednotlivým typům
-        // returns body;
-
         let { index } = props;
-
         const bodyStr = `<div class="body-container"></div>`;
         const body = document.createRange().createContextualFragment(bodyStr);
 
         let content = "";
+        let dataArr = [];
         
         switch (screenId) {
             case "overview":
                 content = await createOverviewList(tabsOverview);
-                // setListenersOverview(content);
+                setListenersOverview(content);
                 break;
             case "details":
-                // TODO
-                content = await createList(screenId, index);
-                setListenersScreen(content);
-                break;
             case "latest":
-                // TODO
-                content = await createList(screenId, index);
+                dataArr = getDetailedArray(screenId, {count: latestShownCount, index});
+                content = await createList(screenId, dataArr);
+                setListenersScreen(content, dataArr);
                 break;
         
             default:
+                console.error("Error: body element couldn't be created.");
                 break;
         }
 
         body.firstChild.append(content);
-
-        // listeners
 
         return body;
     }
 
 
     /**
-     * Creates HTML Node with screen, that can be rendered with renderScreen
-     * returns node
+     * Creates HTML Node with screen, filled with header and body.
+     * Screen can be rendered with renderScreen.
+     * 
+     * @param {string} screenId 'overview', 'details', 'latest'
+     * @param {obj} props optional properties such as index number etc.
+     * @returns {node} <div id="overview" class="screen"> header + body </div>
      */
     const createScreen = async (screenId, props = {}) => {
-        // <div id="overview" class="screen"></div>
-        // append: header, append: body
-        // return screen;
-
-        console.log(props);
-
         const screenStr = `<div id="${screenId}" class="screen"></div>`;
         const screen = document.createRange().createContextualFragment(screenStr);
         
@@ -360,19 +410,13 @@
     }
 
     /**
-     * .slide-out -> div#overview
-     * .slide-in -> #details
-     * .slide-out -> position: relative
-     */
-
-    /**
      * Appends `screen` (html node) to `dest`
+     * 
      * @param {HTML Node} screen Node created by createScreen()
      * @param {HTML Node} dest Node found by querySelector
      */
     const renderScreen = (screen, dest) => {
-        // appends screen to where it should be
-        // check if dest === node !!
+        // @todo check if dest === node !!
 
         dest.appendChild(screen);
     }
@@ -407,7 +451,7 @@
     }
 
     /**
-     * Změní číslo v headeru
+     * Changes tabs count in header
      * @param {number} newCount 
      */
     const refreshOpenTabsCount = (newCount) => {
@@ -423,8 +467,7 @@
         document.querySelector(".screen:not(#overview)").classList.add("slide-out-reverse");
 
         document.addEventListener("transitionend", () => {
-            // @todo which class I remove? -- reálně mě to zbaví classy .screen, ale funguje to ok
-            document.querySelector("#overview").classList = "";
+            document.querySelector("#overview").classList = "screen";
         }, { once: true });
 
         if(deletedId) tabs.splice(tabs.findIndex(tab => tab.id === deletedId), 1);
@@ -445,7 +488,6 @@
     }
 
     /**
-     * @todo přepsat - vykleštit closest li
      * @param {element} target
      * @param {*} indexNumber tabsOverview index number
      */
@@ -463,10 +505,6 @@
     }
 
     const getDetailsArray = (index) => {
-        // const index = target.closest("li").dataset.indexNumber;
-
-        console.log(index);
-
         const ids = tabsOverview[index].ids;
         let array = [];
 
@@ -484,7 +522,6 @@
         const elm = document.querySelector(`li[data-tab-id='${item.id}'] .bookmark`);
 
         if(bookmarks.length > 0){
-            // TBA After design is ready
             elm.classList.add("bookmarked");
             elm.classList.remove("bookmark-close");
             elm.setAttribute("title", "This url is already bookmarked");
@@ -544,7 +581,6 @@
         refreshOverviewScreen();
     }
 
-    // NEW
     // Returns headerTitle for secondary screens
     const getHeaderTitle = (id, type) => {
         let headerTitle = "";
@@ -566,7 +602,7 @@
     /**
      * Returns sorted/reduced array for detailed secondary screens
      * @param {string} type normal | latest | ??? 
-     * @param {*} param1 
+     * @param {*} props 
      */
     const getDetailedArray = (type, props = {}) => {
         let { count, index } = props;
@@ -603,14 +639,12 @@
     }
 
     /**
-     * Main function for generating secondary screens
+     * Main function for generating secondary screen lists
      * Replaces showScreen which replaced showLatestDisplayed() and showDetailedScreen()
      * @param {string} type 
-     * @param {number} index 
      * @returns {node} ul
      */
-    const createList = (type, index) => {
-        const array = getDetailedArray(type, {count: latestShownCount, index});
+    const createList = (type, array) => {
         const ul = document.createElement("ul");
 
         // Fill in with content
@@ -637,70 +671,5 @@
         }
 
         return ul;
-    }
-
-    // LISTENERS
-    // @todo rewrite
-    // Fungují pro overview! => setListenersOverview()
-    document.querySelector("#main-container").onmouseover = (e) => {
-        if(e.target.closest("#overview li")){
-
-            const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
-            parentElm.children[1].classList.remove("hidden");
-        }
-    }
-    document.querySelector("#main-container").onmouseout = (e) => {
-        if(e.target.closest("#overview li")){
-
-            const parentElm = e.target.closest("li").querySelector(".item-buttons-container");
-            parentElm.children[0].classList.remove("hidden");
-            parentElm.children[1].classList.add("hidden");
-        }
-    }
-    document.querySelector("#main-container").onclick = async (e) => {
-        if(e.target.classList.contains("remove")){
-            const index = e.target.closest("li").dataset.indexNumber;
-            removeTabsFromOverview(index);
-            console.log("Tabs removed!");
-        }
-        if( !!e.target.closest(".overview-item") && !e.target.classList.contains("remove")){
-            const target = e.target.closest("div.url-container");
-
-            const index = parseInt(e.target.closest("li").dataset.indexNumber);
-            console.log(index);
-
-            // new way
-            const screen = await createScreen("details", { index });
-            const dest = document.querySelector("#main-container");
-            renderScreen(screen, dest);
-
-            // showScreen(target, {type: "normal"}); // old way
-
-            new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve();
-                }, 10);
-            }).then(() => {
-                document.querySelector("#overview").classList.add("slide-out");
-                document.querySelector(".screen:not(#overview)").classList.add("slide-in");
-            });
-
-            console.log("clicked");
-        }
-        if(e.target.closest("#ten-unused")){
-            // new way
-            const screen = await createScreen("latest");
-            const dest = document.querySelector("#main-container");
-            renderScreen(screen, dest);
-
-            new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve();
-                }, 10);
-            }).then(() => {
-                document.querySelector("#overview").classList.add("slide-out");
-                document.querySelector(".screen:not(#overview)").classList.add("slide-in");
-            });
-        }
     }
 })();
