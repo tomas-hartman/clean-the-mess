@@ -240,12 +240,12 @@
             }
         }
 
-
-
         return header;
     }
 
     const setListenersScreen = (node) => {
+        const array = tabs;
+
         node.onmouseover = (e) => {
             // not only .detail, but also .latest
             if(e.target.closest("li.detail")){
@@ -256,6 +256,7 @@
                 parentElm.children[2].classList.add("hidden");
             }
         }
+
         node.onmouseout = (e) => {
             if(e.target.closest("li.detail")){
     
@@ -422,7 +423,7 @@
         document.querySelector(".screen:not(#overview)").classList.add("slide-out-reverse");
 
         document.addEventListener("transitionend", () => {
-            // @todo which class I remove?
+            // @todo which class I remove? -- reálně mě to zbaví classy .screen, ale funguje to ok
             document.querySelector("#overview").classList = "";
         }, { once: true });
 
