@@ -10,6 +10,7 @@
     let tabs = await browser.tabs.query({currentWindow: true});
     const windows = await browser.windows.getAll();
     let tabsOverview = []; // fills with getOverview
+    const latestShownCount = 10;
     
     console.log(tabs);
 
@@ -87,6 +88,11 @@
         return tabsOverview;
     }
 
+    /**
+     * Creates overview list
+     * @param {array} tabsOverview 
+     * @returns {node} ul#list > li.overview-item*n
+     */
     const createOverviewList = (tabsOverview) => {
         return new Promise((resolve, reject) => {
             const ul = document.createElement("ul");
@@ -95,7 +101,7 @@
             for(let i = 0; i < tabsOverview.length; i++){
                 let tab = tabsOverview[i];
     
-                let text = `<li class="url-${i}" data-index-number="${i}">
+                let text = `<li class="url-${i} overview-item" data-index-number="${i}">
                                 <div class="url-container">
                                     <div class="main-item-text-container">
                                         <div class="url" title="${tab.url}">${tab.url}</div>
@@ -124,7 +130,7 @@
      */
 
     /**
-     * Returns simple separator
+     * Returns simple separator node
      * Used in createHeader*
      */
     const createSeparator = () => {
@@ -132,6 +138,35 @@
         const separator = document.createRange().createContextualFragment(separatorStr);
 
         return separator;
+    }
+
+    /**
+     * Creates header for "latest" and "details"
+     * @param {number} index id number from __tabsOverview__ array
+     * @param {string} type 'latest' or 'details'
+     */
+    const createHeaderScreen = (index = null, type) => {
+        // components: back button, title, ?closeAll, ?search
+
+        const headerTitle = getHeaderTitle(index, type);
+
+        const backBtnStr = `<div class="back go-back" title="Back"></div>`;
+        const headerTitleDivStr = `<div class="header-title">${headerTitle}</div>`;
+        const closeAllDivStr = type !== "latest" ? `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>` : "";
+        const separator = createSeparator(); // node!
+
+        const headerDivStr = `
+            <div id="header" class="control">
+                ${backBtnStr}
+                ${headerTitleDivStr}
+                ${closeAllDivStr}
+            </div>
+        `;
+
+        const headerDiv = document.createRange().createContextualFragment(headerDivStr);
+        const header = [headerDiv, separator];
+
+        return header;
     }
 
     const createHeaderOverview = () => {
@@ -152,8 +187,6 @@
                             </div>`;
         const unused = document.createRange().createContextualFragment(unusedStr);
 
-        console.log(headerTitleContainer);
-
         return [headerTitleContainer, createSeparator(), unused, createSeparator()];
     }
 
@@ -161,10 +194,14 @@
      * Creates screen header component
      * returns node
      */
-    const createHeader = (screenId) => {
+    const createHeader = (screenId, props = {}) => {
         // <div class="header-container"><!-- Content --></div>
         // Zde se generuje header v závislosti na typu screeny
         // returns header;
+
+        let  { index } = props;
+
+        console.log(index);
 
         const headerStr = `<div class="header-container"></div>`;
         const header = document.createRange().createContextualFragment(headerStr);
@@ -175,7 +212,12 @@
             case "overview":
                 contentArr = createHeaderOverview();
                 break;
-        
+            case "details":
+                contentArr = createHeaderScreen(index, screenId);
+                break;
+            case "latest":
+                contentArr = ["ahoj"];
+                break;
             default:
                 break;
         }
@@ -184,6 +226,22 @@
             header.firstChild.append(elm);
         });
 
+        // listeners!
+        header.firstChild.onclick = (e) => {
+            if(e.target.classList.contains("back")){
+                closeScreen();
+            }
+            if(e.target.closest(".close-all") && index){
+                // const index = e.target.closest(".close-all").dataset.indexNumber;
+                removeTabsFromOverview(index);
+
+                // autoclose
+                refreshOverviewScreen();
+            }
+        }
+
+
+
         return header;
     }
 
@@ -191,10 +249,12 @@
      * Creates screen body component (with list of items)
      * returns node
      */
-    const createBody = async (screenId) => {
+    const createBody = async (screenId, props = {}) => {
         // <div class="body-container"><!-- Content of body component - list --></div>
         // Zde se přidávají rendering listy k jednotlivým typům
         // returns body;
+
+        let { index } = props;
 
         const bodyStr = `<div class="body-container"></div>`;
         const body = document.createRange().createContextualFragment(bodyStr);
@@ -205,12 +265,23 @@
             case "overview":
                 content = await createOverviewList(tabsOverview);
                 break;
+            case "details":
+                // TODO
+                content = await createList(screenId, index);
+                break;
+            case "latest":
+                // TODO
+                content = await createOverviewList(tabsOverview);
+                break;
         
             default:
                 break;
         }
 
         body.firstChild.append(content);
+
+        // listeners
+        // TODO
 
         return body;
     }
@@ -220,16 +291,18 @@
      * Creates HTML Node with screen, that can be rendered with renderScreen
      * returns node
      */
-    const createScreen = async (screenId) => {
+    const createScreen = async (screenId, props = {}) => {
         // <div id="overview" class="screen"></div>
         // append: header, append: body
         // return screen;
 
+        console.log(props);
+
         const screenStr = `<div id="${screenId}" class="screen"></div>`;
         const screen = document.createRange().createContextualFragment(screenStr);
         
-        const header = createHeader(screenId);
-        const body = await createBody(screenId);
+        const header = createHeader(screenId, props);
+        const body = await createBody(screenId, props);
 
         screen.firstChild.append(header);
         screen.firstChild.append(body);
@@ -341,8 +414,11 @@
         }
     }
 
-    const getDetailsArray = (target) => {
-        const index = target.closest("li").dataset.indexNumber;
+    const getDetailsArray = (index) => {
+        // const index = target.closest("li").dataset.indexNumber;
+
+        console.log(index);
+
         const ids = tabsOverview[index].ids;
         let array = [];
 
@@ -371,28 +447,30 @@
     New: createSlideScreebBody = (header)
     */
     const createSlideScreenBody = (headerTitle, index) => {
-        const closeAllDiv = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`;
-        const closeAll = index ? closeAllDiv : "";
-        const headerDivStr = `<div id="header" class="control">
-                                <div class="back go-back" title="Back"></div>
-                        <div class="header-title">${headerTitle}</div>
-                        ${closeAll}</div>
-                        <div class="separator separator-bottom"></div>`;
-        const headerDiv = document.createRange().createContextualFragment(headerDivStr);
+        // const closeAllDiv = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`;
+        // const closeAll = index ? closeAllDiv : "";
+        // const headerDivStr = `<div id="header" class="control">
+        //                         <div class="back go-back" title="Back"></div>
+        //                 <div class="header-title">${headerTitle}</div>
+        //                 ${closeAll}</div>
+        //                 <div class="separator separator-bottom"></div>`;
+        // const headerDiv = document.createRange().createContextualFragment(headerDivStr);
 
-        const mainDetailsDiv = document.createElement("div");
-              mainDetailsDiv.setAttribute("id", "details");
-              mainDetailsDiv.setAttribute("class", "screen");
-              mainDetailsDiv.appendChild(headerDiv);
+        // const mainDetailsDiv = document.createElement("div");
+        //       mainDetailsDiv.setAttribute("id", "details");
+        //       mainDetailsDiv.setAttribute("class", "screen");
+        //       mainDetailsDiv.appendChild(headerDiv);
 
-        const ul = document.createElement("ul");
-        const ulContainer = document.createElement("div");
-              ulContainer.classList.add("ul-container");
+        // const ul = document.createElement("ul");
+        // const ulContainer = document.createElement("div");
+        //       ulContainer.classList.add("ul-container");
 
-        ulContainer.appendChild(ul);
-        mainDetailsDiv.appendChild(ulContainer);
+        // ulContainer.appendChild(ul);
+        // mainDetailsDiv.appendChild(ulContainer);
 
-        return mainDetailsDiv;
+        // console.log(mainDetailsDiv);
+
+        // return mainDetailsDiv;
     }
 
     const bookmarkTab = async (url, title, id) => {
@@ -454,9 +532,9 @@
      * @param {*} param1 
      * @returns {string} headerTitle
      */
-    const getHeaderTitle = (type, {target, count} = {}) => {
+    const _getHeaderTitle = (type, {target, count} = {}) => {
         let headerTitle = "";
-        if(type === "normal" && target){
+        if(type === "details" && target){
             try {
                 headerTitle = (new URL(target.querySelector('.url').innerText)).host;
             } catch (error) {
@@ -471,15 +549,35 @@
         return headerTitle;
     }
 
+    // NEW
+    const getHeaderTitle = (id, type) => {
+        let headerTitle = "";
+
+        if(type === "details") {
+            try {
+                headerTitle = (new URL(tabsOverview[id].url)).host;
+            } catch (error) {
+                headerTitle = tabsOverview[id].url;
+            }
+        }
+        if(type === "latest"){
+            headerTitle = `${latestShownCount} longest unused tabs`;
+        }
+
+        return headerTitle;
+    }
+
     /**
      * Returns sorted/reduced array for detailed secondary screens
      * @param {string} type normal | latest | ??? 
      * @param {*} param1 
      */
-    const getDetailedArray = (type, {target, count} = {}) => {
+    const getDetailedArray = (type, props = {}) => {
+        let { count, index } = props;
+
         let array = [];
-        if (type === "normal" && target) {
-            array = getDetailsArray(target);
+        if (type === "details") {
+            array = getDetailsArray(index);
         } else if(type === "latest" && count) {
             array = getLatestUsed(tabs, count);
         } else {
@@ -491,7 +589,7 @@
 
     const setClass = (type, className) => {
         const dict = {
-            normal: {
+            details: {
                 url: "",
                 lastDisplayed: "hidden"
             },
@@ -508,6 +606,40 @@
         }
     }
 
+
+    const createList = (type, index) => {
+
+        console.log(index);
+
+        const array = getDetailedArray(type, {count: latestShownCount, index});
+        const ul = document.createElement("ul");
+
+        // Fill in with content
+        for(let i=0; i < array.length; i++){
+            const text = `
+            <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
+                <div class="item-container detail">
+                    <div class="item-text-container">
+                        <div class="title detail" title="${array[i].title}">${array[i].title}</div>
+                        <div class="url detail ${setClass(type, "url")}" title="${array[i].url}">${array[i].url}</div>
+                        <div class="last-displayed detail ${setClass(type, "lastDisplayed")}" title="${array[i].date}">${array[i].date}</div>
+                    </div>
+                    <div class="item-buttons-container">
+                        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+                        <div class="remove detail hidden" title="Close tab"></div>
+                        <div class="get-in"></div>
+                    </div>
+                </div>
+            </li>
+            `;
+
+            ul.appendChild(document.createRange().createContextualFragment(text));
+            addBookmarkStatus(array[i]);
+        }
+
+        return ul;
+    }
+
      /**
       * Main function for generating secondary screens
       * Replaces showLatestDisplayed() and showDetailedScreen()
@@ -515,9 +647,9 @@
       * @param {number} [latestCount = 10] Number of latest shown
       * @param {string} [type = "normal"] normal | latest | ??? 
       */
-    const showScreen = (target, {latestCount = 10, type = "normal"} = {}) => {
+    const _showScreen = (target, {latestCount = 10, type = "normal"} = {}) => {
         const array = getDetailedArray(type, {count: latestCount, target: target});
-        const headerTitle = getHeaderTitle(type, {count: latestCount, target: target});
+        const headerTitle = _getHeaderTitle(type, {count: latestCount, target: target});
 
         const index = !!target.closest("li") && target.closest("li").dataset.indexNumber;
 
@@ -568,9 +700,9 @@
         }
 
         screen.onclick = (e) => {
-            if(e.target.classList.contains("back")){
-                closeScreen();
-            }
+            // if(e.target.classList.contains("back")){
+            //     closeScreen();
+            // }
             if(e.target.classList.contains("bookmark-close")){
                 // bookmark & remove tab
                 const id = parseInt(e.target.closest("li").dataset.tabId);
@@ -593,13 +725,13 @@
                 const id = parseInt(e.target.closest("li").dataset.tabId);
                 browser.tabs.update(id, {active: true});
             }
-            if(e.target.closest(".close-all")){
-                const index = e.target.closest(".close-all").dataset.indexNumber;
-                removeTabsFromOverview(index);
+            // if(e.target.closest(".close-all")){
+            //     const index = e.target.closest(".close-all").dataset.indexNumber;
+            //     removeTabsFromOverview(index);
 
-                // autoclose
-                refreshOverviewScreen();
-            }
+            //     // autoclose
+            //     refreshOverviewScreen();
+            // }
         }
         
         const destination = document.querySelector("#main-container");
@@ -607,6 +739,8 @@
         // document.querySelector("#main-container").appendChild(screen);
     }
 
+    // LISTENERS
+    // @todo rewrite
     document.querySelector("#main-container").onmouseover = (e) => {
         if(e.target.closest("li")){
 
@@ -622,16 +756,25 @@
             parentElm.children[1].classList.add("hidden");
         }
     }
-    document.querySelector("#main-container").onclick = (e) => {
+    document.querySelector("#main-container").onclick = async (e) => {
         if(e.target.classList.contains("remove")){
             const index = e.target.closest("li").dataset.indexNumber;
             removeTabsFromOverview(index);
             console.log("Tabs removed!");
         }
-        if( e.target.closest("div.url-container") && !e.target.classList.contains("remove")){
+        if( !!e.target.closest(".overview-item") && !e.target.classList.contains("remove")){
             const target = e.target.closest("div.url-container");
 
-            showScreen(target, {type: "normal"})
+            const index = parseInt(e.target.closest("li").dataset.indexNumber);
+            console.log(index);
+
+            // new way
+            const screen = await createScreen("details", { index });
+            const dest = document.querySelector("#main-container");
+            renderScreen(screen, dest);
+
+            // showScreen(target, {type: "normal"}); // old way
+
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve();
@@ -644,7 +787,12 @@
             console.log("clicked");
         }
         if(e.target.closest("#ten-unused")){
-            showScreen(e.target, {type: "latest"});
+            // new way
+            const screen = await createScreen("latest");
+            const dest = document.querySelector("#main-container");
+            renderScreen(screen, dest);
+
+            // _showScreen(e.target, {type: "latest"});
 
             new Promise((resolve, reject) => {
                 setTimeout(() => {
