@@ -11,15 +11,13 @@
     const windows = await browser.windows.getAll();
     let tabsOverview = []; // fills with getOverview
     const latestShownCount = 10;
-    
-    console.log(tabs);
 
     /**
      * @todo Work on detailed and better filtered return array
      * @param {array} tabs tabs query array 
      * @param {number} numOfLatest optional, is equal to 10 normally 
      */
-    const getLatestUsed = (tabs, numOfLatest = 10) => {
+    const getLatestUsed = (tabs, numOfLatest) => {
         let newTabs = tabs.slice(0);
         let iterationsNum = numOfLatest;
         let latest = [];
@@ -182,18 +180,13 @@
 
         // Header link to latest
         const unusedStr = `<div id="ten-unused">
-                                <span>10 longest unused tabs</span>
+                                <span>${latestShownCount} longest unused tabs</span>
                                 <div class="get-in"></div>
                             </div>`;
         const unused = document.createRange().createContextualFragment(unusedStr);
 
         return [headerTitleContainer, createSeparator(), unused, createSeparator()];
     }
-
-    /**
-     * 
-     * returns node
-     */
     
     /**
      * Creates screen header component
@@ -214,8 +207,6 @@
                 contentArr = createHeaderOverview();
                 break;
             case "details":
-                contentArr = createHeaderScreen(index, screenId);
-                break;
             case "latest":
                 contentArr = createHeaderScreen(index, screenId);
                 break;
@@ -346,11 +337,6 @@
     }
 
     /**
-     * 
-     * returns node
-     */
-
-    /**
      * Creates screen body component (with list of items). Adds list of items to container and returns it, based on its type.
      * 
      * @param {string} screenId 
@@ -386,7 +372,6 @@
 
         return body;
     }
-
 
     /**
      * Creates HTML Node with screen, filled with header and body.
@@ -462,7 +447,10 @@
     /**
      * Use only after details to overview transition (pressing back button)
      */
-    const refreshOverviewScreen = async ({ deletedId } = {}) => {
+    const refreshOverviewScreen = async (props = {}) => {
+        let { deletedId = false } = props;
+
+        console.log(deletedId);
         document.querySelector("#overview").classList.add("slide-in-reverse");
         document.querySelector(".screen:not(#overview)").classList.add("slide-out-reverse");
 
@@ -559,7 +547,9 @@
      * @param {array} array detailed array of tabs 
      * @param {boolean} autoclose determines if screen closes with last closed item
      */
-    const removeTab = async (e, array, { autoclose = true } = {}) => {
+    const removeTab = async (e, array, props = {}) => {
+        let { autoclose = true } = props;
+
         // remove tab
         const id = parseInt(e.target.closest("li").dataset.tabId);
                         
