@@ -12,6 +12,8 @@
     let tabsOverview = []; // fills with getOverview
     const latestShownCount = 10;
 
+    console.log(tabs);
+
     /**
      * @todo Work on detailed and better filtered return array
      * @param {array} tabs tabs query array 
