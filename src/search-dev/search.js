@@ -29,19 +29,24 @@ const standardize = (string) => {
     }
 }
 
+/**
+ * Returns clean url without params
+ * @returns
+ */
+const cleanUrl = (url) => {
+    // new URL(url) => url.origin + url.pathname
+}
+
 const search = (data, input) => {
-    console.log(data, input);
-
     // standardize data
-
     let stdInput = standardize(input);
     let output = [];
-    console.log(stdInput);
 
     const performSearch = (data, stdInput) => {
         output = data.filter((item) => {
             const title = standardize(item.title);
-            const string = item.url + " " + title;
+            const url = cleanUrl(item.url);
+            const string = url + " " + title;
     
             if(stdInput.length > 1){
                 performSearch.call(this, output, stdInput);
@@ -53,7 +58,18 @@ const search = (data, input) => {
     }
     performSearch(data, stdInput);
 
-    console.log(output);
+    return output;
 }
 
-search(inputData, input);
+// const found = search(inputData, input);
+
+
+/// Technical implementation
+/// @todo make this async
+const inputElm = document.querySelector("#search-input");
+
+inputElm.addEventListener("keyup", (event) => {
+    console.log(event.target.value);
+    const found = search(inputData, event.target.value);
+    console.log(found);
+})
