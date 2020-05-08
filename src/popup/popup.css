@@ -261,11 +261,24 @@ li>div {
   box-sizing: border-box;
 }
 
+#search-input {
+  height: 32px;
+  width: 100%;
+  padding: 0 8px;
+  border-radius: 1px;
+  box-shadow: none;
+  border: none;
+}
+
 #header.control {
   display: grid;
   grid-template-columns: 40px auto 40px;
   align-content: center;
   height: 30px;
+}
+
+#search .header-title {
+  width: 100%;
 }
 
 .control .back, .control .close-all {
