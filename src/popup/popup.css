@@ -251,7 +251,7 @@ li>div {
   flex-direction: column;
 }
 
-#details, #latest {
+#details, #latest, #search {
   position: absolute;
   height: 100%;
   width: 100%;

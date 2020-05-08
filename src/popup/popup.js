@@ -15,6 +15,103 @@
     console.log(tabs);
 
     /**
+     * @todo Load this from external module!
+     * @param {array} data __tabs__ general array with all
+     * @param {string} input 
+     */
+    const search = (data, input) => {     
+        const replaceLetters = (match, _offset, _string) => {
+            const before = "žščřďťňáéíóúíůäëöüľĺŕě".split("");
+            const after = "zscrdtnaeiouiuaeoullre".split("");
+            const index = before.indexOf(match);
+        
+            return after[index];
+        }
+
+        /**
+         * Returns clean url without params
+         * @returns
+         */
+        const cleanUrl = (url) => {
+            // new URL(url) => url.origin + url.pathname
+        }
+
+        /**
+         * 
+         * @param {string} string
+         * @returns {array} 
+         */
+        const standardize = (string) => {
+            try {
+                let output = string.toLowerCase();
+                output = output.replace(/[žščřďťňáéíóúíůäëöüľĺŕě]/g, replaceLetters);
+                output = output.split(" "); // vymyslet více rozdělovačů
+            
+                return output;
+            } catch(err){
+                console.error(err);
+                return [];
+            }
+        }
+
+        // standardize data
+        let stdInput = standardize(input);
+        let output = [];
+
+        const performSearch = (data, stdInput) => {
+            output = data.filter((item) => {
+                const title = standardize(item.title);
+                const url = cleanUrl(item.url);
+                const string = url + " " + title;
+        
+                if(stdInput.length > 1){
+                    performSearch.call(this, output, stdInput);
+                    stdInput.shift();
+                } else if(string.includes(stdInput[0])){
+                    return true;
+                }
+            });
+        }
+        performSearch(data, stdInput);
+
+        return output;
+    }
+
+    const getSearchDetailsArray = (data) => {
+        const newTabs = tabs.slice(0);
+        const foundItems = [];
+
+        console.log("todo");
+        /* 
+        For each item from data create an object with:
+        { id, url, title, date}
+
+        and sort them by date
+
+        if data = [], then return null or stg
+        */
+
+        for(let i=0; i<data.length;i++){
+            if(newTabs[i].pinned) continue;
+
+            let output = {};
+
+            let date = new Intl.DateTimeFormat(locale.string, locale.options).format(new Date(newTabs[i].lastAccessed));
+            
+            output.date = date;
+            output.title = newTabs[i].title;
+            output.id = newTabs[i].id;
+            output.url = newTabs[i].url;
+
+            foundItems.push(output);
+        }
+
+        // tady nějakej sort
+
+        return foundItems;
+    }
+
+    /**
      * @todo Work on detailed and better filtered return array
      * @param {array} tabs tabs query array 
      * @param {number} numOfLatest optional, is equal to 10 normally 
@@ -168,6 +265,26 @@
 
         return header;
     }
+    const createHeaderSearch = () => {
+        // components: back button, title, ?closeAll, ?search
+
+        const backBtnStr = `<div class="back go-back" title="Back"></div>`;
+        const headerTitleDivStr = `<div class="header-title"><input type="search" name="search-input" id="search-input" /></div>`;
+        // const closeAllDivStr = type !== "latest" ? `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>` : "";
+        const separator = createSeparator(); // node!
+
+        const headerDivStr = `
+            <div id="header" class="control">
+                ${backBtnStr}
+                ${headerTitleDivStr}
+            </div>
+        `;
+
+        const headerDiv = document.createRange().createContextualFragment(headerDivStr);
+        const header = [headerDiv, separator];
+
+        return header;
+    }
 
     const createHeaderOverview = () => {
         // Header title
@@ -175,7 +292,7 @@
         const headerTitleContainerStr = `<div class="header-title"></div>`;
         const headerTitleContainer = document.createRange().createContextualFragment(headerTitleContainerStr);
 
-        const headerTitleStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>`;
+        const headerTitleStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}. <div id="search-btn">Search</div></span>`;
         const headerTitle = document.createRange().createContextualFragment(headerTitleStr);
 
         headerTitleContainer.firstChild.appendChild(headerTitle);
@@ -208,6 +325,9 @@
             case "overview":
                 contentArr = createHeaderOverview();
                 break;
+            case "search":
+                contentArr = createHeaderSearch();
+                break;
             case "details":
             case "latest":
                 contentArr = createHeaderScreen(index, screenId);
@@ -215,6 +335,8 @@
             default:
                 break;
         }
+
+        console.log(contentArr);
 
         contentArr.forEach(elm => {
             header.firstChild.append(elm);
@@ -242,7 +364,43 @@
     
                 playTransition();
             }
+            if(e.target.closest("#search-btn")){
+                const screen = await createScreen("search");
+                const dest = document.querySelector("#main-container");
+                
+                setListenersSearch(screen);
+                renderScreen(screen, dest);
+
+                playTransition();
+            }
         }
+    }
+
+    const setListenersSearch = (node) => {
+        const inputElm = node.querySelector("#search-input");
+        const dest = node.querySelector(".body-container").parentNode;
+        const oldBody = node.querySelector(".body-container").remove();
+        let timeout;
+
+        inputElm.addEventListener("keyup", (event) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(async () => {
+                const found = search(tabs, event.target.value);
+                const body = await createBody("search", {data: found});
+
+                console.log(event.target.value);
+                console.log(found);
+
+                console.log(body);
+                // const dest = node.querySelector(".body-container");
+
+                // console.log(node);
+                renderScreen(body,dest);
+
+
+                // tohle bude volat render nějakýho toho body
+            }, 150);
+        });
     }
 
     const setListenersOverview = (node) => {
@@ -346,7 +504,7 @@
      * @returns {node} <div class="body-container"><!-- Content of body component - ul --></div>
      */
     const createBody = async (screenId, props = {}) => {
-        let { index } = props;
+        let { index, data } = props;
         const bodyStr = `<div class="body-container"></div>`;
         const body = document.createRange().createContextualFragment(bodyStr);
 
@@ -360,11 +518,15 @@
                 break;
             case "details":
             case "latest":
-                dataArr = getDetailedArray(screenId, {count: latestShownCount, index});
+                dataArr = getDetailedArray(screenId, {count: latestShownCount, index, data: tabs});
                 content = await createList(screenId, dataArr);
                 setListenersScreen(content, dataArr);
                 break;
-        
+            case "search":
+                dataArr = getDetailedArray(screenId, {data});
+                content = await createList(screenId, dataArr);
+                setListenersScreen(content, dataArr);
+                break;
             default:
                 console.error("Error: body element couldn't be created.");
                 break;
@@ -392,6 +554,8 @@
 
         screen.firstChild.append(header);
         screen.firstChild.append(body);
+
+        console.log(screen);
 
         return screen;
     }
@@ -597,13 +761,15 @@
      * @param {*} props 
      */
     const getDetailedArray = (type, props = {}) => {
-        let { count, index } = props;
+        let { count, index, data } = props;
 
         let array = [];
         if (type === "details") {
             array = getDetailsArray(index);
-        } else if(type === "latest" && count) {
-            array = getLatestUsed(tabs, count);
+        } else if(type === "latest" && count && data) {
+            array = getLatestUsed(data, count); // data === __tabs__
+        } else if(type === "search" && data){
+            array = getSearchDetailsArray(data);
         } else {
             console.log("Error: got wrong params on getDetailedArray()");
         }
@@ -620,6 +786,10 @@
             latest: {
                 url: "hidden",
                 lastDisplayed: ""
+            },
+            search: {
+                url: "",
+                lastDisplayed: "hidden"
             }
         }
 
