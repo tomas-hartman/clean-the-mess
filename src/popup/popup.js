@@ -78,7 +78,7 @@
     }
 
     const getSearchDetailsArray = (data) => {
-        const newTabs = tabs.slice(0);
+        const newTabs = data.slice(0);
         const foundItems = [];
 
         console.log("todo");
@@ -89,6 +89,8 @@
         and sort them by date
 
         if data = [], then return null or stg
+
+        @todo fix: currently returns incorrect results!
         */
 
         for(let i=0; i<data.length;i++){
@@ -379,27 +381,32 @@
     const setListenersSearch = (node) => {
         const inputElm = node.querySelector("#search-input");
         const dest = node.querySelector(".body-container").parentNode;
-        const oldBody = node.querySelector(".body-container").remove();
+        // const oldBody = node.querySelector(".body-container").remove();
         let timeout;
 
         inputElm.addEventListener("keyup", (event) => {
             clearTimeout(timeout);
             timeout = setTimeout(async () => {
                 const found = search(tabs, event.target.value);
-                const body = await createBody("search", {data: found});
+                console.log(found); // returns correct results! error bude v createBody
+                const bodyContainer = await createBody("search", {data: found});
+                console.log(bodyContainer.querySelectorAll("li"));
+                const oldBodyContainer = document.querySelector("#search > .body-container");
+
+                if(oldBodyContainer){
+                    oldBodyContainer.remove();
+                }
 
                 console.log(event.target.value);
-                console.log(found);
-
-                console.log(body);
+                console.log(bodyContainer);
                 // const dest = node.querySelector(".body-container");
 
-                // console.log(node);
-                renderScreen(body,dest);
+                console.log(node);
+                renderScreen(bodyContainer,dest);
 
 
                 // tohle bude volat render nějakýho toho body
-            }, 150);
+            }, 200);
         });
     }
 
