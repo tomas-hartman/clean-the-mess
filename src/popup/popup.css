@@ -360,6 +360,34 @@ li.detail {
   height: 40px;
 }
 
+.search-container {
+  /*! position: relative; */
+  display: flex;
+}
+
+.search-controls {
+  z-index: 9;
+  /*! height: 100%; */
+  width: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /*! position: absolute; */
+  margin-left: -40px;
+}
+
+.search-count {
+  color: black;
+}
+
+.clear-search {
+  /*! position: absolute; */
+  /*! left: -10px; */
+  /*! margin-left: -25px; */
+  /*! justify-self: center; */
+  z-index: 9;
+}
+
 /* ANIMATIONS */
 .slide-in {
   right: 0% !important;

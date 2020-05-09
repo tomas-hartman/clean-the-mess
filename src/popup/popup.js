@@ -284,9 +284,16 @@
         // components: back button, title, ?closeAll, ?search
 
         const backBtnStr = `<div class="back go-back" title="Back"></div>`;
-        const headerTitleDivStr = `<div class="header-title">
-                                        <input type="search" name="search-input" id="search-input" placeholder="Type here" autofocus="autofocus" />
-                                   </div>`;
+        const headerTitleDivStr = `
+            <div class="header-title">
+                <div class="search-container">
+                    <input type="search" name="search-input" id="search-input" placeholder="Type here" autofocus="autofocus" />
+                    <div class="search-controls">
+                        <span class="search-count">10</span>
+                        <button class="clear-search">x</button>
+                    </div>
+                </div>                            
+            </div>`;
         // const closeAllDivStr = type !== "latest" ? `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>` : "";
         const separator = createSeparator(); // node!
 

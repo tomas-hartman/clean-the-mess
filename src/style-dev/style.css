@@ -67,6 +67,14 @@ li {
   align-items: center;
 }
 
+li#nothing-to-show {
+  height: auto;
+}
+
+li#nothing-to-show:hover {
+  background-color: transparent;
+}
+
 li:hover,
 #ten-unused:hover {
   background-color: var(--color-link-hover);
@@ -350,6 +358,34 @@ li>div {
 
 li.detail {
   height: 40px;
+}
+
+.search-container {
+  /*! position: relative; */
+  display: flex;
+}
+
+.search-controls {
+  z-index: 9;
+  /*! height: 100%; */
+  width: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /*! position: absolute; */
+  margin-left: -40px;
+}
+
+.search-count {
+  color: black;
+}
+
+.clear-search {
+  /*! position: absolute; */
+  /*! left: -10px; */
+  /*! margin-left: -25px; */
+  /*! justify-self: center; */
+  z-index: 9;
 }
 
 /* ANIMATIONS */
