@@ -294,10 +294,13 @@
     const createHeaderOverview = () => {
         // Header title
         const windowStr = windows.length > 1 ? " in this window" : "";
-        const headerTitleContainerStr = `<div class="header-title"></div>`;
+        const headerTitleContainerStr = `<div id="header" class="control header-overview"></div>`;
         const headerTitleContainer = document.createRange().createContextualFragment(headerTitleContainerStr);
 
-        const headerTitleStr = `<span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}. <div id="search-btn">Search</div></span>`;
+        const headerTitleStr = `<div class="header-title">
+                                    <span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>
+                                </div>
+                                <div id="search-btn">Srch</div>`;
         const headerTitle = document.createRange().createContextualFragment(headerTitleStr);
 
         headerTitleContainer.firstChild.appendChild(headerTitle);
