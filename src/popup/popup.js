@@ -30,10 +30,21 @@
 
         /**
          * Returns clean url without params
-         * @returns
+         * @returns {array}
          */
         const cleanUrl = (url) => {
-            // new URL(url) => url.origin + url.pathname
+            try {
+                const urlObj = new URL(url); // -> zjistit, co udělají about:debugging a další! || performance?
+                const protocol = `${urlObj.protocol}//`;
+
+                let output = urlObj.href.substring(protocol.length) // -> "code.visualstudio.com/blogs/2020/05/06/github-issues-integration"
+                output = output.split(/\W/); // performance? // ignore special chars / . - etc.
+
+                return output;
+            } catch(err){
+                console.error(err);
+                return [];
+            }
         }
 
         /**
@@ -45,7 +56,8 @@
             try {
                 let output = string.toLowerCase();
                 output = output.replace(/[žščřďťňáéíóúíůäëöüľĺŕě]/g, replaceLetters);
-                output = output.split(" "); // vymyslet více rozdělovačů
+                output = output.split(/\W/); // ignore special characters
+                output = output.filter(item => item !== ""); // ignore empty strings (from special chars etc.)
             
                 return output;
             } catch(err){
@@ -55,14 +67,16 @@
         }
 
         // standardize data
-        let stdInput = standardize(input);
+        let stdInput = standardize(input); // @todo ignore non word chars /\W/
         let output = [];
+
+        console.log(stdInput);
 
         const performSearch = (data, stdInput) => {
             output = data.filter((item) => {
                 const title = standardize(item.title);
                 const url = cleanUrl(item.url);
-                const string = url + " " + title;
+                const string = url + "," + title;
         
                 if(stdInput.length > 1){
                     performSearch.call(this, output, stdInput);
@@ -81,7 +95,6 @@
         const newTabs = data.slice(0);
         const foundItems = [];
 
-        console.log("todo");
         /* 
         For each item from data create an object with:
         { id, url, title, date}
@@ -89,8 +102,6 @@
         and sort them by date
 
         if data = [], then return null or stg
-
-        @todo fix: currently returns incorrect results!
         */
 
         for(let i=0; i<data.length;i++){
@@ -108,7 +119,9 @@
             foundItems.push(output);
         }
 
-        // tady nějakej sort
+        // sort the results by date or relevancy?
+
+        console.log(foundItems);
 
         return foundItems;
     }
@@ -387,31 +400,20 @@
     const setListenersSearch = (node) => {
         const inputElm = node.querySelector("#search-input");
         const dest = node.querySelector(".body-container").parentNode;
-        // const oldBody = node.querySelector(".body-container").remove();
-        let timeout;
+        let timeout; // waits until next char is typed in before it renders; default 200 ms
 
         inputElm.addEventListener("keyup", (event) => {
             clearTimeout(timeout);
             timeout = setTimeout(async () => {
                 const found = search(tabs, event.target.value);
-                console.log(found); // returns correct results! error bude v createBody
                 const bodyContainer = await createBody("search", {data: found});
-                console.log(bodyContainer.querySelectorAll("li"));
                 const oldBodyContainer = document.querySelector("#search > .body-container");
 
                 if(oldBodyContainer){
                     oldBodyContainer.remove();
                 }
 
-                console.log(event.target.value);
-                console.log(bodyContainer);
-                // const dest = node.querySelector(".body-container");
-
-                console.log(node);
                 renderScreen(bodyContainer,dest);
-
-
-                // tohle bude volat render nějakýho toho body
             }, 200);
         });
     }
@@ -770,8 +772,11 @@
 
     /**
      * Returns sorted/reduced array for detailed secondary screens
+     * Detailed array consists of objects with props {id, url, title, date}
+     * 
      * @param {string} type normal | latest | ??? 
      * @param {*} props 
+     * @returns array = [{id, url, title, date}, ...]
      */
     const getDetailedArray = (type, props = {}) => {
         let { count, index, data } = props;
@@ -843,6 +848,18 @@
 
             ul.appendChild(document.createRange().createContextualFragment(text));
             addBookmarkStatus(array[i]);
+        }
+
+        if(type === "search" && array.length === 0){
+            const text = `
+            <li id="nothing-to-show">
+                <div class="item-container error">
+                    Nothing to display. Either nothing was found or the search hasn't started yet.
+                </div>
+            </li>
+            `;
+
+            ul.appendChild(document.createRange().createContextualFragment(text));
         }
 
         return ul;

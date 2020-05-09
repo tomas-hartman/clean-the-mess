@@ -67,6 +67,14 @@ li {
   align-items: center;
 }
 
+li#nothing-to-show {
+  height: auto;
+}
+
+li#nothing-to-show:hover {
+  background-color: transparent;
+}
+
 li:hover,
 #ten-unused:hover {
   background-color: var(--color-link-hover);
