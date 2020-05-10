@@ -77,13 +77,30 @@
                 const title = standardize(item.title);
                 const url = cleanUrl(item.url);
                 const string = url + "," + title;
+
+                console.log(string);
+                console.log(stdInput);
         
-                if(stdInput.length > 1){
-                    performSearch.call(this, output, stdInput);
-                    stdInput.shift();
-                } else if(string.includes(stdInput[0])){
-                    return true;
+                // Currently working well
+                // Working with output might be a nice performance booster
+                // Woud need to save found to state and reinitiate search again from the state
+                if(stdInput.length === 1 && string.includes(stdInput[0])) return true; 
+                for(let i=0;i<stdInput.length;i++){
+                    if(!string.includes(stdInput[i])){
+                        break;
+                    }
+                    if(i === stdInput.length-1){
+                        return true;
+                    }
                 }
+
+                // OLD ALGORITHM DO NOT DELETE YET
+                /*if(stdInput.length > 1){
+                    performSearch.call(this, output, stdInput); // v případě, že je všechno v pohodě, hledám dál v outputu
+                    stdInput.shift(); // this is the cause of the bug -- it only allows searching one string
+                } else if(string.includes(stdInput[0])){ // this part will be required to repeat for each from stdInput
+                    return true;
+                } */
             });
         }
         performSearch(data, stdInput);
@@ -289,7 +306,7 @@
                 <div class="search-container">
                     <input type="search" name="search-input" id="search-input" placeholder="Type here" autofocus="autofocus" />
                     <div class="search-controls">
-                        <span class="search-count">(10)</span>
+                        <span class="search-count"></span>
                         <button class="clear-search hidden">x</button>
                     </div>
                 </div>                            
