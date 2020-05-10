@@ -280,7 +280,7 @@ li>div {
 #search-input {
   height: 32px;
   width: 100%;
-  padding: 0 8px;
+  padding: 0 42px 0 8px;
   border-radius: 1px;
   box-shadow: none;
   border: none;
@@ -361,31 +361,40 @@ li.detail {
 }
 
 .search-container {
-  /*! position: relative; */
+  position: relative;
   display: flex;
+  align-items: center;
 }
 
 .search-controls {
   z-index: 9;
-  /*! height: 100%; */
-  width: auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /*! position: absolute; */
-  margin-left: -40px;
+  position: absolute;
+  right: 0;
+  height: 100%;
 }
 
 .search-count {
   color: black;
+  margin: 0px 4px;
 }
 
 .clear-search {
-  /*! position: absolute; */
-  /*! left: -10px; */
-  /*! margin-left: -25px; */
-  /*! justify-self: center; */
-  z-index: 9;
+  border: none;
+  background-color: cadetblue;
+  height: 18px;
+  width: 18px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 100%;
+  margin-right: 4px;
+}
+
+.clear-search.hidden {
+  display: none;
 }
 
 /* ANIMATIONS */

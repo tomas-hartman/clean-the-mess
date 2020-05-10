@@ -289,8 +289,8 @@
                 <div class="search-container">
                     <input type="search" name="search-input" id="search-input" placeholder="Type here" autofocus="autofocus" />
                     <div class="search-controls">
-                        <span class="search-count">10</span>
-                        <button class="clear-search">x</button>
+                        <span class="search-count">(10)</span>
+                        <button class="clear-search hidden">x</button>
                     </div>
                 </div>                            
             </div>`;
@@ -404,6 +404,18 @@
         }
     }
 
+    /**
+     * Sets number of count into search input info
+     * @todo similar implementation could be used for specifying "not found" error message
+     * @param {number} count 
+     */
+    const setFoundCount = (count) => {
+        const foundElm = document.querySelector(".search-count");
+        if(count > 0){
+            foundElm.innerText = `(${count})`;
+        } else foundElm.innerText = "";
+    }
+
     const setListenersSearch = (node) => {
         const inputElm = node.querySelector("#search-input");
         const dest = node.querySelector(".body-container").parentNode;
@@ -415,6 +427,8 @@
                 const found = search(tabs, event.target.value);
                 const bodyContainer = await createBody("search", {data: found});
                 const oldBodyContainer = document.querySelector("#search > .body-container");
+
+                setFoundCount(found.length);
 
                 if(oldBodyContainer){
                     oldBodyContainer.remove();
