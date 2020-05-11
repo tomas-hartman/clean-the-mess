@@ -70,20 +70,17 @@
         let stdInput = standardize(input); // @todo ignore non word chars /\W/
         let output = [];
 
-        console.log(stdInput);
-
+        /**
+         * Second algorithm, avg. 203 items / 3.2 s
+         * @param {array} data __tabs__
+         * @param {array} stdInput array of strings, received from standardize()
+         */
         const performSearch = (data, stdInput) => {
             output = data.filter((item) => {
                 const title = standardize(item.title);
                 const url = cleanUrl(item.url);
                 const string = url + "," + title;
 
-                console.log(string);
-                console.log(stdInput);
-        
-                // Currently working well
-                // Working with output might be a nice performance booster
-                // Woud need to save found to state and reinitiate search again from the state
                 if(stdInput.length === 1 && string.includes(stdInput[0])) return true; 
                 for(let i=0;i<stdInput.length;i++){
                     if(!string.includes(stdInput[i])){
@@ -93,14 +90,6 @@
                         return true;
                     }
                 }
-
-                // OLD ALGORITHM DO NOT DELETE YET
-                /*if(stdInput.length > 1){
-                    performSearch.call(this, output, stdInput); // v případě, že je všechno v pohodě, hledám dál v outputu
-                    stdInput.shift(); // this is the cause of the bug -- it only allows searching one string
-                } else if(string.includes(stdInput[0])){ // this part will be required to repeat for each from stdInput
-                    return true;
-                } */
             });
         }
         performSearch(data, stdInput);
