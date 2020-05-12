@@ -382,14 +382,16 @@
     }
 
     const setListenersHeader = (header, index) => {
+        console.log(index);
         header.firstChild.onclick = async (e) => {
             if(e.target.classList.contains("back")){
                 closeScreen();
             }
-            if(e.target.closest(".close-all") && index){
-                removeTabsFromOverview(index);
+            if(e.target.closest(".close-all") && (index || index === 0)){
+                console.log(index);
+                await removeTabsFromOverview(index);
 
-                refreshOverviewScreen(); // autoclose
+                await refreshOverviewScreen(); // autoclose
             }
             if(e.target.closest("#ten-unused")){
                 const screen = await createScreen("latest");
@@ -465,7 +467,7 @@
         node.onclick = async (e) => {
             if(e.target.classList.contains("remove")){
                 const index = e.target.closest("li").dataset.indexNumber;
-                removeTabsFromOverview(index);
+                await removeTabsFromOverview(index);
                 console.log("Tabs removed!");
             }
             if( !!e.target.closest(".overview-item") && !e.target.classList.contains("remove")){
@@ -692,11 +694,11 @@
         if(id.length > 10) {
             if(confirm(`Are you sure you want to close ${id.length} tabs?`)){
                 await browser.tabs.remove(id);
-                refreshOverviewData(indexNumber);
+                await refreshOverviewData(indexNumber);
             } else return;
         } else {
             await browser.tabs.remove(id);
-            refreshOverviewData(indexNumber);
+            await refreshOverviewData(indexNumber);
         }
     }
 
@@ -768,15 +770,15 @@
 
         // autoclose
         if(autoclose && array.length === 0){
-            refreshOverviewScreen({ deletedId: id });
+            await refreshOverviewScreen({ deletedId: id });
         }
     }
     
     /**
      * Closes opened screen
      */
-    const closeScreen = () => {
-        refreshOverviewScreen();
+    const closeScreen = async () => {
+        await refreshOverviewScreen();
     }
 
     // Returns headerTitle for secondary screens
