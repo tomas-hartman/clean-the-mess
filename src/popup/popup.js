@@ -326,7 +326,7 @@
         const headerTitleStr = `<div class="header-title">
                                     <span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>
                                 </div>
-                                <div id="search-btn">Srch</div>`;
+                                <div id="search-btn"></div>`;
         const headerTitle = document.createRange().createContextualFragment(headerTitleStr);
 
         headerTitleContainer.firstChild.appendChild(headerTitle);

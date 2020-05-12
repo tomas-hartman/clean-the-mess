@@ -336,6 +336,10 @@ li>div {
 
 .control #search-btn {
   background-color: inherit;
+  background-image: url("../icons/btn-search-24.svg");
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .header-title {
