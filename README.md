@@ -1,6 +1,27 @@
 # Clean the mess!
 
-## Description
+Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!
+
+Clean the mess! a simple addon that is designed to help you with maintaining order among opened websites. Unlike some other extensions, first and main purpose of Clean the mess is to help you find and mercilessly close tabs you don't need, not just reorder them.
+
+With its integrated search feature, Clean the mess! could also be used as a fast and simple tab manager, that lets you control your tabs and always find those you opened a week, a month or a year ago. And of course close those you don't find up to date anymore.
+
+**What are Clean the mess's main features?**
+
+- group opened websites by their domain names
+- show number of opened websites
+- close opened websites one by one or all tabs with the same domain
+- search among opened websites
+- bookmark & close opened websites at one click
+- light and darkmode support
+- lightweight, simple and fast
+- opens with hotkey: ctrl + alt + t or ⌘⌥T
+
+... And some more.
+
+**Enjoy, comment, report bugs!**
+
+## Long Description
 This is a simple Web Extension that I've always desired to create! Now it's here, fitting my best purpose. What is this one about? My common workflow in an internet browser comprises of repeated visits to several common services such as calendar, email, facebook, my favourite newspapers' articles and many other websites in which I am interested - and opening them into a big load of new tabs. Regardless if I mean to vist those websites later or have just visited them, roughly around the half of them ends up never closed. I am terrible with closing tabs. I know and I am sorry. But I came with the idea of an extension that would allow me to close them easily and clean the mess I made!
 
 ### How am I doing that?
