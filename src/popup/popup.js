@@ -232,7 +232,9 @@
                                 </div>
                             </li>`;
                 
-                ul.appendChild(document.createRange().createContextualFragment(text));
+                if (text) {
+                    ul.appendChild(document.createRange().createContextualFragment(text));
+                }
             }
 
             resolve(ul);
@@ -253,7 +255,7 @@
      */
     const createSeparator = () => {
         const separatorStr = `<div class="separator separator-bottom"></div>`;
-        const separator = document.createRange().createContextualFragment(separatorStr);
+        const separator = separatorStr && document.createRange().createContextualFragment(separatorStr);
 
         return separator;
     }
@@ -281,7 +283,7 @@
             </div>
         `;
 
-        const headerDiv = document.createRange().createContextualFragment(headerDivStr);
+        const headerDiv = headerDivStr && document.createRange().createContextualFragment(headerDivStr);
         const header = [headerDiv, separator];
 
         return header;
@@ -310,7 +312,7 @@
             </div>
         `;
 
-        const headerDiv = document.createRange().createContextualFragment(headerDivStr);
+        const headerDiv = headerDivStr && document.createRange().createContextualFragment(headerDivStr);
             //   headerDiv.querySelector("#search-input").autofocus = true;
         const header = [headerDiv, separator];
 
@@ -321,13 +323,13 @@
         // Header title
         const windowStr = windows.length > 1 ? " in this window" : "";
         const headerTitleContainerStr = `<div id="header" class="control header-overview"></div>`;
-        const headerTitleContainer = document.createRange().createContextualFragment(headerTitleContainerStr);
+        const headerTitleContainer = headerTitleContainerStr && document.createRange().createContextualFragment(headerTitleContainerStr);
 
         const headerTitleStr = `<div class="header-title">
                                     <span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>
                                 </div>
                                 <div id="search-btn"></div>`;
-        const headerTitle = document.createRange().createContextualFragment(headerTitleStr);
+        const headerTitle = headerTitleStr && document.createRange().createContextualFragment(headerTitleStr);
 
         headerTitleContainer.firstChild.appendChild(headerTitle);
 
@@ -336,7 +338,7 @@
                                 <span>${latestShownCount} longest unused tabs</span>
                                 <div class="get-in"></div>
                             </div>`;
-        const unused = document.createRange().createContextualFragment(unusedStr);
+        const unused = unusedStr && document.createRange().createContextualFragment(unusedStr);
 
         return [headerTitleContainer, createSeparator(), unused, createSeparator()];
     }
@@ -351,7 +353,7 @@
     const createHeader = (screenId, props = {}) => {
         let  { index } = props;
         const headerStr = `<div class="header-container"></div>`;
-        const header = document.createRange().createContextualFragment(headerStr);
+        const header = headerStr && document.createRange().createContextualFragment(headerStr);
 
         let contentArr = [];
         
@@ -557,7 +559,7 @@
     const createBody = async (screenId, props = {}) => {
         let { index, data } = props;
         const bodyStr = `<div class="body-container"></div>`;
-        const body = document.createRange().createContextualFragment(bodyStr);
+        const body = bodyStr && document.createRange().createContextualFragment(bodyStr);
 
         let content = "";
         let dataArr = [];
@@ -598,7 +600,7 @@
      */
     const createScreen = async (screenId, props = {}) => {
         const screenStr = `<div id="${screenId}" class="screen"></div>`;
-        const screen = document.createRange().createContextualFragment(screenStr);
+        const screen = screenStr && document.createRange().createContextualFragment(screenStr);
         
         const header = createHeader(screenId, props);
         const body = await createBody(screenId, props);
@@ -773,7 +775,9 @@
 
         // remove tab
         detailsArr.splice(detailsArr.findIndex(tab => tab.id === id), 1); // removes item from detailed array
-        tabsOverview[index].ids.splice(tabsOverview[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids        
+        if(index){
+            tabsOverview[index].ids.splice(tabsOverview[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen      
+        }
         await browser.tabs.remove([id]); // closes tab in browser
 
         e.target.closest("li").remove(); // removes node
@@ -886,8 +890,10 @@
             </li>
             `;
 
-            ul.appendChild(document.createRange().createContextualFragment(text));
-            addBookmarkStatus(array[i]);
+            if(text){
+                ul.appendChild(document.createRange().createContextualFragment(text));
+                addBookmarkStatus(array[i]);
+            }
         }
 
         if(type === "search" && array.length === 0){
@@ -899,7 +905,9 @@
             </li>
             `;
 
-            ul.appendChild(document.createRange().createContextualFragment(text));
+            if(text){
+                ul.appendChild(document.createRange().createContextualFragment(text));
+            }
         }
 
         return ul;
