@@ -21,8 +21,8 @@
      */
     const search = (data, input) => {     
         const replaceLetters = (match, _offset, _string) => {
-            const before = "žščřďťňáéíóúíůäëöüľĺŕě".split("");
-            const after = "zscrdtnaeiouiuaeoullre".split("");
+            const before = "žščřďťňáéíóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęłżőűãõåø".split("");
+            const after =  "zscrdtnaeiouiuaeioullrcnoszeigcstaeiouaeuaelzouaoao".split("");
             const index = before.indexOf(match);
         
             return after[index];
@@ -55,7 +55,7 @@
         const standardize = (string) => {
             try {
                 let output = string.toLowerCase();
-                output = output.replace(/[žščřďťňáéíóúíůäëöüľĺŕě]/g, replaceLetters);
+                output = output.replace(/[žščřďťňáéíóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęłżőűãõåø]/g, replaceLetters);
                 output = output.split(/\W/); // ignore special characters
                 output = output.filter(item => item !== ""); // ignore empty strings (from special chars etc.)
             
@@ -858,12 +858,13 @@
 
         // Fill in with content
         for(let i=0; i < array.length; i++){
+            const decodedUrl = decodeURI(array[i].url);
             const text = `
             <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
                 <div class="item-container detail">
                     <div class="item-text-container">
                         <div class="title detail" title="${array[i].title}">${array[i].title}</div>
-                        <div class="url detail ${setClass(type, "url")}" title="${array[i].url}">${array[i].url}</div>
+                        <div class="url detail ${setClass(type, "url")}" title="${decodedUrl}">${decodedUrl}</div>
                         <div class="last-displayed detail ${setClass(type, "lastDisplayed")}" title="${array[i].date}">${array[i].date}</div>
                     </div>
                     <div class="item-buttons-container">
