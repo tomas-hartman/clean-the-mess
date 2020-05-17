@@ -2,7 +2,7 @@
 
     "manifest_version": 2,
     "name": "Clean the mess",
-    "version": "1.2-alpha",
+    "version": "1.2-alpha.2",
   
     "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
   

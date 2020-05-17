@@ -12,7 +12,7 @@
     let tabsOverview = []; // fills with getOverview
     const latestShownCount = 10;
 
-    console.log(tabs);
+    // console.log(tabs);
 
     /**
      * @todo Load this from external module!
@@ -127,7 +127,7 @@
 
         // sort the results by date or relevancy?
 
-        console.log(foundItems);
+        // console.log(foundItems);
 
         return foundItems;
     }
@@ -370,7 +370,7 @@
                 break;
         }
 
-        console.log(contentArr);
+        // console.log(contentArr);
 
         contentArr.forEach(elm => {
             header.firstChild.append(elm);
@@ -382,13 +382,12 @@
     }
 
     const setListenersHeader = (header, index) => {
-        console.log(index);
         header.firstChild.onclick = async (e) => {
             if(e.target.classList.contains("back")){
                 closeScreen();
             }
             if(e.target.closest(".close-all") && (index || index === 0)){
-                console.log(index);
+                // console.log(index);
                 await removeTabsFromOverview(index);
 
                 await refreshOverviewScreen(); // autoclose
@@ -493,7 +492,15 @@
         });
     }
 
-    const setListenersScreen = (node, array) => {
+    /**
+     * Sets up listeners to screen
+     * @param {DOM Node} node Node to which listeners should be set up
+     * @param {array} array detailed array of items rendered in detailed screen
+     * @param {object} params index: group index from __overview__
+     */
+    const setListenersScreen = (node, array, params = {}) => {
+        let { index } = params;
+
         node.onmouseover = (e) => {
             if(e.target.closest("li.detail")){
     
@@ -523,10 +530,10 @@
                 const title = arrItem.title;
 
                 bookmarkTab(url, title, id);
-                removeTab(e, array);
+                removeTab(e, array, { index });
             }
             if(e.target.classList.contains("remove")){
-                removeTab(e, array);
+                removeTab(e, array, { index });
             }
             if(e.target.closest("li") 
                 && !e.target.classList.contains("remove") 
@@ -564,12 +571,12 @@
             case "latest":
                 dataArr = getDetailedArray(screenId, {count: latestShownCount, index, data: tabs});
                 content = await createList(screenId, dataArr);
-                setListenersScreen(content, dataArr);
+                setListenersScreen(content, dataArr, { index });
                 break;
             case "search":
                 dataArr = getDetailedArray(screenId, {data});
                 content = await createList(screenId, dataArr);
-                setListenersScreen(content, dataArr);
+                setListenersScreen(content, dataArr, { index });
                 break;
             default:
                 console.error("Error: body element couldn't be created.");
@@ -599,7 +606,7 @@
         screen.firstChild.append(header);
         screen.firstChild.append(body);
 
-        console.log(screen);
+        // console.log(screen);
 
         return screen;
     }
@@ -660,7 +667,7 @@
     const refreshOverviewScreen = async (props = {}) => {
         let { deletedId = false } = props;
 
-        console.log(deletedId);
+        // console.log(deletedId);
         document.querySelector("#overview").classList.add("slide-in-reverse");
         document.querySelector(".screen:not(#overview)").classList.add("slide-out-reverse");
 
@@ -754,22 +761,25 @@
     /**
      * removeTab() use for removing tabs in detailed screens
      * @param {event} e 
-     * @param {array} array detailed array of tabs 
+     * @param {array} detailsArr DETAILED array of tabs taken from __tabs__
      * @param {boolean} autoclose determines if screen closes with last closed item
+     * @param {number} index id of grouped overview array
      */
-    const removeTab = async (e, array, props = {}) => {
-        let { autoclose = true } = props;
+    const removeTab = async (e, detailsArr, props = {}) => {
+        let { autoclose = true, index } = props;
+        const id = parseInt(e.target.closest("li").dataset.tabId);
+        // id: index in __tabs__ (tab index)
+        // index: index in __overview__ (group index)
 
         // remove tab
-        const id = parseInt(e.target.closest("li").dataset.tabId);
-                        
-        array.splice(array.findIndex(tab => tab.id === id), 1);
-        await browser.tabs.remove([id]);
+        detailsArr.splice(detailsArr.findIndex(tab => tab.id === id), 1); // removes item from detailed array
+        tabsOverview[index].ids.splice(tabsOverview[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids        
+        await browser.tabs.remove([id]); // closes tab in browser
 
-        e.target.closest("li").remove();
+        e.target.closest("li").remove(); // removes node
 
         // autoclose
-        if(autoclose && array.length === 0){
+        if(autoclose && detailsArr.length === 0){
             await refreshOverviewScreen({ deletedId: id });
         }
     }
