@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should return correct overview data 1`] = `
+Array [
+  Object {
+    "count": 5,
+    "ids": Array [
+      77,
+      80,
+      92,
+      97,
+      99,
+    ],
+    "url": "https://www.google.com",
+  },
+  Object {
+    "count": 5,
+    "ids": Array [
+      87,
+      95,
+      94,
+      98,
+      100,
+    ],
+    "url": "https://stackoverflow.com",
+  },
+  Object {
+    "count": 3,
+    "ids": Array [
+      81,
+      93,
+      96,
+    ],
+    "url": "https://jestjs.io",
+  },
+  Object {
+    "count": 2,
+    "ids": Array [
+      7,
+      23,
+    ],
+    "url": "https://www.respekt.cz",
+  },
+  Object {
+    "count": 2,
+    "ids": Array [
+      82,
+      91,
+    ],
+    "url": "https://www.valentinog.com",
+  },
+  Object {
+    "count": 2,
+    "ids": Array [
+      83,
+      101,
+    ],
+    "url": "https://medium.com",
+  },
+  Object {
+    "count": 1,
+    "ids": Array [
+      5,
+    ],
+    "url": "https://www.info.cz",
+  },
+  Object {
+    "count": 1,
+    "ids": Array [
+      65,
+    ],
+    "url": "https://www.youtube.com",
+  },
+  Object {
+    "count": 1,
+    "ids": Array [
+      78,
+    ],
+    "url": "https://github.com",
+  },
+  Object {
+    "count": 1,
+    "ids": Array [
+      103,
+    ],
+    "url": "https://www.sitepoint.com",
+  },
+  Object {
+    "count": 1,
+    "ids": Array [
+      102,
+    ],
+    "url": "https://shinglyu.com",
+  },
+]
+`;

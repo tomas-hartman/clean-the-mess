@@ -1,5 +1,9 @@
 const { setClass } = require("../src/popup/popup");
 
+global.console = {
+    error: jest.fn()
+}
+
 it('should return correct values for "details"', () => {
     const output1 = setClass("details", "lastDisplayed");
     const output2 = setClass("details", "url");
@@ -24,5 +28,6 @@ it('should return correct values for "search"', () => {
 it('should throw error for incorrect value', () => {
     const output1 = setClass("");
 
-    expect(output1).toBe("hidden");
+    expect(output1).toBe("");
+    expect(global.console.error).toHaveBeenCalledWith("Error: this screen type is not defined.");
 });

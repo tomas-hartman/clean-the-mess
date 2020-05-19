@@ -145,7 +145,7 @@ const getSearchDetailsArray = (data) => {
  * @param {array} tabs tabs query array
  * @param {number} numOfLatest optional, is equal to 10 normally
  */
-const getLatestUsed = (tabs, numOfLatest) => {
+const getLatestUsed = (tabs, numOfLatest = 10) => {
     let newTabs = tabs.slice(0);
     let iterationsNum = numOfLatest;
     let latest = [];
@@ -749,12 +749,12 @@ const removeTabsFromOverview = async (indexNumber) => {
     }
 };
 
-const getDetailsArray = (index) => {
-    const ids = tabsOverview[index].ids;
+const getDetailsArray = (overviewId, tabsOverview, data) => {
+    const ids = tabsOverview[overviewId].ids;
     let array = [];
 
     for (let i = 0; i < ids.length; i++) {
-        array.push(...tabs.filter((tab) => tab.id === ids[i]));
+        array.push(...data.filter((tab) => tab.id === ids[i]));
     }
 
     array.sort((a, b) => b.lastAccessed - a.lastAccessed);
@@ -846,12 +846,13 @@ const getHeaderTitle = (id, type, tabsOverview) => {
         try {
             headerTitle = new URL(tabsOverview[id].url).host;
         } catch (error) {
-            headerTitle = tabsOverview[id].url;
+            if(tabsOverview[id] && tabsOverview[id].url){
+                headerTitle = tabsOverview[id].url;
+            } else headerTitle = "";
         }
-    }
-    if (type === "latest") {
+    } else if (type === "latest") {
         headerTitle = `${latestShownCount} longest unused tabs`;
-    }
+    } else headerTitle = null;
 
     return headerTitle;
 };
@@ -868,10 +869,10 @@ const getDetailedArray = (type, props = {}) => {
     let { count, index, data } = props;
 
     let array = [];
-    if (type === "details") {
-        array = getDetailsArray(index);
+    if (type === "details" && data) { // data === __tabs__
+        array = getDetailsArray(index, tabsOverview, data);
     } else if (type === "latest" && count && data) {
-        array = getLatestUsed(data, count); // data === __tabs__
+        array = getLatestUsed(data, count);
     } else if (type === "search" && data) {
         array = getSearchDetailsArray(data);
     } else {
@@ -898,43 +899,73 @@ const setClass = (type, className) => {
     };
 
     try {
-        return dict[type][className];
+        if(dict[type]){
+            return dict[type][className];
+        } else {
+            console.error("Error: this screen type is not defined.");
+            return "";
+        }
     } catch (err) {
         throw err;
     }
 };
 
 /**
+ * Create single detailed item component for both latest and all detailed screens
+ * @param {object} props { itemId, data, type }; data = { id, title, url, date }
+ * @returns {node} <li /> for use with createList() 
+ */
+const createSingleDetailItem = (props) => {
+    let { itemId, data, type } = props;
+    let { id, title, url, date } = data;
+
+    const decodedUrl = decodeURI(url);
+    const blueprint = `
+        <li id="item-${itemId}" class="detail" data-tab-id="${id}">
+            <div class="item-container detail">
+                <div class="item-text-container">
+                    <div class="title detail" title="${title}">${title}</div>
+                    <div class="url detail ${setClass(type,"url")}" title="${decodedUrl}">${decodedUrl}</div>
+                    <div class="last-displayed detail ${setClass(type,"lastDisplayed")}" title="${date}">${date}</div>
+                </div>
+                <div class="item-buttons-container">
+                    <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+                    <div class="remove detail hidden" title="Close tab"></div>
+                    <div class="get-in"></div>
+                </div>
+            </div>
+        </li>
+        `;
+    
+    const node = blueprint ? document.createRange().createContextualFragment(blueprint) : null;
+
+    return node;
+}
+
+/**
  * Main function for generating secondary screen lists
  * Replaces showScreen which replaced showLatestDisplayed() and showDetailedScreen()
  * @param {string} type
+ * @param {array} array of objects. array for type=details is filter from __tabs__, for latest it's different pre-processed
  * @returns {node} ul
  */
 const createList = (type, array) => {
     const ul = document.createElement("ul");
 
-    // Fill in with content
-    for (let i = 0; i < array.length; i++) {
-        const decodedUrl = decodeURI(array[i].url);
-        const text = `
-            <li id="item-${i}" class="detail" data-tab-id="${array[i].id}">
-                <div class="item-container detail">
-                    <div class="item-text-container">
-                        <div class="title detail" title="${array[i].title}">${array[i].title}</div>
-                        <div class="url detail ${setClass(type,"url")}" title="${decodedUrl}">${decodedUrl}</div>
-                        <div class="last-displayed detail ${setClass(type,"lastDisplayed")}" title="${array[i].date}">${array[i].date}</div>
-                    </div>
-                    <div class="item-buttons-container">
-                        <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
-                        <div class="remove detail hidden" title="Close tab"></div>
-                        <div class="get-in"></div>
-                    </div>
-                </div>
-            </li>
-            `;
+    console.log(array);
+    console.log(type);
 
-        if (text) {
-            ul.appendChild(document.createRange().createContextualFragment(text));
+    // Fill in with detailed items
+    for (let i = 0; i < array.length; i++) {
+        const props = {
+            itemId: i,
+            data: array[i],
+            type
+        }
+        const detailItem = createSingleDetailItem(props);
+
+        if(detailItem){
+            ul.appendChild(detailItem);
             addBookmarkStatus(array[i]);
         }
     }
@@ -972,17 +1003,19 @@ const init = async () => {
 
 init();
 
-try{
+try {
     module.exports = { 
         getHeaderTitle, 
         setClass,
+        createSingleDetailItem,
         getDetailedArray,
         getDetailsArray,
         getLatestUsed,
+        getOverview,
         search,
         setFoundCount,
-        tabsOverview
+        tabsOverview,
     };
-} catch(err){
+} catch (err){
     console.log("Popup run in production environment.");
 }
