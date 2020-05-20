@@ -1,6 +1,6 @@
 const { createSingleDetailItem } = require("../src/popup/popup");
 
-it('should render correct detail element for latest', () => {
+it('should render correct detail element for latest (source _tabsOverview_)', () => {
     const data = {
         date: "18. 5. 2020 21:45:35",
         title: "Youtube",
@@ -17,7 +17,7 @@ it('should render correct detail element for latest', () => {
     expect(output).toMatchSnapshot();
 });
 
-it('should render correct detail element for details', () => {
+it('should render correct detail element for details (source _tabs_)', () => {
     const data = {
         "id": 23,
         "index": 2,

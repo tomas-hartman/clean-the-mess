@@ -177,21 +177,39 @@ const getOverview = (tabs) => {
     const tabsOverview = [];
 
     tabs.forEach((tab) => {
-        let url = new URL(tab.url);
-        let originUrl = url.origin;
+        let url = {};
+        let originUrl = "";
 
-        if (originUrl === "null" || url.protocol === "moz-extension:") {
-            switch (url.protocol) {
-                case "about:":
-                case "moz-extension:":
-                    originUrl = "Browser tabs";
-                    break;
-                case "file:":
-                    originUrl = "Opened files";
-                    break;
-                default:
-                    originUrl = "Other tabs";
-                    break;
+        try {
+            url = new URL(tab.url);
+            originUrl = url.origin;
+    
+            if (originUrl === "null" || url.protocol === "moz-extension:") {
+                switch (url.protocol) {
+                    case "about:":
+                    case "moz-extension:":
+                    case "chrome:":
+                        originUrl = "Browser tabs";
+                        break;
+                    case "file:":
+                        originUrl = "Opened files";
+                        break;
+                    case "localhost:":
+                        originUrl = "Localhost";
+                        break;
+                    default:
+                        originUrl = "Other tabs";
+                        break;
+                }
+            }
+        } catch(err){
+            if(tab.url === "localhost"){
+                originUrl = "Localhost";
+            } else if((/^((\d{1,3}.){3}\d{1,3})(:|\/|\s|$)/g).test(tab.url)){
+                const array = tab.url.split(/\:|\//);
+                originUrl = array[0];
+            } else {
+                originUrl = "Other tabs";
             }
         }
 
@@ -216,6 +234,35 @@ const getOverview = (tabs) => {
     return tabsOverview;
 };
 
+
+/**
+ * Returns single overview item component 
+ * @param {object} props { itemId, data }; data = { url, count } ; dat acome from _tabsOverview_
+ * @returns {node} <li /> to be used with createOverviewList()
+ */
+const createSingleOverviewItem = (props) => {
+    let { itemId, data } = props;
+    let { url, count } = data;
+
+    let blueprint = `
+        <li class="url-${itemId} overview-item" data-index-number="${itemId}">
+            <div class="url-container">
+                <div class="main-item-text-container">
+                    <div class="url" title="${url}">${url}</div>
+                    <div class="count">(${count})</div>
+                </div>
+                <div class="item-buttons-container">
+                    <div class="get-in"></div>
+                    <div class="remove hidden" title="Close all tabs with this url"></div>
+                </div>
+            </div>
+        </li>`;
+
+    const node = blueprint ? document.createRange().createContextualFragment(blueprint) : null;
+    
+    return node;
+}
+
 /**
  * Creates overview list
  * @param {array} tabsOverview
@@ -227,24 +274,14 @@ const createOverviewList = (tabsOverview) => {
         ul.setAttribute("id", "list");
 
         for (let i = 0; i < tabsOverview.length; i++) {
-            let tab = tabsOverview[i];
-
-            let text = `<li class="url-${i} overview-item" data-index-number="${i}">
-                                <div class="url-container">
-                                    <div class="main-item-text-container">
-                                        <div class="url" title="${tab.url}">${tab.url}</div>
-                                        <div class="count">(${tab.count})</div>
-                                    </div>
-                                    <div class="item-buttons-container">
-                                        <div class="get-in"></div>
-                                        <div class="remove hidden" title="Close all tabs with this url"></div>
-                                    </div>
-                                </div>
-                            </li>`;
-
-            if (text) {
-                ul.appendChild(document.createRange().createContextualFragment(text));
+            const props = {
+                itemId: i,
+                data: tabsOverview[i],
             }
+
+            const overviewItemComponent = createSingleOverviewItem(props);
+            
+            ul.appendChild(overviewItemComponent);
         }
 
         resolve(ul);
@@ -274,8 +311,9 @@ const createSeparator = () => {
  * Creates header for "latest" and "details"
  * @param {number} index id number from __tabsOverview__ array
  * @param {string} type 'latest' or 'details'
+ * @todo If I put only tabsOverview item in, I could get rid of index
  */
-const createHeaderScreen = (index = null, type) => {
+const createHeaderScreen = (index = null, type, tabsOverview) => {
     // components: back button, title, ?closeAll, ?search
 
     const headerTitle = getHeaderTitle(index, type, tabsOverview);
@@ -1008,6 +1046,8 @@ try {
         getHeaderTitle, 
         setClass,
         createSingleDetailItem,
+        createSingleOverviewItem,
+        createHeaderScreen,
         getDetailedArray,
         getDetailsArray,
         getLatestUsed,

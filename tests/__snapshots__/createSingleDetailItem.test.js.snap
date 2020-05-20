@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correct detail element for details 1`] = `
+exports[`should render correct detail element for details (source _tabs_) 1`] = `
 <DocumentFragment>
   
         
@@ -82,7 +82,7 @@ exports[`should render correct detail element for details 1`] = `
 </DocumentFragment>
 `;
 
-exports[`should render correct detail element for latest 1`] = `
+exports[`should render correct detail element for latest (source _tabsOverview_) 1`] = `
 <DocumentFragment>
   
         

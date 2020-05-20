@@ -21,3 +21,34 @@ it('should not fail if getLatestCount is bigger than tabs.length', () => {
     expect(output).toMatchSnapshot();
     expect(output.length).toBe(tabs.length);
 });
+
+it('should skip pinned items', () => {
+    const sampleMinifiedTabs = [
+        {
+            "id": 6,
+            "index": 0,
+            "windowId": 1,
+            "pinned": true,
+            "status": "complete",
+            "lastAccessed": 1589322068733,
+            "url": "https://www.google.com",
+            "title": "Google.com but pinned",
+        },
+        {
+            "id": 7,
+            "index": 1,
+            "windowId": 1,
+            "pinned": false,
+            "status": "complete",
+            "lastAccessed": 1589322068733,
+            "url": "https://www.google.com",
+            "title": "Google.com",
+        },
+
+    ];
+
+    const output = getLatestUsed(sampleMinifiedTabs, 10);
+
+    expect(output).toMatchSnapshot();
+    expect(output.length).toBe(1);
+});

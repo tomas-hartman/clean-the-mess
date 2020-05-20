@@ -183,3 +183,14 @@ Array [
   },
 ]
 `;
+
+exports[`should skip pinned items 1`] = `
+Array [
+  Object {
+    "date": "2020-5-13 0:21:08",
+    "id": 7,
+    "title": "Google.com",
+    "url": "https://www.google.com",
+  },
+]
+`;
