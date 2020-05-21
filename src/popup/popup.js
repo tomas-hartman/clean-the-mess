@@ -15,94 +15,6 @@ let windows = [];
 let tabsOverview = []; // fills with getOverview
 const latestShownCount = 10;
 
-// console.log(tabs);
-
-/**
- * @todo Load this from external module!
- * @param {array} data __tabs__ general array with all
- * @param {string} input
- */
-const search = (data, input) => {
-    const replaceLetters = (match, _offset, _string) => {
-        const before = "žščřďťňáéíóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęłżőűãõåø".split("");
-        const after = "zscrdtnaeiouiuaeioullrcnoszeigcstaeiouaeuaelzouaoao".split("");
-        const index = before.indexOf(match);
-
-        return after[index];
-    };
-
-    /**
-     * Returns clean url without params
-     * @returns {array}
-     */
-    const cleanUrl = (url) => {
-        try {
-            const urlObj = new URL(url); // -> zjistit, co udělají about:debugging a další! || performance?
-            const protocol = `${urlObj.protocol}//`;
-
-            let output = urlObj.href.substring(protocol.length); // -> "code.visualstudio.com/blogs/2020/05/06/github-issues-integration"
-            output = output.split(/\W/); // performance? // ignore special chars / . - etc.
-
-            return output;
-        } catch (err) {
-            console.error(err);
-            return [];
-        }
-    };
-
-    /**
-     *
-     * @param {string} string
-     * @returns {array}
-     */
-    const standardize = (string) => {
-        try {
-            let output = string.toLowerCase();
-            output = output.replace(
-                /[žščřďťňáéíóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęłżőűãõåø]/g,
-                replaceLetters
-            );
-            output = output.split(/\W/); // ignore special characters
-            output = output.filter((item) => item !== ""); // ignore empty strings (from special chars etc.)
-
-            return output;
-        } catch (err) {
-            console.error(err);
-            return [];
-        }
-    };
-
-    // standardize data
-    let stdInput = standardize(input); // @todo ignore non word chars /\W/
-    let output = [];
-
-    /**
-     * Second algorithm, avg. 203 items / 3.2 s
-     * @param {array} data __tabs__
-     * @param {array} stdInput array of strings, received from standardize()
-     */
-    const performSearch = (data, stdInput) => {
-        output = data.filter((item) => {
-            const title = standardize(item.title);
-            const url = cleanUrl(item.url);
-            const string = url + "," + title;
-
-            if (stdInput.length === 1 && string.includes(stdInput[0])) return true;
-            for (let i = 0; i < stdInput.length; i++) {
-                if (!string.includes(stdInput[i])) {
-                    break;
-                }
-                if (i === stdInput.length - 1) {
-                    return true;
-                }
-            }
-        });
-    };
-    performSearch(data, stdInput);
-
-    return output;
-};
-
 const getSearchDetailsArray = (data) => {
     const newTabs = data.slice(0);
     const foundItems = [];
@@ -428,7 +340,7 @@ const createHeader = (screenId, props = {}) => {
             break;
         case "details":
         case "latest":
-            contentArr = createHeaderScreen(index, screenId);
+            contentArr = createHeaderScreen(index, screenId, tabsOverview);
             break;
         default:
             break;
@@ -1041,7 +953,7 @@ const init = async () => {
 
 init();
 
-try {
+// try {
     module.exports = { 
         getHeaderTitle, 
         setClass,
@@ -1052,10 +964,9 @@ try {
         getDetailsArray,
         getLatestUsed,
         getOverview,
-        search,
         setFoundCount,
         tabsOverview,
     };
-} catch (err){
-    console.log("Popup run in production environment.");
-}
+// } catch (err){
+//     console.log("Popup run in production environment.");
+// }
