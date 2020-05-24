@@ -7,9 +7,14 @@
 
 // search.perform() initiates the search
 const search = {
+    lettersToReplace: {
+        before: "žščřďťňáéíýóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęįųłżőűãõåøķīāūßė",
+        after:  "zscrdtnaeiyouiuaeioullrcnoszeigcstaeiouaeuaeiulzouaoaokiauße"
+    },
+
     replaceLetters: function (match, _offset, _string) {
-        const before = "žščřďťňáéíýóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęįųłżőűãõåøķīāūßė".split("");
-        const after =  "zscrdtnaeiyouiuaeioullrcnoszeigcstaeiouaeuaeiulzouaoaokiauße".split("");
+        const before = search.lettersToReplace.before.split("");
+        const after = search.lettersToReplace.after.split("");
         const index = before.indexOf(match);
 
         return after[index];
@@ -49,12 +54,16 @@ const search = {
      */
     standardize: function (string){
         try {
+            const regex = new RegExp(`[${search.lettersToReplace.before}]`, "g");
             let output = string.toLowerCase();
             output = output.replace(
-                /[žščřďťňáéíýóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęįųłżőűãõåøķīāūßė]/g,
+                // /[žščřďťňáéíýóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęįųłżőűãõåøķīāūßė]/g,
+                regex,
                 this.replaceLetters
             );
-            output = output.split(/\W/); // ignore special characters
+            // output = output.split(/\W/); // ignore special characters
+            // output = output.split(/[\[\]<>!?:@#\$%\^\&*\)\(+=._-\s\,“„'"]/); // other, more general 
+            output = output.split(/[^\wß]/); // ignore special characters except ß
             output = output.filter((item) => item !== ""); // ignore empty strings (from special chars etc.)
 
             return output;
