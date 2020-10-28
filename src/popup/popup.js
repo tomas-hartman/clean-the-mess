@@ -1,3 +1,5 @@
+import search from "../search/search.js";
+
 const locale = {
     string: "cs-CZ",
     options: {
@@ -416,7 +418,7 @@ const setListenersSearch = (node) => {
     inputElm.addEventListener("keyup", (event) => {
         clearTimeout(timeout);
         timeout = setTimeout(async () => {
-            const found = search(tabs, event.target.value);
+            const found = search.perform(tabs, event.target.value);
             const bodyContainer = await createBody("search", { data: found });
             const oldBodyContainer = document.querySelector(
                 "#search > .body-container"
@@ -953,6 +955,8 @@ const init = async () => {
     tabs = await browser.tabs.query({ currentWindow: true });
     windows = await browser.windows.getAll()
     tabsOverview = getOverview(tabs);
+
+    browser.runtime.sendMessage("hello world I am sending you a message!")
 
     const initialDest = document.querySelector("#main-container");
     const screen = await createScreen("overview");

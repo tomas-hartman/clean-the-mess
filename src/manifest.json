@@ -11,6 +11,10 @@
         "tabs",
         "bookmarks"
     ],
+
+    "background": {
+      "scripts": ["background/background.js"]
+    },
     
     "browser_action": {
         "browser_style": false,
