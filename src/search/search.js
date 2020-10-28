@@ -100,6 +100,4 @@ const search = {
     }
 }
 
-// module.exports = { search };
-
 export default search;

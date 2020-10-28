@@ -1,4 +1,5 @@
-const { search } = require("../src/search/search");
+import search from "../src/search/search";
+
 const { tabs, sampleMinifiedTabs } = require("./__sampleData__/tabs");
 
 describe('Search main functionality', () => {
