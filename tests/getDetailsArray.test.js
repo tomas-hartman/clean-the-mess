@@ -1,4 +1,5 @@
 const { getDetailsArray } = require("../src/popup/popup");
+
 const { tabs } = require("./__sampleData__/tabs");
 const { tabsOverview } = require("./__sampleData__/tabsOverview");
 
