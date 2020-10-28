@@ -151,7 +151,7 @@ const getOverview = (tabs) => {
 
 /**
  * Returns single overview item component 
- * @param {object} props { itemId, data }; data = { url, count } ; dat acome from _tabsOverview_
+ * @param {object} props { itemId, data }; data = { url, count } ; data come from _tabsOverview_
  * @returns {node} <li /> to be used with createOverviewList()
  */
 const createSingleOverviewItem = (props) => {
@@ -167,6 +167,7 @@ const createSingleOverviewItem = (props) => {
                 </div>
                 <div class="item-buttons-container">
                     <div class="get-in"></div>
+                    <div class="bookmark-all hidden" title="Bookmark and close all items">BA</div>
                     <div class="remove hidden" title="Close all tabs with this url"></div>
                 </div>
             </div>
@@ -442,6 +443,7 @@ const setListenersOverview = (node) => {
                 .closest("li")
                 .querySelector(".item-buttons-container");
             parentElm.children[1].classList.remove("hidden");
+            parentElm.children[2].classList.remove("hidden");
         }
     };
     node.onmouseout = (e) => {
@@ -451,28 +453,52 @@ const setListenersOverview = (node) => {
                 .querySelector(".item-buttons-container");
             parentElm.children[0].classList.remove("hidden");
             parentElm.children[1].classList.add("hidden");
+            parentElm.children[2].classList.add("hidden");
         }
     };
 
     node.onclick = async (e) => {
-        if (e.target.classList.contains("remove")) {
-            const index = e.target.closest("li").dataset.indexNumber;
-            await removeTabsFromOverview(index);
+        const its = e.target;
+        const tabsOverviewId = parseInt(its.closest("li").dataset.indexNumber);
+
+        if (its.classList.contains("remove")) {
+            await removeTabsFromOverview(tabsOverviewId);
+
             console.log("Tabs removed!");
         }
-        if (
-            !!e.target.closest(".overview-item") &&
-            !e.target.classList.contains("remove")
-        ) {
-            const index = parseInt(e.target.closest("li").dataset.indexNumber);
 
-            const screen = await createScreen("details", { index });
+        if (its.classList.contains("bookmark-all")){
+
+            browser.runtime.sendMessage({type: "bookmark-all", data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }})
+
+            console.log("Bookmark all! Still some todos!");
+        }
+
+        if (!!its.closest(".overview-item") && !its.classList.contains("remove") && !its.classList.contains("bookmark-all")) {
+
+            const screen = await createScreen("details", { index: tabsOverviewId });
             const dest = document.querySelector("#main-container");
             renderScreen(screen, dest);
 
             playTransition();
         }
     };
+
+    /**
+     * Listeners to messages from from background.js
+     */
+    browser.runtime.onMessage.addListener(async (message) => {
+        switch (message.type) {
+            case "items-bookmarked":
+                await removeTabsFromOverview(message.data.index);
+                break;
+        
+            default:
+                console.warn("Non-standard message received from background.js:");
+                console.warn(message);
+                break;
+        }
+    })
 };
 
 const playTransition = () => {
@@ -978,6 +1004,7 @@ init();
         getLatestUsed,
         getOverview,
         setFoundCount,
+        bookmarkTab,
         tabsOverview,
     };
 // } catch (err){
