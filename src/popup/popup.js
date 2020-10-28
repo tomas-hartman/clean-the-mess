@@ -383,6 +383,15 @@ const setListenersHeader = (header, index) => {
             renderScreen(screen, dest);
 
             playTransition();
+
+            // Focus on searchbar
+            const setFocusOnSearchBar = () => {
+                document.querySelector("#search-input").focus();
+                document.querySelector("#search-input").select();
+            }
+
+            setTimeout(setFocusOnSearchBar, 0);
+
         }
     };
 };
