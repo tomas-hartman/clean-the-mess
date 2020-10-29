@@ -17,6 +17,21 @@ let windows = [];
 let tabsOverview = []; // fills with getOverview
 const latestShownCount = 10;
 
+
+/**
+ * Converts string to html-safe code. Useful for titles to be displayed.
+ * @see https://stackoverflow.com/a/57448862/11243775
+ * @param {string} str 
+ */
+const escapeHTML = str => str.replace(/[&<>'"]/g, 
+tag => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;'
+  }[tag]));
+
 const getSearchDetailsArray = (data) => {
     const newTabs = data.slice(0);
     const foundItems = [];
@@ -158,6 +173,17 @@ const createSingleOverviewItem = (props) => {
     let { itemId, data } = props;
     let { url, count } = data;
 
+    /**
+     * I want to render bookmark button conditionally
+     * @param {string} _url 
+     */
+    const getBookmarkAllButton = (_url) => {
+        const nonBookmarkablesList = ["Browser tabs", "Opened files"];
+        if(nonBookmarkablesList.includes(_url)) return "";
+
+        return `<div class="bookmark-all hidden" title="Bookmark and close all items"></div>`;
+    }
+
     let blueprint = `
         <li class="url-${itemId} overview-item" data-index-number="${itemId}">
             <div class="url-container">
@@ -167,7 +193,7 @@ const createSingleOverviewItem = (props) => {
                 </div>
                 <div class="item-buttons-container">
                     <div class="get-in"></div>
-                    <div class="bookmark-all hidden" title="Bookmark and close all items">BA</div>
+                    ${getBookmarkAllButton(data.url)}
                     <div class="remove hidden" title="Close all tabs with this url"></div>
                 </div>
             </div>
@@ -443,7 +469,7 @@ const setListenersOverview = (node) => {
                 .closest("li")
                 .querySelector(".item-buttons-container");
             parentElm.children[1].classList.remove("hidden");
-            parentElm.children[2].classList.remove("hidden");
+            parentElm.children[2]?.classList.remove("hidden");
         }
     };
     node.onmouseout = (e) => {
@@ -453,7 +479,7 @@ const setListenersOverview = (node) => {
                 .querySelector(".item-buttons-container");
             parentElm.children[0].classList.remove("hidden");
             parentElm.children[1].classList.add("hidden");
-            parentElm.children[2].classList.add("hidden");
+            parentElm.children[2]?.classList.add("hidden");
         }
     };
 
@@ -906,12 +932,12 @@ const createSingleDetailItem = (props) => {
     let { itemId, data, type } = props;
     let { id, title, url, date } = data;
 
-    const decodedUrl = decodeURI(url);
+    const decodedUrl = escapeHTML(decodeURI(url));
     const blueprint = `
         <li id="item-${itemId}" class="detail" data-tab-id="${id}">
             <div class="item-container detail">
                 <div class="item-text-container">
-                    <div class="title detail" title="${title}">${title}</div>
+                    <div class="title detail" title="${title}">${escapeHTML(title)}</div>
                     <div class="url detail ${setClass(type,"url")}" title="${decodedUrl}">${decodedUrl}</div>
                     <div class="last-displayed detail ${setClass(type,"lastDisplayed")}" title="${date}">${date}</div>
                 </div>
@@ -981,8 +1007,6 @@ const init = async () => {
     tabs = await browser.tabs.query({ currentWindow: true });
     windows = await browser.windows.getAll()
     tabsOverview = getOverview(tabs);
-
-    browser.runtime.sendMessage("hello world I am sending you a message!")
 
     const initialDest = document.querySelector("#main-container");
     const screen = await createScreen("overview");
