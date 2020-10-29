@@ -49,6 +49,12 @@ exports[`should return correct component 1`] = `
         
                     
         <div
+          class="bookmark-all hidden"
+          title="Bookmark and close all items"
+        />
+        
+                    
+        <div
           class="remove hidden"
           title="Close all tabs with this url"
         />

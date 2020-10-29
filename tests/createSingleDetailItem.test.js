@@ -57,3 +57,28 @@ it('should render correct detail element for details (source _tabs_)', () => {
 
     expect(output).toMatchSnapshot();
 });
+
+it('should render items with dangerous characters (<div>) in title, safely', () => {
+  const data = {
+    "id": 22,
+    "index": 3,
+    "windowId": 1,
+    "pinned": false,
+    "lastAccessed": 1589822256789,
+    "url": "https://www.example.com/?q=1#<div>",
+    "title": "<div> Example 1",
+  }
+
+  const props = {
+    data,
+    itemId: 1,
+    type: "details"
+}
+
+  const output = createSingleDetailItem(props);
+
+  // There should not appear unexpected <div> generated from title
+  expect(output.querySelector(".item-text-container").children.length).toBe(3);
+  expect(output.querySelector(".title").children.length).toBe(0);
+  expect(output.querySelector(".url").children.length).toBe(0);
+});

@@ -201,7 +201,8 @@ li>div {
 
 .remove,
 .get-in,
-.bookmark {
+.bookmark,
+.bookmark-all {
   width: 20px;
   height: 20px;
   align-self: center;
@@ -218,12 +219,14 @@ li>div {
 }
 
 .remove:hover,
-.bookmark:hover {
+.bookmark:hover,
+.bookmark-all:hover {
   background-color: var(--color-emphasis-light);
 }
 
 .remove:active,
-.bookmark:active {
+.bookmark:active,
+.bookmark-all:active {
   background-color: var(--color-emphasis-dark);
 }
 
@@ -257,6 +260,13 @@ li>div {
   background-repeat: no-repeat;
   background-position: center;
   transform: rotate(180deg);
+}
+
+.bookmark-all {
+  background-image: url(../icons/ico-bookmark-close.svg);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* DETAILS */

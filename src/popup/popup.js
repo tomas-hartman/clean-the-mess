@@ -1,3 +1,5 @@
+import search from "../search/search.js";
+
 const locale = {
     string: "cs-CZ",
     options: {
@@ -14,6 +16,21 @@ let tabs = [];
 let windows = [];
 let tabsOverview = []; // fills with getOverview
 const latestShownCount = 10;
+
+
+/**
+ * Converts string to html-safe code. Useful for titles to be displayed.
+ * @see https://stackoverflow.com/a/57448862/11243775
+ * @param {string} str 
+ */
+const escapeHTML = str => str.replace(/[&<>'"]/g, 
+tag => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;'
+  }[tag]));
 
 const getSearchDetailsArray = (data) => {
     const newTabs = data.slice(0);
@@ -149,12 +166,23 @@ const getOverview = (tabs) => {
 
 /**
  * Returns single overview item component 
- * @param {object} props { itemId, data }; data = { url, count } ; dat acome from _tabsOverview_
+ * @param {object} props { itemId, data }; data = { url, count } ; data come from _tabsOverview_
  * @returns {node} <li /> to be used with createOverviewList()
  */
 const createSingleOverviewItem = (props) => {
     let { itemId, data } = props;
     let { url, count } = data;
+
+    /**
+     * I want to render bookmark button conditionally
+     * @param {string} _url 
+     */
+    const getBookmarkAllButton = (_url) => {
+        const nonBookmarkablesList = ["Browser tabs", "Opened files"];
+        if(nonBookmarkablesList.includes(_url)) return "";
+
+        return `<div class="bookmark-all hidden" title="Bookmark and close all items"></div>`;
+    }
 
     let blueprint = `
         <li class="url-${itemId} overview-item" data-index-number="${itemId}">
@@ -165,6 +193,7 @@ const createSingleOverviewItem = (props) => {
                 </div>
                 <div class="item-buttons-container">
                     <div class="get-in"></div>
+                    ${getBookmarkAllButton(data.url)}
                     <div class="remove hidden" title="Close all tabs with this url"></div>
                 </div>
             </div>
@@ -416,7 +445,7 @@ const setListenersSearch = (node) => {
     inputElm.addEventListener("keyup", (event) => {
         clearTimeout(timeout);
         timeout = setTimeout(async () => {
-            const found = search(tabs, event.target.value);
+            const found = search.perform(tabs, event.target.value);
             const bodyContainer = await createBody("search", { data: found });
             const oldBodyContainer = document.querySelector(
                 "#search > .body-container"
@@ -440,6 +469,7 @@ const setListenersOverview = (node) => {
                 .closest("li")
                 .querySelector(".item-buttons-container");
             parentElm.children[1].classList.remove("hidden");
+            parentElm.children[2]?.classList.remove("hidden");
         }
     };
     node.onmouseout = (e) => {
@@ -449,28 +479,52 @@ const setListenersOverview = (node) => {
                 .querySelector(".item-buttons-container");
             parentElm.children[0].classList.remove("hidden");
             parentElm.children[1].classList.add("hidden");
+            parentElm.children[2]?.classList.add("hidden");
         }
     };
 
     node.onclick = async (e) => {
-        if (e.target.classList.contains("remove")) {
-            const index = e.target.closest("li").dataset.indexNumber;
-            await removeTabsFromOverview(index);
+        const its = e.target;
+        const tabsOverviewId = parseInt(its.closest("li").dataset.indexNumber);
+
+        if (its.classList.contains("remove")) {
+            await removeTabsFromOverview(tabsOverviewId);
+
             console.log("Tabs removed!");
         }
-        if (
-            !!e.target.closest(".overview-item") &&
-            !e.target.classList.contains("remove")
-        ) {
-            const index = parseInt(e.target.closest("li").dataset.indexNumber);
 
-            const screen = await createScreen("details", { index });
+        if (its.classList.contains("bookmark-all")){
+
+            browser.runtime.sendMessage({type: "bookmark-all", data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }})
+
+            console.log("Bookmark all! Still some todos!");
+        }
+
+        if (!!its.closest(".overview-item") && !its.classList.contains("remove") && !its.classList.contains("bookmark-all")) {
+
+            const screen = await createScreen("details", { index: tabsOverviewId });
             const dest = document.querySelector("#main-container");
             renderScreen(screen, dest);
 
             playTransition();
         }
     };
+
+    /**
+     * Listeners to messages from from background.js
+     */
+    browser.runtime.onMessage.addListener(async (message) => {
+        switch (message.type) {
+            case "items-bookmarked":
+                await removeTabsFromOverview(message.data.index);
+                break;
+        
+            default:
+                console.warn("Non-standard message received from background.js:");
+                console.warn(message);
+                break;
+        }
+    })
 };
 
 const playTransition = () => {
@@ -878,12 +932,12 @@ const createSingleDetailItem = (props) => {
     let { itemId, data, type } = props;
     let { id, title, url, date } = data;
 
-    const decodedUrl = decodeURI(url);
+    const decodedUrl = escapeHTML(decodeURI(url));
     const blueprint = `
         <li id="item-${itemId}" class="detail" data-tab-id="${id}">
             <div class="item-container detail">
                 <div class="item-text-container">
-                    <div class="title detail" title="${title}">${title}</div>
+                    <div class="title detail" title="${title}">${escapeHTML(title)}</div>
                     <div class="url detail ${setClass(type,"url")}" title="${decodedUrl}">${decodedUrl}</div>
                     <div class="last-displayed detail ${setClass(type,"lastDisplayed")}" title="${date}">${date}</div>
                 </div>
@@ -974,6 +1028,7 @@ init();
         getLatestUsed,
         getOverview,
         setFoundCount,
+        bookmarkTab,
         tabsOverview,
     };
 // } catch (err){
