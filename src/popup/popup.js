@@ -297,20 +297,20 @@ const createHeaderSearch = () => {
                     </div>
                 </div>                            
             </div>`;
-    // const closeAllDivStr = type !== "latest" ? `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>` : "";
+    const closeAllDivStr = `<div class="close-all btn-inactive" title="Close all listed tabs"></div>`;
     const separator = createSeparator(); // node!
 
     const headerDivStr = `
             <div id="header" class="control">
                 ${backBtnStr}
                 ${headerTitleDivStr}
+                ${closeAllDivStr}
             </div>
         `;
 
     const headerDiv =
         headerDivStr &&
         document.createRange().createContextualFragment(headerDivStr);
-    //   headerDiv.querySelector("#search-input").autofocus = true;
     const header = [headerDiv, separator];
 
     return header;
@@ -381,21 +381,32 @@ const createHeader = (screenId, props = {}) => {
         header.firstChild.append(elm);
     });
 
-    setListenersHeader(header, index);
+    setListenersHeader(header, index, screenId);
 
     return header;
 };
 
-const setListenersHeader = (header, index) => {
+const setListenersHeader = (header, index, screenId) => {
     header.firstChild.onclick = async (e) => {
         if (e.target.classList.contains("back")) {
             closeScreen();
         }
-        if (e.target.closest(".close-all") && (index || index === 0)) {
-            // console.log(index);
-            await removeTabsFromOverview(index);
+        if (e.target.closest(".close-all")) {
+            /**
+             * Close items from overview. Index = overviewItemId
+             */
+            if(screenId === "details" && (index || index === 0)) {
+                await removeTabsFromOverview(index);
+    
+                await refreshOverviewScreen(); // autoclose
+            }
 
-            await refreshOverviewScreen(); // autoclose
+            /**
+             * Close items from search
+             */
+            if(screenId === "search") {
+                await removeTabsFromSearch();
+            }
         }
         if (e.target.closest("#ten-unused")) {
             const screen = await createScreen("latest");
@@ -439,25 +450,13 @@ const setFoundCount = (count) => {
 
 const setListenersSearch = (node) => {
     const inputElm = node.querySelector("#search-input");
-    const dest = node.querySelector(".body-container").parentNode;
     let timeout; // waits until next char is typed in before it renders; default 200 ms
 
     inputElm.addEventListener("keyup", (event) => {
         clearTimeout(timeout);
         timeout = setTimeout(async () => {
             const found = search.perform(tabs, event.target.value);
-            const bodyContainer = await createBody("search", { data: found });
-            const oldBodyContainer = document.querySelector(
-                "#search > .body-container"
-            );
-
-            setFoundCount(found.length);
-
-            if (oldBodyContainer) {
-                oldBodyContainer.remove();
-            }
-
-            renderScreen(bodyContainer, dest);
+            await refreshSearchScreen(found);
         }, 200);
     });
 };
@@ -746,6 +745,28 @@ const refreshOverviewScreen = async (props = {}) => {
 };
 
 /**
+ * Refreshes searchScreen, needs to include result of search.perform of []
+ * @param {object} data Data which should be used in search query; usually result of search.perform()
+ */
+const refreshSearchScreen = async (data) => {
+    const bodyContainer = await createBody("search", { data });
+    const oldBodyContainer = document.querySelector(
+        "#search > .body-container"
+    );
+    const dest = oldBodyContainer.parentNode;
+    const hasData = !!data[0];
+
+    setFoundCount(data.length);
+    toggleButtonActive(".close-all", hasData);
+
+    if (oldBodyContainer) {
+        oldBodyContainer.remove();
+    }
+
+    renderScreen(bodyContainer, dest);
+}
+
+/**
  * @param {element} target
  * @param {*} indexNumber tabsOverview index number
  */
@@ -761,6 +782,24 @@ const removeTabsFromOverview = async (indexNumber) => {
         await refreshOverviewData(indexNumber);
     }
 };
+
+/**
+ * Removes tabs from search screen
+ */
+const removeTabsFromSearch = async () => {
+    const lis = Array.from(document.querySelectorAll("#search .body-container li"));
+    const ids = lis.map((item) => {
+        if(item.dataset.tabId) {
+            return parseInt(item.dataset.tabId, 10)    
+        } else return null;
+    });
+
+    if(ids[0] && confirm(`Are you sure you want to close ${ids.length} tabs?`)){
+        await browser.tabs.remove(ids);
+        tabs = await browser.tabs.query({ currentWindow: true });
+        await refreshSearchScreen([]);
+    }
+}
 
 const getDetailsArray = (overviewId, tabsOverview, data) => {
     const ids = tabsOverview[overviewId].ids;
@@ -895,6 +934,11 @@ const getDetailedArray = (type, props = {}) => {
     return array;
 };
 
+/**
+ * Handles which details should be displayed for given type of screen
+ * @param {string} type 
+ * @param {string} className 
+ */
 const setClass = (type, className) => {
     const dict = {
         details: {
@@ -922,6 +966,20 @@ const setClass = (type, className) => {
         throw err;
     }
 };
+
+/**
+ * Toggles button element's class, so it should be inactive or active
+ * @param {string} className class of the button element
+ * @param {boolean} isActive defines whether element with given className should contain class btn-inactive or not
+ */
+const toggleButtonActive = (className, isActive) => {
+    const element = document.querySelector(`${className}`);
+    const inactiveClassName = "btn-inactive";
+
+    if(isActive) {
+        element.classList.remove(inactiveClassName);
+    } else element.classList.add(inactiveClassName);
+}
 
 /**
  * Create single detailed item component for both latest and all detailed screens
