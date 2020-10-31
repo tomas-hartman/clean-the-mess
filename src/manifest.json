@@ -9,7 +9,8 @@
     "permissions": [
         "activeTab",
         "tabs",
-        "bookmarks"
+        "bookmarks",
+        "contextMenus"
     ],
 
     "background": {

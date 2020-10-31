@@ -105,6 +105,31 @@ const handleBookmarkAll = async (_data) => {
 }
 
 /**
+ * Handle context menu
+ */
+browser.contextMenus.create({
+    id: "tab-click",
+    title: "Close all other similar tabs",
+    // title: "Close other tabs on this website",
+    // title: "Close other similar tabs",
+    // title: "Close similar tabs",
+    contexts: ["tab"]
+});
+
+/**
+ * Listeners to contextMenu
+ */
+browser.contextMenus.onClicked.addListener((info, tab) => {
+    switch (info.menuItemId) {
+        case "tab-click":
+            console.log("info: ", info);
+            console.log("tab: ", tab); // odtud můžu vzít url a následně vyfiltrovat tabsOverview a ty ostatní zavřít
+            break;
+        // ...
+    }
+});
+
+/**
  * Listeners to messages from popup.js
  * Popup messages handler. Handles how should be messages from popup.js treated.
  * 
