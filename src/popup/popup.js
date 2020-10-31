@@ -467,8 +467,8 @@ const setListenersOverview = (node) => {
             const parentElm = e.target
                 .closest("li")
                 .querySelector(".item-buttons-container");
-            parentElm.children[1].classList.remove("hidden");
-            parentElm.children[2]?.classList.remove("hidden");
+            parentElm.querySelector(".bookmark-all")?.classList.remove("hidden");
+            parentElm.querySelector(".remove").classList.remove("hidden");
         }
     };
     node.onmouseout = (e) => {
@@ -476,9 +476,9 @@ const setListenersOverview = (node) => {
             const parentElm = e.target
                 .closest("li")
                 .querySelector(".item-buttons-container");
-            parentElm.children[0].classList.remove("hidden");
-            parentElm.children[1].classList.add("hidden");
-            parentElm.children[2]?.classList.add("hidden");
+            parentElm.querySelector(".get-in").classList.remove("hidden");
+            parentElm.querySelector(".bookmark-all")?.classList.add("hidden");
+            parentElm.querySelector(".remove").classList.add("hidden");
         }
     };
 
@@ -551,9 +551,9 @@ const setListenersScreen = (node, array, params = {}) => {
             const parentElm = e.target
                 .closest("li")
                 .querySelector(".item-buttons-container");
-            parentElm.children[0].classList.remove("hidden");
-            parentElm.children[1].classList.remove("hidden");
-            parentElm.children[2].classList.add("hidden");
+            parentElm.querySelector(".bookmark-close")?.classList.remove("hidden"); // .bookmark-close
+            parentElm.querySelector(".remove").classList.remove("hidden"); // .remove
+            parentElm.querySelector(".get-in").classList.add("hidden"); // .get-in
         }
     };
 
@@ -562,9 +562,9 @@ const setListenersScreen = (node, array, params = {}) => {
             const parentElm = e.target
                 .closest("li")
                 .querySelector(".item-buttons-container");
-            parentElm.children[0].classList.add("hidden");
-            parentElm.children[1].classList.add("hidden");
-            parentElm.children[2].classList.remove("hidden");
+            parentElm.querySelector(".bookmark-close")?.classList.add("hidden");
+            parentElm.querySelector(".remove").classList.add("hidden");
+            parentElm.querySelector(".get-in").classList.remove("hidden");
         }
     };
 
@@ -815,6 +815,9 @@ const getDetailsArray = (overviewId, tabsOverview, data) => {
 };
 
 const addBookmarkStatus = async (item) => {
+    // I will not check for duplicate items with some special protocols in bookmarks
+    if(hasIgnoredProtocol(item.url)) return;
+
     const bookmarks = await browser.bookmarks.search({ url: item.url });
     const elm = document.querySelector(`li[data-tab-id='${item.id}'] .bookmark`);
 
@@ -982,6 +985,19 @@ const toggleButtonActive = (className, isActive) => {
 }
 
 /**
+ * Checks if url has some of the special protocols, that do not work well with certain features and APIs such as bookmarks
+ * @param {string} url 
+ */
+const hasIgnoredProtocol = (url) => {
+    const ignoredProtocols = ["about:", "moz-extension:", "chrome:", "file:"];
+    const { protocol } = new URL(url);
+
+    if(ignoredProtocols.includes(protocol)) {
+        return true;
+    } else return false;
+}
+
+/**
  * Create single detailed item component for both latest and all detailed screens
  * @param {object} props { itemId, data, type }; data = { id, title, url, date }
  * @returns {node} <li /> for use with createList() 
@@ -989,6 +1005,12 @@ const toggleButtonActive = (className, isActive) => {
 const createSingleDetailItem = (props) => {
     let { itemId, data, type } = props;
     let { id, title, url, date } = data;
+
+    const getBookmarkAndCloseButton = (_url) => {
+        if(hasIgnoredProtocol(_url)) return "";
+
+        return `<div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>`
+    }
 
     const decodedUrl = escapeHTML(decodeURI(url));
     const blueprint = `
@@ -1000,7 +1022,7 @@ const createSingleDetailItem = (props) => {
                     <div class="last-displayed detail ${setClass(type,"lastDisplayed")}" title="${date}">${date}</div>
                 </div>
                 <div class="item-buttons-container">
-                    <div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>
+                    ${getBookmarkAndCloseButton(url)}
                     <div class="remove detail hidden" title="Close tab"></div>
                     <div class="get-in"></div>
                 </div>
@@ -1022,9 +1044,6 @@ const createSingleDetailItem = (props) => {
  */
 const createList = (type, array) => {
     const ul = document.createElement("ul");
-
-    console.log(array);
-    console.log(type);
 
     // Fill in with detailed items
     for (let i = 0; i < array.length; i++) {
