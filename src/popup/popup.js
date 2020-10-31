@@ -37,13 +37,13 @@ const getSearchDetailsArray = (data) => {
     const foundItems = [];
 
     /* 
-          For each item from data create an object with:
-          { id, url, title, date}
-  
-          and sort them by date
-  
-          if data = [], then return null or stg
-          */
+        For each item from data create an object with:
+        { id, url, title, date}
+
+        and sort them by date
+
+        if data = [], then return null or stg
+    */
 
     for (let i = 0; i < data.length; i++) {
         if (newTabs[i].pinned) continue;
@@ -514,7 +514,7 @@ const setListenersOverview = (node) => {
      */
     browser.runtime.onMessage.addListener(async (message) => {
         switch (message.type) {
-            case "items-bookmarked":
+            case "success-items-bookmarked":
                 await removeTabsFromOverview(message.data.index);
                 break;
         

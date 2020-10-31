@@ -101,7 +101,7 @@ const handleBookmarkAll = async (_data) => {
         await mergeBookmarksInFolder(overviewObject.ids, searchResults, folderName);
     }
 
-    browser.runtime.sendMessage({ type: "items-bookmarked", data: { index }});
+    browser.runtime.sendMessage({ type: "success-items-bookmarked", data: { index }});
 }
 
 /**
@@ -119,7 +119,7 @@ browser.contextMenus.create({
 /**
  * Listeners to contextMenu
  */
-browser.contextMenus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
     switch (info.menuItemId) {
         case "tab-click":
             console.log("info: ", info);
