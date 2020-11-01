@@ -756,7 +756,7 @@ const refreshSearchScreen = async (data) => {
     const dest = oldBodyContainer.parentNode;
     const hasData = !!data[0];
 
-    setFoundCount(data.length);
+    setFoundCount(data.filter((item) => !item.pinned).length);
     toggleButtonActive(".close-all", hasData);
 
     if (oldBodyContainer) {
