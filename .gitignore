@@ -3,3 +3,6 @@ log
 src/icons/src
 .vscode
 coverage/
+
+# Keep only specific builds
+build/**/
