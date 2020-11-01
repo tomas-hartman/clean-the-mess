@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should return correct component 1`] = `
+<DocumentFragment>
+  
+        
+  <li
+    class="url-1 overview-item"
+    data-index-number="1"
+  >
+    
+            
+    <div
+      class="url-container"
+    >
+      
+                
+      <div
+        class="main-item-text-container"
+      >
+        
+                    
+        <div
+          class="url"
+          title="https://jestjs.io"
+        >
+          https://jestjs.io
+        </div>
+        
+                    
+        <div
+          class="count"
+        >
+          (3)
+        </div>
+        
+                
+      </div>
+      
+                
+      <div
+        class="item-buttons-container"
+      >
+        
+                    
+        <div
+          class="get-in"
+        />
+        
+                    
+        <div
+          class="bookmark-all hidden"
+          title="Bookmark and close all items"
+        />
+        
+                    
+        <div
+          class="remove hidden"
+          title="Close all tabs with this url"
+        />
+        
+                
+      </div>
+      
+            
+    </div>
+    
+        
+  </li>
+</DocumentFragment>
+`;

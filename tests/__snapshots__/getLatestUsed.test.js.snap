@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not fail if getLatestCount is bigger than tabs.length 1`] = `
+Array [
+  Object {
+    "date": "2020-5-13 0:21:08",
+    "id": 5,
+    "title": "Zahraniční filmaři Česko milují. Máme tu jen jeden handicap, říkají producenti | info.cz",
+    "url": "https://www.info.cz/cesko/zahranicni-filmari-cesko-miluji-mame-tu-jen-jeden-handicap-rikaji-producenti-44262.html",
+  },
+  Object {
+    "date": "2020-5-17 18:21:33",
+    "id": 23,
+    "title": "Vězení Gaza • RESPEKT",
+    "url": "https://www.respekt.cz/tydenik/2009/19/vezeni-gaza",
+  },
+  Object {
+    "date": "2020-5-18 21:45:35",
+    "id": 65,
+    "title": "(4) ExploringKaman - YouTube",
+    "url": "https://www.youtube.com/user/ExploringKaman",
+  },
+  Object {
+    "date": "2020-5-18 21:45:42",
+    "id": 7,
+    "title": "Děti bez budoucnosti • RESPEKT",
+    "url": "https://www.respekt.cz/tydenik/2020/6/deti-bez-budoucnosti?issueId=100439",
+  },
+  Object {
+    "date": "2020-5-18 21:47:04",
+    "id": 77,
+    "title": "jest test methods inside anonymous function - Hledat Googlem",
+    "url": "https://www.google.com/search?client=firefox-b-d&ei=-uXCXrrIF8WhkwXumZmgDQ&q=jest+test+methods+inside+anonymous+function&oq=jest+test+methods+inside+anonymous+function&gs_lcp=CgZwc3ktYWIQAzoECAAQHjoGCAAQDRAeOgQIIRAKUIH8AViKpwJg3K4CaABwAHgAgAF1iAHLDZIBBDUuMTKYAQCgAQGqAQdnd3Mtd2l6&sclient=psy-ab&ved=0ahUKEwi6rb_Nlr7pAhXF0KQKHe5MBtQQ4dUDCAs&uact=5",
+  },
+  Object {
+    "date": "2020-5-18 21:47:41",
+    "id": 78,
+    "title": "Testing function called as a parameter of another function · Issue #6390 · facebook/jest",
+    "url": "https://github.com/facebook/jest/issues/6390",
+  },
+  Object {
+    "date": "2020-5-18 22:05:52",
+    "id": 80,
+    "title": "jest setting up a first test - Hledat Googlem",
+    "url": "https://www.google.com/search?client=firefox-b-d&q=jest+setting+up+a+first+test",
+  },
+  Object {
+    "date": "2020-5-18 22:35:18",
+    "id": 93,
+    "title": "ES6 Class Mocks · Jest",
+    "url": "https://jestjs.io/docs/en/es6-class-mocks",
+  },
+  Object {
+    "date": "2020-5-18 22:36:13",
+    "id": 94,
+    "title": "javascript - Mock a function from another file - Jest - Stack Overflow",
+    "url": "https://stackoverflow.com/questions/49359476/mock-a-function-from-another-file-jest",
+  },
+  Object {
+    "date": "2020-5-18 22:36:14",
+    "id": 91,
+    "title": "Jest Tutorial for Beginners: Getting Started With JavaScript Testing",
+    "url": "https://www.valentinog.com/blog/jest/",
+  },
+  Object {
+    "date": "2020-5-18 22:36:15",
+    "id": 82,
+    "title": "Jest Tutorial for Beginners: Getting Started With JavaScript Testing",
+    "url": "https://www.valentinog.com/blog/jest/",
+  },
+  Object {
+    "date": "2020-5-18 22:39:09",
+    "id": 87,
+    "title": "javascript - Accessing a function (from another file) inside an anonymous function - Stack Overflow",
+    "url": "https://stackoverflow.com/questions/56672453/accessing-a-function-from-another-file-inside-an-anonymous-function",
+  },
+  Object {
+    "date": "2020-5-18 22:41:44",
+    "id": 83,
+    "title": "Writing Your Very First Unit Test With Jest | JavaScript in Plain English",
+    "url": "https://medium.com/javascript-in-plain-english/writing-your-first-unit-test-with-jest-b4953dabb931",
+  },
+  Object {
+    "date": "2020-5-18 22:42:02",
+    "id": 92,
+    "title": "unit testing do I always need to export file - Hledat Googlem",
+    "url": "https://www.google.com/search?client=firefox-b-d&ei=nvHCXoStHYH6kwXKgYLoDQ&q=unit+testing+do+I+always+need+to+export+file&oq=unit+testing+do+I+always+need+to+export+file&gs_lcp=CgZwc3ktYWIQAzIFCCEQoAEyBQghEKABOgQIABBHOgIIADoFCAAQgwE6BAgAEEM6BAgAEAo6BggAEBYQHjoECAAQEzoICAAQCBANEB46BQgAEM0COggIIRAWEB0QHjoECCEQFToHCCEQChCgAVCgmhZYxOIWYL3jFmgCcAF4AIABjwKIAZQpkgEHMTIuMjkuM5gBAKABAaoBB2d3cy13aXqwAQA&sclient=psy-ab&ved=0ahUKEwiE9MHaob7pAhUB_aQKHcqAAN0Q4dUDCAs&uact=5",
+  },
+  Object {
+    "date": "2020-5-18 22:43:13",
+    "id": 95,
+    "title": "unit testing - How to access and test an internal (non-exports) function in a node.js module? - Stack Overflow",
+    "url": "https://stackoverflow.com/questions/14874208/how-to-access-and-test-an-internal-non-exports-function-in-a-node-js-module",
+  },
+  Object {
+    "date": "2020-5-18 22:44:09",
+    "id": 81,
+    "title": "Configuring Jest · Jest",
+    "url": "https://jestjs.io/docs/en/configuration#testenvironmentoptions-object",
+  },
+  Object {
+    "date": "2020-5-18 22:45:59",
+    "id": 100,
+    "title": "javascript - Unit testing with Jest without module.exports - Stack Overflow",
+    "url": "https://stackoverflow.com/questions/52506163/unit-testing-with-jest-without-module-exports",
+  },
+  Object {
+    "date": "2020-5-18 22:46:00",
+    "id": 97,
+    "title": "jest test without export - Hledat Googlem",
+    "url": "https://www.google.com/search?client=firefox-b-d&q=jest+test+without+export",
+  },
+  Object {
+    "date": "2020-5-18 22:46:45",
+    "id": 98,
+    "title": "javascript - How to Unit Test non-exported functions? - Stack Overflow",
+    "url": "https://stackoverflow.com/questions/54116070/how-to-unit-test-non-exported-functions",
+  },
+  Object {
+    "date": "2020-5-18 22:50:12",
+    "id": 102,
+    "title": "How to Unit Test WebExtensions | Shing's Blog",
+    "url": "https://shinglyu.com/web/2018/06/24/how-to-unit-test-webextensions.html",
+  },
+  Object {
+    "date": "2020-5-18 22:50:18",
+    "id": 101,
+    "title": "Testing your web extension with integration tests - Eric Masseran - Medium",
+    "url": "https://medium.com/@Morikko/testing-your-web-extension-with-integration-tests-f875f1f52ff9",
+  },
+  Object {
+    "date": "2020-5-18 22:50:28",
+    "id": 99,
+    "title": "how to test web extensions - Hledat Googlem",
+    "url": "https://www.google.com/search?client=firefox-b-d&ei=pfTCXq62BI2WkwWlxoyQCw&q=how+to+test+web+extensions&oq=how+to+test+web+extensions&gs_lcp=CgZwc3ktYWIQAzoECAAQRzoCCAA6BAgAEEM6BAgAEAo6BggAEBYQHjoECAAQDToGCAAQDRAeOggIABAWEAoQHjoICCEQFhAdEB5Q_SZY82hg8GpoAXABeACAAcYBiAHFGZIBBTEyLjE1mAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab&ved=0ahUKEwjunO_LpL7pAhUNy6QKHSUjA7IQ4dUDCAs&uact=5",
+  },
+  Object {
+    "date": "2020-5-18 22:56:11",
+    "id": 103,
+    "title": "Understanding module.exports and exports in Node.js",
+    "url": "https://www.sitepoint.com/understanding-module-exports-exports-node-js/",
+  },
+  Object {
+    "date": "2020-5-18 22:58:50",
+    "id": 96,
+    "title": "Getting Started · Jest",
+    "url": "https://jestjs.io/docs/en/getting-started",
+  },
+]
+`;
+
+exports[`should return formated array 1`] = `
+Array [
+  Object {
+    "date": "2020-5-13 0:21:08",
+    "id": 5,
+    "title": "Zahraniční filmaři Česko milují. Máme tu jen jeden handicap, říkají producenti | info.cz",
+    "url": "https://www.info.cz/cesko/zahranicni-filmari-cesko-miluji-mame-tu-jen-jeden-handicap-rikaji-producenti-44262.html",
+  },
+  Object {
+    "date": "2020-5-17 18:21:33",
+    "id": 23,
+    "title": "Vězení Gaza • RESPEKT",
+    "url": "https://www.respekt.cz/tydenik/2009/19/vezeni-gaza",
+  },
+  Object {
+    "date": "2020-5-18 21:45:35",
+    "id": 65,
+    "title": "(4) ExploringKaman - YouTube",
+    "url": "https://www.youtube.com/user/ExploringKaman",
+  },
+  Object {
+    "date": "2020-5-18 21:45:42",
+    "id": 7,
+    "title": "Děti bez budoucnosti • RESPEKT",
+    "url": "https://www.respekt.cz/tydenik/2020/6/deti-bez-budoucnosti?issueId=100439",
+  },
+  Object {
+    "date": "2020-5-18 21:47:04",
+    "id": 77,
+    "title": "jest test methods inside anonymous function - Hledat Googlem",
+    "url": "https://www.google.com/search?client=firefox-b-d&ei=-uXCXrrIF8WhkwXumZmgDQ&q=jest+test+methods+inside+anonymous+function&oq=jest+test+methods+inside+anonymous+function&gs_lcp=CgZwc3ktYWIQAzoECAAQHjoGCAAQDRAeOgQIIRAKUIH8AViKpwJg3K4CaABwAHgAgAF1iAHLDZIBBDUuMTKYAQCgAQGqAQdnd3Mtd2l6&sclient=psy-ab&ved=0ahUKEwi6rb_Nlr7pAhXF0KQKHe5MBtQQ4dUDCAs&uact=5",
+  },
+]
+`;
+
+exports[`should skip pinned items 1`] = `
+Array [
+  Object {
+    "date": "2020-5-13 0:21:08",
+    "id": 7,
+    "title": "Google.com",
+    "url": "https://www.google.com",
+  },
+]
+`;

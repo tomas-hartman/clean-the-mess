@@ -1,0 +1,30 @@
+{
+  "name": "clean-the-mess",
+  "version": "1.2.1",
+  "description": "Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!",
+  "main": "src/popup/popup.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomas-hartman/clean-the-mess.git"
+  },
+  "keywords": [
+    "addon",
+    "mozilla",
+    "tabs"
+  ],
+  "author": "Tomas Hartman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomas-hartman/clean-the-mess/issues"
+  },
+  "homepage": "https://github.com/tomas-hartman/clean-the-mess#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "babel-jest": "^26.6.1",
+    "jest": "^26.6.1"
+  }
+}
