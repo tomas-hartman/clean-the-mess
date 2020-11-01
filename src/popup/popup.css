@@ -352,6 +352,15 @@ li>div {
   background-position: center;
 }
 
+.control .btn-inactive {
+  opacity: 30%;
+}
+
+.control .btn-inactive:hover, 
+.control .btn-inactive:active {
+  background-color: initial;
+}
+
 .header-title {
   justify-self: center;
   align-self: center;

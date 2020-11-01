@@ -23,13 +23,13 @@ const addBookmarksToFolder = async (tabIds, parentId) => {
     
         const duplicates = await browser.bookmarks.search(url);
 
-        console.log(await duplicates);
+        // console.log(await duplicates);
 
         if(duplicates.length === 0 && isSupportedProtocol(url)){
             await browser.bookmarks
                 .create({ title, url, parentId })
                 .catch((err) => console.log(err));
-        } else console.log("This is fucking duplicate");
+        } else console.log(`Item with url ${url} already exists and was skipped.`);
     }
 }
 

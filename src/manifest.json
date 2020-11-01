@@ -13,7 +13,7 @@
     ],
 
     "background": {
-      "scripts": ["background/background.html"]
+      "page": "background/background.html"
     },
     
     "browser_action": {
