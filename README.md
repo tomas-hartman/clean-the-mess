@@ -8,3 +8,17 @@ With its integrated search feature, Clean the mess! could also be used as a fast
 
 ## Development readme
 Developed using `web-ext`, using standard `web-ext` APIs for run, lint and build. `Web-ext` should be installed globally.
+
+```sh
+# Firefox
+gulp firefox
+npm run firefox
+
+# Chrome
+gulp chrome
+npm run chrome
+
+# Both
+gulp
+npm run start
+```

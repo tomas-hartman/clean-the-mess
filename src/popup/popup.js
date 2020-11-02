@@ -63,7 +63,7 @@ const getSearchDetailsArray = (data) => {
 
 	// sort the results by date or relevancy?
 
-	// console.log(foundItems);
+	console.log(foundItems);
 
 	return foundItems;
 };

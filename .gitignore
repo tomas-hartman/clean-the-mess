@@ -9,3 +9,7 @@ debug.log
 build/**/
 !build/firefox/
 !build/chrome/
+
+# Dist temp files
+dist/firefox/*
+dist/chrome/*
