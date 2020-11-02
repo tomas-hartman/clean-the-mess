@@ -5,8 +5,10 @@
   "main": "src/popup/popup.js",
   "scripts": {
     "test": "jest",
-    "chrome": "web-ext run -t chromium",
-    "firefox": "web-ext run"
+    "firefox": "web-ext run -s - ./src",
+    "chrome": "web-ext run -t chromium -s ./src",
+    "firefox:build": "web-ext build -a ./build/firefox",
+    "chrome:build": "web-ext build -a ./build/chrome"
   },
   "repository": {
     "type": "git",

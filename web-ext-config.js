@@ -1,7 +1,7 @@
 module.exports = {
 	verbose: false,
-	artifactsDir: './build',
-	sourceDir: './src',
+	// artifactsDir: './build',
+	// sourceDir: './src',
 	ignoreFiles: [
 		'./dev',
 		'./icons/unused',
