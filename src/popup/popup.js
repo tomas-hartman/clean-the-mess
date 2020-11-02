@@ -50,9 +50,8 @@ const getSearchDetailsArray = (data) => {
 
 		let output = {};
 
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(
-			new Date(newTabs[i].lastAccessed)
-		);
+		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
+		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 
 		output.date = date;
 		output.title = newTabs[i].title;
@@ -87,9 +86,9 @@ const getLatestUsed = (tabs, numOfLatest = 10) => {
 		if (newTabs[i].pinned) continue;
 
 		let output = {};
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(
-			new Date(newTabs[i].lastAccessed)
-		);
+
+		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
+		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 
 		output.date = date;
 		output.title = newTabs[i].title;
@@ -113,7 +112,7 @@ const getOverview = (tabs) => {
 			url = new URL(tab.url);
 			originUrl = url.origin;
     
-			if (originUrl === 'null' || url.protocol === 'moz-extension:') {
+			if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:') {
 				switch (url.protocol) {
 				case 'about:':
 				case 'moz-extension:':
@@ -1086,6 +1085,9 @@ const init = async () => {
 
 	const initialDest = document.querySelector('#main-container');
 	const screen = await createScreen('overview');
+
+	// const urlsArray = tabs.map((item) => item.url);
+	// console.log(JSON.stringify(urlsArray));
 
 	renderScreen(screen, initialDest);
 };
