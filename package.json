@@ -4,8 +4,10 @@
   "description": "Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!",
   "main": "src/popup/popup.js",
   "scripts": {
+    "init": "npm install -g gulp-cli && web-ext",
+    "start": "npm run chrome && npm run firefox",
     "test": "jest",
-    "firefox": "web-ext run -s - ./src",
+    "firefox": "web-ext run -s ./dist/firefox",
     "chrome": "web-ext run -t chromium -s ./src",
     "firefox:build": "web-ext build -a ./build/firefox",
     "chrome:build": "web-ext build -a ./build/chrome"
@@ -31,6 +33,7 @@
     "babel-jest": "^26.6.1",
     "eslint": "^7.12.1",
     "eslint-plugin-jest": "^24.1.0",
+    "gulp": "^4.0.2",
     "jest": "^26.6.1",
     "webextension-polyfill": "^0.6.0"
   }
