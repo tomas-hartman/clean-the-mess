@@ -1,5 +1,10 @@
 const { watch, src, dest, parallel } = require('gulp');
 const sass = require('gulp-sass');
+const path = require('path');
+
+const express = require('express');
+const livereload = require('livereload');
+const connectLivereload = require('connect-livereload');
 
 sass.compiler = require('node-sass');
 
@@ -12,15 +17,8 @@ function common(browser) {
 }
 
 function styles(browser, _srcPath, _destPath){
-
-	console.log(_srcPath);
-	console.log(_destPath);
-	
 	const srcPath = _srcPath || `src/styles/${browser}/**/*.scss`;
 	const destPath = _destPath || `dist/${browser}/styles/`;
-	
-	console.log(srcPath);
-	console.log(destPath);
 
 	return src(srcPath)
 		.pipe(sass().on('error', sass.logError))
@@ -32,10 +30,6 @@ function icons(browser) {
 }
 
 function server() {
-	const express = require('express');
-	const livereload = require('livereload');
-	const connectLivereload = require('connect-livereload');
-
 	const app = express();
 	const port = 3000;
 
@@ -43,19 +37,24 @@ function server() {
 	liveReloadServer.watch('src/dev/style-dev');
 
 	app.use(connectLivereload());
-	app.use(express.static('src/dev/style-dev'));
+	
+	const publicPath = express.static(path.join(__dirname, 'src/dev/style-dev'));
+	const publicImages = express.static(path.join(__dirname, 'src/dev/style-dev', '../../icons/'));
+
+	app.use(publicPath);
+	app.use('/icons', publicImages);
 
 	app.listen(port, () => {
 		console.log(`Started localhost on port ${port}`);
 	});
 }
 
-function devserver() {
+function compileScssDev(cb) {
 	const styleDevPath = 'src/dev/style-dev';
 	const styleDevSrcPath = 'src/dev/style-dev/**/*.scss';
 
 	styles('', styleDevSrcPath, styleDevPath);
-	// server();
+	cb();
 }
 
 /**
@@ -83,15 +82,14 @@ function buildDevChrome(cb) {
 }
 
 /**
- * Exports
+ * Tasks
  */
 exports.build = parallel(buildDevFirefox, buildDevChrome);
-// exports.devserver = devserver;
-exports.devserver = function(){
-	server();
-	// devserver();
 
-	watch('./src/dev/style-dev', devserver);
+exports.styledev = function(){
+	server();
+
+	watch('./src/dev/style-dev/**/*.scss', compileScssDev);
 };
 
 exports.firefox = function(){
@@ -103,12 +101,10 @@ exports.firefox = function(){
 exports.chrome = function(){
 	console.log('Waiting for changes...');
 	// add some cleanup
-	watch('src/', buildDevChrome);
+	watch(['src/', '!src/dev/'], buildDevChrome);
 };
 
 exports.default = function(){
 	console.log('Waiting for changes...');
 	watch(['src/', '!src/dev/'], parallel(buildDevFirefox, buildDevChrome));
 };
-
-
