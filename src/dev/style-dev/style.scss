@@ -1,3 +1,5 @@
+@import "vars";
+
 :root {
   --color-link-hover-purple: #c169ffb9;
   --color-link-hover: var(--color-emphasis-dark);
@@ -211,7 +213,7 @@ li>div {
 }
 
 .remove {
-  background-image: url(../icons/btn-remove.svg);
+  background-image: $removeIcon;
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;
@@ -232,30 +234,30 @@ li>div {
 
 .bookmark {
   border-radius: 1px;
-  background-image: url(../icons/btn-bookmark-star.svg);
+  background-image: $bookmarkIcon;
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .bookmark.bookmark-close {
-  background-image: url(../icons/ico-bookmark-close.svg);
+  background-image: $bookmarkCloseIcon;
   background-size: 70%;
 }
 
 .bookmark.bookmarked {
-  background-image: url(../icons/btn-bookmark-star-full.svg);
+  background-image: $bookmarkedIcon;
 }
 
 .get-in {
-  background-image: url(../icons/btn-bold-arrow.svg);
+  background-image: $getInIcon;
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .go-back {
-  background-image: url(../icons/btn-big-arrow.svg);
+  background-image: $goBackIcon;
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
@@ -263,7 +265,7 @@ li>div {
 }
 
 .bookmark-all {
-  background-image: url(../icons/ico-bookmark-close.svg);
+  background-image: $bookmarkAllIcon;
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
@@ -330,7 +332,7 @@ li>div {
 
 .control .close-all {
   background-color: inherit;
-  background-image: url("../icons/btn-big-remove.svg");
+  background-image: $closeAllIcon;
   background-size: 60%;
   background-position: center;
   background-repeat: no-repeat;
@@ -346,7 +348,7 @@ li>div {
 
 .control #search-btn {
   background-color: inherit;
-  background-image: url("../icons/btn-search-24.svg");
+  background-image: $searchBtnIcon;
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
