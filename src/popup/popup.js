@@ -1,4 +1,4 @@
-import search from '../search/search.js';
+import search from '../modules/search.js';
 
 const locale = {
 	string: 'cs-CZ',
