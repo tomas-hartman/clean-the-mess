@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correct detail element for details (source _tabs_) 1`] = `
+<DocumentFragment>
+  
+        
+  <li
+    class="detail"
+    data-tab-id="23"
+    id="item-1"
+  >
+    
+            
+    <div
+      class="item-container detail"
+    >
+      
+                
+      <div
+        class="item-text-container"
+      >
+        
+                    
+        <div
+          class="title detail"
+          title="Vězení Gaza • RESPEKT"
+        >
+          Vězení Gaza • RESPEKT
+        </div>
+        
+                    
+        <div
+          class="url detail "
+          title="https://www.respekt.cz/tydenik/2009/19/vezeni-gaza"
+        >
+          https://www.respekt.cz/tydenik/2009/19/vezeni-gaza
+        </div>
+        
+                    
+        <div
+          class="last-displayed detail hidden"
+          title="undefined"
+        >
+          undefined
+        </div>
+        
+                
+      </div>
+      
+                
+      <div
+        class="item-buttons-container"
+      >
+        
+                    
+        <div
+          class="bookmark bookmark-close detail hidden"
+          title="Bookmark and close tab"
+        />
+        
+                    
+        <div
+          class="remove detail hidden"
+          title="Close tab"
+        />
+        
+                    
+        <div
+          class="get-in"
+        />
+        
+                
+      </div>
+      
+            
+    </div>
+    
+        
+  </li>
+  
+        
+</DocumentFragment>
+`;
+
+exports[`should render correct detail element for latest (source _tabsOverview_) 1`] = `
+<DocumentFragment>
+  
+        
+  <li
+    class="detail"
+    data-tab-id="65"
+    id="item-1"
+  >
+    
+            
+    <div
+      class="item-container detail"
+    >
+      
+                
+      <div
+        class="item-text-container"
+      >
+        
+                    
+        <div
+          class="title detail"
+          title="Youtube"
+        >
+          Youtube
+        </div>
+        
+                    
+        <div
+          class="url detail hidden"
+          title="https://www.youtube.com/"
+        >
+          https://www.youtube.com/
+        </div>
+        
+                    
+        <div
+          class="last-displayed detail "
+          title="18. 5. 2020 21:45:35"
+        >
+          18. 5. 2020 21:45:35
+        </div>
+        
+                
+      </div>
+      
+                
+      <div
+        class="item-buttons-container"
+      >
+        
+                    
+        <div
+          class="bookmark bookmark-close detail hidden"
+          title="Bookmark and close tab"
+        />
+        
+                    
+        <div
+          class="remove detail hidden"
+          title="Close tab"
+        />
+        
+                    
+        <div
+          class="get-in"
+        />
+        
+                
+      </div>
+      
+            
+    </div>
+    
+        
+  </li>
+  
+        
+</DocumentFragment>
+`;

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search main functionality should return entries in correct (tabs-like) format and have url, title, index, id and pinned props  1`] = `
+Array [
+  Object {
+    "audible": false,
+    "id": 15,
+    "index": 2,
+    "lastAccessed": 1589831456789,
+    "mutedInfo": Object {
+      "muted": false,
+    },
+    "pinned": false,
+    "sharingState": Object {
+      "camera": false,
+      "microphone": false,
+    },
+    "status": "complete",
+    "successorTabId": -1,
+    "title": "Example 1",
+    "url": "https://www.example.com/?q=1",
+    "windowId": 1,
+  },
+]
+`;
