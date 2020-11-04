@@ -4,7 +4,9 @@
   "description": "Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!",
   "main": "src/popup/popup.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "chrome": "web-ext run -t chromium",
+    "firefox": "web-ext run"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "@babel/preset-env": "^7.12.1",
     "babel-jest": "^26.6.1",
     "eslint": "^7.12.1",
-    "jest": "^26.6.1"
+    "jest": "^26.6.1",
+    "webextension-polyfill": "^0.6.0"
   }
 }

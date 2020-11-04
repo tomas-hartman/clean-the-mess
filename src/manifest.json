@@ -2,7 +2,7 @@
 
     "manifest_version": 2,
     "name": "Clean the mess",
-    "version": "1.3",
+    "version": "2.0",
   
     "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
   
@@ -38,8 +38,10 @@
     "commands": {
       "_execute_browser_action": {
         "suggested_key": {
-          "default": "Ctrl+Alt+T",
-          "mac": "Ctrl+Alt+T"
+          "default": "Alt+Shift+T",
+          "mac": "Alt+Shift+T"
+
+
         },
         "description": "Open extension popup"
       }

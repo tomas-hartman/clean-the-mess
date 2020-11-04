@@ -1,6 +1,6 @@
 node_modules/
 log
-src/icons/src
+src/dev/icons/src
 .vscode
 coverage/
 
