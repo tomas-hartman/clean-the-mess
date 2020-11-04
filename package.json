@@ -8,7 +8,7 @@
     "start": "npm run chrome && npm run firefox",
     "test": "jest",
     "firefox": "web-ext run -s ./dist/firefox",
-    "chrome": "web-ext run -t chromium -s ./src",
+    "chrome": "web-ext run -t chromium -s ./dist/chrome",
     "firefox:build": "web-ext build -a ./build/firefox",
     "chrome:build": "web-ext build -a ./build/chrome"
   },

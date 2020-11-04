@@ -53,7 +53,7 @@ body {
 }
 
 body, input {
-  font-size: 12px; // snad 13px?
+  font-size: 12px;
   // font-size: 81.25%;
   font-weight: 400;
   font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
@@ -187,6 +187,7 @@ li>div {
   min-height: 300px;
   max-height: 600px;
   display: flex;
+  // font-size: 0.75rem;
 }
 
 .body-container, .ul-container {
