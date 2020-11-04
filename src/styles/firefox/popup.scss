@@ -1,3 +1,5 @@
+@import "vars";
+
 :root {
   --color-link-hover-purple: #c169ffb9;
   --color-link-hover: var(--color-emphasis-dark);
@@ -201,7 +203,8 @@ li>div {
 
 .remove,
 .get-in,
-.bookmark {
+.bookmark,
+.bookmark-all {
   width: 20px;
   height: 20px;
   align-self: center;
@@ -210,7 +213,7 @@ li>div {
 }
 
 .remove {
-  background-image: url(../icons/btn-remove.svg);
+  background-image: $removeIcon;
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;
@@ -218,45 +221,54 @@ li>div {
 }
 
 .remove:hover,
-.bookmark:hover {
+.bookmark:hover,
+.bookmark-all:hover {
   background-color: var(--color-emphasis-light);
 }
 
 .remove:active,
-.bookmark:active {
+.bookmark:active,
+.bookmark-all:active {
   background-color: var(--color-emphasis-dark);
 }
 
 .bookmark {
   border-radius: 1px;
-  background-image: url(../icons/btn-bookmark-star.svg);
+  background-image: $bookmarkIcon;
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .bookmark.bookmark-close {
-  background-image: url(../icons/ico-bookmark-close.svg);
+  background-image: $bookmarkCloseIcon;
   background-size: 70%;
 }
 
 .bookmark.bookmarked {
-  background-image: url(../icons/btn-bookmark-star-full.svg);
+  background-image: $bookmarkedIcon;
 }
 
 .get-in {
-  background-image: url(../icons/btn-bold-arrow.svg);
+  background-image: $getInIcon;
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .go-back {
-  background-image: url(../icons/btn-big-arrow.svg);
+  background-image: $goBackIcon;
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
   transform: rotate(180deg);
+}
+
+.bookmark-all {
+  background-image: $bookmarkAllIcon;
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* DETAILS */
@@ -280,7 +292,7 @@ li>div {
 #search-input {
   height: 32px;
   width: 100%;
-  padding: 0 53px 0 8px;
+  padding: 0 42px 0 8px;
   border-radius: 1px;
   box-shadow: none;
   border: none;
@@ -320,7 +332,7 @@ li>div {
 
 .control .close-all {
   background-color: inherit;
-  background-image: url("../icons/btn-big-remove.svg");
+  background-image: $closeAllIcon;
   background-size: 60%;
   background-position: center;
   background-repeat: no-repeat;
@@ -336,6 +348,19 @@ li>div {
 
 .control #search-btn {
   background-color: inherit;
+  background-image: $searchBtnIcon;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.control .btn-inactive {
+  opacity: 30%;
+}
+
+.control .btn-inactive:hover, 
+.control .btn-inactive:active {
+  background-color: initial;
 }
 
 .header-title {
@@ -372,14 +397,13 @@ li.detail {
   justify-content: space-around;
   align-items: center;
   position: absolute;
-  margin-left: -40px;
   right: 0;
-  width: 53px;
   height: 100%;
 }
 
 .search-count {
   color: black;
+  margin: 0px 4px;
 }
 
 .clear-search {
@@ -391,6 +415,11 @@ li.detail {
   display: flex;
   align-items: center;
   border-radius: 100%;
+  margin-right: 4px;
+}
+
+.clear-search.hidden {
+  display: none;
 }
 
 /* ANIMATIONS */

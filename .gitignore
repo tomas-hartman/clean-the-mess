@@ -1,8 +1,16 @@
 node_modules/
 log
-src/icons/src
+src/dev/icons/src
 .vscode
 coverage/
+debug.log
 
 # Keep only specific builds
 build/**/
+!build/firefox/
+!build/chrome/
+
+# Dist and dev temp files
+dist/firefox/*
+dist/chrome/*
+src/dev/style-dev/style.css

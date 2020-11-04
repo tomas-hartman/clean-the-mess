@@ -1,10 +1,16 @@
 {
   "name": "clean-the-mess",
-  "version": "2.0",
+  "version": "1.0.0",
   "description": "Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!",
   "main": "src/popup/popup.js",
   "scripts": {
-    "test": "jest"
+    "init": "npm install -g gulp-cli && web-ext",
+    "start": "npm run chrome && npm run firefox",
+    "test": "jest",
+    "firefox": "web-ext run -s ./dist/firefox",
+    "chrome": "web-ext run -t chromium -s ./src",
+    "firefox:build": "web-ext build -a ./build/firefox",
+    "chrome:build": "web-ext build -a ./build/chrome"
   },
   "repository": {
     "type": "git",
@@ -25,6 +31,17 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "babel-jest": "^26.6.1",
-    "jest": "^26.6.1"
+    "connect-livereload": "^0.6.1",
+    "eslint": "^7.12.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0",
+    "jest": "^26.6.1",
+    "livereload": "^0.9.1",
+    "node-sass": "^5.0.0",
+    "webextension-polyfill": "^0.6.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
