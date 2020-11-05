@@ -1,5 +1,8 @@
 import search from '../modules/search.js';
 
+/**
+ * Globals
+ */
 const locale = {
 	string: 'cs-CZ',
 	options: {
@@ -111,8 +114,8 @@ const getOverview = (tabs) => {
 		try {
 			url = new URL(tab.url);
 			originUrl = url.origin;
-    
-			if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:') {
+	
+			if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:' || url.protocol === 'file:') {
 				switch (url.protocol) {
 				case 'about:':
 				case 'moz-extension:':
