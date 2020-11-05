@@ -1,32 +1,34 @@
 @import "vars";
 
-// Chrome -dev
+// Chrome-dev
 :root {
   --color-link-hover-purple: #c169ffb9;
+  --color-back-button: var(--color-background);
   --color-link-hover: var(--color-emphasis-dark);
   --color-emphasis-dark: #d7d7dbdc;
-  --color-emphasis-light: #ededf0d0;
+  --color-emphasis-light: rgb(200,200,201);
   --color-separator: #d7d7db;
-  --color-background: #ffffff;
+  --color-background: rgb(255, 255, 255);
+  --color-secondary-background: var(--color-background);
+  --color-alternative-background: rgb(241, 243, 244);
   --color-font: #0c0c0d;
-  --color-alternative-font: rgb(95, 99, 104);
-  --color-secondary-font: #737373;
-  --color-back-button: var(--color-background);
-  --color-alternative-background: rgb(32, 33, 36);
+  --color-secondary-font: rgb(98, 99, 101);
+  --color-alternative-font: var(--color-font);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --color-link-hover: #663399;
-    --color-emphasis-dark: #737373c1;
-    --color-emphasis-light: #7373738a;
-    --color-separator: rgb(63, 64, 66);
-    --color-background: rgb(41, 42, 45); // chrome
-    --color-font: #e8eaed; // chrome
-    --color-alternative-font: rgb(95, 99, 104);
-    --color-secondary-font: #f9f9fa;
     --color-back-button: darkorchid;
-    --color-alternative-background: rgb(32, 33, 36);
+    --color-emphasis-dark: #737373c1; // ???
+    --color-emphasis-light: rgb(75, 76, 79); // header button hover
+    --color-separator: rgb(63, 64, 66);
+    --color-background: rgb(41, 42, 45); // main background
+    --color-secondary-background: rgb(53, 54, 58); // header background
+    --color-alternative-background: rgb(32, 33, 36); // search background
+    --color-font: rgb(232, 234, 237); // chrome
+    --color-secondary-font: rgb(172, 174, 177); // icons + (2)
+    --color-alternative-font: rgb(95, 99, 104); // font in search
   }
 }
 
@@ -53,7 +55,7 @@ body {
 }
 
 body, input {
-  font-size: 12px;
+  font-size: 12px; // snad 13px?
   // font-size: 81.25%;
   font-weight: 400;
   font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
@@ -94,6 +96,10 @@ li#nothing-to-show:hover {
 li:hover,
 #ten-unused:hover {
   background-color: var(--color-link-hover);
+
+  .count {
+    color: var(--color-font);
+  }
 }
 
 li>div {
@@ -187,7 +193,6 @@ li>div {
   min-height: 300px;
   max-height: 600px;
   display: flex;
-  // font-size: 0.75rem;
 }
 
 .body-container, .ul-container {
@@ -202,7 +207,9 @@ li>div {
 }
 
 .header-container {
-  margin-top: 4px;
+  // margin-top: 4px;
+  padding-top: 4px;
+  background-color: var(--color-secondary-background);
 }
 
 .url,
@@ -214,14 +221,16 @@ li>div {
 
 .count {
   flex-basis: auto;
+  color: var(--color-secondary-font);
 }
 
 .remove,
 .get-in,
 .bookmark,
 .bookmark-all {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
   align-self: center;
   text-align: center;
   flex-shrink: 0;
@@ -229,7 +238,7 @@ li>div {
 
 .remove {
   background-image: $removeIcon;
-  background-size: 75%;
+  background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
   margin-left: 4px !important;
@@ -248,16 +257,15 @@ li>div {
 }
 
 .bookmark {
-  border-radius: 1px;
   background-image: $bookmarkIcon;
-  background-size: 70%;
+  background-size: 65%;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .bookmark.bookmark-close {
   background-image: $bookmarkCloseIcon;
-  background-size: 70%;
+  background-size: 65%;
 }
 
 .bookmark.bookmarked {
@@ -266,7 +274,7 @@ li>div {
 
 .get-in {
   background-image: $getInIcon;
-  background-size: 60%;
+  background-size: 55%;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -281,7 +289,7 @@ li>div {
 
 .bookmark-all {
   background-image: $bookmarkAllIcon;
-  background-size: 70%;
+  background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -331,17 +339,20 @@ li>div {
   width: 100%;
 }
 
+// Header buttons
 .control .back, .control .close-all, .control #search-btn {
+  $dimension: 27px;
+
   justify-self: center;
-  width: 32px;
-  height: 32px;
+  width: $dimension;
+  height: $dimension;
   background-color: var(--color-back-button);
   align-self: center;
   text-align: center;
   font-size: 1.15em;
   border-radius: 100%;
   display: block;
-  line-height: 32px;
+  line-height: $dimension;
 }
 
 .control .back:hover {
@@ -395,6 +406,7 @@ li>div {
   text-overflow: ellipsis;
   word-break: keep-all;
   white-space: nowrap;
+  margin-bottom: 2px;
 }
 
 .url.detail,
