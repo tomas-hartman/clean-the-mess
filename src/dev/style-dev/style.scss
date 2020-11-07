@@ -1,36 +1,8 @@
 @import "vars";
-
-// Chrome-dev
-:root {
-  --color-link-hover-purple: #c169ffb9;
-  --color-back-button: var(--color-background);
-  --color-link-hover: var(--color-emphasis-dark);
-  --color-emphasis-dark: #d7d7dbdc;
-  --color-emphasis-light: rgb(200,200,201);
-  --color-separator: #d7d7db;
-  --color-background: rgb(255, 255, 255);
-  --color-secondary-background: var(--color-background);
-  --color-alternative-background: rgb(241, 243, 244);
-  --color-font: #0c0c0d;
-  --color-secondary-font: rgb(98, 99, 101);
-  --color-alternative-font: var(--color-font);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-link-hover: #663399;
-    --color-back-button: darkorchid;
-    --color-emphasis-dark: #737373c1; // ???
-    --color-emphasis-light: rgb(75, 76, 79); // header button hover
-    --color-separator: rgb(63, 64, 66);
-    --color-background: rgb(41, 42, 45); // main background
-    --color-secondary-background: rgb(53, 54, 58); // header background
-    --color-alternative-background: rgb(32, 33, 36); // search background
-    --color-font: rgb(232, 234, 237); // chrome
-    --color-secondary-font: rgb(172, 174, 177); // icons + (2)
-    --color-alternative-font: rgb(95, 99, 104); // font in search
-  }
-}
+// @import "colors";
+@import "mixins";
+@import "animations";
+@import "search";
 
 html,
 body {
@@ -55,10 +27,9 @@ body {
 }
 
 body, input {
-  font-size: 12px; // snad 13px?
-  // font-size: 81.25%;
+  font-size: $font-size; // snad 13px?
   font-weight: 400;
-  font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
+  font-family: $font-family;
   color: var(--color-font);
 }
 
@@ -66,15 +37,19 @@ input:focus, textarea:focus, select:focus{
   outline: none;
 }
 
-.hidden {
-  display: none;
-}
-
 ul {
   list-style: none;
   margin-block-start: auto;
   margin-block-end: auto;
   padding-inline-start: initial;
+}
+
+.screen {
+  top: 0;
+}
+
+.hidden {
+  display: none;
 }
 
 li {
@@ -87,10 +62,10 @@ li {
 
 li#nothing-to-show {
   height: auto;
-}
 
-li#nothing-to-show:hover {
-  background-color: transparent;
+  &:hover {
+    background-color: transparent;
+  }
 }
 
 li:hover,
@@ -212,90 +187,60 @@ li>div {
   background-color: var(--color-secondary-background);
 }
 
-.url,
-.last-displayed {
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+// HEADER
+// Header container child - without 
+#header.control {
+  display: grid;
+  grid-template-columns: 40px auto 40px;
+  align-content: center;
+  height: 30px;
 }
 
-.count {
-  flex-basis: auto;
-  color: var(--color-secondary-font);
-}
-
-.remove,
-.get-in,
-.bookmark,
-.bookmark-all {
-  width: 22px;
-  height: 22px;
-  border-radius: 100%;
+.header-title {
+  justify-self: center;
   align-self: center;
-  text-align: center;
-  flex-shrink: 0;
 }
 
+// Header buttons
+@include header-button(".close-all", $closeAllIcon, 50%);
+@include header-button("#search-btn", $searchBtnIcon, 50%);
+@include header-button(".back", $goBackIcon, 45%, var(--color-back-button));
+
+.control .btn-inactive {
+  opacity: 30%;
+
+  &:hover, &:active {
+    background-color: initial;
+  }
+}
+// End of header
+
+// Buttons on items
+@include item-buttons(".remove", $removeIcon, 70%);
+@include item-buttons(".bookmark", $bookmarkIcon, 60%);
+@include item-buttons(".bookmark-all", $bookmarkAllIcon, 60%);
+@include item-buttons(".get-in", $getInIcon, 55%, inherit, inherit);
+
+.bookmark {
+  .bookmark-close {
+    background-image: $bookmarkCloseIcon;
+    background-size: 60%;
+  }
+  .bookmarked {
+    background-image: $bookmarkedIcon;
+  }
+}
+
+
+// Případ těch, co jsou napravo, nebo nalevo: chce konkrétnější řešení
 .remove {
-  background-image: $removeIcon;
-  background-size: 70%;
-  background-repeat: no-repeat;
-  background-position: center;
   margin-left: 4px !important;
 }
 
-.remove:hover,
-.bookmark:hover,
-.bookmark-all:hover {
-  background-color: var(--color-emphasis-light);
-}
 
-.remove:active,
-.bookmark:active,
-.bookmark-all:active {
-  background-color: var(--color-emphasis-dark);
-}
-
-.bookmark {
-  background-image: $bookmarkIcon;
-  background-size: 65%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.bookmark.bookmark-close {
-  background-image: $bookmarkCloseIcon;
-  background-size: 65%;
-}
-
-.bookmark.bookmarked {
-  background-image: $bookmarkedIcon;
-}
-
-.get-in {
-  background-image: $getInIcon;
-  background-size: 55%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.go-back {
-  background-image: $goBackIcon;
-  background-size: 45%;
-  background-repeat: no-repeat;
-  background-position: center;
-  transform: rotate(180deg);
-}
-
-.bookmark-all {
-  background-image: $bookmarkAllIcon;
-  background-size: 60%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
 
 /* DETAILS */
-
+// Screens
 #overview {
   width: 100%;
   display: flex;
@@ -310,95 +255,6 @@ li>div {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-}
-
-#search-input {
-  background-color: var(--color-alternative-background);
-  height: 32px;
-  width: 100%;
-  padding: 0 42px 0 12px;
-  box-shadow: none;
-
-  // border: 0;
-  border: 2px solid transparent;
-  border-radius: 50px;
-}
-
-#search-input:focus {
-  border: 2px solid var(--color-link-hover);
-}
-
-#header.control {
-  display: grid;
-  grid-template-columns: 40px auto 40px;
-  align-content: center;
-  height: 30px;
-}
-
-#search .header-title {
-  width: 100%;
-}
-
-// Header buttons
-.control .back, .control .close-all, .control #search-btn {
-  $dimension: 27px;
-
-  justify-self: center;
-  width: $dimension;
-  height: $dimension;
-  background-color: var(--color-back-button);
-  align-self: center;
-  text-align: center;
-  font-size: 1.15em;
-  border-radius: 100%;
-  display: block;
-  line-height: $dimension;
-}
-
-.control .back:hover {
-  background-color: var(--color-emphasis-light);
-}
-
-.control .back:active {
-  background-color: var(--color-emphasis-dark);
-}
-
-.control .close-all {
-  background-color: inherit;
-  background-image: $closeAllIcon;
-  background-size: 50%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.control .close-all:hover, .control #search-btn:hover {
-  background-color: var(--color-emphasis-light);
-}
-
-.control .close-all:active, .control #search-btn:active {
-  background-color: var(--color-emphasis-dark);
-}
-
-.control #search-btn {
-  background-color: inherit;
-  background-image: $searchBtnIcon;
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.control .btn-inactive {
-  opacity: 30%;
-}
-
-.control .btn-inactive:hover, 
-.control .btn-inactive:active {
-  background-color: initial;
-}
-
-.header-title {
-  justify-self: center;
-  align-self: center;
 }
 
 .title.detail {
@@ -419,79 +275,16 @@ li.detail {
   height: 40px;
 }
 
-.search-container {
-  color: var(--color-alternative-font);
-  position: relative;
-  display: flex;
-  align-items: center;
+// Overview & buttons
+.url,
+.last-displayed {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.search-controls {
-  z-index: 9;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  position: absolute;
-  right: 0;
-  height: 100%;
-  line-height: 32px;
+// Info on how many items are in the category
+.count {
+  flex-basis: auto;
+  color: var(--color-secondary-font);
 }
-
-.search-count {
-  margin: 0px 8px 0px 4px;
-}
-
-.clear-search {
-  border: none;
-  background-color: cadetblue;
-  height: 18px;
-  width: 18px;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  border-radius: 100%;
-  margin-right: 4px;
-}
-
-.clear-search.hidden {
-  display: none;
-}
-
-/* ANIMATIONS */
-.slide-in {
-  right: 0% !important;
-
-  transition: right 150ms cubic-bezier(.07, .95, 0, 1);
-}
-
-.slide-out {
-  left: -100% !important;
-
-  transition: left 150ms cubic-bezier(.07, .95, 0, 1);
-  position: relative;
-}
-
-#overview.slide-out {
-  overflow-y: hidden !important;
-}
-
-.slide-out-reverse {
-  right: -100% !important;
-
-  transition: right 150ms cubic-bezier(.07, .95, 0, 1);
-}
-
-.slide-in-reverse {
-  left: 0% !important;
-
-  transition: left 150ms cubic-bezier(.07, .95, 0, 1);
-}
-
-#overview.slide-in-reverse {
-  overflow-y: auto !important;
-}
-
-.screen {
-  top: 0;
-}
-

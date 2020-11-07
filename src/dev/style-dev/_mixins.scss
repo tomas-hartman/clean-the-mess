@@ -1,0 +1,58 @@
+// .close-all, #search-btn (.back later)
+@mixin header-button ($btn-name, $img, $img-size, $bck-color: inherit, $hover-color: var(--color-emphasis-light), $active-color: var(--color-emphasis-dark)) {
+    $dimension: 27px;
+
+    .control #{$btn-name} {
+        justify-self: center;
+        align-self: center;
+        text-align: center;
+        width: $dimension;
+        height: $dimension;
+        line-height: $dimension;
+        font-size: 1.15em;
+        border-radius: 100%;
+        display: block;
+
+        background-color: $bck-color;
+        background-image: $img;
+        background-size: $img-size;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        @if $btn-name==".back" {
+            transform: rotate(180deg);
+        }
+
+        &:hover {
+            background-color: $hover-color;
+        }
+
+        &:active {
+            background-color: $active-color;
+        }
+    }
+}
+
+@mixin item-buttons($btn-name, $img, $img-size, $hover-color: var(--color-emphasis-light), $active-color: var(--color-emphasis-dark)) {
+    #{$btn-name} {
+        width: 22px;
+        height: 22px;
+        border-radius: 100%;
+        align-self: center;
+        text-align: center;
+        flex-shrink: 0;
+
+        background-image: $img;
+        background-size: $img-size;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &:hover {
+            background-color: $hover-color;
+        }
+
+        &:active {
+            background-color: $active-color;
+        }
+    }
+}
