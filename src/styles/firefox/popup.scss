@@ -38,16 +38,24 @@ body {
   width: auto;
   overflow: hidden;
   background-color: var(--color-background);
-  color: var(--color-font);
+
   
-  font-size: 12px;
-  font-weight: 400;
-  font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
   font: caption;
   
   cursor: default;
   user-select: none;
   -moz-user-select: none;
+}
+
+body, input {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+  color: var(--color-font);
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
 }
 
 .hidden {
@@ -310,16 +318,18 @@ li>div {
 }
 
 .control .back, .control .close-all, .control #search-btn {
+  $dimension: 32px;
+
   justify-self: center;
-  width: 32px;
-  height: 32px;
+  width: $dimension;
+  height: $dimension;
   background-color: var(--color-back-button);
   align-self: center;
   text-align: center;
   font-size: 1.15em;
   border-radius: 1px;
   display: block;
-  line-height: 32px;
+  line-height: $dimension;
 }
 
 .control .back:hover {
@@ -373,6 +383,7 @@ li>div {
   text-overflow: ellipsis;
   word-break: keep-all;
   white-space: nowrap;
+  margin-bottom: 2px;
 }
 
 .url.detail,

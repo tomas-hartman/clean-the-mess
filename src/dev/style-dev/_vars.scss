@@ -1,12 +1,12 @@
-// Buttons and icons
-$bookmarkIcon: url(./icons/btn-bookmark-star.svg);
-$bookmarkCloseIcon: url(./icons/ico-bookmark-close.svg);
-$bookmarkAllIcon: url(./icons/ico-bookmark-close.svg);
-$bookmarkedIcon: url(./icons/btn-bookmark-star-full.svg);
+@import "icons";
+@import "colors";
 
-$goBackIcon: url(./icons/btn-big-arrow.svg);
-$closeAllIcon: url(./icons/btn-big-remove.svg);
+// Browser-related variables (chrome)
+$font-size: 12px;
+// font-size: 81.25%;
+$font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
 
-$getInIcon: url(./icons/btn-bold-arrow.svg);
-$removeIcon: url(./icons/btn-remove.svg);
-$searchBtnIcon: url(./icons/btn-search-24.svg);
+$item-buttons-height: 22px;
+$header-buttons-height: 27px;
+
+// 
