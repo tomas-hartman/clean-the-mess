@@ -515,7 +515,7 @@ const setListenersOverview = (node) => {
 	browser.runtime.onMessage.addListener(async (message) => {
 		switch (message.type) {
 		case 'items-bookmarked':
-			await removeTabsFromOverview(message.data.index);
+			await removeTabsFromOverview(message.data.index, 'bookmark-all');
 			break;
         
 		default:
@@ -770,16 +770,29 @@ const refreshSearchScreen = async (data) => {
  * @param {element} target
  * @param {*} indexNumber tabsOverview index number
  */
-const removeTabsFromOverview = async (indexNumber) => {
+const removeTabsFromOverview = async (indexNumber, type) => {
 	const id = tabsOverview[indexNumber].ids;
-	if (id.length > 10) {
-		if (confirm(`Are you sure you want to close ${id.length} tabs?`)) {
-			await browser.tabs.remove(id);
-			await refreshOverviewData(indexNumber);
-		} else return;
-	} else {
+	const removeTabs = async (indexNumber, id) => {
 		await browser.tabs.remove(id);
 		await refreshOverviewData(indexNumber);
+	};
+
+	// Case: bookmark all & close
+	if(type && type === 'bookmark-all') {
+		const folderName = (new URL(tabsOverview[indexNumber].url)).hostname;
+
+		if (confirm(`Are you sure you want to add ${id.length} tabs to "${folderName}" folder in bookmarks and close them?`)) {
+			removeTabs(indexNumber, id);
+		} else return;
+	}
+
+	// Case: standard case
+	if (id.length > 10) {
+		if (confirm(`Are you sure you want to close ${id.length} tabs?`)) {
+			removeTabs(indexNumber, id);
+		} else return;
+	} else {
+		removeTabs(indexNumber, id);
 	}
 };
 
