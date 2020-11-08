@@ -1,5 +1,6 @@
-const { watch, src, dest, parallel } = require('gulp');
+const { watch, src, dest, parallel, series } = require('gulp');
 const sass = require('gulp-sass');
+const fs = require('fs');
 const path = require('path');
 
 const express = require('express');
@@ -59,6 +60,15 @@ function compileScssDev(cb) {
 	cb();
 }
 
+function cleanUp(cb, browser, options) {
+	console.log('Cleaning after previous jobs.');
+	const pathToClean = path.join(__dirname, `dist/${browser}`);
+	
+	fs.rmdir(pathToClean, {recursive: true}, cb);
+
+	cb();
+}
+
 /**
  * Joint function 
  */
@@ -86,7 +96,14 @@ function buildDevChrome(cb) {
 /**
  * Tasks
  */
-exports.build = parallel(buildDevFirefox, buildDevChrome);
+exports.build = function(cb) {
+	cleanUp(cb, 'firefox');
+	cleanUp(cb, 'chrome');
+
+	buildDevFirefox(cb);
+	buildDevChrome(cb);
+};
+
 
 exports.styledev = function(){
 	server();
@@ -94,13 +111,19 @@ exports.styledev = function(){
 	watch('./src/dev/style-dev/**/*.scss', compileScssDev);
 };
 
-exports.firefox = function(){
+exports.firefox = function(cb){
+	cleanUp(cb, 'firefox');
+	buildDevFirefox(cb);
+
 	console.log('Waiting for changes...');
 	// add some cleanup
 	watch(['src/', '!src/dev/'], buildDevFirefox);
 };
 
-exports.chrome = function(){
+exports.chrome = function(cb){
+	cleanUp(cb, 'chrome');
+	buildDevChrome(cb);
+	
 	console.log('Waiting for changes...');
 	// add some cleanup
 	watch(['src/', '!src/dev/'], buildDevChrome);
