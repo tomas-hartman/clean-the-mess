@@ -268,7 +268,7 @@ const createHeaderScreen = (index = null, type, tabsOverview) => {
 	const separator = createSeparator(); // node!
 
 	const headerDivStr = `
-            <div id="header" class="control">
+            <div id="header">
                 ${backBtnStr}
                 ${headerTitleDivStr}
                 ${closeAllDivStr}
@@ -301,7 +301,7 @@ const createHeaderSearch = () => {
 	const separator = createSeparator(); // node!
 
 	const headerDivStr = `
-            <div id="header" class="control">
+            <div id="header">
                 ${backBtnStr}
                 ${headerTitleDivStr}
                 ${closeAllDivStr}
@@ -319,7 +319,7 @@ const createHeaderSearch = () => {
 const createHeaderOverview = () => {
 	// Header title
 	const windowStr = windows.length > 1 ? ' in this window' : '';
-	const headerTitleContainerStr = '<div id="header" class="control header-overview"></div>';
+	const headerTitleContainerStr = '<div id="header" class="header-overview"></div>';
 	const headerTitleContainer =
         headerTitleContainerStr &&
         document.createRange().createContextualFragment(headerTitleContainerStr);
