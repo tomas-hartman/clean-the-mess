@@ -17,11 +17,13 @@ function common(browser) {
 }
 
 function styles(browser, _srcPath, _destPath){
-	const srcPath = _srcPath || `src/styles/${browser}/**/*.scss`;
+	const srcPath = _srcPath || 'src/styles/**/*.scss';
 	const destPath = _destPath || `dist/${browser}/styles/`;
 
+	const options = browser ? {includePaths: `src/styles/${browser}/`} : {};
+
 	return src(srcPath)
-		.pipe(sass().on('error', sass.logError))
+		.pipe(sass(options).on('error', sass.logError))
 		.pipe(dest(destPath));
 }
 
@@ -53,7 +55,7 @@ function compileScssDev(cb) {
 	const styleDevPath = 'src/dev/style-dev';
 	const styleDevSrcPath = 'src/dev/style-dev/**/*.scss';
 
-	styles('', styleDevSrcPath, styleDevPath);
+	styles(null, styleDevSrcPath, styleDevPath);
 	cb();
 }
 

@@ -1,0 +1,34 @@
+/* ANIMATIONS */
+.slide-in {
+    right: 0% !important;
+
+    transition: right 150ms cubic-bezier(.07, .95, 0, 1);
+}
+
+.slide-out {
+    left: -100% !important;
+
+    transition: left 150ms cubic-bezier(.07, .95, 0, 1);
+    position: relative;
+}
+
+#overview.slide-out {
+    overflow-y: hidden !important;
+}
+
+.slide-out-reverse {
+    right: -100% !important;
+
+    transition: right 150ms cubic-bezier(.07, .95, 0, 1);
+}
+
+.slide-in-reverse {
+    left: 0% !important;
+
+    transition: left 150ms cubic-bezier(.07, .95, 0, 1);
+}
+
+#overview.slide-in-reverse {
+    overflow-y: auto !important;
+}
+
