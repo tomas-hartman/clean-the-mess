@@ -1,4 +1,5 @@
 import search from '../modules/search.js';
+import { isSupportedProtocol } from '../modules/helpers.js';
 
 /**
  * Globals
@@ -493,10 +494,17 @@ const setListenersOverview = (node) => {
 		}
 
 		if (its.classList.contains('bookmark-all')){
+			const numOfItems = tabsOverview[tabsOverviewId].ids.length;
+			const folderName = (new URL(tabsOverview[tabsOverviewId].url)).hostname;
 
-			browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }});
+			const onTrue = () => browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }});
+			const onFalse = () => { return; };
 
-			console.log('Bookmark all! Still some todos!');
+			if(numOfItems > 1){
+				callWithConfirm('bookmarkAll', onTrue, onFalse, numOfItems, folderName);
+			} else {
+				onTrue();
+			}
 		}
 
 		if (!!its.closest('.overview-item') && !its.classList.contains('remove') && !its.classList.contains('bookmark-all')) {
@@ -515,7 +523,7 @@ const setListenersOverview = (node) => {
 	browser.runtime.onMessage.addListener(async (message) => {
 		switch (message.type) {
 		case 'items-bookmarked':
-			await removeTabsFromOverview(message.data.index, 'bookmark-all');
+			await removeTabsFromOverview(message.data.index, { forceRemove: true }); // this should just call remove tabs without anything else, it should not ask HERE
 			break;
         
 		default:
@@ -767,30 +775,46 @@ const refreshSearchScreen = async (data) => {
 };
 
 /**
- * @param {element} target
- * @param {*} indexNumber tabsOverview index number
+ * Function that calls another one after that one is confirmed
+ * @param {string} question enum: bookmarkAll | closeTabs
+ * @param {function} onTrue Function wrapped in () => {}
+ * @param {function} onFalse Function wrapped in () => {}
+ * @param  {...string} args 
+ * @todo tests!
  */
-const removeTabsFromOverview = async (indexNumber, type) => {
+const callWithConfirm = (question, onTrue, onFalse, ...args) => {
+	const questions = {
+		bookmarkAll:  `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
+		closeTabs: `Are you sure you want to close ${args[0]} tabs?`
+	};
+
+	if(confirm(questions[question])) {
+		onTrue();
+	} else onFalse();
+};
+
+/**
+ * Removes tabs with given ids from overview. 
+ * @param {number} indexNumber tabsOverview index number
+ * @param {Object} options 
+ * @param {Boolean} [options.forceRemove = false] Forces removal without confirm (= removal was confirmed previously as in bookmark-all)
+ */
+const removeTabsFromOverview = async (indexNumber, options = {}) => {
 	const id = tabsOverview[indexNumber].ids;
+	const { forceRemove = false } = options;
+
 	const removeTabs = async (indexNumber, id) => {
 		await browser.tabs.remove(id);
 		await refreshOverviewData(indexNumber);
 	};
 
-	// Case: bookmark all & close
-	if(type && type === 'bookmark-all') {
-		const folderName = (new URL(tabsOverview[indexNumber].url)).hostname;
-
-		if (confirm(`Are you sure you want to add ${id.length} tabs to "${folderName}" folder in bookmarks and close them?`)) {
-			removeTabs(indexNumber, id);
-		} else return;
-	}
+	// Callbacks
+	const onTrue = () => removeTabs(indexNumber, id);
+	const onFalse = () => { return; };
 
 	// Case: standard case
-	if (id.length > 10) {
-		if (confirm(`Are you sure you want to close ${id.length} tabs?`)) {
-			removeTabs(indexNumber, id);
-		} else return;
+	if (!forceRemove && id.length > 10) {
+		callWithConfirm('closeTabs', onTrue, onFalse, id.length);
 	} else {
 		removeTabs(indexNumber, id);
 	}
@@ -842,13 +866,6 @@ const addBookmarkStatus = async (item) => {
 };
 
 const bookmarkTab = async (url, title, _id) => {
-	const isSupportedProtocol = (url) => {
-		const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
-		const urlObj = new URL(url);
-
-		return supportedProtocols.indexOf(urlObj.protocol) != -1;
-	};
-
 	if (isSupportedProtocol(url)) {
 		// check if folder exists and create special folder?
 		await browser.bookmarks
