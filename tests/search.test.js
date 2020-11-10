@@ -1,6 +1,6 @@
 import search from '../src/modules/search';
 
-const { sampleMinifiedTabs } = require('./__sampleData__/tabs');
+import { sampleMinifiedTabs } from './__sampleData__/tabs';
 
 describe('Search main functionality', () => {
 	it.each([

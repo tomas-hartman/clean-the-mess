@@ -1,4 +1,4 @@
-const { createHeaderScreen } = require('../src/popup/popup');
+import { createHeaderScreen } from '../src/popup/popup';
 const tabsOverviewMinified = [{
 	'url': 'https://www.stackoverflow.com',
 	'count': 5,
