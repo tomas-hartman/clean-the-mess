@@ -1,4 +1,4 @@
-import { getLatestUsed } from '../src/popup/popup';
+import { getLatestUsed } from '../src/modules/details';
 import { tabs } from './__sampleData__/tabs';
 
 it('should return formated array', () => {
