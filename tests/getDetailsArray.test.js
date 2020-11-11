@@ -1,4 +1,4 @@
-import { getDetailsArray } from '../src/popup/popup';
+import { getDetailsArray } from '../src/modules/details';
 
 import { tabs } from './__sampleData__/tabs';
 import { tabsOverview } from './__sampleData__/tabsOverview';

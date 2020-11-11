@@ -1,4 +1,4 @@
-import { getOverview } from '../src/popup/popup';
+import { getOverview } from '../src/modules/overview';
 import { tabs } from './__sampleData__/tabs';
 
 it('should return correct overview data', () => {
