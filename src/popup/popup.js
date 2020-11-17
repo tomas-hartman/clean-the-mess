@@ -1,10 +1,8 @@
 import search from '../modules/search.js';
-import { locale } from '../modules/locale.js';
 import getOverview from '../modules/overview.js';
 import getDetailedArray from '../modules/details.js';
-import { isSupportedProtocol, hasIgnoredProtocol, escapeHTML, callWithConfirm } from '../modules/helpers.js';
+import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle } from '../modules/helpers.js';
 import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
-import { getLatestUsed } from '../modules/details.js';
 
 /**
  * Globals
@@ -107,7 +105,7 @@ const createSeparator = () => {
 const createHeaderScreen = (index = null, type, tabsOverview) => {
 	// components: back button, title, ?closeAll, ?search
 
-	const headerTitle = getHeaderTitle(index, type, tabsOverview);
+	const headerTitle = getHeaderTitle(index, type, tabsOverview, latestShownCount);
 
 	const backBtnStr = '<div class="back go-back" title="Back"></div>';
 	const headerTitleDivStr = `<div class="header-title">${headerTitle}</div>`;
@@ -282,18 +280,6 @@ const setListenersHeader = (header, index, screenId) => {
 
 		}
 	};
-};
-
-/**
- * Sets number of count into search input info
- * @todo similar implementation could be used for specifying "not found" error message
- * @param {number} count
- */
-const setFoundCount = (count) => {
-	const foundElm = document.querySelector('.search-count');
-	if (count > 0) {
-		foundElm.innerText = `(${count})`;
-	} else foundElm.innerText = '';
 };
 
 const setListenersSearch = (node) => {
@@ -706,27 +692,6 @@ const removeTab = async (e, detailsArr, props = {}) => {
 const closeScreen = async () => {
 	await refreshOverviewScreen();
 };
-
-// Returns headerTitle for secondary screens
-const getHeaderTitle = (id, type, tabsOverview) => {
-	let headerTitle = '';
-
-	if (type === 'details') {
-		try {
-			headerTitle = new URL(tabsOverview[id].url).host;
-		} catch (error) {
-			if(tabsOverview[id] && tabsOverview[id].url){
-				headerTitle = tabsOverview[id].url;
-			} else headerTitle = '';
-		}
-	} else if (type === 'latest') {
-		headerTitle = `${latestShownCount} longest unused tabs`;
-	} else headerTitle = null;
-
-	return headerTitle;
-};
-
-
 
 /**
  * Handles which details should be displayed for given type of screen

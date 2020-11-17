@@ -1,14 +1,14 @@
 import { getHeaderTitle } from '../src/popup/popup';
 import { tabsOverview } from './__sampleData__/tabsOverview';
 
-it('getHeaderTitle should return correct resilts for details', () => {
+it('getHeaderTitle should return correct results for details', () => {
 	const headerTitle = getHeaderTitle(1, 'details', tabsOverview);
 
 	expect(headerTitle).toBe('stackoverflow.com');
 });
 
-it('getHeaderTitle should return correct resilts for latest', () => {
-	const headerTitle = getHeaderTitle(1, 'latest', tabsOverview);
+it('getHeaderTitle should return correct results for latest', () => {
+	const headerTitle = getHeaderTitle(1, 'latest', tabsOverview, 10);
 
 	expect(headerTitle).toBe('10 longest unused tabs');
 });

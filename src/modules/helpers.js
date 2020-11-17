@@ -35,6 +35,25 @@ export const getTabDataFromId = async (id) => {
 	return [title, url];
 };
 
+// Returns headerTitle for secondary screens
+export const getHeaderTitle = (id, type, tabsOverview, count) => {
+	let headerTitle = '';
+
+	if (type === 'details') {
+		try {
+			headerTitle = new URL(tabsOverview[id].url).host;
+		} catch (error) {
+			if(tabsOverview[id] && tabsOverview[id].url){
+				headerTitle = tabsOverview[id].url;
+			} else headerTitle = '';
+		}
+	} else if (type === 'latest') {
+		headerTitle = `${count} longest unused tabs`;
+	} else headerTitle = null;
+
+	return headerTitle;
+};
+
 /**
  * Converts string to html-safe code. Useful for titles to be displayed.
  * @see https://stackoverflow.com/a/57448862/11243775
@@ -48,8 +67,6 @@ export const escapeHTML = str => str.replace(/[&<>'"]/g,
 		'\'': '&#39;',
 		'"': '&quot;'
 	}[tag]));
-
-
 
 /**
  * Function that calls another one after that one is confirmed
@@ -68,4 +85,17 @@ export const callWithConfirm = (question, onTrue, onFalse, ...args) => {
 	if(confirm(questions[question])) {
 		onTrue();
 	} else onFalse();
+};
+
+/**
+ * Sets number of count into search input info.
+ * Manipulates DOM.
+ * @todo similar implementation could be used for specifying "not found" error message
+ * @param {number} count
+ */
+export const setFoundCount = (count) => {
+	const foundElm = document.querySelector('.search-count');
+	if (count > 0) {
+		foundElm.innerText = `(${count})`;
+	} else foundElm.innerText = '';
 };
