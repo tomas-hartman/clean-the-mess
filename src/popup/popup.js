@@ -1,170 +1,16 @@
 import search from '../modules/search.js';
+import getOverview from '../modules/overview.js';
+import getDetailedArray from '../modules/details.js';
+import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle } from '../modules/helpers.js';
+import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
 
 /**
  * Globals
  */
-const locale = {
-	string: 'cs-CZ',
-	options: {
-		year: 'numeric',
-		month: 'numeric',
-		day: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric',
-		second: 'numeric',
-	},
-};
-
-let tabs = [];
+let tabs = []; // has tid
 let windows = [];
-let tabsOverview = []; // fills with getOverview
+let tabsOverview = []; // fills with getOverview; has oid
 const latestShownCount = 10;
-
-
-/**
- * Converts string to html-safe code. Useful for titles to be displayed.
- * @see https://stackoverflow.com/a/57448862/11243775
- * @param {string} str 
- */
-const escapeHTML = str => str.replace(/[&<>'"]/g, 
-	tag => ({
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'\'': '&#39;',
-		'"': '&quot;'
-	}[tag]));
-
-const getSearchDetailsArray = (data) => {
-	const newTabs = data.slice(0);
-	const foundItems = [];
-
-	/* 
-          For each item from data create an object with:
-          { id, url, title, date}
-  
-          and sort them by date
-  
-          if data = [], then return null or stg
-          */
-
-	for (let i = 0; i < data.length; i++) {
-		if (newTabs[i].pinned) continue;
-
-		let output = {};
-
-		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
-
-		output.date = date;
-		output.title = newTabs[i].title;
-		output.id = newTabs[i].id;
-		output.url = newTabs[i].url;
-
-		foundItems.push(output);
-	}
-
-	// sort the results by date or relevancy?
-
-	console.log(foundItems);
-
-	return foundItems;
-};
-
-/**
- * @todo Work on detailed and better filtered return array
- * @param {array} tabs tabs query array
- * @param {number} numOfLatest optional, is equal to 10 normally
- */
-const getLatestUsed = (tabs, numOfLatest = 10) => {
-	let newTabs = tabs.slice(0);
-	let iterationsNum = numOfLatest;
-	let latest = [];
-
-	if (tabs.length < iterationsNum) iterationsNum = tabs.length;
-
-	newTabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
-
-	for (let i = 0; i < iterationsNum; i++) {
-		if (newTabs[i].pinned) continue;
-
-		let output = {};
-
-		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
-
-		output.date = date;
-		output.title = newTabs[i].title;
-		output.id = newTabs[i].id;
-		output.url = newTabs[i].url;
-
-		latest.push(output);
-	}
-
-	return latest;
-};
-
-const getOverview = (tabs) => {
-	const tabsOverview = [];
-
-	tabs.forEach((tab) => {
-		let url = {};
-		let originUrl = '';
-
-		try {
-			url = new URL(tab.url);
-			originUrl = url.origin;
-	
-			if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:' || url.protocol === 'file:') {
-				switch (url.protocol) {
-				case 'about:':
-				case 'moz-extension:':
-				case 'chrome:':
-					originUrl = 'Browser tabs';
-					break;
-				case 'file:':
-					originUrl = 'Opened files';
-					break;
-				case 'localhost:':
-					originUrl = 'Localhost';
-					break;
-				default:
-					originUrl = 'Other tabs';
-					break;
-				}
-			}
-		} catch(err){
-			if(tab.url === 'localhost'){
-				originUrl = 'Localhost';
-			} else if((/^((\d{1,3}.){3}\d{1,3})(:|\/|\s|$)/g).test(tab.url)){
-				const array = tab.url.split(/:|\//);
-				originUrl = array[0];
-			} else {
-				originUrl = 'Other tabs';
-			}
-		}
-
-		if (!tab.pinned) {
-			if (tabsOverview.some((website) => website.url === originUrl)) {
-				const index = tabsOverview.findIndex(
-					(website) => website.url === originUrl
-				);
-
-				tabsOverview[index].count += 1;
-				tabsOverview[index].ids.push(tab.id);
-			} else {
-				tabsOverview.push({ url: originUrl, count: 1, ids: [tab.id] });
-			}
-		}
-	});
-
-	tabsOverview.sort((a, b) => b.count - a.count);
-
-	// browser.browserAction.setBadgeText({text: `${tabs.length}`});
-
-	return tabsOverview;
-};
-
 
 /**
  * Returns single overview item component 
@@ -259,7 +105,7 @@ const createSeparator = () => {
 const createHeaderScreen = (index = null, type, tabsOverview) => {
 	// components: back button, title, ?closeAll, ?search
 
-	const headerTitle = getHeaderTitle(index, type, tabsOverview);
+	const headerTitle = getHeaderTitle(index, type, tabsOverview, latestShownCount);
 
 	const backBtnStr = '<div class="back go-back" title="Back"></div>';
 	const headerTitleDivStr = `<div class="header-title">${headerTitle}</div>`;
@@ -436,18 +282,6 @@ const setListenersHeader = (header, index, screenId) => {
 	};
 };
 
-/**
- * Sets number of count into search input info
- * @todo similar implementation could be used for specifying "not found" error message
- * @param {number} count
- */
-const setFoundCount = (count) => {
-	const foundElm = document.querySelector('.search-count');
-	if (count > 0) {
-		foundElm.innerText = `(${count})`;
-	} else foundElm.innerText = '';
-};
-
 const setListenersSearch = (node) => {
 	const inputElm = node.querySelector('#search-input');
 	let timeout; // waits until next char is typed in before it renders; default 200 ms
@@ -493,10 +327,17 @@ const setListenersOverview = (node) => {
 		}
 
 		if (its.classList.contains('bookmark-all')){
+			const numOfItems = tabsOverview[tabsOverviewId].ids.length;
+			const folderName = (new URL(tabsOverview[tabsOverviewId].url)).hostname;
 
-			browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }});
+			const onTrue = () => browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }});
+			const onFalse = () => { return; };
 
-			console.log('Bookmark all! Still some todos!');
+			if(numOfItems > 1){
+				callWithConfirm('bookmarkAll', onTrue, onFalse, numOfItems, folderName);
+			} else {
+				onTrue();
+			}
 		}
 
 		if (!!its.closest('.overview-item') && !its.classList.contains('remove') && !its.classList.contains('bookmark-all')) {
@@ -515,7 +356,7 @@ const setListenersOverview = (node) => {
 	browser.runtime.onMessage.addListener(async (message) => {
 		switch (message.type) {
 		case 'items-bookmarked':
-			await removeTabsFromOverview(message.data.index, 'bookmark-all');
+			await removeTabsFromOverview(message.data.index, { forceRemove: true }); // this should just call remove tabs without anything else, it should not ask HERE
 			break;
         
 		default:
@@ -552,6 +393,7 @@ const setListenersScreen = (node, array, params = {}) => {
 				.closest('li')
 				.querySelector('.item-buttons-container');
 			parentElm.querySelector('.bookmark-close')?.classList.remove('hidden'); // .bookmark-close
+			parentElm.querySelector('.bookmarked')?.classList.remove('hidden'); // .bookmarked
 			parentElm.querySelector('.remove').classList.remove('hidden'); // .remove
 			parentElm.querySelector('.get-in').classList.add('hidden'); // .get-in
 		}
@@ -563,6 +405,7 @@ const setListenersScreen = (node, array, params = {}) => {
 				.closest('li')
 				.querySelector('.item-buttons-container');
 			parentElm.querySelector('.bookmark-close')?.classList.add('hidden');
+			parentElm.querySelector('.bookmarked')?.classList.add('hidden');
 			parentElm.querySelector('.remove').classList.add('hidden');
 			parentElm.querySelector('.get-in').classList.remove('hidden');
 		}
@@ -618,16 +461,17 @@ const createBody = async (screenId, props = {}) => {
 		break;
 	case 'details':
 	case 'latest':
-		dataArr = getDetailedArray(screenId, {
+		dataArr = getDetailedArray(screenId, tabsOverview, {
 			count: latestShownCount,
 			index,
 			data: tabs,
 		});
+			
 		content = await createList(screenId, dataArr);
 		setListenersScreen(content, dataArr, { index });
 		break;
 	case 'search':
-		dataArr = getDetailedArray(screenId, { data });
+		dataArr = getDetailedArray(screenId, tabsOverview, { data });
 		content = await createList(screenId, dataArr);
 		setListenersScreen(content, dataArr, { index });
 		break;
@@ -767,30 +611,27 @@ const refreshSearchScreen = async (data) => {
 };
 
 /**
- * @param {element} target
- * @param {*} indexNumber tabsOverview index number
+ * Removes tabs with given ids from overview. 
+ * @param {number} indexNumber tabsOverview index number
+ * @param {Object} options 
+ * @param {Boolean} [options.forceRemove = false] Forces removal without confirm (= removal was confirmed previously as in bookmark-all)
  */
-const removeTabsFromOverview = async (indexNumber, type) => {
+const removeTabsFromOverview = async (indexNumber, options = {}) => {
 	const id = tabsOverview[indexNumber].ids;
+	const { forceRemove = false } = options;
+
 	const removeTabs = async (indexNumber, id) => {
 		await browser.tabs.remove(id);
 		await refreshOverviewData(indexNumber);
 	};
 
-	// Case: bookmark all & close
-	if(type && type === 'bookmark-all') {
-		const folderName = (new URL(tabsOverview[indexNumber].url)).hostname;
-
-		if (confirm(`Are you sure you want to add ${id.length} tabs to "${folderName}" folder in bookmarks and close them?`)) {
-			removeTabs(indexNumber, id);
-		} else return;
-	}
+	// Callbacks
+	const onTrue = () => removeTabs(indexNumber, id);
+	const onFalse = () => { return; };
 
 	// Case: standard case
-	if (id.length > 10) {
-		if (confirm(`Are you sure you want to close ${id.length} tabs?`)) {
-			removeTabs(indexNumber, id);
-		} else return;
+	if (!forceRemove && id.length > 10) {
+		callWithConfirm('closeTabs', onTrue, onFalse, id.length);
 	} else {
 		removeTabs(indexNumber, id);
 	}
@@ -811,60 +652,6 @@ const removeTabsFromSearch = async () => {
 		await browser.tabs.remove(ids);
 		tabs = await browser.tabs.query({ currentWindow: true });
 		await refreshSearchScreen([]);
-	}
-};
-
-const getDetailsArray = (overviewId, tabsOverview, data) => {
-	const ids = tabsOverview[overviewId].ids;
-	let array = [];
-
-	for (let i = 0; i < ids.length; i++) {
-		array.push(...data.filter((tab) => tab.id === ids[i]));
-	}
-
-	array.sort((a, b) => b.lastAccessed - a.lastAccessed);
-
-	return array;
-};
-
-const addBookmarkStatus = async (item) => {
-	// I will not check for duplicate items with some special protocols in bookmarks
-	if(hasIgnoredProtocol(item.url)) return;
-
-	const bookmarks = await browser.bookmarks.search({ url: item.url });
-	const elm = document.querySelector(`li[data-tab-id='${item.id}'] .bookmark`);
-
-	if (bookmarks.length > 0) {
-		elm.classList.add('bookmarked');
-		elm.classList.remove('bookmark-close');
-		elm.setAttribute('title', 'This url is already bookmarked');
-	}
-};
-
-const bookmarkTab = async (url, title, _id) => {
-	const isSupportedProtocol = (url) => {
-		const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
-		const urlObj = new URL(url);
-
-		return supportedProtocols.indexOf(urlObj.protocol) != -1;
-	};
-
-	if (isSupportedProtocol(url)) {
-		// check if folder exists and create special folder?
-		await browser.bookmarks
-			.create({ title: title, url: url })
-			.catch((err) => console.log(err));
-		await browser.browserAction.setIcon({
-			path: '../icons/btn-bookmark-star-blue.svg',
-		});
-
-		new Promise((resolve, _reject) => {
-			setTimeout(() => {
-				browser.browserAction.setIcon({});
-				resolve();
-			}, 700);
-		});
-		console.log('New bookmark created');
 	}
 };
 
@@ -904,50 +691,6 @@ const removeTab = async (e, detailsArr, props = {}) => {
  */
 const closeScreen = async () => {
 	await refreshOverviewScreen();
-};
-
-// Returns headerTitle for secondary screens
-const getHeaderTitle = (id, type, tabsOverview) => {
-	let headerTitle = '';
-
-	if (type === 'details') {
-		try {
-			headerTitle = new URL(tabsOverview[id].url).host;
-		} catch (error) {
-			if(tabsOverview[id] && tabsOverview[id].url){
-				headerTitle = tabsOverview[id].url;
-			} else headerTitle = '';
-		}
-	} else if (type === 'latest') {
-		headerTitle = `${latestShownCount} longest unused tabs`;
-	} else headerTitle = null;
-
-	return headerTitle;
-};
-
-/**
- * Returns sorted/reduced array for detailed secondary screens
- * Detailed array consists of objects with props {id, url, title, date}
- *
- * @param {string} type normal | latest | ???
- * @param {*} props
- * @returns array = [{id, url, title, date}, ...]
- */
-const getDetailedArray = (type, props = {}) => {
-	let { count, index, data } = props;
-
-	let array = [];
-	if (type === 'details' && data) { // data === __tabs__
-		array = getDetailsArray(index, tabsOverview, data);
-	} else if (type === 'latest' && count && data) {
-		array = getLatestUsed(data, count);
-	} else if (type === 'search' && data) {
-		array = getSearchDetailsArray(data);
-	} else {
-		console.log('Error: got wrong params on getDetailedArray()');
-	}
-
-	return array;
 };
 
 /**
@@ -996,19 +739,6 @@ const toggleButtonActive = (className, isActive) => {
 	if(isActive) {
 		element.classList.remove(inactiveClassName);
 	} else element.classList.add(inactiveClassName);
-};
-
-/**
- * Checks if url has some of the special protocols, that do not work well with certain features and APIs such as bookmarks
- * @param {string} url 
- */
-const hasIgnoredProtocol = (url) => {
-	const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
-	const { protocol } = new URL(url);
-
-	if(ignoredProtocols.includes(protocol)) {
-		return true;
-	} else return false;
 };
 
 /**
@@ -1070,7 +800,8 @@ const createList = (type, array) => {
 
 		if(detailItem){
 			ul.appendChild(detailItem);
-			addBookmarkStatus(array[i]);
+
+			addBookmarkStatus(array[i], document);
 		}
 	}
 
@@ -1110,21 +841,12 @@ const init = async () => {
 
 init();
 
-// try {
-module.exports = { 
+export { 
 	getHeaderTitle, 
 	setClass,
 	createSingleDetailItem,
 	createSingleOverviewItem,
 	createHeaderScreen,
-	getDetailedArray,
-	getDetailsArray,
-	getLatestUsed,
-	getOverview,
 	setFoundCount,
-	bookmarkTab,
 	tabsOverview,
 };
-// } catch (err){
-//     console.log("Popup run in production environment.");
-// }

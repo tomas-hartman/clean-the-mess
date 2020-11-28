@@ -33,7 +33,7 @@ $bookmark-close-size: 60%;
     @include item-button(".remove", $removeIcon, 70%);
     @include item-button(".bookmark", $bookmarkIcon, 60%);
     @include item-button(".bookmark-all", $bookmarkAllIcon, 60%);
-    @include item-button(".get-in", $getInIcon, 55%, inherit, inherit);
+    @include item-button(".get-in", $chGetInIcon, 40%, inherit, inherit);
 }
 
 @mixin header-buttons {
