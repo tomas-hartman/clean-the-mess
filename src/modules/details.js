@@ -3,16 +3,16 @@ import { locale } from './locale.js';
 /**
  * Function that returns filtered array with details for latest used group
  * @todo Work on detailed and better filtered return array
- * @param {array} tabs tabs query array
- * @param {number} numOfLatest optional, is equal to 10 normally
+ * @param {Array} innerTabsData tabs query array
+ * @param {Number} numOfLatest optional, is equal to 10 normally
  * @returns {Object[]} Array with filtered items from tabs object
  */
-export const getLatestUsed = (tabs, numOfLatest = 10) => {
-	let newTabs = tabs.slice(0);
+export const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
+	let newTabs = innerTabsData.slice(0);
 	let iterationsNum = numOfLatest;
 	let latest = [];
 
-	if (tabs.length < iterationsNum) iterationsNum = tabs.length;
+	if (innerTabsData.length < iterationsNum) iterationsNum = innerTabsData.length;
 
 	newTabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
 
@@ -37,16 +37,16 @@ export const getLatestUsed = (tabs, numOfLatest = 10) => {
 
 /**
  * Function that returns filtered array with details for given group
- * @param {*} overviewId 
- * @param {*} innerOverviewData 
- * @param {*} data 
+ * @param {Object} overviewItemData data of one given item in overviewData
+ * @param {Object} innerTabsData tabsData object
+ * @returns {Object[]}
  */
-export const getDetailsArray = (overviewId, innerOverviewData, data) => {
-	const ids = innerOverviewData[overviewId].ids;
+export const getDetailsArray = (overviewItemData, innerTabsData) => {
+	const ids = overviewItemData.ids;
 	let array = [];
 
 	for (let i = 0; i < ids.length; i++) {
-		array.push(...data.filter((tab) => tab.id === ids[i]));
+		array.push(...innerTabsData.filter((tab) => tab.id === ids[i]));
 	}
 
 	array.sort((a, b) => b.lastAccessed - a.lastAccessed);
@@ -56,22 +56,23 @@ export const getDetailsArray = (overviewId, innerOverviewData, data) => {
 
 /**
  * Function that returns filtered array with details for current search query
- * @param {*} data 
+ * @param {Object[]} innerTabsData 
+ * @returns {Object[]} - Array of found items
  */
-export const getSearchDetailsArray = (data) => {
-	const newTabs = data.slice(0);
+export const getSearchDetailsArray = (innerTabsData) => {
+	const newTabs = innerTabsData.slice(0);
 	const foundItems = [];
 
 	/* 
-          For each item from data create an object with:
-          { id, url, title, date}
-  
-          and sort them by date
-  
-          if data = [], then return null or stg
-          */
+	For each item from data create an object with:
+	{ id, url, title, date}
 
-	for (let i = 0; i < data.length; i++) {
+	and sort them by date
+
+	if data = [], then return null or stg
+	*/
+
+	for (let i = 0; i < innerTabsData.length; i++) {
 		if (newTabs[i].pinned) continue;
 
 		let output = {};
@@ -95,20 +96,24 @@ export const getSearchDetailsArray = (data) => {
 };
 
 /**
+ * Function that utilizes data grouping methods and returns their pre-made output.
  * Returns sorted/reduced array for detailed secondary screens
  * Detailed array consists of objects with props {id, url, title, date}
  *
- * @param {string} type normal | latest | ???
- * @param {Array} _tabsOverview - copy of tabsOverview object for reference
- * @param {*} props
- * @returns array = [{id, url, title, date}, ...]
+ * @param {String} type normal | latest | ???
+ * @param {Array} innerOverviewData - copy of dataOverview object for reference
+ * @param {Object} props - object with optional settings
+ * @param {Number} props.count
+ * @param {Number} props.index 
+ * @param {Object} props.data tabsData object
+ * @returns {Object[]} = [{id, url, title, date}, ...]
  */
-const getDetailedArray = (type, _tabsOverview, props = {}) => {
+const getDetailedArray = (type, innerOverviewData, props = {}) => {
 	let { count, index, data } = props;
 
 	let array = [];
 	if (type === 'details' && data) { // data === __tabs__
-		array = getDetailsArray(index, _tabsOverview, data);
+		array = getDetailsArray(innerOverviewData[index], data);
 	} else if (type === 'latest' && count && data) {
 		array = getLatestUsed(data, count);
 	} else if (type === 'search' && data) {
