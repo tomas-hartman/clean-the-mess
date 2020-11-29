@@ -140,15 +140,15 @@ const saveTabsOverviewDataPure = async () => {
 	overviewData[`overviewData${currentWindow.id}`] = currentWindowData;
 	
 	await browser.storage.local.set(overviewData);
-	console.log('Saved');
+	console.log('Change saved!');
 };
 
 /**
  * @todo there should be some debounce
  * @param {String} message 
  */
-export const saveTabsOverviewData = async (message = null) => {
-	if(message) console.log(message);
+export const saveTabsOverviewData = async (...args) => {
+	console.log('Event args:', args);
 
 	setTimeout(async () => {
 		await saveTabsOverviewDataPure();
@@ -158,9 +158,9 @@ export const saveTabsOverviewData = async (message = null) => {
 	 * TBA: delete this after all
 	 */
 	const local = await getOverviewData();
-	console.log('Local: ', await local);
+	console.log('OverviewData:', await local);
 
 	const tabs = await browser.tabs.query({ currentWindow: true });
-	console.log(await tabs);
-	console.log(await tabs.length);
+	console.log('Tabs:', await tabs);
+	console.log('Tabs length:', await tabs.length);
 };

@@ -7,7 +7,7 @@ import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
 /**
  * Globals
  */
-let tabs = []; // has tid
+let tabsData = []; // has tid
 let windows = [];
 const latestShownCount = 10;
 
@@ -171,7 +171,7 @@ const createHeaderOverview = () => {
         document.createRange().createContextualFragment(headerTitleContainerStr);
 
 	const headerTitleStr = `<div class="header-title">
-                                    <span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>
+                                    <span>You have <span id="open-tabs-count">${tabsData.length}</span> opened tabs${windowStr}.</span>
                                 </div>
                                 <div id="search-btn"></div>`;
 	const headerTitle =
@@ -290,7 +290,7 @@ const setListenersSearch = (node) => {
 	inputElm.addEventListener('keyup', (event) => {
 		clearTimeout(timeout);
 		timeout = setTimeout(async () => {
-			const found = search.perform(tabs, event.target.value);
+			const found = search.perform(tabsData, event.target.value);
 			await refreshSearchScreen(found);
 		}, 200);
 	});
@@ -445,6 +445,14 @@ const setListenersScreen = (node, array, params = {}) => {
 
 /**
  * Creates screen body component (with list of items). Adds list of items to container and returns it, based on its type.
+ * It works this way:
+ * 
+ * 1. gathers data based on type of the screen
+ * 2. creates DOM content based on the data
+ * 3. sets listeners for elements in the node
+ * ---
+ * 4. creates DOM node and appends previosly created node to it
+ * 5. returns this node
  *
  * @param {string} screenId
  * @param {object} props
@@ -457,8 +465,8 @@ const createBody = async (screenId, props = {}) => {
 	const body =
         bodyStr && document.createRange().createContextualFragment(bodyStr);
 
-	let content = '';
-	let dataArr = [];
+	let content = ''; // this shoud be general
+	let dataArr = []; // this should be internal variable; pre-made grouped output of getDetailedArray
 
 	switch (screenId) {
 	case 'overview':
@@ -470,7 +478,7 @@ const createBody = async (screenId, props = {}) => {
 		dataArr = getDetailedArray(screenId, await overviewData, {
 			count: latestShownCount,
 			index,
-			data: tabs,
+			data: tabsData,
 		});
 			
 		content = await createList(screenId, dataArr);
@@ -528,21 +536,25 @@ const renderScreen = (screen, dest) => {
 };
 
 /**
- * Use only after removal!
- * @param {string} data id of selected url from tabsOverview
+ * Use only after removal of an item in overview!
+ * @param {string} oid overviewData id of node item that should be removed from overview 
  */
-const refreshOverviewData = async (data) => {
+const refreshOverviewData = async (oid) => {
 	const overviewData = await getOverviewData();
-	tabs = await browser.tabs.query({ currentWindow: true });
+	/**
+	 * @todo this should only tell tabs to refresh
+	 * ---> refreshTabsData() --> refresh them on background
+	 */
+	tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background 
 	let currentTabsNum = parseInt(
 		document.querySelector('#open-tabs-count').innerText
 	);
-	let tabsNum = overviewData[data].ids.length;
+	let tabsNum = overviewData[oid].ids.length;
 	let newTabsNum = currentTabsNum - tabsNum;
 
 	refreshOpenTabsCount(newTabsNum);
 
-	document.querySelector(`li.url-${data}`).remove();
+	document.querySelector(`li.url-${oid}`).remove();
 };
 
 /**
@@ -555,7 +567,7 @@ const refreshOpenTabsCount = (newCount) => {
 };
 
 /**
- * Use only after details to overview transition (pressing back button)
+ * Use only when pressing back button (= after details to overview transition)
  */
 const refreshOverviewScreen = async (props = {}) => {
 	let { deletedId = false } = props;
@@ -574,18 +586,23 @@ const refreshOverviewScreen = async (props = {}) => {
 		{ once: true }
 	);
 
+	/**
+	 * @todo this could be optimized by refreshing tabs directly.
+	 * there is however a risk, that tabs data will be inaccurate due to async
+	 * This actually is a temporary workaround to manually removes item from tabs 
+	 * before they are REALLY refreshed.
+	 */
 	if (deletedId)
-		tabs.splice(
-			tabs.findIndex((tab) => tab.id === deletedId),
+		tabsData.splice(
+			tabsData.findIndex((tab) => tab.id === deletedId),
 			1
 		);
 
-	tabs = await browser.tabs.query({ currentWindow: true });
-	// tabsOverview = getOverview(tabs); // tohle by po refaktoru mohlo zmizet
+	tabsData = await browser.tabs.query({ currentWindow: true }); // tohle by se mělo generovat na pozadí
 
 	const newBodyContainer = await createBody('overview');
 
-	refreshOpenTabsCount(tabs.length);
+	refreshOpenTabsCount(tabsData.length);
 
 	document.querySelector('.body-container').remove();
 	document.querySelector('#overview').appendChild(newBodyContainer);
@@ -658,7 +675,7 @@ const removeTabsFromSearch = async () => {
 
 	if(ids[0] && confirm(`Are you sure you want to close ${ids.length} tabs?`)){
 		await browser.tabs.remove(ids);
-		tabs = await browser.tabs.query({ currentWindow: true });
+		tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background
 		await refreshSearchScreen([]);
 	}
 };
@@ -671,8 +688,8 @@ const removeTabsFromSearch = async () => {
  * @param {number} index id of grouped overview array
  */
 const removeTab = async (e, detailsArr, props = {}) => {
-	const overviewData = await browser.storage.local.get('overviewData');
 	let { autoclose = true, index } = props;
+	const overviewData = await getOverviewData();
 	const id = parseInt(e.target.closest('li').dataset.tabId);
 	// id: index in __tabs__ (tab index)
 	// index: index in __overview__ (group index)
@@ -682,6 +699,11 @@ const removeTab = async (e, detailsArr, props = {}) => {
 		detailsArr.findIndex((tab) => tab.id === id),
 		1
 	); // removes item from detailed array
+
+	/**
+	 * @todo remove calls to overviewData[index]
+	 */
+
 	if (index) {
 		overviewData[index].ids.splice(overviewData[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen
 	}
@@ -835,15 +857,11 @@ const createList = (type, array) => {
  * Handles first run events, creates overview screen and renders it
  */
 const init = async () => {
-	tabs = await browser.tabs.query({ currentWindow: true });
+	tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background
 	windows = await browser.windows.getAll();
-	// tabsOverview = getOverview(tabs);
 
 	const initialDest = document.querySelector('#main-container');
 	const screen = await createScreen('overview');
-
-	// const urlsArray = tabs.map((item) => item.url);
-	// console.log(JSON.stringify(urlsArray));
 
 	renderScreen(screen, initialDest);
 };
