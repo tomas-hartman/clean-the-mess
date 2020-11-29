@@ -9,7 +9,8 @@
     "permissions": [
         "activeTab",
         "tabs",
-        "bookmarks"
+        "bookmarks",
+        "storage"
     ],
 
     "background": {

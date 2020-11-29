@@ -1,7 +1,7 @@
 import search from '../modules/search.js';
-import getOverview from '../modules/overview.js';
+// import getOverview from '../modules/overview.js';
 import getDetailedArray from '../modules/details.js';
-import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle } from '../modules/helpers.js';
+import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle, getOverviewData } from '../modules/helpers.js';
 import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
 
 /**
@@ -9,7 +9,6 @@ import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
  */
 let tabs = []; // has tid
 let windows = [];
-let tabsOverview = []; // fills with getOverview; has oid
 const latestShownCount = 10;
 
 /**
@@ -32,8 +31,9 @@ const createSingleOverviewItem = (props) => {
 		return '<div class="bookmark-all hidden" title="Bookmark and close all items"></div>';
 	};
 
+	// data-index-number="${itemId}"
 	let blueprint = `
-        <li class="url-${itemId} overview-item" data-index-number="${itemId}">
+        <li class="url-${itemId} overview-item" data-key="${data.key}">
             <div class="url-container">
                 <div class="main-item-text-container">
                     <div class="url" title="${url}">${url}</div>
@@ -109,7 +109,7 @@ const createHeaderScreen = (index = null, type, tabsOverview) => {
 
 	const backBtnStr = '<div class="back go-back" title="Back"></div>';
 	const headerTitleDivStr = `<div class="header-title">${headerTitle}</div>`;
-	const closeAllElement = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`;
+	const closeAllElement = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`; // data-index-number="${index}" could be changed into key: and handled by this, not neccessary!
 	const closeAllDivStr = type !== 'latest' ? closeAllElement : '';
 	const separator = createSeparator(); // node!
 
@@ -198,8 +198,9 @@ const createHeaderOverview = () => {
  * @param {object} props
  * @returns {node} <div class="header-container"><!-- Content --></div>
  */
-const createHeader = (screenId, props = {}) => {
+const createHeader = async (screenId, props = {}) => {
 	let { index } = props;
+	const overviewData = await getOverviewData();
 	const headerStr = '<div class="header-container"></div>';
 	const header =
         headerStr && document.createRange().createContextualFragment(headerStr);
@@ -215,7 +216,7 @@ const createHeader = (screenId, props = {}) => {
 		break;
 	case 'details':
 	case 'latest':
-		contentArr = createHeaderScreen(index, screenId, tabsOverview);
+		contentArr = createHeaderScreen(index, screenId, overviewData);
 		break;
 	default:
 		break;
@@ -295,7 +296,9 @@ const setListenersSearch = (node) => {
 	});
 };
 
-const setListenersOverview = (node) => {
+const setListenersOverview = async (node) => {
+	// const overviewData = await getOverviewData();
+
 	node.onmouseover = (e) => {
 		if (e.target.closest('#overview li')) {
 			const parentElm = e.target
@@ -318,7 +321,9 @@ const setListenersOverview = (node) => {
 
 	node.onclick = async (e) => {
 		const its = e.target;
-		const tabsOverviewId = parseInt(its.closest('li').dataset.indexNumber);
+		const overviewData = await getOverviewData();
+		const tabsOverviewKey = parseInt(its.closest('li').dataset.key);
+		const tabsOverviewId = overviewData.findIndex((item) => item.key === tabsOverviewKey);
 
 		if (its.classList.contains('remove')) {
 			await removeTabsFromOverview(tabsOverviewId);
@@ -327,10 +332,10 @@ const setListenersOverview = (node) => {
 		}
 
 		if (its.classList.contains('bookmark-all')){
-			const numOfItems = tabsOverview[tabsOverviewId].ids.length;
-			const folderName = (new URL(tabsOverview[tabsOverviewId].url)).hostname;
+			const numOfItems = overviewData[tabsOverviewId].ids.length;
+			const folderName = (new URL(overviewData[tabsOverviewId].url)).hostname;
 
-			const onTrue = () => browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }});
+			const onTrue = () => browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: overviewData[tabsOverviewId], index: tabsOverviewId }});
 			const onFalse = () => { return; };
 
 			if(numOfItems > 1){
@@ -411,7 +416,7 @@ const setListenersScreen = (node, array, params = {}) => {
 		}
 	};
 
-	node.onclick = (e) => {
+	node.onclick = async (e) => {
 		if (e.target.classList.contains('bookmark-close')) {
 			// bookmark & remove tab
 			const id = parseInt(e.target.closest('li').dataset.tabId);
@@ -433,7 +438,7 @@ const setListenersScreen = (node, array, params = {}) => {
 		) {
 			// switchTo tab
 			const id = parseInt(e.target.closest('li').dataset.tabId);
-			browser.tabs.update(id, { active: true });
+			await browser.tabs.update(id, { active: true });
 		}
 	};
 };
@@ -447,6 +452,7 @@ const setListenersScreen = (node, array, params = {}) => {
  */
 const createBody = async (screenId, props = {}) => {
 	let { index, data } = props;
+	const overviewData = await getOverviewData();
 	const bodyStr = '<div class="body-container"></div>';
 	const body =
         bodyStr && document.createRange().createContextualFragment(bodyStr);
@@ -456,12 +462,12 @@ const createBody = async (screenId, props = {}) => {
 
 	switch (screenId) {
 	case 'overview':
-		content = await createOverviewList(tabsOverview);
+		content = await createOverviewList(await overviewData);
 		setListenersOverview(content);
 		break;
 	case 'details':
 	case 'latest':
-		dataArr = getDetailedArray(screenId, tabsOverview, {
+		dataArr = getDetailedArray(screenId, await overviewData, {
 			count: latestShownCount,
 			index,
 			data: tabs,
@@ -471,7 +477,7 @@ const createBody = async (screenId, props = {}) => {
 		setListenersScreen(content, dataArr, { index });
 		break;
 	case 'search':
-		dataArr = getDetailedArray(screenId, tabsOverview, { data });
+		dataArr = getDetailedArray(screenId, await overviewData, { data });
 		content = await createList(screenId, dataArr);
 		setListenersScreen(content, dataArr, { index });
 		break;
@@ -498,7 +504,7 @@ const createScreen = async (screenId, props = {}) => {
 	const screen =
         screenStr && document.createRange().createContextualFragment(screenStr);
 
-	const header = createHeader(screenId, props);
+	const header = await createHeader(screenId, props);
 	const body = await createBody(screenId, props);
 
 	screen.firstChild.append(header);
@@ -526,11 +532,12 @@ const renderScreen = (screen, dest) => {
  * @param {string} data id of selected url from tabsOverview
  */
 const refreshOverviewData = async (data) => {
+	const overviewData = await getOverviewData();
 	tabs = await browser.tabs.query({ currentWindow: true });
 	let currentTabsNum = parseInt(
 		document.querySelector('#open-tabs-count').innerText
 	);
-	let tabsNum = tabsOverview[data].ids.length;
+	let tabsNum = overviewData[data].ids.length;
 	let newTabsNum = currentTabsNum - tabsNum;
 
 	refreshOpenTabsCount(newTabsNum);
@@ -574,7 +581,7 @@ const refreshOverviewScreen = async (props = {}) => {
 		);
 
 	tabs = await browser.tabs.query({ currentWindow: true });
-	tabsOverview = getOverview(tabs);
+	// tabsOverview = getOverview(tabs); // tohle by po refaktoru mohlo zmizet
 
 	const newBodyContainer = await createBody('overview');
 
@@ -617,7 +624,8 @@ const refreshSearchScreen = async (data) => {
  * @param {Boolean} [options.forceRemove = false] Forces removal without confirm (= removal was confirmed previously as in bookmark-all)
  */
 const removeTabsFromOverview = async (indexNumber, options = {}) => {
-	const id = tabsOverview[indexNumber].ids;
+	const overviewData = await getOverviewData();
+	const id = overviewData[indexNumber].ids; // @todo handle this with key hash
 	const { forceRemove = false } = options;
 
 	const removeTabs = async (indexNumber, id) => {
@@ -663,6 +671,7 @@ const removeTabsFromSearch = async () => {
  * @param {number} index id of grouped overview array
  */
 const removeTab = async (e, detailsArr, props = {}) => {
+	const overviewData = await browser.storage.local.get('overviewData');
 	let { autoclose = true, index } = props;
 	const id = parseInt(e.target.closest('li').dataset.tabId);
 	// id: index in __tabs__ (tab index)
@@ -674,7 +683,7 @@ const removeTab = async (e, detailsArr, props = {}) => {
 		1
 	); // removes item from detailed array
 	if (index) {
-		tabsOverview[index].ids.splice(tabsOverview[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen
+		overviewData[index].ids.splice(overviewData[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen
 	}
 	await browser.tabs.remove([id]); // closes tab in browser
 
@@ -828,7 +837,7 @@ const createList = (type, array) => {
 const init = async () => {
 	tabs = await browser.tabs.query({ currentWindow: true });
 	windows = await browser.windows.getAll();
-	tabsOverview = getOverview(tabs);
+	// tabsOverview = getOverview(tabs);
 
 	const initialDest = document.querySelector('#main-container');
 	const screen = await createScreen('overview');
@@ -848,5 +857,4 @@ export {
 	createSingleOverviewItem,
 	createHeaderScreen,
 	setFoundCount,
-	tabsOverview,
 };
