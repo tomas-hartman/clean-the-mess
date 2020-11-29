@@ -1,3 +1,5 @@
+import { getOverview } from '../modules/overview.js';
+
 /**
  * Validates if url with given protocol can be bookmarked
  * @param {string} url Url to be validated
@@ -98,4 +100,67 @@ export const setFoundCount = (count) => {
 	if (count > 0) {
 		foundElm.innerText = `(${count})`;
 	} else foundElm.innerText = '';
+};
+
+/**
+ * Function that converts string to hash. Used to set unique keys in getOverview.
+ * @see https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+ * @param {string} value
+ * @returns {string} 
+ */
+export const getHash = (value) => {
+	let hash = 0, i, chr;
+	for (i = 0; i < value.length; i++) {
+		chr = value.charCodeAt(i);
+		hash = ((hash << 5) - hash) + chr;
+		hash |= 0; // Convert to 32bit integer
+	}
+	return hash;
+};
+
+/**
+ * Function that returns correct overviewData (former tabsOverview) for each window.
+ */
+export const getOverviewData = async () => {
+	const currentWindow = await browser.windows.getCurrent();
+	const dataset = `overviewData${currentWindow.id}`;
+
+	const data = await browser.storage.local.get(dataset);
+
+	return data[dataset];
+};
+
+const saveTabsOverviewDataPure = async () => {
+	const tabs = await browser.tabs.query({ currentWindow: true });
+	const currentWindowData = getOverview(await tabs);
+	// console.log(await tabs);
+
+	const currentWindow = await browser.windows.getCurrent();
+	const overviewData = {};
+	overviewData[`overviewData${currentWindow.id}`] = currentWindowData;
+	
+	await browser.storage.local.set(overviewData);
+	console.log('Saved');
+};
+
+/**
+ * @todo there should be some debounce
+ * @param {String} message 
+ */
+export const saveTabsOverviewData = async (message = null) => {
+	if(message) console.log(message);
+
+	setTimeout(async () => {
+		await saveTabsOverviewDataPure();
+	}, 200);
+
+	/**
+	 * TBA: delete this after all
+	 */
+	const local = await getOverviewData();
+	console.log('Local: ', await local);
+
+	const tabs = await browser.tabs.query({ currentWindow: true });
+	console.log(await tabs);
+	console.log(await tabs.length);
 };

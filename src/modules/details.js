@@ -38,11 +38,11 @@ export const getLatestUsed = (tabs, numOfLatest = 10) => {
 /**
  * Function that returns filtered array with details for given group
  * @param {*} overviewId 
- * @param {*} tabsOverview 
+ * @param {*} innerOverviewData 
  * @param {*} data 
  */
-export const getDetailsArray = (overviewId, tabsOverview, data) => {
-	const ids = tabsOverview[overviewId].ids;
+export const getDetailsArray = (overviewId, innerOverviewData, data) => {
+	const ids = innerOverviewData[overviewId].ids;
 	let array = [];
 
 	for (let i = 0; i < ids.length; i++) {
