@@ -7,10 +7,10 @@
     "init": "npm install -g gulp-cli && web-ext",
     "start": "npm run chrome && npm run firefox",
     "test": "jest",
-    "firefox": "web-ext run -s ./dist/firefox",
-    "chrome": "web-ext run -t chromium -s ./dist/chrome",
-    "firefox:build": "web-ext build -a ./build/firefox",
-    "chrome:build": "web-ext build -a ./build/chrome"
+    "firefox": "npx web-ext run -s ./dist/firefox",
+    "chrome": "npx web-ext run -t chromium -s ./src",
+    "firefox:build": "npx web-ext build -a ./build/firefox",
+    "chrome:build": "npx web-ext build -a ./build/chrome"
   },
   "repository": {
     "type": "git",
@@ -39,7 +39,8 @@
     "jest": "^26.6.1",
     "livereload": "^0.9.1",
     "node-sass": "^5.0.0",
-    "webextension-polyfill": "^0.6.0"
+    "web-ext": "^6.1.0",
+    "webextension-polyfill": "^0.8.0"
   },
   "dependencies": {
     "express": "^4.17.1"
