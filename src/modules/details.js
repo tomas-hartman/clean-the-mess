@@ -7,7 +7,7 @@ import { locale } from './locale.js';
  * @param {Number} numOfLatest optional, is equal to 10 normally
  * @returns {Object[]} Array with filtered items from tabs object
  */
-export const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
+const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
 	let newTabs = innerTabsData.slice(0);
 	let iterationsNum = numOfLatest;
 	let latest = [];
@@ -41,7 +41,7 @@ export const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
  * @param {Object} innerTabsData tabsData object
  * @returns {Object[]}
  */
-export const getDetailsArray = (overviewItemData, innerTabsData) => {
+const getDetailsArray = (overviewItemData, innerTabsData) => {
 	const ids = overviewItemData.ids;
 	let array = [];
 
@@ -59,7 +59,7 @@ export const getDetailsArray = (overviewItemData, innerTabsData) => {
  * @param {Object[]} innerTabsData 
  * @returns {Object[]} - Array of found items
  */
-export const getSearchDetailsArray = (innerTabsData) => {
+const getSearchDetailsArray = (innerTabsData) => {
 	const newTabs = innerTabsData.slice(0);
 	const foundItems = [];
 
@@ -125,4 +125,11 @@ const getDetailedArray = (type, innerOverviewData, props = {}) => {
 	return array;
 };
 
-export default getDetailedArray;
+export {
+	getLatestUsed,
+	getDetailsArray,
+	getSearchDetailsArray,
+	getDetailedArray
+};
+
+// Bug: při mazání poslední položky

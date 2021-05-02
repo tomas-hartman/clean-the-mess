@@ -5,7 +5,7 @@ import { getOverview } from '../modules/overview.js';
  * @param {string} url Url to be validated
  * @returns {boolean}
  */
-export const isSupportedProtocol = (url) => {
+const isSupportedProtocol = (url) => {
 	const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
 	const urlObj = new URL(url);
 
@@ -17,7 +17,7 @@ export const isSupportedProtocol = (url) => {
  * @param {string} url 
  * @returns {Boolean}
  */
-export const hasIgnoredProtocol = (url) => {
+const hasIgnoredProtocol = (url) => {
 	const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
 	const { protocol } = new URL(url);
 
@@ -30,7 +30,7 @@ export const hasIgnoredProtocol = (url) => {
  * Gets information about tab of given id
  * @param {number} id - id from tabs array
  */
-export const getTabDataFromId = async (id) => {
+const getTabDataFromId = async (id) => {
 	const data = await browser.tabs.get(id);
 	const { title, url } = await data;
 
@@ -38,7 +38,7 @@ export const getTabDataFromId = async (id) => {
 };
 
 // Returns headerTitle for secondary screens
-export const getHeaderTitle = (id, type, tabsOverview, count) => {
+const getHeaderTitle = (id, type, tabsOverview, count) => {
 	let headerTitle = '';
 
 	if (type === 'details') {
@@ -61,7 +61,7 @@ export const getHeaderTitle = (id, type, tabsOverview, count) => {
  * @see https://stackoverflow.com/a/57448862/11243775
  * @param {string} str 
  */
-export const escapeHTML = str => str.replace(/[&<>'"]/g, 
+const escapeHTML = str => str.replace(/[&<>'"]/g, 
 	tag => ({
 		'&': '&amp;',
 		'<': '&lt;',
@@ -78,7 +78,7 @@ export const escapeHTML = str => str.replace(/[&<>'"]/g,
  * @param  {...string} args 
  * @todo tests!
  */
-export const callWithConfirm = (question, onTrue, onFalse, ...args) => {
+const callWithConfirm = (question, onTrue, onFalse, ...args) => {
 	const questions = {
 		bookmarkAll:  `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
 		closeTabs: `Are you sure you want to close ${args[0]} tabs?`
@@ -86,7 +86,11 @@ export const callWithConfirm = (question, onTrue, onFalse, ...args) => {
 
 	if(confirm(questions[question])) {
 		onTrue();
-	} else onFalse();
+		return true;
+	} 
+	
+	onFalse();
+	return false;
 };
 
 /**
@@ -95,7 +99,7 @@ export const callWithConfirm = (question, onTrue, onFalse, ...args) => {
  * @todo similar implementation could be used for specifying "not found" error message
  * @param {number} count
  */
-export const setFoundCount = (count) => {
+const setFoundCount = (count) => {
 	const foundElm = document.querySelector('.search-count');
 	if (count > 0) {
 		foundElm.innerText = `(${count})`;
@@ -108,7 +112,7 @@ export const setFoundCount = (count) => {
  * @param {string} value
  * @returns {string} 
  */
-export const getHash = (value) => {
+const getHash = (value) => {
 	let hash = 0, i, chr;
 	for (i = 0; i < value.length; i++) {
 		chr = value.charCodeAt(i);
@@ -121,19 +125,27 @@ export const getHash = (value) => {
 /**
  * Function that returns correct overviewData (former tabsOverview) for each window.
  */
-export const getOverviewData = async () => {
+const getOverviewData = async () => {
 	const currentWindow = await browser.windows.getCurrent();
 	const dataset = `overviewData${currentWindow.id}`;
 
-	const data = await browser.storage.local.get(dataset);
+	const getData = async () => {
+		return await browser.storage.local.get(dataset);
+	};
 
-	return data[dataset];
+	let data = await getData();
+
+	if(!data) {
+		await saveTabsOverviewDataPure();
+		data = await getData();
+	}
+
+	return await data[dataset];
 };
 
 const saveTabsOverviewDataPure = async () => {
 	const tabs = await browser.tabs.query({ currentWindow: true });
 	const currentWindowData = getOverview(await tabs);
-	// console.log(await tabs);
 
 	const currentWindow = await browser.windows.getCurrent();
 	const overviewData = {};
@@ -146,21 +158,30 @@ const saveTabsOverviewDataPure = async () => {
 /**
  * @todo there should be some debounce
  * @param {String} message 
+ * @returns {Object} overview data
  */
-export const saveTabsOverviewData = async (...args) => {
+const saveTabsOverviewData = async (...args) => {
 	console.log('Event args:', args);
 
-	setTimeout(async () => {
-		await saveTabsOverviewDataPure();
-	}, 200);
+	await saveTabsOverviewDataPure();
+	return await getOverviewData();
+};
 
-	/**
-	 * TBA: delete this after all
-	 */
-	const local = await getOverviewData();
-	console.log('OverviewData:', await local);
+const removeTabs = async (ids) => {
+	await browser.tabs.remove(ids);
+	await saveTabsOverviewData();
+};
 
-	const tabs = await browser.tabs.query({ currentWindow: true });
-	console.log('Tabs:', await tabs);
-	console.log('Tabs length:', await tabs.length);
+export {
+	isSupportedProtocol,
+	hasIgnoredProtocol,
+	getTabDataFromId,
+	getHeaderTitle,
+	escapeHTML,
+	callWithConfirm,
+	setFoundCount,
+	getHash,
+	getOverviewData,
+	saveTabsOverviewData,
+	removeTabs
 };

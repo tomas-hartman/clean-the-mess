@@ -4,11 +4,12 @@
   "description": "Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!",
   "main": "src/popup/popup.js",
   "scripts": {
-    "init": "npm install -g gulp-cli && web-ext",
     "start": "npm run chrome && npm run firefox",
     "test": "jest",
     "firefox": "npx web-ext run -s ./dist/firefox",
-    "chrome": "npx web-ext run -t chromium -s ./src",
+    "chrome": "npx web-ext run -t chromium -s ./dist/chrome",
+    "firefox:src": "npx web-ext run -s ./src",
+    "chrome:src": "npx web-ext run -t chromium -s ./src",
     "firefox:build": "npx web-ext build -a ./build/firefox",
     "chrome:build": "npx web-ext build -a ./build/chrome"
   },

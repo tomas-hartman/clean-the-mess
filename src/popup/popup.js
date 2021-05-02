@@ -1,7 +1,7 @@
 import search from '../modules/search.js';
 // import getOverview from '../modules/overview.js';
-import getDetailedArray from '../modules/details.js';
-import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle, getOverviewData } from '../modules/helpers.js';
+import { getDetailedArray } from '../modules/details.js';
+import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle, getOverviewData, saveTabsOverviewData } from '../modules/helpers.js';
 import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
 
 /**
@@ -58,23 +58,21 @@ const createSingleOverviewItem = (props) => {
  * @returns {node} ul#list > li.overview-item*n
  */
 const createOverviewList = (tabsOverview) => {
-	return new Promise((resolve, _reject) => {
-		const ul = document.createElement('ul');
-		ul.setAttribute('id', 'list');
-
-		for (let i = 0; i < tabsOverview.length; i++) {
-			const props = {
-				itemId: i,
-				data: tabsOverview[i],
-			};
-
-			const overviewItemComponent = createSingleOverviewItem(props);
-            
-			ul.appendChild(overviewItemComponent);
-		}
-
-		resolve(ul);
-	});
+	const ul = document.createElement('ul');
+	ul.setAttribute('id', 'list');
+	
+	for (let i = 0; i < tabsOverview.length; i++) {
+		const props = {
+			itemId: i,
+			data: tabsOverview[i],
+		};
+	
+		const overviewItemComponent = createSingleOverviewItem(props);
+				
+		ul.appendChild(overviewItemComponent);
+	}
+	
+	return ul;
 };
 
 /**
@@ -326,6 +324,7 @@ const setListenersOverview = async (node) => {
 		const tabsOverviewId = overviewData.findIndex((item) => item.key === tabsOverviewKey);
 
 		if (its.classList.contains('remove')) {
+			console.log(tabsOverviewId);
 			await removeTabsFromOverview(tabsOverviewId);
 
 			console.log('Tabs removed!');
@@ -428,6 +427,7 @@ const setListenersScreen = (node, array, params = {}) => {
 			removeTab(e, array, { index });
 		}
 		if (e.target.classList.contains('remove')) {
+			// console.log('removed detail');
 			removeTab(e, array, { index });
 		}
 		if (
@@ -460,7 +460,9 @@ const setListenersScreen = (node, array, params = {}) => {
  */
 const createBody = async (screenId, props = {}) => {
 	let { index, data } = props;
+
 	const overviewData = await getOverviewData();
+
 	const bodyStr = '<div class="body-container"></div>';
 	const body =
         bodyStr && document.createRange().createContextualFragment(bodyStr);
@@ -468,31 +470,35 @@ const createBody = async (screenId, props = {}) => {
 	let content = ''; // this shoud be general
 	let dataArr = []; // this should be internal variable; pre-made grouped output of getDetailedArray
 
-	switch (screenId) {
-	case 'overview':
-		content = await createOverviewList(await overviewData);
-		setListenersOverview(content);
-		break;
-	case 'details':
-	case 'latest':
-		dataArr = getDetailedArray(screenId, await overviewData, {
-			count: latestShownCount,
-			index,
-			data: tabsData,
-		});
-			
-		content = await createList(screenId, dataArr);
-		setListenersScreen(content, dataArr, { index });
-		break;
-	case 'search':
-		dataArr = getDetailedArray(screenId, await overviewData, { data });
-		content = await createList(screenId, dataArr);
-		setListenersScreen(content, dataArr, { index });
-		break;
-	default:
-		console.error('Error: body element couldn\'t be created.');
-		break;
-	}
+	const asyncSwitch = async (statement) => {
+		switch (statement) {
+		case 'overview':
+			content = await createOverviewList(await overviewData);
+			setListenersOverview(content);
+			break;
+		case 'details':
+		case 'latest':
+			dataArr = getDetailedArray(screenId, await overviewData, {
+				count: latestShownCount,
+				index,
+				data: await browser.tabs.query({ currentWindow: true }), // !== Overview data!!, === tabsData
+			});
+				
+			content = await createList(screenId, dataArr);
+			setListenersScreen(content, dataArr, { index });
+			break;
+		case 'search':
+			dataArr = getDetailedArray(screenId, await overviewData, { data });
+			content = await createList(screenId, dataArr);
+			setListenersScreen(content, dataArr, { index });
+			break;
+		default:
+			console.error('Error: body element couldn\'t be created.');
+			break;
+		}
+	};
+
+	await asyncSwitch(screenId);
 
 	body.firstChild.append(content);
 
@@ -540,7 +546,8 @@ const renderScreen = (screen, dest) => {
  * @param {string} oid overviewData id of node item that should be removed from overview 
  */
 const refreshOverviewData = async (oid) => {
-	const overviewData = await getOverviewData();
+	// const overviewData = await saveTabsOverviewData();
+	const overviewData = await getOverviewData(); // Gets overview data to perform changes on them
 	/**
 	 * @todo this should only tell tabs to refresh
 	 * ---> refreshTabsData() --> refresh them on background
@@ -555,6 +562,8 @@ const refreshOverviewData = async (oid) => {
 	refreshOpenTabsCount(newTabsNum);
 
 	document.querySelector(`li.url-${oid}`).remove();
+	
+	await saveTabsOverviewData(); // Saves those changes for the next rerender
 };
 
 /**
@@ -572,7 +581,7 @@ const refreshOpenTabsCount = (newCount) => {
 const refreshOverviewScreen = async (props = {}) => {
 	let { deletedId = false } = props;
 
-	// console.log(deletedId);
+	// Manipulate DOM
 	document.querySelector('#overview').classList.add('slide-in-reverse');
 	document
 		.querySelector('.screen:not(#overview)')
@@ -592,17 +601,19 @@ const refreshOverviewScreen = async (props = {}) => {
 	 * This actually is a temporary workaround to manually removes item from tabs 
 	 * before they are REALLY refreshed.
 	 */
-	if (deletedId)
+	if (deletedId) {
 		tabsData.splice(
 			tabsData.findIndex((tab) => tab.id === deletedId),
 			1
 		);
+	}
 
 	tabsData = await browser.tabs.query({ currentWindow: true }); // tohle by se mělo generovat na pozadí
 
 	const newBodyContainer = await createBody('overview');
 
 	refreshOpenTabsCount(tabsData.length);
+
 
 	document.querySelector('.body-container').remove();
 	document.querySelector('#overview').appendChild(newBodyContainer);
@@ -651,7 +662,7 @@ const removeTabsFromOverview = async (indexNumber, options = {}) => {
 	};
 
 	// Callbacks
-	const onTrue = () => removeTabs(indexNumber, id);
+	const onTrue = async () => await removeTabs(indexNumber, id);
 	const onFalse = () => { return; };
 
 	// Case: standard case
@@ -673,10 +684,19 @@ const removeTabsFromSearch = async () => {
 		} else return null;
 	});
 
-	if(ids[0] && confirm(`Are you sure you want to close ${ids.length} tabs?`)){
+	const onTrue = async () => {
 		await browser.tabs.remove(ids);
-		tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background
+		// await saveTabsOverviewData(); // this should be handled on background
+		tabsData = await browser.tabs.query({ currentWindow: true }); // !== Overview data!!
 		await refreshSearchScreen([]);
+	};
+
+	const onFalse = () => {
+		console.log('Tabs were not removed from search.');
+	};
+
+	if(ids[0]){
+		callWithConfirm('closeTabs', onTrue, onFalse, ids.length);
 	}
 };
 
@@ -703,16 +723,17 @@ const removeTab = async (e, detailsArr, props = {}) => {
 	/**
 	 * @todo remove calls to overviewData[index]
 	 */
-
 	if (index) {
 		overviewData[index].ids.splice(overviewData[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen
 	}
+
 	await browser.tabs.remove([id]); // closes tab in browser
 
 	e.target.closest('li').remove(); // removes node
 
 	// autoclose
 	if (autoclose && detailsArr.length === 0) {
+		// await saveTabsOverviewData();
 		await refreshOverviewScreen({ deletedId: id });
 	}
 };
