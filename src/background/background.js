@@ -27,9 +27,23 @@ browser.tabs.onRemoved.addListener(saveTabsOverviewData);
  * }
  */
 browser.runtime.onMessage.addListener((message) => {
+	console.log('Message', message);
+
 	switch (message.type) {
 	case 'bookmark-all':
 		handleBookmarkAll(message.data);
+		break;
+
+	// This only works in chrome
+	case 'darkScheme':
+		console.log('darkScheme');
+		chrome.browserAction.setIcon({
+			path: {
+				'16': '../icons/png/ico-dark-16.png',
+				'32': '../icons/png/ico-dark-32.png',
+				'128': '../icons/png/ico-dark-128.png',
+			}
+		});
 		break;
     
 	default:

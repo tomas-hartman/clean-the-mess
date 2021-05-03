@@ -23,14 +23,14 @@ gulp styledev
 
 ```sh
 # Firefox
-gulp firefox # starts devserver that creates dev build in dist
+npx gulp firefox # starts devserver that creates dev build in dist
 npm run firefox # runs browser with installed temporary addon (build from dist)
 
 # Chrome
-gulp chrome
+npx gulp chrome
 npm run chrome
 
 # Both
-gulp
+npx gulp
 npm run start
 ```

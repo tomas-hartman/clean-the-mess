@@ -17,22 +17,28 @@
       "page": "background/background.html"
     },
 
+    "icons": {
+      "16": "icons/png/ico-light-16.png",
+      "32": "icons/png/ico-light-32.png",
+      "128": "icons/png/ico-light-128.png"
+    },
     
     "browser_action": {
         "browser_style": false,
         "default_icon": {
-            "16": "icons/ico-light-16.svg",
-            "32": "icons/ico-light-32.svg"
+            "16": "icons/png/ico-light-16.png",
+            "32": "icons/png/ico-light-32.png",
+            "128": "icons/png/ico-light-128.png"
         },
         "default_title": "Clean the mess",
         "default_popup": "popup/popup.html",
         "theme_icons": [{
-            "dark": "icons/ico-light-16.svg",
-            "light": "icons/ico-dark-16.svg",
+            "dark": "icons/png/ico-light-16.png",
+            "light": "icons/png/ico-dark-16.png",
             "size": 16
           }, {
-            "dark": "icons/ico-light-32.svg",
-            "light": "icons/ico-dark-32.svg",
+            "dark": "icons/png/ico-light-32.png",
+            "light": "icons/png/ico-dark-32.png",
             "size": 32
           }]
     },

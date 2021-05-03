@@ -1,4 +1,5 @@
 const { watch, src, dest, parallel, series } = require('gulp');
+const merge = require('gulp-merge-json');
 const sass = require('gulp-sass');
 const fs = require('fs');
 const path = require('path');
@@ -13,8 +14,24 @@ sass.compiler = require('node-sass');
  * Build single tasks
  */
 function common(browser) {
+	const ignoredChromeOnly = ['!src/content/themedIco.chrome.js'];
+	const ignoredFirefoxOnly = [];
+	
+	const browserSpecific = browser === 'firefox' ? ignoredChromeOnly : ignoredFirefoxOnly;
+
 	// copy everything except for those with distinct files and dev folders
-	return src(['src/**/*', '!src/icons/**', '!src/styles/**', '!src/dev/**']).pipe(dest(`dist/${browser}/`));
+	return src(['src/**/*', '!src/icons/**', '!src/styles/**', '!src/dev/**', '!src/*.json', ...browserSpecific])
+		.pipe(dest(`dist/${browser}/`));
+}
+
+function manifest(browser) {
+	const options = {
+		fileName: 'manifest.json',
+	};
+
+	src(['src/manifest.common.json', `src/manifest.${browser}.json`])
+		.pipe(merge(options))
+		.pipe(dest(`./dist/${browser}/`));
 }
 
 function styles(browser, _srcPath, _destPath){
@@ -29,7 +46,7 @@ function styles(browser, _srcPath, _destPath){
 }
 
 function icons(browser) {
-	return src(['src/icons/*.*', '!src/icons/unused/**']).pipe(dest(`dist/${browser}/icons`));
+	return src(['src/icons/**/*.*', '!src/icons/unused/**']).pipe(dest(`dist/${browser}/icons`));
 }
 
 function server() {
@@ -75,6 +92,7 @@ function cleanUp(cb, browser, options) {
 function build(browser){
 	styles(browser);
 	icons(browser);
+	manifest(browser);
 	common(browser);
 }
 
