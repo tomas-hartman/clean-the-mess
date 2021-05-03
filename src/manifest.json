@@ -9,12 +9,14 @@
     "permissions": [
         "activeTab",
         "tabs",
-        "bookmarks"
+        "bookmarks",
+        "storage"
     ],
 
     "background": {
       "page": "background/background.html"
     },
+
     
     "browser_action": {
         "browser_style": false,

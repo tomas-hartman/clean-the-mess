@@ -1,167 +1,15 @@
 import search from '../modules/search.js';
+// import getOverview from '../modules/overview.js';
+import { getDetailedArray } from '../modules/details.js';
+import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle, getOverviewData, saveTabsOverviewData } from '../modules/helpers.js';
+import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
 
-const locale = {
-	string: 'cs-CZ',
-	options: {
-		year: 'numeric',
-		month: 'numeric',
-		day: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric',
-		second: 'numeric',
-	},
-};
-
-let tabs = [];
+/**
+ * Globals
+ */
+let tabsData = []; // has tid
 let windows = [];
-let tabsOverview = []; // fills with getOverview
 const latestShownCount = 10;
-
-
-/**
- * Converts string to html-safe code. Useful for titles to be displayed.
- * @see https://stackoverflow.com/a/57448862/11243775
- * @param {string} str 
- */
-const escapeHTML = str => str.replace(/[&<>'"]/g, 
-	tag => ({
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'\'': '&#39;',
-		'"': '&quot;'
-	}[tag]));
-
-const getSearchDetailsArray = (data) => {
-	const newTabs = data.slice(0);
-	const foundItems = [];
-
-	/* 
-          For each item from data create an object with:
-          { id, url, title, date}
-  
-          and sort them by date
-  
-          if data = [], then return null or stg
-          */
-
-	for (let i = 0; i < data.length; i++) {
-		if (newTabs[i].pinned) continue;
-
-		let output = {};
-
-		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
-
-		output.date = date;
-		output.title = newTabs[i].title;
-		output.id = newTabs[i].id;
-		output.url = newTabs[i].url;
-
-		foundItems.push(output);
-	}
-
-	// sort the results by date or relevancy?
-
-	console.log(foundItems);
-
-	return foundItems;
-};
-
-/**
- * @todo Work on detailed and better filtered return array
- * @param {array} tabs tabs query array
- * @param {number} numOfLatest optional, is equal to 10 normally
- */
-const getLatestUsed = (tabs, numOfLatest = 10) => {
-	let newTabs = tabs.slice(0);
-	let iterationsNum = numOfLatest;
-	let latest = [];
-
-	if (tabs.length < iterationsNum) iterationsNum = tabs.length;
-
-	newTabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
-
-	for (let i = 0; i < iterationsNum; i++) {
-		if (newTabs[i].pinned) continue;
-
-		let output = {};
-
-		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
-
-		output.date = date;
-		output.title = newTabs[i].title;
-		output.id = newTabs[i].id;
-		output.url = newTabs[i].url;
-
-		latest.push(output);
-	}
-
-	return latest;
-};
-
-const getOverview = (tabs) => {
-	const tabsOverview = [];
-
-	tabs.forEach((tab) => {
-		let url = {};
-		let originUrl = '';
-
-		try {
-			url = new URL(tab.url);
-			originUrl = url.origin;
-    
-			if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:') {
-				switch (url.protocol) {
-				case 'about:':
-				case 'moz-extension:':
-				case 'chrome:':
-					originUrl = 'Browser tabs';
-					break;
-				case 'file:':
-					originUrl = 'Opened files';
-					break;
-				case 'localhost:':
-					originUrl = 'Localhost';
-					break;
-				default:
-					originUrl = 'Other tabs';
-					break;
-				}
-			}
-		} catch(err){
-			if(tab.url === 'localhost'){
-				originUrl = 'Localhost';
-			} else if((/^((\d{1,3}.){3}\d{1,3})(:|\/|\s|$)/g).test(tab.url)){
-				const array = tab.url.split(/:|\//);
-				originUrl = array[0];
-			} else {
-				originUrl = 'Other tabs';
-			}
-		}
-
-		if (!tab.pinned) {
-			if (tabsOverview.some((website) => website.url === originUrl)) {
-				const index = tabsOverview.findIndex(
-					(website) => website.url === originUrl
-				);
-
-				tabsOverview[index].count += 1;
-				tabsOverview[index].ids.push(tab.id);
-			} else {
-				tabsOverview.push({ url: originUrl, count: 1, ids: [tab.id] });
-			}
-		}
-	});
-
-	tabsOverview.sort((a, b) => b.count - a.count);
-
-	// browser.browserAction.setBadgeText({text: `${tabs.length}`});
-
-	return tabsOverview;
-};
-
 
 /**
  * Returns single overview item component 
@@ -183,8 +31,9 @@ const createSingleOverviewItem = (props) => {
 		return '<div class="bookmark-all hidden" title="Bookmark and close all items"></div>';
 	};
 
+	// data-index-number="${itemId}"
 	let blueprint = `
-        <li class="url-${itemId} overview-item" data-index-number="${itemId}">
+        <li class="url-${itemId} overview-item" data-key="${data.key}">
             <div class="url-container">
                 <div class="main-item-text-container">
                     <div class="url" title="${url}">${url}</div>
@@ -209,23 +58,21 @@ const createSingleOverviewItem = (props) => {
  * @returns {node} ul#list > li.overview-item*n
  */
 const createOverviewList = (tabsOverview) => {
-	return new Promise((resolve, _reject) => {
-		const ul = document.createElement('ul');
-		ul.setAttribute('id', 'list');
-
-		for (let i = 0; i < tabsOverview.length; i++) {
-			const props = {
-				itemId: i,
-				data: tabsOverview[i],
-			};
-
-			const overviewItemComponent = createSingleOverviewItem(props);
-            
-			ul.appendChild(overviewItemComponent);
-		}
-
-		resolve(ul);
-	});
+	const ul = document.createElement('ul');
+	ul.setAttribute('id', 'list');
+	
+	for (let i = 0; i < tabsOverview.length; i++) {
+		const props = {
+			itemId: i,
+			data: tabsOverview[i],
+		};
+	
+		const overviewItemComponent = createSingleOverviewItem(props);
+				
+		ul.appendChild(overviewItemComponent);
+	}
+	
+	return ul;
 };
 
 /**
@@ -256,16 +103,16 @@ const createSeparator = () => {
 const createHeaderScreen = (index = null, type, tabsOverview) => {
 	// components: back button, title, ?closeAll, ?search
 
-	const headerTitle = getHeaderTitle(index, type, tabsOverview);
+	const headerTitle = getHeaderTitle(index, type, tabsOverview, latestShownCount);
 
 	const backBtnStr = '<div class="back go-back" title="Back"></div>';
 	const headerTitleDivStr = `<div class="header-title">${headerTitle}</div>`;
-	const closeAllElement = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`;
+	const closeAllElement = `<div class="close-all" data-index-number="${index}" title="Close all listed tabs"></div>`; // data-index-number="${index}" could be changed into key: and handled by this, not neccessary!
 	const closeAllDivStr = type !== 'latest' ? closeAllElement : '';
 	const separator = createSeparator(); // node!
 
 	const headerDivStr = `
-            <div id="header" class="control">
+            <div id="header">
                 ${backBtnStr}
                 ${headerTitleDivStr}
                 ${closeAllDivStr}
@@ -298,7 +145,7 @@ const createHeaderSearch = () => {
 	const separator = createSeparator(); // node!
 
 	const headerDivStr = `
-            <div id="header" class="control">
+            <div id="header">
                 ${backBtnStr}
                 ${headerTitleDivStr}
                 ${closeAllDivStr}
@@ -316,13 +163,13 @@ const createHeaderSearch = () => {
 const createHeaderOverview = () => {
 	// Header title
 	const windowStr = windows.length > 1 ? ' in this window' : '';
-	const headerTitleContainerStr = '<div id="header" class="control header-overview"></div>';
+	const headerTitleContainerStr = '<div id="header" class="header-overview"></div>';
 	const headerTitleContainer =
         headerTitleContainerStr &&
         document.createRange().createContextualFragment(headerTitleContainerStr);
 
 	const headerTitleStr = `<div class="header-title">
-                                    <span>You have <span id="open-tabs-count">${tabs.length}</span> opened tabs${windowStr}.</span>
+                                    <span>You have <span id="open-tabs-count">${tabsData.length}</span> opened tabs${windowStr}.</span>
                                 </div>
                                 <div id="search-btn"></div>`;
 	const headerTitle =
@@ -349,8 +196,9 @@ const createHeaderOverview = () => {
  * @param {object} props
  * @returns {node} <div class="header-container"><!-- Content --></div>
  */
-const createHeader = (screenId, props = {}) => {
+const createHeader = async (screenId, props = {}) => {
 	let { index } = props;
+	const overviewData = await getOverviewData();
 	const headerStr = '<div class="header-container"></div>';
 	const header =
         headerStr && document.createRange().createContextualFragment(headerStr);
@@ -366,7 +214,7 @@ const createHeader = (screenId, props = {}) => {
 		break;
 	case 'details':
 	case 'latest':
-		contentArr = createHeaderScreen(index, screenId, tabsOverview);
+		contentArr = createHeaderScreen(index, screenId, overviewData);
 		break;
 	default:
 		break;
@@ -433,18 +281,6 @@ const setListenersHeader = (header, index, screenId) => {
 	};
 };
 
-/**
- * Sets number of count into search input info
- * @todo similar implementation could be used for specifying "not found" error message
- * @param {number} count
- */
-const setFoundCount = (count) => {
-	const foundElm = document.querySelector('.search-count');
-	if (count > 0) {
-		foundElm.innerText = `(${count})`;
-	} else foundElm.innerText = '';
-};
-
 const setListenersSearch = (node) => {
 	const inputElm = node.querySelector('#search-input');
 	let timeout; // waits until next char is typed in before it renders; default 200 ms
@@ -452,13 +288,15 @@ const setListenersSearch = (node) => {
 	inputElm.addEventListener('keyup', (event) => {
 		clearTimeout(timeout);
 		timeout = setTimeout(async () => {
-			const found = search.perform(tabs, event.target.value);
+			const found = search.perform(tabsData, event.target.value);
 			await refreshSearchScreen(found);
 		}, 200);
 	});
 };
 
-const setListenersOverview = (node) => {
+const setListenersOverview = async (node) => {
+	// const overviewData = await getOverviewData();
+
 	node.onmouseover = (e) => {
 		if (e.target.closest('#overview li')) {
 			const parentElm = e.target
@@ -481,19 +319,29 @@ const setListenersOverview = (node) => {
 
 	node.onclick = async (e) => {
 		const its = e.target;
-		const tabsOverviewId = parseInt(its.closest('li').dataset.indexNumber);
+		const overviewData = await getOverviewData();
+		const tabsOverviewKey = parseInt(its.closest('li').dataset.key);
+		const tabsOverviewId = overviewData.findIndex((item) => item.key === tabsOverviewKey);
 
 		if (its.classList.contains('remove')) {
+			console.log(tabsOverviewId);
 			await removeTabsFromOverview(tabsOverviewId);
 
 			console.log('Tabs removed!');
 		}
 
 		if (its.classList.contains('bookmark-all')){
+			const numOfItems = overviewData[tabsOverviewId].ids.length;
+			const folderName = (new URL(overviewData[tabsOverviewId].url)).hostname;
 
-			browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: tabsOverview[tabsOverviewId], index: tabsOverviewId }});
+			const onTrue = () => browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: overviewData[tabsOverviewId], index: tabsOverviewId }});
+			const onFalse = () => { return; };
 
-			console.log('Bookmark all! Still some todos!');
+			if(numOfItems > 1){
+				callWithConfirm('bookmarkAll', onTrue, onFalse, numOfItems, folderName);
+			} else {
+				onTrue();
+			}
 		}
 
 		if (!!its.closest('.overview-item') && !its.classList.contains('remove') && !its.classList.contains('bookmark-all')) {
@@ -512,7 +360,7 @@ const setListenersOverview = (node) => {
 	browser.runtime.onMessage.addListener(async (message) => {
 		switch (message.type) {
 		case 'items-bookmarked':
-			await removeTabsFromOverview(message.data.index);
+			await removeTabsFromOverview(message.data.index, { forceRemove: true }); // this should just call remove tabs without anything else, it should not ask HERE
 			break;
         
 		default:
@@ -549,6 +397,7 @@ const setListenersScreen = (node, array, params = {}) => {
 				.closest('li')
 				.querySelector('.item-buttons-container');
 			parentElm.querySelector('.bookmark-close')?.classList.remove('hidden'); // .bookmark-close
+			parentElm.querySelector('.bookmarked')?.classList.remove('hidden'); // .bookmarked
 			parentElm.querySelector('.remove').classList.remove('hidden'); // .remove
 			parentElm.querySelector('.get-in').classList.add('hidden'); // .get-in
 		}
@@ -560,12 +409,13 @@ const setListenersScreen = (node, array, params = {}) => {
 				.closest('li')
 				.querySelector('.item-buttons-container');
 			parentElm.querySelector('.bookmark-close')?.classList.add('hidden');
+			parentElm.querySelector('.bookmarked')?.classList.add('hidden');
 			parentElm.querySelector('.remove').classList.add('hidden');
 			parentElm.querySelector('.get-in').classList.remove('hidden');
 		}
 	};
 
-	node.onclick = (e) => {
+	node.onclick = async (e) => {
 		if (e.target.classList.contains('bookmark-close')) {
 			// bookmark & remove tab
 			const id = parseInt(e.target.closest('li').dataset.tabId);
@@ -577,6 +427,7 @@ const setListenersScreen = (node, array, params = {}) => {
 			removeTab(e, array, { index });
 		}
 		if (e.target.classList.contains('remove')) {
+			// console.log('removed detail');
 			removeTab(e, array, { index });
 		}
 		if (
@@ -587,13 +438,21 @@ const setListenersScreen = (node, array, params = {}) => {
 		) {
 			// switchTo tab
 			const id = parseInt(e.target.closest('li').dataset.tabId);
-			browser.tabs.update(id, { active: true });
+			await browser.tabs.update(id, { active: true });
 		}
 	};
 };
 
 /**
  * Creates screen body component (with list of items). Adds list of items to container and returns it, based on its type.
+ * It works this way:
+ * 
+ * 1. gathers data based on type of the screen
+ * 2. creates DOM content based on the data
+ * 3. sets listeners for elements in the node
+ * ---
+ * 4. creates DOM node and appends previosly created node to it
+ * 5. returns this node
  *
  * @param {string} screenId
  * @param {object} props
@@ -601,37 +460,45 @@ const setListenersScreen = (node, array, params = {}) => {
  */
 const createBody = async (screenId, props = {}) => {
 	let { index, data } = props;
+
+	const overviewData = await getOverviewData();
+
 	const bodyStr = '<div class="body-container"></div>';
 	const body =
         bodyStr && document.createRange().createContextualFragment(bodyStr);
 
-	let content = '';
-	let dataArr = [];
+	let content = ''; // this shoud be general
+	let dataArr = []; // this should be internal variable; pre-made grouped output of getDetailedArray
 
-	switch (screenId) {
-	case 'overview':
-		content = await createOverviewList(tabsOverview);
-		setListenersOverview(content);
-		break;
-	case 'details':
-	case 'latest':
-		dataArr = getDetailedArray(screenId, {
-			count: latestShownCount,
-			index,
-			data: tabs,
-		});
-		content = await createList(screenId, dataArr);
-		setListenersScreen(content, dataArr, { index });
-		break;
-	case 'search':
-		dataArr = getDetailedArray(screenId, { data });
-		content = await createList(screenId, dataArr);
-		setListenersScreen(content, dataArr, { index });
-		break;
-	default:
-		console.error('Error: body element couldn\'t be created.');
-		break;
-	}
+	const asyncSwitch = async (statement) => {
+		switch (statement) {
+		case 'overview':
+			content = await createOverviewList(await overviewData);
+			setListenersOverview(content);
+			break;
+		case 'details':
+		case 'latest':
+			dataArr = getDetailedArray(screenId, await overviewData, {
+				count: latestShownCount,
+				index,
+				data: await browser.tabs.query({ currentWindow: true }), // !== Overview data!!, === tabsData
+			});
+				
+			content = await createList(screenId, dataArr);
+			setListenersScreen(content, dataArr, { index });
+			break;
+		case 'search':
+			dataArr = getDetailedArray(screenId, await overviewData, { data });
+			content = await createList(screenId, dataArr);
+			setListenersScreen(content, dataArr, { index });
+			break;
+		default:
+			console.error('Error: body element couldn\'t be created.');
+			break;
+		}
+	};
+
+	await asyncSwitch(screenId);
 
 	body.firstChild.append(content);
 
@@ -651,7 +518,7 @@ const createScreen = async (screenId, props = {}) => {
 	const screen =
         screenStr && document.createRange().createContextualFragment(screenStr);
 
-	const header = createHeader(screenId, props);
+	const header = await createHeader(screenId, props);
 	const body = await createBody(screenId, props);
 
 	screen.firstChild.append(header);
@@ -675,20 +542,28 @@ const renderScreen = (screen, dest) => {
 };
 
 /**
- * Use only after removal!
- * @param {string} data id of selected url from tabsOverview
+ * Use only after removal of an item in overview!
+ * @param {string} oid overviewData id of node item that should be removed from overview 
  */
-const refreshOverviewData = async (data) => {
-	tabs = await browser.tabs.query({ currentWindow: true });
+const refreshOverviewData = async (oid) => {
+	// const overviewData = await saveTabsOverviewData();
+	const overviewData = await getOverviewData(); // Gets overview data to perform changes on them
+	/**
+	 * @todo this should only tell tabs to refresh
+	 * ---> refreshTabsData() --> refresh them on background
+	 */
+	tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background 
 	let currentTabsNum = parseInt(
 		document.querySelector('#open-tabs-count').innerText
 	);
-	let tabsNum = tabsOverview[data].ids.length;
+	let tabsNum = overviewData[oid].ids.length;
 	let newTabsNum = currentTabsNum - tabsNum;
 
 	refreshOpenTabsCount(newTabsNum);
 
-	document.querySelector(`li.url-${data}`).remove();
+	document.querySelector(`li.url-${oid}`).remove();
+	
+	await saveTabsOverviewData(); // Saves those changes for the next rerender
 };
 
 /**
@@ -701,12 +576,12 @@ const refreshOpenTabsCount = (newCount) => {
 };
 
 /**
- * Use only after details to overview transition (pressing back button)
+ * Use only when pressing back button (= after details to overview transition)
  */
 const refreshOverviewScreen = async (props = {}) => {
 	let { deletedId = false } = props;
 
-	// console.log(deletedId);
+	// Manipulate DOM
 	document.querySelector('#overview').classList.add('slide-in-reverse');
 	document
 		.querySelector('.screen:not(#overview)')
@@ -720,18 +595,25 @@ const refreshOverviewScreen = async (props = {}) => {
 		{ once: true }
 	);
 
-	if (deletedId)
-		tabs.splice(
-			tabs.findIndex((tab) => tab.id === deletedId),
+	/**
+	 * @todo this could be optimized by refreshing tabs directly.
+	 * there is however a risk, that tabs data will be inaccurate due to async
+	 * This actually is a temporary workaround to manually removes item from tabs 
+	 * before they are REALLY refreshed.
+	 */
+	if (deletedId) {
+		tabsData.splice(
+			tabsData.findIndex((tab) => tab.id === deletedId),
 			1
 		);
+	}
 
-	tabs = await browser.tabs.query({ currentWindow: true });
-	tabsOverview = getOverview(tabs);
+	tabsData = await browser.tabs.query({ currentWindow: true }); // tohle by se mělo generovat na pozadí
 
 	const newBodyContainer = await createBody('overview');
 
-	refreshOpenTabsCount(tabs.length);
+	refreshOpenTabsCount(tabsData.length);
+
 
 	document.querySelector('.body-container').remove();
 	document.querySelector('#overview').appendChild(newBodyContainer);
@@ -764,19 +646,30 @@ const refreshSearchScreen = async (data) => {
 };
 
 /**
- * @param {element} target
- * @param {*} indexNumber tabsOverview index number
+ * Removes tabs with given ids from overview. 
+ * @param {number} indexNumber tabsOverview index number
+ * @param {Object} options 
+ * @param {Boolean} [options.forceRemove = false] Forces removal without confirm (= removal was confirmed previously as in bookmark-all)
  */
-const removeTabsFromOverview = async (indexNumber) => {
-	const id = tabsOverview[indexNumber].ids;
-	if (id.length > 10) {
-		if (confirm(`Are you sure you want to close ${id.length} tabs?`)) {
-			await browser.tabs.remove(id);
-			await refreshOverviewData(indexNumber);
-		} else return;
-	} else {
+const removeTabsFromOverview = async (indexNumber, options = {}) => {
+	const overviewData = await getOverviewData();
+	const id = overviewData[indexNumber].ids; // @todo handle this with key hash
+	const { forceRemove = false } = options;
+
+	const removeTabs = async (indexNumber, id) => {
 		await browser.tabs.remove(id);
 		await refreshOverviewData(indexNumber);
+	};
+
+	// Callbacks
+	const onTrue = async () => await removeTabs(indexNumber, id);
+	const onFalse = () => { return; };
+
+	// Case: standard case
+	if (!forceRemove && id.length > 10) {
+		callWithConfirm('closeTabs', onTrue, onFalse, id.length);
+	} else {
+		removeTabs(indexNumber, id);
 	}
 };
 
@@ -791,64 +684,19 @@ const removeTabsFromSearch = async () => {
 		} else return null;
 	});
 
-	if(ids[0] && confirm(`Are you sure you want to close ${ids.length} tabs?`)){
+	const onTrue = async () => {
 		await browser.tabs.remove(ids);
-		tabs = await browser.tabs.query({ currentWindow: true });
+		// await saveTabsOverviewData(); // this should be handled on background
+		tabsData = await browser.tabs.query({ currentWindow: true }); // !== Overview data!!
 		await refreshSearchScreen([]);
-	}
-};
-
-const getDetailsArray = (overviewId, tabsOverview, data) => {
-	const ids = tabsOverview[overviewId].ids;
-	let array = [];
-
-	for (let i = 0; i < ids.length; i++) {
-		array.push(...data.filter((tab) => tab.id === ids[i]));
-	}
-
-	array.sort((a, b) => b.lastAccessed - a.lastAccessed);
-
-	return array;
-};
-
-const addBookmarkStatus = async (item) => {
-	// I will not check for duplicate items with some special protocols in bookmarks
-	if(hasIgnoredProtocol(item.url)) return;
-
-	const bookmarks = await browser.bookmarks.search({ url: item.url });
-	const elm = document.querySelector(`li[data-tab-id='${item.id}'] .bookmark`);
-
-	if (bookmarks.length > 0) {
-		elm.classList.add('bookmarked');
-		elm.classList.remove('bookmark-close');
-		elm.setAttribute('title', 'This url is already bookmarked');
-	}
-};
-
-const bookmarkTab = async (url, title, _id) => {
-	const isSupportedProtocol = (url) => {
-		const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
-		const urlObj = new URL(url);
-
-		return supportedProtocols.indexOf(urlObj.protocol) != -1;
 	};
 
-	if (isSupportedProtocol(url)) {
-		// check if folder exists and create special folder?
-		await browser.bookmarks
-			.create({ title: title, url: url })
-			.catch((err) => console.log(err));
-		await browser.browserAction.setIcon({
-			path: '../icons/btn-bookmark-star-blue.svg',
-		});
+	const onFalse = () => {
+		console.log('Tabs were not removed from search.');
+	};
 
-		new Promise((resolve, _reject) => {
-			setTimeout(() => {
-				browser.browserAction.setIcon({});
-				resolve();
-			}, 700);
-		});
-		console.log('New bookmark created');
+	if(ids[0]){
+		callWithConfirm('closeTabs', onTrue, onFalse, ids.length);
 	}
 };
 
@@ -861,6 +709,7 @@ const bookmarkTab = async (url, title, _id) => {
  */
 const removeTab = async (e, detailsArr, props = {}) => {
 	let { autoclose = true, index } = props;
+	const overviewData = await getOverviewData();
 	const id = parseInt(e.target.closest('li').dataset.tabId);
 	// id: index in __tabs__ (tab index)
 	// index: index in __overview__ (group index)
@@ -870,15 +719,21 @@ const removeTab = async (e, detailsArr, props = {}) => {
 		detailsArr.findIndex((tab) => tab.id === id),
 		1
 	); // removes item from detailed array
+
+	/**
+	 * @todo remove calls to overviewData[index]
+	 */
 	if (index) {
-		tabsOverview[index].ids.splice(tabsOverview[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen
+		overviewData[index].ids.splice(overviewData[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen
 	}
+
 	await browser.tabs.remove([id]); // closes tab in browser
 
 	e.target.closest('li').remove(); // removes node
 
 	// autoclose
 	if (autoclose && detailsArr.length === 0) {
+		// await saveTabsOverviewData();
 		await refreshOverviewScreen({ deletedId: id });
 	}
 };
@@ -888,50 +743,6 @@ const removeTab = async (e, detailsArr, props = {}) => {
  */
 const closeScreen = async () => {
 	await refreshOverviewScreen();
-};
-
-// Returns headerTitle for secondary screens
-const getHeaderTitle = (id, type, tabsOverview) => {
-	let headerTitle = '';
-
-	if (type === 'details') {
-		try {
-			headerTitle = new URL(tabsOverview[id].url).host;
-		} catch (error) {
-			if(tabsOverview[id] && tabsOverview[id].url){
-				headerTitle = tabsOverview[id].url;
-			} else headerTitle = '';
-		}
-	} else if (type === 'latest') {
-		headerTitle = `${latestShownCount} longest unused tabs`;
-	} else headerTitle = null;
-
-	return headerTitle;
-};
-
-/**
- * Returns sorted/reduced array for detailed secondary screens
- * Detailed array consists of objects with props {id, url, title, date}
- *
- * @param {string} type normal | latest | ???
- * @param {*} props
- * @returns array = [{id, url, title, date}, ...]
- */
-const getDetailedArray = (type, props = {}) => {
-	let { count, index, data } = props;
-
-	let array = [];
-	if (type === 'details' && data) { // data === __tabs__
-		array = getDetailsArray(index, tabsOverview, data);
-	} else if (type === 'latest' && count && data) {
-		array = getLatestUsed(data, count);
-	} else if (type === 'search' && data) {
-		array = getSearchDetailsArray(data);
-	} else {
-		console.log('Error: got wrong params on getDetailedArray()');
-	}
-
-	return array;
 };
 
 /**
@@ -980,19 +791,6 @@ const toggleButtonActive = (className, isActive) => {
 	if(isActive) {
 		element.classList.remove(inactiveClassName);
 	} else element.classList.add(inactiveClassName);
-};
-
-/**
- * Checks if url has some of the special protocols, that do not work well with certain features and APIs such as bookmarks
- * @param {string} url 
- */
-const hasIgnoredProtocol = (url) => {
-	const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
-	const { protocol } = new URL(url);
-
-	if(ignoredProtocols.includes(protocol)) {
-		return true;
-	} else return false;
 };
 
 /**
@@ -1054,7 +852,8 @@ const createList = (type, array) => {
 
 		if(detailItem){
 			ul.appendChild(detailItem);
-			addBookmarkStatus(array[i]);
+
+			addBookmarkStatus(array[i], document);
 		}
 	}
 
@@ -1079,36 +878,22 @@ const createList = (type, array) => {
  * Handles first run events, creates overview screen and renders it
  */
 const init = async () => {
-	tabs = await browser.tabs.query({ currentWindow: true });
+	tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background
 	windows = await browser.windows.getAll();
-	tabsOverview = getOverview(tabs);
 
 	const initialDest = document.querySelector('#main-container');
 	const screen = await createScreen('overview');
-
-	// const urlsArray = tabs.map((item) => item.url);
-	// console.log(JSON.stringify(urlsArray));
 
 	renderScreen(screen, initialDest);
 };
 
 init();
 
-// try {
-module.exports = { 
+export { 
 	getHeaderTitle, 
 	setClass,
 	createSingleDetailItem,
 	createSingleOverviewItem,
 	createHeaderScreen,
-	getDetailedArray,
-	getDetailsArray,
-	getLatestUsed,
-	getOverview,
 	setFoundCount,
-	bookmarkTab,
-	tabsOverview,
 };
-// } catch (err){
-//     console.log("Popup run in production environment.");
-// }
