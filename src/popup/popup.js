@@ -669,7 +669,7 @@ const removeTabsFromOverview = async (indexNumber, options = {}) => {
 	if (!forceRemove && id.length > 10) {
 		callWithConfirm('closeTabs', onTrue, onFalse, id.length);
 	} else {
-		removeTabs(indexNumber, id);
+		await removeTabs(indexNumber, id);
 	}
 };
 
