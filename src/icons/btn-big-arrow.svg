@@ -14,6 +14,7 @@
 		@media (prefers-color-scheme: dark) {
 			.st0 {
 				stroke: rgba(249, 249, 250, 0.8);
+			}
 		}
 	</style>
 	<polyline class="st0" points="6,2 12,8 6,14 " />
