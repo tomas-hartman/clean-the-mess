@@ -15,6 +15,7 @@
 		.st0 {
 			stroke: rgba(249, 249, 250, 0.8);
 		}
+	}
 </style>
 <circle class="st0" cx="8.5" cy="8.5" r="6.5"/>
 <g>

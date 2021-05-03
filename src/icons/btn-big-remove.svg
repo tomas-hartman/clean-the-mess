@@ -13,6 +13,7 @@
 		@media (prefers-color-scheme: dark) {
 			.st0 {
 				stroke: rgba(249, 249, 250, 0.8);
+			}
 		}
 </style>
 <line class="st0" x1="3" y1="13" x2="13" y2="3"/>
