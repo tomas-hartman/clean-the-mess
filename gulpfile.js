@@ -4,8 +4,6 @@ const sass = require('gulp-sass');
 const fs = require('fs');
 const path = require('path');
 const exec = require('gulp-exec');
-const babel = require('gulp-babel');
-const rename = require('gulp-rename');
 
 const express = require('express');
 const livereload = require('livereload');
