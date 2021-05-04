@@ -4,6 +4,7 @@ src/dev/icons/src
 .vscode
 coverage/
 debug.log
+.DS_Store
 
 # Keep only specific builds
 build/**/
