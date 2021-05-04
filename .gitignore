@@ -5,6 +5,8 @@ src/dev/icons/src
 coverage/
 debug.log
 .DS_Store
+.parcel-cache
+.cache
 
 # Keep only specific builds
 build/**/

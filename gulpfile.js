@@ -1,8 +1,11 @@
-const { watch, src, dest, parallel, series } = require('gulp');
+const { watch, src, dest, parallel } = require('gulp');
 const merge = require('gulp-merge-json');
 const sass = require('gulp-sass');
 const fs = require('fs');
 const path = require('path');
+const exec = require('gulp-exec');
+const babel = require('gulp-babel');
+const rename = require('gulp-rename');
 
 const express = require('express');
 const livereload = require('livereload');
@@ -10,144 +13,162 @@ const connectLivereload = require('connect-livereload');
 
 sass.compiler = require('node-sass');
 
+const ignoredPatternsInCompilation = ['!src/icons/**', '!src/styles/**/*', '!src/dev/**/*', '!src/*.json'];
+
 /**
  * Build single tasks
  */
 function common(browser) {
-	const ignoredChromeOnly = ['!src/content/themedIco.chrome.js'];
-	const ignoredFirefoxOnly = [];
+  const ignoredChromeOnly = ['!src/content/themedIco.chrome.js'];
+  const ignoredFirefoxOnly = [];
 	
-	const browserSpecific = browser === 'firefox' ? ignoredChromeOnly : ignoredFirefoxOnly;
+  const browserSpecific = browser === 'firefox' ? ignoredChromeOnly : ignoredFirefoxOnly;
 
-	// copy everything except for those with distinct files and dev folders
-	return src(['src/**/*', '!src/icons/**', '!src/styles/**', '!src/dev/**', '!src/*.json', ...browserSpecific])
-		.pipe(dest(`dist/${browser}/`));
+  // copy everything that is not js 
+  return src(['src/**/*', '!src/**/*.jsx', ...ignoredPatternsInCompilation, ...browserSpecific])
+    .pipe(dest(`dist/${browser}/`));
 }
 
-function manifest(browser) {
-	const options = {
-		fileName: 'manifest.json',
-	};
+/**
+ * Build js
+ * @param {*} browser 
+ * @returns 
+ */
+function compileJsx(browser) {
+  // compiles all js(x) files except for those with distinct files and dev folders
+  return src(['src/**/*.jsx', ...ignoredPatternsInCompilation])
+    .pipe(exec((file) => `npx parcel ${file.path} --out-dir dist/${browser}/popup/`))
+    .pipe(dest(`dist/${browser}/`));
+}
 
-	src(['src/manifest.common.json', `src/manifest.${browser}.json`])
-		.pipe(merge(options))
-		.pipe(dest(`./dist/${browser}/`));
+
+// .pipe(exec(file => `git checkout ${file.path} customTemplatingThing`, options))
+
+function manifest(browser) {
+  const options = {
+    fileName: 'manifest.json',
+  };
+
+  src(['src/manifest.common.json', `src/manifest.${browser}.json`])
+    .pipe(merge(options))
+    .pipe(dest(`./dist/${browser}/`));
 }
 
 function styles(browser, _srcPath, _destPath){
-	const srcPath = _srcPath || 'src/styles/**/*.scss';
-	const destPath = _destPath || `dist/${browser}/styles/`;
+  const srcPath = _srcPath || 'src/styles/**/*.scss';
+  const destPath = _destPath || `dist/${browser}/styles/`;
 
-	const options = browser ? {includePaths: `src/styles/${browser}/`} : {};
+  const options = browser ? {includePaths: `src/styles/${browser}/`} : {};
 
-	return src(srcPath)
-		.pipe(sass(options).on('error', sass.logError))
-		.pipe(dest(destPath));
+  return src(srcPath)
+    .pipe(sass(options).on('error', sass.logError))
+    .pipe(dest(destPath));
 }
 
 function icons(browser) {
-	return src(['src/icons/**/*.*', '!src/icons/unused/**']).pipe(dest(`dist/${browser}/icons`));
+  return src(['src/icons/**/*.*', '!src/icons/unused/**']).pipe(dest(`dist/${browser}/icons`));
 }
 
 function server() {
-	const app = express();
-	const port = 3000;
+  const app = express();
+  const port = 3000;
 
-	const liveReloadServer = livereload.createServer();
-	liveReloadServer.watch('src/dev/style-dev');
+  const liveReloadServer = livereload.createServer();
+  liveReloadServer.watch('src/dev/style-dev');
 
-	app.use(connectLivereload());
+  app.use(connectLivereload());
 	
-	const publicPath = express.static(path.join(__dirname, 'src/dev/style-dev'));
-	const publicImages = express.static(path.join(__dirname, 'src/dev/style-dev', '../../icons/'));
+  const publicPath = express.static(path.join(__dirname, 'src/dev/style-dev'));
+  const publicImages = express.static(path.join(__dirname, 'src/dev/style-dev', '../../icons/'));
 
-	app.use(publicPath);
-	app.use('/icons', publicImages);
+  app.use(publicPath);
+  app.use('/icons', publicImages);
 
-	app.listen(port, () => {
-		console.log(`Started localhost on port ${port}`);
-	});
+  app.listen(port, () => {
+    console.log(`Started localhost on port ${port}`);
+  });
 }
 
 function compileScssDev(cb) {
-	const styleDevPath = 'src/dev/style-dev';
-	const styleDevSrcPath = 'src/dev/style-dev/**/*.scss';
+  const styleDevPath = 'src/dev/style-dev';
+  const styleDevSrcPath = 'src/dev/style-dev/**/*.scss';
 
-	styles(null, styleDevSrcPath, styleDevPath);
-	cb();
+  styles(null, styleDevSrcPath, styleDevPath);
+  cb();
 }
 
-function cleanUp(cb, browser, options) {
-	console.log('Cleaning after previous jobs.');
-	const pathToClean = path.join(__dirname, `dist/${browser}`);
+function cleanUp(cb, browser, _options) {
+  console.log('Cleaning after previous jobs.');
+  const pathToClean = path.join(__dirname, `dist/${browser}`);
 	
-	fs.rmdir(pathToClean, {recursive: true}, cb);
+  fs.rmdir(pathToClean, {recursive: true}, cb);
 
-	cb();
+  cb();
 }
 
 /**
  * Joint function 
  */
 function build(browser){
-	styles(browser);
-	icons(browser);
-	manifest(browser);
-	common(browser);
+  styles(browser);
+  icons(browser);
+  manifest(browser);
+  common(browser);
+  compileJsx(browser);
 }
 
 /**
  * Environment building
  */
 function buildDevFirefox(cb) {
-	build('firefox');
+  build('firefox');
     
-	cb();
+  cb();
 }
 
 function buildDevChrome(cb) {
-	build('chrome');
+  build('chrome');
     
-	cb();
+  cb();
 }
 
 /**
  * Tasks
  */
 exports.build = function(cb) {
-	cleanUp(cb, 'firefox');
-	cleanUp(cb, 'chrome');
+  cleanUp(cb, 'firefox');
+  cleanUp(cb, 'chrome');
 
-	buildDevFirefox(cb);
-	buildDevChrome(cb);
+  buildDevFirefox(cb);
+  buildDevChrome(cb);
 };
 
 
 exports.styledev = function(){
-	server();
+  server();
 
-	watch('./src/dev/style-dev/**/*.scss', compileScssDev);
+  watch('./src/dev/style-dev/**/*.scss', compileScssDev);
 };
 
 exports.firefox = function(cb){
-	cleanUp(cb, 'firefox');
-	buildDevFirefox(cb);
+  cleanUp(cb, 'firefox');
+  buildDevFirefox(cb);
 
-	console.log('Waiting for changes...');
-	// add some cleanup
-	watch(['src/', '!src/dev/'], buildDevFirefox);
+  console.log('Waiting for changes...');
+  // add some cleanup
+  watch(['src/', '!src/dev/'], buildDevFirefox);
 };
 
 exports.chrome = function(cb){
-	cleanUp(cb, 'chrome');
-	buildDevChrome(cb);
+  cleanUp(cb, 'chrome');
+  buildDevChrome(cb);
 	
-	console.log('Waiting for changes...');
-	// add some cleanup
-	watch(['src/', '!src/dev/'], buildDevChrome);
+  console.log('Waiting for changes...');
+  // add some cleanup
+  watch(['src/', '!src/dev/'], buildDevChrome);
 };
 
 exports.default = function(){
-	console.log('Waiting for changes...');
-	watch(['src/', '!src/dev/'], parallel(buildDevFirefox, buildDevChrome));
+  console.log('Waiting for changes...');
+  watch(['src/', '!src/dev/'], parallel(buildDevFirefox, buildDevChrome));
 };
