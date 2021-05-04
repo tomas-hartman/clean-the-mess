@@ -6,10 +6,10 @@ import { getOverview } from '../modules/overview.js';
  * @returns {boolean}
  */
 const isSupportedProtocol = (url) => {
-	const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
-	const urlObj = new URL(url);
+  const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
+  const urlObj = new URL(url);
 
-	return supportedProtocols.indexOf(urlObj.protocol) != -1;
+  return supportedProtocols.indexOf(urlObj.protocol) != -1;
 };
 
 /**
@@ -18,12 +18,12 @@ const isSupportedProtocol = (url) => {
  * @returns {Boolean}
  */
 const hasIgnoredProtocol = (url) => {
-	const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
-	const { protocol } = new URL(url);
+  const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
+  const { protocol } = new URL(url);
 
-	if(ignoredProtocols.includes(protocol)) {
-		return true;
-	} else return false;
+  if(ignoredProtocols.includes(protocol)) {
+    return true;
+  } else return false;
 };
 
 /**
@@ -31,29 +31,29 @@ const hasIgnoredProtocol = (url) => {
  * @param {number} id - id from tabs array
  */
 const getTabDataFromId = async (id) => {
-	const data = await browser.tabs.get(id);
-	const { title, url } = await data;
+  const data = await browser.tabs.get(id);
+  const { title, url } = await data;
 
-	return [title, url];
+  return [title, url];
 };
 
 // Returns headerTitle for secondary screens
 const getHeaderTitle = (id, type, tabsOverview, count) => {
-	let headerTitle = '';
+  let headerTitle = '';
 
-	if (type === 'details') {
-		try {
-			headerTitle = new URL(tabsOverview[id].url).host;
-		} catch (error) {
-			if(tabsOverview[id] && tabsOverview[id].url){
-				headerTitle = tabsOverview[id].url;
-			} else headerTitle = '';
-		}
-	} else if (type === 'latest') {
-		headerTitle = `${count} longest unused tabs`;
-	} else headerTitle = null;
+  if (type === 'details') {
+    try {
+      headerTitle = new URL(tabsOverview[id].url).host;
+    } catch (error) {
+      if(tabsOverview[id] && tabsOverview[id].url){
+        headerTitle = tabsOverview[id].url;
+      } else headerTitle = '';
+    }
+  } else if (type === 'latest') {
+    headerTitle = `${count} longest unused tabs`;
+  } else headerTitle = null;
 
-	return headerTitle;
+  return headerTitle;
 };
 
 /**
@@ -62,13 +62,13 @@ const getHeaderTitle = (id, type, tabsOverview, count) => {
  * @param {string} str 
  */
 const escapeHTML = str => str.replace(/[&<>'"]/g, 
-	tag => ({
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'\'': '&#39;',
-		'"': '&quot;'
-	}[tag]));
+  tag => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '\'': '&#39;',
+    '"': '&quot;'
+  }[tag]));
 
 /**
  * Function that calls another one after that one is confirmed
@@ -79,18 +79,18 @@ const escapeHTML = str => str.replace(/[&<>'"]/g,
  * @todo tests!
  */
 const callWithConfirm = (question, onTrue, onFalse, ...args) => {
-	const questions = {
-		bookmarkAll:  `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
-		closeTabs: `Are you sure you want to close ${args[0]} tabs?`
-	};
+  const questions = {
+    bookmarkAll:  `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
+    closeTabs: `Are you sure you want to close ${args[0]} tabs?`
+  };
 
-	if(confirm(questions[question])) {
-		onTrue();
-		return true;
-	} 
+  if(confirm(questions[question])) {
+    onTrue();
+    return true;
+  } 
 	
-	onFalse();
-	return false;
+  onFalse();
+  return false;
 };
 
 /**
@@ -100,10 +100,10 @@ const callWithConfirm = (question, onTrue, onFalse, ...args) => {
  * @param {number} count
  */
 const setFoundCount = (count) => {
-	const foundElm = document.querySelector('.search-count');
-	if (count > 0) {
-		foundElm.innerText = `(${count})`;
-	} else foundElm.innerText = '';
+  const foundElm = document.querySelector('.search-count');
+  if (count > 0) {
+    foundElm.innerText = `(${count})`;
+  } else foundElm.innerText = '';
 };
 
 /**
@@ -113,46 +113,46 @@ const setFoundCount = (count) => {
  * @returns {string} 
  */
 const getHash = (value) => {
-	let hash = 0, i, chr;
-	for (i = 0; i < value.length; i++) {
-		chr = value.charCodeAt(i);
-		hash = ((hash << 5) - hash) + chr;
-		hash |= 0; // Convert to 32bit integer
-	}
-	return hash;
+  let hash = 0, i, chr;
+  for (i = 0; i < value.length; i++) {
+    chr = value.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
 };
 
 /**
  * Function that returns correct overviewData (former tabsOverview) for each window.
  */
 const getOverviewData = async () => {
-	const currentWindow = await browser.windows.getCurrent();
-	const dataset = `overviewData${currentWindow.id}`;
+  const currentWindow = await browser.windows.getCurrent();
+  const dataset = `overviewData${currentWindow.id}`;
 
-	const getData = async () => {
-		return await browser.storage.local.get(dataset);
-	};
+  const getData = async () => {
+    return await browser.storage.local.get(dataset);
+  };
 
-	let data = await getData();
+  let data = await getData();
 
-	if(!data) {
-		await saveTabsOverviewDataPure();
-		data = await getData();
-	}
+  if(!data) {
+    await saveTabsOverviewDataPure();
+    data = await getData();
+  }
 
-	return await data[dataset];
+  return await data[dataset];
 };
 
 const saveTabsOverviewDataPure = async () => {
-	const tabs = await browser.tabs.query({ currentWindow: true });
-	const currentWindowData = getOverview(await tabs);
+  const tabs = await browser.tabs.query({ currentWindow: true });
+  const currentWindowData = getOverview(await tabs);
 
-	const currentWindow = await browser.windows.getCurrent();
-	const overviewData = {};
-	overviewData[`overviewData${currentWindow.id}`] = currentWindowData;
+  const currentWindow = await browser.windows.getCurrent();
+  const overviewData = {};
+  overviewData[`overviewData${currentWindow.id}`] = currentWindowData;
 	
-	await browser.storage.local.set(overviewData);
-	console.log('Change saved!');
+  await browser.storage.local.set(overviewData);
+  console.log('Change saved!');
 };
 
 /**
@@ -161,27 +161,27 @@ const saveTabsOverviewDataPure = async () => {
  * @returns {Object} overview data
  */
 const saveTabsOverviewData = async (...args) => {
-	console.log('Event args:', args);
+  console.log('Event args:', args);
 
-	await saveTabsOverviewDataPure();
-	return await getOverviewData();
+  await saveTabsOverviewDataPure();
+  return await getOverviewData();
 };
 
 const removeTabs = async (ids) => {
-	await browser.tabs.remove(ids);
-	await saveTabsOverviewData();
+  await browser.tabs.remove(ids);
+  await saveTabsOverviewData();
 };
 
 export {
-	isSupportedProtocol,
-	hasIgnoredProtocol,
-	getTabDataFromId,
-	getHeaderTitle,
-	escapeHTML,
-	callWithConfirm,
-	setFoundCount,
-	getHash,
-	getOverviewData,
-	saveTabsOverviewData,
-	removeTabs
+  isSupportedProtocol,
+  hasIgnoredProtocol,
+  getTabDataFromId,
+  getHeaderTitle,
+  escapeHTML,
+  callWithConfirm,
+  setFoundCount,
+  getHash,
+  getOverviewData,
+  saveTabsOverviewData,
+  removeTabs
 };
