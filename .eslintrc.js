@@ -1,42 +1,33 @@
 module.exports = {
-  'env': {
-    'webextensions': true,
-    'es2021': true,
-    'browser': true,
-    'node': true,
-    'jest/globals': true
+  env: {
+    webextensions: true,
+    es2021: true,
+    browser: true,
+    node: true,
+    'jest/globals': true,
   },
-  'extends': [
-    'eslint:recommended',
-    'plugin:react/recommended'
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
   ],
-  'parserOptions': {
-    'ecmaFeatures': {
-      'jsx': true
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    'ecmaVersion': 12,
-    'sourceType': 'module'
+    ecmaVersion: 12,
+    sourceType: 'module',
   },
-  'plugins': [
-    'react', 'jest'
+  plugins: [
+    'react', 'jest',
   ],
-  'rules': {
-    'indent': [
-      'error',
-      2
-    ],
+  rules: {
     'linebreak-style': [
       'error',
-      'unix'
+      'unix',
     ],
-    'quotes': [
-      'error',
-      'single'
-    ],
-    'semi': [
-      'error',
-      'always'
-    ],
-    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': false, 'argsIgnorePattern': '^_'  }]
-  }
+    'no-unused-vars': ['error', {
+      vars: 'all', args: 'after-used', ignoreRestSiblings: false, argsIgnorePattern: '^_',
+    }],
+    'arrow-body-style': 'off',
+  },
 };

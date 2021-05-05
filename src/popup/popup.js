@@ -1,8 +1,18 @@
-import search from '../modules/search.js';
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-use-before-define */
+import search from '../modules/search';
 // import getOverview from '../modules/overview.js';
-import { getDetailedArray } from '../modules/details.js';
-import { hasIgnoredProtocol, escapeHTML, callWithConfirm, setFoundCount, getHeaderTitle, getOverviewData, saveTabsOverviewData } from '../modules/helpers.js';
-import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks.js';
+import { getDetailedArray } from '../modules/details';
+import {
+  hasIgnoredProtocol,
+  escapeHTML,
+  callWithConfirm,
+  setFoundCount,
+  getHeaderTitle,
+  getOverviewData,
+  saveTabsOverviewData,
+} from '../modules/helpers';
+import { addBookmarkStatus, bookmarkTab } from '../modules/bookmarks';
 
 /**
  * Globals
@@ -12,27 +22,27 @@ let windows = [];
 const latestShownCount = 10;
 
 /**
- * Returns single overview item component 
+ * Returns single overview item component
  * @param {object} props { itemId, data }; data = { url, count } ; data come from _tabsOverview_
  * @returns {node} <li /> to be used with createOverviewList()
  */
 const createSingleOverviewItem = (props) => {
-  let { itemId, data } = props;
-  let { url, count } = data;
+  const { itemId, data } = props;
+  const { url, count } = data;
 
   /**
      * I want to render bookmark button conditionally
-     * @param {string} _url 
+     * @param {string} _url
      */
   const getBookmarkAllButton = (_url) => {
     const nonBookmarkablesList = ['Browser tabs', 'Opened files'];
-    if(nonBookmarkablesList.includes(_url)) return '';
+    if (nonBookmarkablesList.includes(_url)) return '';
 
     return '<div class="bookmark-all hidden" title="Bookmark and close all items"></div>';
   };
 
   // data-index-number="${itemId}"
-  let blueprint = `
+  const blueprint = `
         <li class="url-${itemId} overview-item" data-key="${data.key}">
             <div class="url-container">
                 <div class="main-item-text-container">
@@ -48,7 +58,7 @@ const createSingleOverviewItem = (props) => {
         </li>`;
 
   const node = blueprint ? document.createRange().createContextualFragment(blueprint) : null;
-    
+
   return node;
 };
 
@@ -60,18 +70,18 @@ const createSingleOverviewItem = (props) => {
 const createOverviewList = (tabsOverview) => {
   const ul = document.createElement('ul');
   ul.setAttribute('id', 'list');
-	
+
   for (let i = 0; i < tabsOverview.length; i++) {
     const props = {
       itemId: i,
       data: tabsOverview[i],
     };
-	
+
     const overviewItemComponent = createSingleOverviewItem(props);
-				
+
     ul.appendChild(overviewItemComponent);
   }
-	
+
   return ul;
 };
 
@@ -119,9 +129,8 @@ const createHeaderScreen = (index = null, type, tabsOverview) => {
             </div>
         `;
 
-  const headerDiv =
-        headerDivStr &&
-        document.createRange().createContextualFragment(headerDivStr);
+  const headerDiv = headerDivStr
+        && document.createRange().createContextualFragment(headerDivStr);
   const header = [headerDiv, separator];
 
   return header;
@@ -152,9 +161,8 @@ const createHeaderSearch = () => {
             </div>
         `;
 
-  const headerDiv =
-        headerDivStr &&
-        document.createRange().createContextualFragment(headerDivStr);
+  const headerDiv = headerDivStr
+        && document.createRange().createContextualFragment(headerDivStr);
   const header = [headerDiv, separator];
 
   return header;
@@ -164,17 +172,15 @@ const createHeaderOverview = () => {
   // Header title
   const windowStr = windows.length > 1 ? ' in this window' : '';
   const headerTitleContainerStr = '<div id="header" class="header-overview"></div>';
-  const headerTitleContainer =
-        headerTitleContainerStr &&
-        document.createRange().createContextualFragment(headerTitleContainerStr);
+  const headerTitleContainer = headerTitleContainerStr
+        && document.createRange().createContextualFragment(headerTitleContainerStr);
 
   const headerTitleStr = `<div class="header-title">
                                     <span>You have <span id="open-tabs-count">${tabsData.length}</span> opened tabs${windowStr}.</span>
                                 </div>
                                 <div id="search-btn"></div>`;
-  const headerTitle =
-        headerTitleStr &&
-        document.createRange().createContextualFragment(headerTitleStr);
+  const headerTitle = headerTitleStr
+        && document.createRange().createContextualFragment(headerTitleStr);
 
   headerTitleContainer.firstChild.appendChild(headerTitle);
 
@@ -183,8 +189,7 @@ const createHeaderOverview = () => {
                                 <span>${latestShownCount} longest unused tabs</span>
                                 <div class="get-in"></div>
                             </div>`;
-  const unused =
-        unusedStr && document.createRange().createContextualFragment(unusedStr);
+  const unused = unusedStr && document.createRange().createContextualFragment(unusedStr);
 
   return [headerTitleContainer, createSeparator(), unused, createSeparator()];
 };
@@ -197,27 +202,26 @@ const createHeaderOverview = () => {
  * @returns {node} <div class="header-container"><!-- Content --></div>
  */
 const createHeader = async (screenId, props = {}) => {
-  let { index } = props;
+  const { index } = props;
   const overviewData = await getOverviewData();
   const headerStr = '<div class="header-container"></div>';
-  const header =
-        headerStr && document.createRange().createContextualFragment(headerStr);
+  const header = headerStr && document.createRange().createContextualFragment(headerStr);
 
   let contentArr = [];
 
   switch (screenId) {
-  case 'overview':
-    contentArr = createHeaderOverview();
-    break;
-  case 'search':
-    contentArr = createHeaderSearch();
-    break;
-  case 'details':
-  case 'latest':
-    contentArr = createHeaderScreen(index, screenId, overviewData);
-    break;
-  default:
-    break;
+    case 'overview':
+      contentArr = createHeaderOverview();
+      break;
+    case 'search':
+      contentArr = createHeaderSearch();
+      break;
+    case 'details':
+    case 'latest':
+      contentArr = createHeaderScreen(index, screenId, overviewData);
+      break;
+    default:
+      break;
   }
 
   // console.log(contentArr);
@@ -240,16 +244,16 @@ const setListenersHeader = (header, index, screenId) => {
       /**
              * Close items from overview. Index = overviewItemId
              */
-      if(screenId === 'details' && (index || index === 0)) {
+      if (screenId === 'details' && (index || index === 0)) {
         await removeTabsFromOverview(index);
-    
+
         await refreshOverviewScreen(); // autoclose
       }
 
       /**
              * Close items from search
              */
-      if(screenId === 'search') {
+      if (screenId === 'search') {
         await removeTabsFromSearch();
       }
     }
@@ -276,7 +280,6 @@ const setListenersHeader = (header, index, screenId) => {
       };
 
       setTimeout(setFocusOnSearchBar, 0);
-
     }
   };
 };
@@ -320,7 +323,7 @@ const setListenersOverview = async (node) => {
   node.onclick = async (e) => {
     const its = e.target;
     const overviewData = await getOverviewData();
-    const tabsOverviewKey = parseInt(its.closest('li').dataset.key);
+    const tabsOverviewKey = parseInt(its.closest('li').dataset.key, 10);
     const tabsOverviewId = overviewData.findIndex((item) => item.key === tabsOverviewKey);
 
     if (its.classList.contains('remove')) {
@@ -330,14 +333,14 @@ const setListenersOverview = async (node) => {
       console.log('Tabs removed!');
     }
 
-    if (its.classList.contains('bookmark-all')){
+    if (its.classList.contains('bookmark-all')) {
       const numOfItems = overviewData[tabsOverviewId].ids.length;
       const folderName = (new URL(overviewData[tabsOverviewId].url)).hostname;
 
-      const onTrue = () => browser.runtime.sendMessage({type: 'bookmark-all', data: { overviewObject: overviewData[tabsOverviewId], index: tabsOverviewId }});
-      const onFalse = () => { return; };
+      const onTrue = () => browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject: overviewData[tabsOverviewId], index: tabsOverviewId } });
+      const onFalse = () => { };
 
-      if(numOfItems > 1){
+      if (numOfItems > 1) {
         callWithConfirm('bookmarkAll', onTrue, onFalse, numOfItems, folderName);
       } else {
         onTrue();
@@ -345,7 +348,6 @@ const setListenersOverview = async (node) => {
     }
 
     if (!!its.closest('.overview-item') && !its.classList.contains('remove') && !its.classList.contains('bookmark-all')) {
-
       const screen = await createScreen('details', { index: tabsOverviewId });
       const dest = document.querySelector('#main-container');
       renderScreen(screen, dest);
@@ -359,14 +361,15 @@ const setListenersOverview = async (node) => {
      */
   browser.runtime.onMessage.addListener(async (message) => {
     switch (message.type) {
-    case 'items-bookmarked':
-      await removeTabsFromOverview(message.data.index, { forceRemove: true }); // this should just call remove tabs without anything else, it should not ask HERE
-      break;
-        
-    default:
-      console.warn('Non-standard message received from background.js:');
-      console.warn(message);
-      break;
+      case 'items-bookmarked':
+        // this should just call remove tabs without anything else, it should not ask HERE
+        await removeTabsFromOverview(message.data.index, { forceRemove: true });
+        break;
+
+      default:
+        console.warn('Non-standard message received from background.js:');
+        console.warn(message);
+        break;
     }
   });
 };
@@ -389,7 +392,7 @@ const playTransition = () => {
  * @param {object} params index: group index from __overview__
  */
 const setListenersScreen = (node, array, params = {}) => {
-  let { index } = params;
+  const { index } = params;
 
   node.onmouseover = (e) => {
     if (e.target.closest('li.detail')) {
@@ -418,10 +421,10 @@ const setListenersScreen = (node, array, params = {}) => {
   node.onclick = async (e) => {
     if (e.target.classList.contains('bookmark-close')) {
       // bookmark & remove tab
-      const id = parseInt(e.target.closest('li').dataset.tabId);
+      const id = parseInt(e.target.closest('li').dataset.tabId, 10);
       const arrItem = array.filter((item) => item.id === id)[0];
-      const url = arrItem.url;
-      const title = arrItem.title;
+      const { url } = arrItem;
+      const { title } = arrItem;
 
       bookmarkTab(url, title, id);
       removeTab(e, array, { index });
@@ -431,22 +434,23 @@ const setListenersScreen = (node, array, params = {}) => {
       removeTab(e, array, { index });
     }
     if (
-      (e.target.closest('li') &&
-                !e.target.classList.contains('remove') &&
-                !e.target.classList.contains('bookmark-close')) ||
-            e.target.classList.contains('bookmarked')
+      (e.target.closest('li')
+                && !e.target.classList.contains('remove')
+                && !e.target.classList.contains('bookmark-close'))
+            || e.target.classList.contains('bookmarked')
     ) {
       // switchTo tab
-      const id = parseInt(e.target.closest('li').dataset.tabId);
+      const id = parseInt(e.target.closest('li').dataset.tabId, 10);
       await browser.tabs.update(id, { active: true });
     }
   };
 };
 
 /**
- * Creates screen body component (with list of items). Adds list of items to container and returns it, based on its type.
+ * Creates screen body component (with list of items). Adds list of items to
+ * container and returns it, based on its type.
  * It works this way:
- * 
+ *
  * 1. gathers data based on type of the screen
  * 2. creates DOM content based on the data
  * 3. sets listeners for elements in the node
@@ -459,42 +463,42 @@ const setListenersScreen = (node, array, params = {}) => {
  * @returns {node} <div class="body-container"><!-- Content of body component - ul --></div>
  */
 const createBody = async (screenId, props = {}) => {
-  let { index, data } = props;
+  const { index, data } = props;
 
   const overviewData = await getOverviewData();
 
   const bodyStr = '<div class="body-container"></div>';
-  const body =
-        bodyStr && document.createRange().createContextualFragment(bodyStr);
+  const body = bodyStr && document.createRange().createContextualFragment(bodyStr);
 
   let content = ''; // this shoud be general
   let dataArr = []; // this should be internal variable; pre-made grouped output of getDetailedArray
 
   const asyncSwitch = async (statement) => {
     switch (statement) {
-    case 'overview':
-      content = await createOverviewList(await overviewData);
-      setListenersOverview(content);
-      break;
-    case 'details':
-    case 'latest':
-      dataArr = getDetailedArray(screenId, await overviewData, {
-        count: latestShownCount,
-        index,
-        data: await browser.tabs.query({ currentWindow: true }), // !== Overview data!!, === tabsData
-      });
-				
-      content = await createList(screenId, dataArr);
-      setListenersScreen(content, dataArr, { index });
-      break;
-    case 'search':
-      dataArr = getDetailedArray(screenId, await overviewData, { data });
-      content = await createList(screenId, dataArr);
-      setListenersScreen(content, dataArr, { index });
-      break;
-    default:
-      console.error('Error: body element couldn\'t be created.');
-      break;
+      case 'overview':
+        content = await createOverviewList(await overviewData);
+        setListenersOverview(content);
+        break;
+      case 'details':
+      case 'latest':
+        dataArr = getDetailedArray(screenId, await overviewData, {
+          count: latestShownCount,
+          index,
+          // !== Overview data!!, === tabsData
+          data: await browser.tabs.query({ currentWindow: true }),
+        });
+
+        content = await createList(screenId, dataArr);
+        setListenersScreen(content, dataArr, { index });
+        break;
+      case 'search':
+        dataArr = getDetailedArray(screenId, await overviewData, { data });
+        content = await createList(screenId, dataArr);
+        setListenersScreen(content, dataArr, { index });
+        break;
+      default:
+        console.error('Error: body element couldn\'t be created.');
+        break;
     }
   };
 
@@ -515,8 +519,7 @@ const createBody = async (screenId, props = {}) => {
  */
 const createScreen = async (screenId, props = {}) => {
   const screenStr = `<div id="${screenId}" class="screen"></div>`;
-  const screen =
-        screenStr && document.createRange().createContextualFragment(screenStr);
+  const screen = screenStr && document.createRange().createContextualFragment(screenStr);
 
   const header = await createHeader(screenId, props);
   const body = await createBody(screenId, props);
@@ -543,26 +546,26 @@ const renderScreen = (screen, dest) => {
 
 /**
  * Use only after removal of an item in overview!
- * @param {string} oid overviewData id of node item that should be removed from overview 
+ * @param {string} oid overviewData id of node item that should be removed from overview
  */
 const refreshOverviewData = async (oid) => {
   // const overviewData = await saveTabsOverviewData();
   const overviewData = await getOverviewData(); // Gets overview data to perform changes on them
   /**
-	 * @todo this should only tell tabs to refresh
-	 * ---> refreshTabsData() --> refresh them on background
-	 */
-  tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background 
-  let currentTabsNum = parseInt(
-    document.querySelector('#open-tabs-count').innerText
+   * @todo this should only tell tabs to refresh
+   * ---> refreshTabsData() --> refresh them on background
+   */
+  tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background
+  const currentTabsNum = parseInt(
+    document.querySelector('#open-tabs-count').innerText, 10,
   );
-  let tabsNum = overviewData[oid].ids.length;
-  let newTabsNum = currentTabsNum - tabsNum;
+  const tabsNum = overviewData[oid].ids.length;
+  const newTabsNum = currentTabsNum - tabsNum;
 
   refreshOpenTabsCount(newTabsNum);
 
   document.querySelector(`li.url-${oid}`).remove();
-	
+
   await saveTabsOverviewData(); // Saves those changes for the next rerender
 };
 
@@ -579,7 +582,7 @@ const refreshOpenTabsCount = (newCount) => {
  * Use only when pressing back button (= after details to overview transition)
  */
 const refreshOverviewScreen = async (props = {}) => {
-  let { deletedId = false } = props;
+  const { deletedId = false } = props;
 
   // Manipulate DOM
   document.querySelector('#overview').classList.add('slide-in-reverse');
@@ -592,28 +595,28 @@ const refreshOverviewScreen = async (props = {}) => {
     () => {
       document.querySelector('#overview').classList = 'screen';
     },
-    { once: true }
+    { once: true },
   );
 
   /**
-	 * @todo this could be optimized by refreshing tabs directly.
-	 * there is however a risk, that tabs data will be inaccurate due to async
-	 * This actually is a temporary workaround to manually removes item from tabs 
-	 * before they are REALLY refreshed.
-	 */
+   * @todo this could be optimized by refreshing tabs directly.
+   * there is however a risk, that tabs data will be inaccurate due to async
+   * This actually is a temporary workaround to manually removes item from tabs
+   * before they are REALLY refreshed.
+   */
   if (deletedId) {
     tabsData.splice(
       tabsData.findIndex((tab) => tab.id === deletedId),
-      1
+      1,
     );
   }
 
-  tabsData = await browser.tabs.query({ currentWindow: true }); // tohle by se mělo generovat na pozadí
+  // tohle by se mělo generovat na pozadí
+  tabsData = await browser.tabs.query({ currentWindow: true });
 
   const newBodyContainer = await createBody('overview');
 
   refreshOpenTabsCount(tabsData.length);
-
 
   document.querySelector('.body-container').remove();
   document.querySelector('#overview').appendChild(newBodyContainer);
@@ -625,12 +628,13 @@ const refreshOverviewScreen = async (props = {}) => {
 
 /**
  * Refreshes searchScreen, needs to include result of search.perform of []
- * @param {object} data Data which should be used in search query; usually result of search.perform()
+ * @param {object} data Data which should be used in search query; usually
+ * result of search.perform()
  */
 const refreshSearchScreen = async (data) => {
   const bodyContainer = await createBody('search', { data });
   const oldBodyContainer = document.querySelector(
-    '#search > .body-container'
+    '#search > .body-container',
   );
   const dest = oldBodyContainer.parentNode;
   const hasData = !!data[0];
@@ -646,10 +650,11 @@ const refreshSearchScreen = async (data) => {
 };
 
 /**
- * Removes tabs with given ids from overview. 
+ * Removes tabs with given ids from overview.
  * @param {number} indexNumber tabsOverview index number
- * @param {Object} options 
- * @param {Boolean} [options.forceRemove = false] Forces removal without confirm (= removal was confirmed previously as in bookmark-all)
+ * @param {Object} options
+ * @param {Boolean} [options.forceRemove = false] Forces removal without confirm
+ * (= removal was confirmed previously as in bookmark-all)
  */
 const removeTabsFromOverview = async (indexNumber, options = {}) => {
   const overviewData = await getOverviewData();
@@ -662,8 +667,8 @@ const removeTabsFromOverview = async (indexNumber, options = {}) => {
   };
 
   // Callbacks
-  const onTrue = async () => await removeTabs(indexNumber, id);
-  const onFalse = () => { return; };
+  const onTrue = async () => removeTabs(indexNumber, id);
+  const onFalse = () => { };
 
   // Case: standard case
   if (!forceRemove && id.length > 10) {
@@ -679,9 +684,9 @@ const removeTabsFromOverview = async (indexNumber, options = {}) => {
 const removeTabsFromSearch = async () => {
   const lis = Array.from(document.querySelectorAll('#search .body-container li'));
   const ids = lis.map((item) => {
-    if(item.dataset.tabId) {
-      return parseInt(item.dataset.tabId, 10);    
-    } else return null;
+    if (item.dataset.tabId) {
+      return parseInt(item.dataset.tabId, 10);
+    } return null;
   });
 
   const onTrue = async () => {
@@ -695,7 +700,7 @@ const removeTabsFromSearch = async () => {
     console.log('Tabs were not removed from search.');
   };
 
-  if(ids[0]){
+  if (ids[0]) {
     callWithConfirm('closeTabs', onTrue, onFalse, ids.length);
   }
 };
@@ -708,23 +713,24 @@ const removeTabsFromSearch = async () => {
  * @param {number} index id of grouped overview array
  */
 const removeTab = async (e, detailsArr, props = {}) => {
-  let { autoclose = true, index } = props;
+  const { autoclose = true, index } = props;
   const overviewData = await getOverviewData();
-  const id = parseInt(e.target.closest('li').dataset.tabId);
+  const id = parseInt(e.target.closest('li').dataset.tabId, 10);
   // id: index in __tabs__ (tab index)
   // index: index in __overview__ (group index)
 
   // remove tab
   detailsArr.splice(
     detailsArr.findIndex((tab) => tab.id === id),
-    1
+    1,
   ); // removes item from detailed array
 
   /**
-	 * @todo remove calls to overviewData[index]
-	 */
+   * @todo remove calls to overviewData[index]
+   */
   if (index) {
-    overviewData[index].ids.splice(overviewData[index].ids.indexOf(id), 1); // removes tab id from __overview__.ids; only detailed screen
+    // removes tab id from __overview__.ids; only detailed screen
+    overviewData[index].ids.splice(overviewData[index].ids.indexOf(id), 1);
   }
 
   await browser.tabs.remove([id]); // closes tab in browser
@@ -747,8 +753,8 @@ const closeScreen = async () => {
 
 /**
  * Handles which details should be displayed for given type of screen
- * @param {string} type 
- * @param {string} className 
+ * @param {string} type
+ * @param {string} className
  */
 const setClass = (type, className) => {
   const dict = {
@@ -768,12 +774,11 @@ const setClass = (type, className) => {
 
   // eslint-disable-next-line no-useless-catch
   try {
-    if(dict[type]){
+    if (dict[type]) {
       return dict[type][className];
-    } else {
-      console.error('Error: this screen type is not defined.');
-      return '';
     }
+    console.error('Error: this screen type is not defined.');
+    return '';
   } catch (err) {
     throw err;
   }
@@ -782,13 +787,14 @@ const setClass = (type, className) => {
 /**
  * Toggles button element's class, so it should be inactive or active
  * @param {string} className class of the button element
- * @param {boolean} isActive defines whether element with given className should contain class btn-inactive or not
+ * @param {boolean} isActive defines whether element with given className
+ * should contain class btn-inactive or not
  */
 const toggleButtonActive = (className, isActive) => {
   const element = document.querySelector(`${className}`);
   const inactiveClassName = 'btn-inactive';
 
-  if(isActive) {
+  if (isActive) {
     element.classList.remove(inactiveClassName);
   } else element.classList.add(inactiveClassName);
 };
@@ -796,14 +802,16 @@ const toggleButtonActive = (className, isActive) => {
 /**
  * Create single detailed item component for both latest and all detailed screens
  * @param {object} props { itemId, data, type }; data = { id, title, url, date }
- * @returns {node} <li /> for use with createList() 
+ * @returns {node} <li /> for use with createList()
  */
 const createSingleDetailItem = (props) => {
-  let { itemId, data, type } = props;
-  let { id, title, url, date } = data;
+  const { itemId, data, type } = props;
+  const {
+    id, title, url, date,
+  } = data;
 
   const getBookmarkAndCloseButton = (_url) => {
-    if(hasIgnoredProtocol(_url)) return '';
+    if (hasIgnoredProtocol(_url)) return '';
 
     return '<div class="bookmark bookmark-close detail hidden" title="Bookmark and close tab"></div>';
   };
@@ -814,8 +822,8 @@ const createSingleDetailItem = (props) => {
             <div class="item-container detail">
                 <div class="item-text-container">
                     <div class="title detail" title="${title}">${escapeHTML(title)}</div>
-                    <div class="url detail ${setClass(type,'url')}" title="${decodedUrl}">${decodedUrl}</div>
-                    <div class="last-displayed detail ${setClass(type,'lastDisplayed')}" title="${date}">${date}</div>
+                    <div class="url detail ${setClass(type, 'url')}" title="${decodedUrl}">${decodedUrl}</div>
+                    <div class="last-displayed detail ${setClass(type, 'lastDisplayed')}" title="${date}">${date}</div>
                 </div>
                 <div class="item-buttons-container">
                     ${getBookmarkAndCloseButton(url)}
@@ -825,7 +833,7 @@ const createSingleDetailItem = (props) => {
             </div>
         </li>
         `;
-    
+
   const node = blueprint ? document.createRange().createContextualFragment(blueprint) : null;
 
   return node;
@@ -846,11 +854,11 @@ const createList = (type, array) => {
     const props = {
       itemId: i,
       data: array[i],
-      type
+      type,
     };
     const detailItem = createSingleDetailItem(props);
 
-    if(detailItem){
+    if (detailItem) {
       ul.appendChild(detailItem);
 
       addBookmarkStatus(array[i], document);
@@ -878,7 +886,8 @@ const createList = (type, array) => {
  * Handles first run events, creates overview screen and renders it
  */
 const init = async () => {
-  tabsData = await browser.tabs.query({ currentWindow: true }); // this should be handled on background
+  // this should be handled on background
+  tabsData = await browser.tabs.query({ currentWindow: true });
   windows = await browser.windows.getAll();
 
   const initialDest = document.querySelector('#main-container');
@@ -889,8 +898,8 @@ const init = async () => {
 
 init();
 
-export { 
-  getHeaderTitle, 
+export {
+  getHeaderTitle,
   setClass,
   createSingleDetailItem,
   createSingleOverviewItem,
