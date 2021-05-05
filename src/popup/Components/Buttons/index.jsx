@@ -1,9 +1,10 @@
-const { BookmarkAllBtn } = require('./BookmarkAllBtn');
-const { BookmarkCloseBtn } = require('./BookmarkCloseBtn');
-const { CloseAllBtn } = require('./CloseAllBtn');
-const { CloseBtn } = require('./CloseBtn');
-const { GetInBtn } = require('./GetInBtn');
-const { SearchBtn } = require('./SearchBtn');
+import BookmarkAllBtn from './BookmarkAllBtn';
+import BookmarkCloseBtn from './BookmarkCloseBtn';
+import CloseAllBtn from './CloseAllBtn';
+import CloseBtn from './CloseBtn';
+import GetInBtn from './GetInBtn';
+import GoBackBtn from './GoBackBtn';
+import SearchBtn from './SearchBtn';
 
 export {
   BookmarkAllBtn,
@@ -11,5 +12,6 @@ export {
   CloseBtn,
   CloseAllBtn,
   GetInBtn,
-  SearchBtn
+  GoBackBtn,
+  SearchBtn,
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function BookmarkAllBtn({ isHidden = false }) {
+export default function BookmarkAllBtn({ isHidden = false }) {
   const hiddenCls = isHidden ? 'hidden' : '';
 
   return (

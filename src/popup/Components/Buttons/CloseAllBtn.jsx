@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function CloseAllBtn({ isHidden = false }) {
+export default function CloseAllBtn({ isHidden = false }) {
   const hiddenCls = isHidden ? 'hidden' : '';
 
   return (
