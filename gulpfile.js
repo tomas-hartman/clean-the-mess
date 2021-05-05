@@ -35,7 +35,7 @@ function common(browser) {
 function compileJsx(browser) {
   // compiles all js(x) files except for those with distinct files and dev folders
   return src(['src/**/*.jsx', ...ignoredPatternsInCompilation])
-    .pipe(exec((file) => `npx parcel ${file.path} --out-dir dist/${browser}/popup/`))
+    .pipe(exec((file) => `npx parcel ${file.path} --dist-dir dist/${browser}/popup/`))
     .pipe(dest(`dist/${browser}/`));
 }
 
