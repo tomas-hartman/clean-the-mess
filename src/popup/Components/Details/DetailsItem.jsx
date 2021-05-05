@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import { escapeHTML, hasIgnoredProtocol } from '../../../modules/helpers';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
 
-export function DetailsItem(props) {
-  let { itemId, data, type } = props;
-  let { id, title, url, date } = data;
+export default function DetailsItem(props) {
+  const [isHidden, setIsHidden] = useState(true);
+  const { itemId, data, type } = props;
+  const {
+    id, title, url, date,
+  } = data;
 
   const decodedUrl = escapeHTML(decodeURI(url));
   const escapedTitle = escapeHTML(title);
@@ -12,8 +16,22 @@ export function DetailsItem(props) {
   const urlCls = type === 'url' ? '' : 'hidden';
   const lastDisplayedCls = type === 'lastDisplayed' ? '' : 'hidden';
 
+  const handleMouseOver = () => {
+    setIsHidden(false);
+  };
+
+  const handleMouseOut = () => {
+    setIsHidden(true);
+  };
+
   return (
-    <li id={`item-${itemId}`} className="detail" data-tab-id={id}>
+    <li
+      id={`item-${itemId}`}
+      className="detail"
+      data-tab-id={id}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
       <div className="item-container detail">
 
         <div className="item-text-container">
@@ -23,9 +41,9 @@ export function DetailsItem(props) {
         </div>
 
         <div className="item-buttons-container">
-          {!hasIgnoredProtocol(url) && <BookmarkCloseBtn isHidden isDetail />}
-          <CloseBtn isHidden isDetail />
-          <GetInBtn />
+          {!hasIgnoredProtocol(url) && <BookmarkCloseBtn isHidden={isHidden} isDetail />}
+          <CloseBtn isHidden={isHidden} isDetail />
+          <GetInBtn isHidden={!isHidden} />
         </div>
 
       </div>
