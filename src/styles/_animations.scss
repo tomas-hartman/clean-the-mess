@@ -1,14 +1,14 @@
 /* ANIMATIONS */
 .slide-in {
-    right: 0% !important;
+    transform: translate(0);
 
-    transition: right 150ms cubic-bezier(.07, .95, 0, 1);
+    transition: transform 150ms cubic-bezier(.07, .95, 0, 1);
 }
 
 .slide-out {
-    left: -100% !important;
+    transform: translate(-100%);
 
-    transition: left 150ms cubic-bezier(.07, .95, 0, 1);
+    transition: transform 150ms cubic-bezier(.07, .95, 0, 1);
     position: relative;
 }
 
@@ -17,15 +17,15 @@
 }
 
 .slide-out-reverse {
-    right: -100% !important;
+    transform: translate(100%);
 
-    transition: right 150ms cubic-bezier(.07, .95, 0, 1);
+    transition: transform 150ms cubic-bezier(.07, .95, 0, 1);
 }
 
 .slide-in-reverse {
-    left: 0% !important;
+    transform: translate(0);
 
-    transition: left 150ms cubic-bezier(.07, .95, 0, 1);
+    transition: transform 150ms cubic-bezier(.07, .95, 0, 1);
 }
 
 #overview.slide-in-reverse {

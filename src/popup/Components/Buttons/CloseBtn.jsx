@@ -4,6 +4,8 @@ export default function CloseBtn({ isHidden = false, isDetail = false }) {
   const hiddenCls = isHidden ? 'hidden' : '';
 
   return (
-    <div className={`remove ${isDetail} ${hiddenCls}`} title="Close tab" />
+    <button type="button" className={`remove ${isDetail} ${hiddenCls}`} title="Close tab">
+      <span className="hidden">Close tab</span>
+    </button>
   );
 }

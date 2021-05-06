@@ -29,5 +29,6 @@ module.exports = {
       vars: 'all', args: 'after-used', ignoreRestSiblings: false, argsIgnorePattern: '^_',
     }],
     'arrow-body-style': 'off',
+    'react/prop-types': 0,
   },
 };

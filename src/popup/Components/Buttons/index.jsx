@@ -1,6 +1,7 @@
 import BookmarkAllBtn from './BookmarkAllBtn';
 import BookmarkCloseBtn from './BookmarkCloseBtn';
-import CloseAllBtn from './CloseAllBtn';
+import CloseAllHeaderBtn from './CloseAllHeaderBtn';
+import CloseAllOverviewBtn from './CloseAllOverviewBtn';
 import CloseBtn from './CloseBtn';
 import GetInBtn from './GetInBtn';
 import GoBackBtn from './GoBackBtn';
@@ -10,7 +11,8 @@ export {
   BookmarkAllBtn,
   BookmarkCloseBtn,
   CloseBtn,
-  CloseAllBtn,
+  CloseAllOverviewBtn,
+  CloseAllHeaderBtn,
   GetInBtn,
   GoBackBtn,
   SearchBtn,

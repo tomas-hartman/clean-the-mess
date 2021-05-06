@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookmarkAllBtn, CloseAllBtn, GetInBtn } from '../Buttons';
+import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
 
 export default function OverviewItem(tabData) {
   const [isHidden, setIsHidden] = useState(true);
@@ -21,19 +21,20 @@ export default function OverviewItem(tabData) {
       onClick={() => switchToScreen('details')}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onFocus={handleMouseOver}
+      onBlur={handleMouseOut}
+      onKeyDown={handleMouseOver}
+      onKeyUp={handleMouseOut}
+      role="menuitem"
     >
       <div className="url-container">
         <div className="main-item-text-container">
           <div className="url" title={url}>{url}</div>
-          <div className="count">
-            (
-            {count}
-            )
-          </div>
+          <div className="count">{`(${count})`}</div>
         </div>
         <div className="item-buttons-container">
           <BookmarkAllBtn isHidden={isHidden} />
-          <CloseAllBtn isHidden={isHidden} />
+          <CloseAllOverviewBtn isHidden={isHidden} />
           <GetInBtn isHidden={!isHidden} />
         </div>
       </div>

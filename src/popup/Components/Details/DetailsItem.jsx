@@ -31,6 +31,9 @@ export default function DetailsItem(props) {
       data-tab-id={id}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onFocus={handleMouseOver}
+      onBlur={handleMouseOut}
+      role="menuitem"
     >
       <div className="item-container detail">
 

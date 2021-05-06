@@ -6,37 +6,12 @@ import sampleTabsData from '../dev/search-dev/input-data';
 
 import OverviewScreen from './Components/Overview';
 import DetailsScreen from './Components/Details';
+import SearchScreen from './Components/Search/SearchScreen';
 
 export default function Popup() {
   const [screen, setScreen] = useState('overview');
   const [overviewData, setOverviewData] = useState(sampleOverviewData);
   const [tabsData, setTabsData] = useState(sampleTabsData);
-
-  const showScreen = (screenName, thisScreen) => {
-    switch (screenName) {
-      case 'overview':
-        if (thisScreen === 'overview') return 'slide-in-reverse';
-        // @todo: this condition is workaround that helps covering an ugly glitch
-        // the glitch is caused by deleting slide-in class and replacing it
-        // directly with slide-out. by default details screen is off screen!
-        if (thisScreen !== 'overview') return 'slide-out-reverse';
-        break;
-      case 'details':
-        if (thisScreen === 'details') return 'slide-in';
-        if (thisScreen === 'overview') return 'slide-out';
-        break;
-      case 'latest':
-        if (thisScreen === 'latest') return 'slide-in';
-        if (thisScreen === 'overview') return 'slide-out';
-        break;
-      case 'search':
-        if (thisScreen === 'search') return 'slide-in';
-        if (thisScreen === 'overview') return 'slide-out';
-        break;
-      default:
-        break;
-    }
-  };
 
   const switchToScreen = (nextScreen) => {
     setScreen(nextScreen);
@@ -44,8 +19,22 @@ export default function Popup() {
 
   return (
     <div className="body-container">
-      <OverviewScreen data={overviewData} className={showScreen(screen, 'overview')} switchToScreen={switchToScreen} />
-      <DetailsScreen data={tabsData} className={showScreen(screen, 'details')} switchToScreen={switchToScreen} />
+      <OverviewScreen
+        data={overviewData}
+        className={screen === 'overview' ? 'slide-in-reverse' : ''}
+        switchToScreen={switchToScreen}
+      />
+      <DetailsScreen
+        data={tabsData}
+        // Animation works one way, slide-in -> slide-out-reverse, not the other. Why?
+        className={screen === 'details' ? 'slide-in' : ''}
+        switchToScreen={switchToScreen}
+      />
+      <SearchScreen
+        data={tabsData}
+        className={screen === 'search' ? 'slide-in' : ''}
+        switchToScreen={switchToScreen}
+      />
     </div>
   );
 }

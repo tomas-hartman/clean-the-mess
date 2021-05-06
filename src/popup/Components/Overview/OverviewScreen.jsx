@@ -6,8 +6,8 @@ export default function OverviewScreen(props) {
   const { className: extraClass, data: overviewData, switchToScreen } = props;
 
   return (
-    <div id="overview" className={`screen ${extraClass}`}>
-      <OverviewHeader />
+    <div id="overview" className={`screen slide-out ${extraClass}`}>
+      <OverviewHeader switchToScreen={switchToScreen} />
       <div className="body-container">
         <ul id="list">
           {overviewData.map((itemData, id) => (
