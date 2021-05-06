@@ -4,7 +4,9 @@ import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
 export default function OverviewItem(tabData) {
   const [isHidden, setIsHidden] = useState(true);
   const { itemId, data, switchToScreen } = tabData;
-  const { url, count, key } = data;
+  const {
+    url, count, key, ids,
+  } = data;
 
   const handleMouseOver = () => {
     setIsHidden(false);
@@ -18,7 +20,7 @@ export default function OverviewItem(tabData) {
     <li
       className={`url-${itemId} overview-item`}
       data-key={key}
-      onClick={() => switchToScreen('details')}
+      onClick={() => switchToScreen('details', { ids, url, key })}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
       onFocus={handleMouseOver}

@@ -1,4 +1,4 @@
-import { getOverview } from '../modules/overview.js';
+import { getOverview } from './overview.js';
 
 /**
  * Validates if url with given protocol can be bookmarked
@@ -14,16 +14,16 @@ const isSupportedProtocol = (url) => {
 
 /**
  * Checks if url has some of the special protocols, that do not work well with certain features and APIs such as bookmarks
- * @param {string} url 
+ * @param {string} url
  * @returns {Boolean}
  */
 const hasIgnoredProtocol = (url) => {
   const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
   const { protocol } = new URL(url);
 
-  if(ignoredProtocols.includes(protocol)) {
+  if (ignoredProtocols.includes(protocol)) {
     return true;
-  } else return false;
+  } return false;
 };
 
 /**
@@ -45,7 +45,7 @@ const getHeaderTitle = (id, type, tabsOverview, count) => {
     try {
       headerTitle = new URL(tabsOverview[id].url).host;
     } catch (error) {
-      if(tabsOverview[id] && tabsOverview[id].url){
+      if (tabsOverview[id] && tabsOverview[id].url) {
         headerTitle = tabsOverview[id].url;
       } else headerTitle = '';
     }
@@ -59,15 +59,15 @@ const getHeaderTitle = (id, type, tabsOverview, count) => {
 /**
  * Converts string to html-safe code. Useful for titles to be displayed.
  * @see https://stackoverflow.com/a/57448862/11243775
- * @param {string} str 
+ * @param {string} str
  */
-const escapeHTML = str => str.replace(/[&<>'"]/g, 
-  tag => ({
+const escapeHTML = (str) => str.replace(/[&<>'"]/g,
+  (tag) => ({
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
     '\'': '&#39;',
-    '"': '&quot;'
+    '"': '&quot;',
   }[tag]));
 
 /**
@@ -75,20 +75,20 @@ const escapeHTML = str => str.replace(/[&<>'"]/g,
  * @param {string} question enum: bookmarkAll | closeTabs
  * @param {function} onTrue Function wrapped in () => {}
  * @param {function} onFalse Function wrapped in () => {}
- * @param  {...string} args 
+ * @param  {...string} args
  * @todo tests!
  */
 const callWithConfirm = (question, onTrue, onFalse, ...args) => {
   const questions = {
-    bookmarkAll:  `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
-    closeTabs: `Are you sure you want to close ${args[0]} tabs?`
+    bookmarkAll: `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
+    closeTabs: `Are you sure you want to close ${args[0]} tabs?`,
   };
 
-  if(confirm(questions[question])) {
+  if (confirm(questions[question])) {
     onTrue();
     return true;
-  } 
-	
+  }
+
   onFalse();
   return false;
 };
@@ -110,10 +110,11 @@ const setFoundCount = (count) => {
  * Function that converts string to hash. Used to set unique keys in getOverview.
  * @see https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
  * @param {string} value
- * @returns {string} 
+ * @returns {string}
  */
 const getHash = (value) => {
-  let hash = 0, i, chr;
+  let hash = 0; let i; let
+    chr;
   for (i = 0; i < value.length; i++) {
     chr = value.charCodeAt(i);
     hash = ((hash << 5) - hash) + chr;
@@ -135,7 +136,7 @@ const getOverviewData = async () => {
 
   let data = await getData();
 
-  if(!data) {
+  if (!data) {
     await saveTabsOverviewDataPure();
     data = await getData();
   }
@@ -150,14 +151,14 @@ const saveTabsOverviewDataPure = async () => {
   const currentWindow = await browser.windows.getCurrent();
   const overviewData = {};
   overviewData[`overviewData${currentWindow.id}`] = currentWindowData;
-	
+
   await browser.storage.local.set(overviewData);
   console.log('Change saved!');
 };
 
 /**
  * @todo there should be some debounce
- * @param {String} message 
+ * @param {String} message
  * @returns {Object} overview data
  */
 const saveTabsOverviewData = async (...args) => {
@@ -183,5 +184,5 @@ export {
   getHash,
   getOverviewData,
   saveTabsOverviewData,
-  removeTabs
+  removeTabs,
 };

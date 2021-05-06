@@ -2,9 +2,7 @@ import React from 'react';
 import { GetInBtn, SearchBtn } from '../Buttons';
 import Separator from '../Separator';
 
-export default function OverviewHeader({ switchToScreen }) {
-  const openTabsCount = 109;
-
+export default function OverviewHeader({ switchToScreen, openTabs }) {
   return (
     <div className="header-container">
 
@@ -13,7 +11,7 @@ export default function OverviewHeader({ switchToScreen }) {
           <span>
             You have
             {' '}
-            <span id="open-tabs-count">{openTabsCount}</span>
+            <span id="open-tabs-count">{openTabs}</span>
             {' '}
             opened tabs in this window.
           </span>

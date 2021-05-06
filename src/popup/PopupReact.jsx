@@ -1,38 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-
-import sampleOverviewData from '../dev/search-dev/overview-data';
-import sampleTabsData from '../dev/search-dev/input-data';
 
 import OverviewScreen from './Components/Overview';
 import DetailsScreen from './Components/Details';
 import SearchScreen from './Components/Search/SearchScreen';
+import getOverview from '../modules/overview';
 
 export default function Popup() {
-  const [screen, setScreen] = useState('overview');
-  const [overviewData, setOverviewData] = useState(sampleOverviewData);
-  const [tabsData, setTabsData] = useState(sampleTabsData);
+  const [screen, setScreen] = useState({ name: 'overview' });
+  const [overviewData, setOverviewData] = useState([]);
+  const [tabsData, setTabsData] = useState([]);
+  // const [refresh, setRefresh] = useState(false);
 
-  const switchToScreen = (nextScreen) => {
-    setScreen(nextScreen);
+  useEffect(() => {
+    (async () => {
+      const tabsDataVar = await browser.tabs.query({ currentWindow: true });
+      const overviewDataVar = getOverview(tabsDataVar);
+
+      setOverviewData(overviewDataVar);
+      setTabsData(tabsDataVar);
+    })();
+  }, []);
+
+  const switchToScreen = (nextScreen, options = {}) => {
+    setScreen({ name: nextScreen, options });
+  };
+
+  /**
+   * Function that returns filtered array with details for given group
+   * @param {Object} overviewItemData data of one given item in overviewData
+   * @param {Object} innerTabsData tabsData object
+   * @returns {Object[]}
+   */
+  const getDetailsData = (_screen, _tabsData) => {
+    if (!_screen?.options?.ids) return [];
+
+    const { ids } = _screen?.options;
+    const array = [];
+
+    for (let i = 0; i < ids.length; i++) {
+      array.push(..._tabsData.filter((tab) => tab.id === ids[i]));
+    }
+
+    array.sort((a, b) => b.lastAccessed - a.lastAccessed);
+
+    return array;
   };
 
   return (
     <div className="body-container">
       <OverviewScreen
-        data={overviewData}
-        className={screen === 'overview' ? 'slide-in-reverse' : ''}
+        overviewData={overviewData}
+        headerData={{ openTabs: tabsData.length }}
+        className={screen.name === 'overview' ? 'slide-in-reverse' : ''}
         switchToScreen={switchToScreen}
       />
       <DetailsScreen
-        data={tabsData}
-        // Animation works one way, slide-in -> slide-out-reverse, not the other. Why?
-        className={screen === 'details' ? 'slide-in' : ''}
+        detailsData={getDetailsData(screen, tabsData)}
+        overviewData={screen.options}
+        className={screen.name === 'details' ? 'slide-in' : ''}
         switchToScreen={switchToScreen}
       />
       <SearchScreen
-        data={tabsData}
-        className={screen === 'search' ? 'slide-in' : ''}
+        tabsData={tabsData}
+        className={screen.name === 'search' ? 'slide-in' : ''}
         switchToScreen={switchToScreen}
       />
     </div>

@@ -3,13 +3,13 @@ import DetailsItem from '../Details/DetailsItem';
 import SearchHeader from './SearchHeader';
 
 export default function SearchScreen(props) {
-  const { data: tabsData, className: extraClass, switchToScreen } = props;
+  const { tabsData, className: extraClass, switchToScreen } = props;
   const type = 'lastDisplayed';
 
   return (
-    <div id="search" className={`screen slide-out-reverse ${extraClass}`}>
+    <div className={`screen screen-search ${extraClass}`}>
 
-      <SearchHeader switchToScreen={switchToScreen} />
+      <SearchHeader oKey={1} switchToScreen={switchToScreen} />
 
       <div className="body-container">
         <ul>

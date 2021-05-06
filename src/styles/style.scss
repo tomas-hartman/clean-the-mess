@@ -69,13 +69,15 @@ input:focus, textarea:focus, select:focus{
 }
 
 // Sliding (secondary) screens starting position
-#details, #latest, #search {
+.screen-details, .screen-latest, .screen-search {
   box-sizing: border-box;
   position: absolute;
   height: 100%;
 
   // Sem musím přidat animaci a pak nebude potřeba ... slide-out-reverse? jenom oddělám slide-in?
   transform: translate(100%);
+  // left: 200%;
+  transition: transform 150ms cubic-bezier(.07, .95, 0, 1);
 }
 
 /**
