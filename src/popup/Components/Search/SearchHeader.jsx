@@ -1,4 +1,6 @@
 import React from 'react';
+import { CloseAllHeaderBtn, GoBackBtn } from '../Buttons';
+import Separator from '../Separator';
 
 /**
  * @todo implement search functionality
@@ -6,11 +8,13 @@ import React from 'react';
  * @param {*} param0
  * @returns
  */
-export default function SearchHeader({ oid, switchToScreen }) {
+export default function SearchHeader({ oKey, switchToScreen }) {
+  const searchCount = 9;
+
   return (
     <div className="header-container">
       <div id="header" className="control">
-        <div className="back go-back" title="Back" />
+        <GoBackBtn handleClick={() => switchToScreen('overview')} />
 
         <div className="header-title">
           <div className="search-container">
@@ -19,17 +23,20 @@ export default function SearchHeader({ oid, switchToScreen }) {
               name="search-input"
               id="search-input"
               placeholder="Type here"
-              autoFocus="autofocus"
+              // autoFocus="autofocus" // @todo turn on first after animation transition!!
             />
             <div className="search-controls">
-              <span className="search-count">(9)</span>
+              <span className="search-count">{`(${searchCount})`}</span>
               <button type="button" className="clear-search hidden">x</button>
             </div>
           </div>
         </div>
-        <div className="close-all" title="Close all listed tabs" />
+
+        <CloseAllHeaderBtn />
       </div>
-      <div className="separator separator-bottom" />
+
+      <Separator />
+
     </div>
   );
 }

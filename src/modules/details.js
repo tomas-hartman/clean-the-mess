@@ -8,31 +8,31 @@ import { locale } from './locale.js';
  * @returns {Object[]} Array with filtered items from tabs object
  */
 const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
-	let newTabs = innerTabsData.slice(0);
-	let iterationsNum = numOfLatest;
-	let latest = [];
+  const newTabs = innerTabsData.slice(0);
+  let iterationsNum = numOfLatest;
+  const latest = [];
 
-	if (innerTabsData.length < iterationsNum) iterationsNum = innerTabsData.length;
+  if (innerTabsData.length < iterationsNum) iterationsNum = innerTabsData.length;
 
-	newTabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
+  newTabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
 
-	for (let i = 0; i < iterationsNum; i++) {
-		if (newTabs[i].pinned) continue;
+  for (let i = 0; i < iterationsNum; i++) {
+    if (newTabs[i].pinned) continue;
 
-		let output = {};
+    const output = {};
 
-		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
+    const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
+    const date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 
-		output.date = date;
-		output.title = newTabs[i].title;
-		output.id = newTabs[i].id;
-		output.url = newTabs[i].url;
+    output.date = date;
+    output.title = newTabs[i].title;
+    output.id = newTabs[i].id;
+    output.url = newTabs[i].url;
 
-		latest.push(output);
-	}
+    latest.push(output);
+  }
 
-	return latest;
+  return latest;
 };
 
 /**
@@ -42,28 +42,28 @@ const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
  * @returns {Object[]}
  */
 const getDetailsArray = (overviewItemData, innerTabsData) => {
-	const ids = overviewItemData.ids;
-	let array = [];
+  const { ids } = overviewItemData;
+  const array = [];
 
-	for (let i = 0; i < ids.length; i++) {
-		array.push(...innerTabsData.filter((tab) => tab.id === ids[i]));
-	}
+  for (let i = 0; i < ids.length; i++) {
+    array.push(...innerTabsData.filter((tab) => tab.id === ids[i]));
+  }
 
-	array.sort((a, b) => b.lastAccessed - a.lastAccessed);
+  array.sort((a, b) => b.lastAccessed - a.lastAccessed);
 
-	return array;
+  return array;
 };
 
 /**
  * Function that returns filtered array with details for current search query
- * @param {Object[]} innerTabsData 
+ * @param {Object[]} innerTabsData
  * @returns {Object[]} - Array of found items
  */
 const getSearchDetailsArray = (innerTabsData) => {
-	const newTabs = innerTabsData.slice(0);
-	const foundItems = [];
+  const newTabs = innerTabsData.slice(0);
+  const foundItems = [];
 
-	/* 
+  /*
 	For each item from data create an object with:
 	{ id, url, title, date}
 
@@ -72,27 +72,27 @@ const getSearchDetailsArray = (innerTabsData) => {
 	if data = [], then return null or stg
 	*/
 
-	for (let i = 0; i < innerTabsData.length; i++) {
-		if (newTabs[i].pinned) continue;
+  for (let i = 0; i < innerTabsData.length; i++) {
+    if (newTabs[i].pinned) continue;
 
-		let output = {};
+    const output = {};
 
-		const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
-		let date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
+    const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
+    const date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 
-		output.date = date;
-		output.title = newTabs[i].title;
-		output.id = newTabs[i].id;
-		output.url = newTabs[i].url;
+    output.date = date;
+    output.title = newTabs[i].title;
+    output.id = newTabs[i].id;
+    output.url = newTabs[i].url;
 
-		foundItems.push(output);
-	}
+    foundItems.push(output);
+  }
 
-	// sort the results by date or relevancy?
+  // sort the results by date or relevancy?
 
-	console.log(foundItems);
+  console.log(foundItems);
 
-	return foundItems;
+  return foundItems;
 };
 
 /**
@@ -104,32 +104,32 @@ const getSearchDetailsArray = (innerTabsData) => {
  * @param {Array} innerOverviewData - copy of dataOverview object for reference
  * @param {Object} props - object with optional settings
  * @param {Number} props.count
- * @param {Number} props.index 
+ * @param {Number} props.index
  * @param {Object} props.data tabsData object
  * @returns {Object[]} = [{id, url, title, date}, ...]
  */
 const getDetailedArray = (type, innerOverviewData, props = {}) => {
-	let { count, index, data } = props;
+  const { count, index, data } = props;
 
-	let array = [];
-	if (type === 'details' && data) { // data === __tabs__
-		array = getDetailsArray(innerOverviewData[index], data);
-	} else if (type === 'latest' && count && data) {
-		array = getLatestUsed(data, count);
-	} else if (type === 'search' && data) {
-		array = getSearchDetailsArray(data);
-	} else {
-		console.log('Error: got wrong params on getDetailedArray()');
-	}
+  let array = [];
+  if (type === 'details' && data) { // data === __tabs__
+    array = getDetailsArray(innerOverviewData[index], data);
+  } else if (type === 'latest' && count && data) {
+    array = getLatestUsed(data, count);
+  } else if (type === 'search' && data) {
+    array = getSearchDetailsArray(data);
+  } else {
+    console.log('Error: got wrong params on getDetailedArray()');
+  }
 
-	return array;
+  return array;
 };
 
 export {
-	getLatestUsed,
-	getDetailsArray,
-	getSearchDetailsArray,
-	getDetailedArray
+  getLatestUsed,
+  getDetailsArray,
+  getSearchDetailsArray,
+  getDetailedArray,
 };
 
 // Bug: při mazání poslední položky
