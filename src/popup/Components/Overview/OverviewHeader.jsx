@@ -1,8 +1,8 @@
 import React from 'react';
 import { GetInBtn, SearchBtn } from '../Buttons';
-import Separator from './Separator';
+import Separator from '../Separator';
 
-export default function OverviewHeader() {
+export default function OverviewHeader({ switchToScreen }) {
   const openTabsCount = 109;
 
   return (
@@ -18,7 +18,7 @@ export default function OverviewHeader() {
             opened tabs in this window.
           </span>
         </div>
-        <SearchBtn />
+        <SearchBtn switchToScreen={switchToScreen} />
       </div>
 
       <Separator />

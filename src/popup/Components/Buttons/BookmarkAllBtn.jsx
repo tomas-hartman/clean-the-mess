@@ -4,6 +4,8 @@ export default function BookmarkAllBtn({ isHidden = false }) {
   const hiddenCls = isHidden ? 'hidden' : '';
 
   return (
-    <div className={`bookmark-all ${hiddenCls}`} title="Bookmark and close all items" />
+    <button type="button" className={`bookmark-all ${hiddenCls}`} title="Bookmark and close all items">
+      <span className="hidden">Bookmark and close all items</span>
+    </button>
   );
 }

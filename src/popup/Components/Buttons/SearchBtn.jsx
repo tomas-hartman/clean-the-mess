@@ -1,7 +1,9 @@
 import React from 'react';
 
-export default function SearchBtn() {
+export default function SearchBtn({ switchToScreen }) {
   return (
-    <div id="search-btn" />
+    <button type="button" id="search-btn" title="Search" onClick={() => switchToScreen('search')}>
+      <span className="hidden">Search</span>
+    </button>
   );
 }

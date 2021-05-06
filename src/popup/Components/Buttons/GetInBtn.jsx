@@ -4,6 +4,8 @@ export default function GetInBtn({ isHidden = false }) {
   const isHiddenCls = isHidden ? 'hidden' : '';
 
   return (
-    <div className={`get-in ${isHiddenCls}`} />
+    <button type="button" className={`get-in ${isHiddenCls}`}>
+      <span className="hidden">Get in</span>
+    </button>
   );
 }
