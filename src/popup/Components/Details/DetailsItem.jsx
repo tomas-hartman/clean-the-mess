@@ -5,7 +5,9 @@ import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
 
 export default function DetailsItem(props) {
   const [isHidden, setIsHidden] = useState(true);
-  const { itemId, data, type } = props;
+  const {
+    itemId, data, type, closeTabs,
+  } = props;
   const {
     id, title, url, date,
   } = data;
@@ -45,7 +47,12 @@ export default function DetailsItem(props) {
 
         <div className="item-buttons-container">
           {!hasIgnoredProtocol(url) && <BookmarkCloseBtn isHidden={isHidden} isDetail />}
-          <CloseBtn isHidden={isHidden} isDetail />
+          <CloseBtn
+            isHidden={isHidden}
+            isDetail
+            tId={id}
+            closeTabs={closeTabs}
+          />
           <GetInBtn isHidden={!isHidden} />
         </div>
 
