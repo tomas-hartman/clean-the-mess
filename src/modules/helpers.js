@@ -1,4 +1,4 @@
-import { getOverview } from './overview.js';
+import getOverview from './overview.js';
 
 /**
  * Validates if url with given protocol can be bookmarked
@@ -13,7 +13,8 @@ const isSupportedProtocol = (url) => {
 };
 
 /**
- * Checks if url has some of the special protocols, that do not work well with certain features and APIs such as bookmarks
+ * Checks if url has some of the special protocols, that do not work
+ * well with certain features and APIs such as bookmarks
  * @param {string} url
  * @returns {Boolean}
  */

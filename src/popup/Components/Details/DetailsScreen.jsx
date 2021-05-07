@@ -9,7 +9,6 @@ export default function DetailsScreen(props) {
   } = props;
   const type = 'url';
   const headerTitle = getHeaderTitle(overviewData?.url, 'details');
-  const oKey = overviewData?.key;
 
   useEffect(() => {
     if (isActive && detailsData.length === 0) {
@@ -19,7 +18,12 @@ export default function DetailsScreen(props) {
 
   return (
     <div className={`screen screen-details ${extraClass}`}>
-      <DetailsHeader oKey={oKey} title={headerTitle} switchToScreen={switchToScreen} />
+      <DetailsHeader
+        title={headerTitle}
+        overviewData={overviewData}
+        switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+      />
       <div className="body-container">
         <ul>
           {detailsData.map((itemData, i) => (
