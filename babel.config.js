@@ -3,11 +3,11 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        'useBuiltIns': 'entry',
-        'targets': {
-          'esmodules': true
-        }
-      }
+        useBuiltIns: 'entry',
+        targets: {
+          esmodules: true,
+        },
+      },
     ],
     '@babel/preset-react',
   ],
