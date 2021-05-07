@@ -10,17 +10,24 @@ export default function Popup() {
   const [screen, setScreen] = useState({ name: 'overview' });
   const [overviewData, setOverviewData] = useState([]);
   const [tabsData, setTabsData] = useState([]);
-  // const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const tabsDataVar = await browser.tabs.query({ currentWindow: true });
-      const overviewDataVar = getOverview(tabsDataVar);
+      if (refresh) {
+        const tabsDataVar = await browser.tabs.query({ currentWindow: true });
+        const overviewDataVar = getOverview(tabsDataVar);
 
-      setOverviewData(overviewDataVar);
-      setTabsData(tabsDataVar);
+        setOverviewData(overviewDataVar);
+        setTabsData(tabsDataVar);
+        setRefresh(false);
+      }
     })();
-  }, []);
+  }, [refresh]);
+
+  const forceRefresh = () => {
+    setRefresh(true);
+  };
 
   const switchToScreen = (nextScreen, options = {}) => {
     setScreen({ name: nextScreen, options });
@@ -38,13 +45,18 @@ export default function Popup() {
     const { ids } = _screen?.options;
     const array = [];
 
-    for (let i = 0; i < ids.length; i++) {
+    for (let i = 0; i < ids.length; i += 1) {
       array.push(..._tabsData.filter((tab) => tab.id === ids[i]));
     }
 
     array.sort((a, b) => b.lastAccessed - a.lastAccessed);
 
     return array;
+  };
+
+  const closeTabs = async (ids) => {
+    await browser.tabs.remove(ids);
+    forceRefresh();
   };
 
   return (
@@ -54,12 +66,15 @@ export default function Popup() {
         headerData={{ openTabs: tabsData.length }}
         className={screen.name === 'overview' ? 'slide-in-reverse' : ''}
         switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
       />
       <DetailsScreen
         detailsData={getDetailsData(screen, tabsData)}
         overviewData={screen.options}
         className={screen.name === 'details' ? 'slide-in' : ''}
         switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+        isActive={screen.name === 'details'}
       />
       <SearchScreen
         tabsData={tabsData}
