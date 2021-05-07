@@ -21,8 +21,11 @@ export default function OverviewHeader({ switchToScreen, openTabs }) {
 
       <Separator />
 
-      <div id="ten-unused">
-        <span>10 longest unused tabs</span>
+      <div
+        id="ten-unused"
+        onClick={() => switchToScreen('latest')}
+      >
+        <span>10 longest inactive tabs</span>
         <GetInBtn />
       </div>
 

@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 
 import OverviewScreen from './Components/Overview';
 import DetailsScreen from './Components/Details';
+import LatestScreen from './Components/Latest';
 import SearchScreen from './Components/Search/SearchScreen';
 import getOverview from '../modules/overview';
+import { getLatestUsed } from '../modules/details';
 
 export default function Popup() {
   const [screen, setScreen] = useState({ name: 'overview' });
@@ -25,12 +27,17 @@ export default function Popup() {
     })();
   }, [refresh]);
 
+  const switchToScreen = (nextScreen, options = {}) => {
+    setScreen({ name: nextScreen, options });
+  };
+
   const forceRefresh = () => {
     setRefresh(true);
   };
 
-  const switchToScreen = (nextScreen, options = {}) => {
-    setScreen({ name: nextScreen, options });
+  const closeTabs = async (ids) => {
+    await browser.tabs.remove(ids);
+    forceRefresh();
   };
 
   /**
@@ -54,11 +61,6 @@ export default function Popup() {
     return array;
   };
 
-  const closeTabs = async (ids) => {
-    await browser.tabs.remove(ids);
-    forceRefresh();
-  };
-
   return (
     <div className="body-container">
       <OverviewScreen
@@ -80,6 +82,13 @@ export default function Popup() {
         tabsData={tabsData}
         className={screen.name === 'search' ? 'slide-in' : ''}
         switchToScreen={switchToScreen}
+      />
+      <LatestScreen
+        detailsData={getLatestUsed(tabsData, 10)}
+        overviewData={screen.options}
+        className={screen.name === 'latest' ? 'slide-in' : ''}
+        switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
       />
     </div>
   );

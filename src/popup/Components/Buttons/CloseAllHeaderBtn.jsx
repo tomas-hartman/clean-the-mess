@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function CloseAllHeaderBtn({ oid = 1 }) {
+export default function CloseAllHeaderBtn({ handleClick }) {
   return (
-    <button type="button" className="close-all" data-index-number={oid} title="Close all listed tabs">
+    <button type="button" className="close-all" title="Close all listed tabs" onClick={handleClick}>
       <span className="hidden">Close all listed tabs</span>
     </button>
   );
