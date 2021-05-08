@@ -6,7 +6,10 @@ import DetailsScreen from './Components/Details';
 import LatestScreen from './Components/Latest';
 import SearchScreen from './Components/Search/SearchScreen';
 import getOverview from '../modules/overview';
+
 import { getLatestUsed } from '../modules/details';
+import { getDetailsData } from '../modules/details.refactor';
+import { handlePopupListeners } from '../modules/listeners';
 
 export default function Popup() {
   const [screen, setScreen] = useState({ name: 'overview' });
@@ -14,6 +17,7 @@ export default function Popup() {
   const [tabsData, setTabsData] = useState([]);
   const [refresh, setRefresh] = useState(true);
 
+  /** Load & prepare tabs & overview data */
   useEffect(() => {
     (async () => {
       if (refresh) {
@@ -27,12 +31,10 @@ export default function Popup() {
     })();
   }, [refresh]);
 
+  const forceRefresh = () => setRefresh(true);
+
   const switchToScreen = (nextScreen, options = {}) => {
     setScreen({ name: nextScreen, options });
-  };
-
-  const forceRefresh = () => {
-    setRefresh(true);
   };
 
   const closeTabs = async (ids) => {
@@ -40,51 +42,16 @@ export default function Popup() {
     forceRefresh();
   };
 
+  /** Listeners from background.js (bookmark all) */
   useEffect(() => {
-    const handlePopupListeners = (message) => {
-      // Finishes bookmark-all event
-      switch (message.type) {
-        case 'items-bookmarked':
-          const { index } = message.data;
-          const { ids } = overviewData[index];
-          closeTabs(ids);
-          break;
-
-        default:
-          console.warn('Non-standard message received from background.js:');
-          console.warn(message);
-          break;
-      }
-    };
-
-    browser.runtime.onMessage.addListener(handlePopupListeners);
+    const listenersCb = (message) => handlePopupListeners({ message, closeTabs, overviewData });
+    browser.runtime.onMessage.addListener(listenersCb);
 
     return () => {
       // remove listener
-      browser.runtime.onMessage.removeListener(handlePopupListeners);
+      browser.runtime.onMessage.removeListener(listenersCb);
     };
   }, [overviewData]);
-
-  /**
-   * Function that returns filtered array with details for given group
-   * @param {Object} overviewItemData data of one given item in overviewData
-   * @param {Object} innerTabsData tabsData object
-   * @returns {Object[]}
-   */
-  const getDetailsData = (_screen, _tabsData) => {
-    if (!_screen?.options?.ids) return [];
-
-    const { ids } = _screen?.options;
-    const array = [];
-
-    for (let i = 0; i < ids.length; i += 1) {
-      array.push(..._tabsData.filter((tab) => tab.id === ids[i]));
-    }
-
-    array.sort((a, b) => b.lastAccessed - a.lastAccessed);
-
-    return array;
-  };
 
   return (
     <div className="body-container">

@@ -16,7 +16,7 @@ const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
 
   newTabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
 
-  for (let i = 0; i < iterationsNum; i++) {
+  for (let i = 0; i < iterationsNum; i += 1) {
     if (newTabs[i].pinned) continue;
 
     const output = {};
@@ -45,7 +45,7 @@ const getDetailsArray = (overviewItemData, innerTabsData) => {
   const { ids } = overviewItemData;
   const array = [];
 
-  for (let i = 0; i < ids.length; i++) {
+  for (let i = 0; i < ids.length; i += 1) {
     array.push(...innerTabsData.filter((tab) => tab.id === ids[i]));
   }
 
@@ -63,16 +63,15 @@ const getSearchDetailsArray = (innerTabsData) => {
   const newTabs = innerTabsData.slice(0);
   const foundItems = [];
 
-  /*
-	For each item from data create an object with:
-	{ id, url, title, date}
-
-	and sort them by date
-
-	if data = [], then return null or stg
-	*/
-
-  for (let i = 0; i < innerTabsData.length; i++) {
+  /**
+   * For each item from data create an object with:
+   * { id, url, title, date}
+   *
+   * and sort them by date
+   *
+   * if data = [], then return null or stg
+  */
+  for (let i = 0; i < innerTabsData.length; i += 1) {
     if (newTabs[i].pinned) continue;
 
     const output = {};
