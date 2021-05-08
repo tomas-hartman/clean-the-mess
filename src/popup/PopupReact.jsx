@@ -72,7 +72,7 @@ export default function Popup() {
       />
       <DetailsScreen
         detailsData={getDetailsData(screen, tabsData)}
-        overviewData={screen.options}
+        overviewData={overviewData?.find((item) => item.key === screen?.options?.key)}
         className={screen.name === 'details' ? 'slide-in' : ''}
         switchToScreen={switchToScreen}
         closeTabs={closeTabs}
