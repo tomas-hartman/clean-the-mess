@@ -25,7 +25,7 @@ export default function BookmarkCloseBtn({
       type="button"
       className={`bookmark ${bookmarkStatus} ${isDetail} ${hiddenCls}`}
       title={buttonTitle}
-      onClick={!isBookmarked && handleClick}
+      onClick={!isBookmarked ? handleClick : undefined}
     >
       <span className="hidden">{buttonTitle}</span>
     </button>

@@ -26,7 +26,6 @@ export default function OverviewItem(props) {
 
     const onTrue = () => {
       browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
-      closeTabs(ids);
     };
 
     const onFalse = () => {

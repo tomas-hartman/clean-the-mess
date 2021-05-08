@@ -40,6 +40,31 @@ export default function Popup() {
     forceRefresh();
   };
 
+  useEffect(() => {
+    const handlePopupListeners = (message) => {
+      // Finishes bookmark-all event
+      switch (message.type) {
+        case 'items-bookmarked':
+          const { index } = message.data;
+          const { ids } = overviewData[index];
+          closeTabs(ids);
+          break;
+
+        default:
+          console.warn('Non-standard message received from background.js:');
+          console.warn(message);
+          break;
+      }
+    };
+
+    browser.runtime.onMessage.addListener(handlePopupListeners);
+
+    return () => {
+      // remove listener
+      browser.runtime.onMessage.removeListener(handlePopupListeners);
+    };
+  }, [overviewData]);
+
   /**
    * Function that returns filtered array with details for given group
    * @param {Object} overviewItemData data of one given item in overviewData
