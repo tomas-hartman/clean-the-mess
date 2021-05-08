@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers.js';
 
 /**
@@ -5,7 +6,6 @@ import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './hel
  */
 
 const bookmarkTabsToFolder = async (tabIds, parentId) => {
-  console.log(parentId);
   for (let i = 0; i < tabIds.length; i += 1) {
     try {
       const [title, url] = await getTabDataFromId(tabIds[i]);
