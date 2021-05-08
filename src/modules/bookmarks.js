@@ -5,20 +5,25 @@ import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './hel
  */
 
 const bookmarkTabsToFolder = async (tabIds, parentId) => {
+  console.log(parentId);
   for (let i = 0; i < tabIds.length; i += 1) {
-    const [title, url] = await getTabDataFromId(tabIds[i]);
+    try {
+      const [title, url] = await getTabDataFromId(tabIds[i]);
 
-    /**
-     * This does not search only in the given folder but everywhere!
-     * Currently a feature (to keep bookmarks clean), but it could be reconsidered.
-    */
-    const duplicates = await browser.bookmarks.search(url);
+      /**
+       * This does not search only in the given folder but everywhere!
+       * Currently a feature (to keep bookmarks clean), but it could be reconsidered.
+      */
+      const duplicates = await browser.bookmarks.search(url);
 
-    if (duplicates.length === 0 && isSupportedProtocol(url)) {
-      await browser.bookmarks
-        .create({ title, url, parentId })
-        .catch((err) => console.log(err));
-    } else console.log(`Item with url ${url} already exists and was skipped.`);
+      if (duplicates.length === 0 && isSupportedProtocol(url)) {
+        await browser.bookmarks
+          .create({ title, url, parentId })
+          .catch((err) => console.log(err));
+      } else console.log(`Item with url ${url} already exists and was skipped.`);
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 
@@ -89,7 +94,7 @@ export const handleBookmarkAll = async (_data) => {
     console.log('done');
 
     // This throws an error in refactor!
-    // browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
+    browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
 
     return;
   }
@@ -107,7 +112,7 @@ export const handleBookmarkAll = async (_data) => {
     await mergeBookmarksInFolder(overviewObject.ids, searchResults, folderName);
   }
 
-//   browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
+  browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
 };
 
 /**
