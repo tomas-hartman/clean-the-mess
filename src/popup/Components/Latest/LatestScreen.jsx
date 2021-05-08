@@ -16,7 +16,7 @@ export default function DetailsScreen(props) {
   const headerTitle = getHeaderTitle(0, 'latest', 10);
 
   return (
-    <div className={`screen screen-details ${extraClass}`}>
+    <div className={`screen screen-latest ${extraClass}`}>
       <LatestHeader
         overviewData={overviewData}
         title={headerTitle}

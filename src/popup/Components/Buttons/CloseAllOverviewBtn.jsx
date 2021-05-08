@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CloseAllOverviewBtn({ ids, isHidden = false, closeTabs }) {
+export default function CloseAllOverviewBtn({ onClick, isHidden = false }) {
   const hiddenCls = isHidden ? 'hidden' : '';
 
   return (
@@ -8,7 +8,7 @@ export default function CloseAllOverviewBtn({ ids, isHidden = false, closeTabs }
       type="button"
       className={`remove ${hiddenCls}`}
       title="Close all tabs with this url"
-      onClick={() => closeTabs(ids)}
+      onClick={onClick}
     >
       <span className="hidden">Close all tabs with this url</span>
     </button>

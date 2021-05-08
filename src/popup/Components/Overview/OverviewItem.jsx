@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { callWithConfirm } from '../../../modules/helpers';
+import { getHeaderTitle } from '../../../modules/helpers.refactor';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
 
 export default function OverviewItem(props) {
@@ -19,8 +21,34 @@ export default function OverviewItem(props) {
   };
 
   const bookmarkOverviewTabs = (overviewObject, oId) => {
-    browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
-    closeTabs(overviewObject.ids);
+    const { ids, url, count } = overviewObject;
+    const folderName = getHeaderTitle(url, 'details');
+
+    const onTrue = () => {
+      browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
+      closeTabs(ids);
+    };
+
+    const onFalse = () => {
+      console.log('Nothing invoked.');
+    };
+
+    callWithConfirm('bookmarkAll', onTrue, onFalse, count, folderName);
+  };
+
+  const closeOverviewTabs = (overviewObject) => {
+    const { ids, count } = overviewObject;
+
+    const onFalse = () => {
+      console.log('Request to close tabs from overview was declined.');
+    };
+
+    if (count > 10) {
+      callWithConfirm('closeTabs', () => closeTabs(ids), onFalse, count);
+      return;
+    }
+
+    closeTabs(ids);
   };
 
   return (
@@ -49,7 +77,7 @@ export default function OverviewItem(props) {
         </div>
         <div className="item-buttons-container">
           <BookmarkAllBtn isHidden={isHidden} onClick={() => bookmarkOverviewTabs(data, itemId)} />
-          <CloseAllOverviewBtn isHidden={isHidden} ids={ids} closeTabs={closeTabs} />
+          <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data)} />
           <GetInBtn isHidden={!isHidden} />
         </div>
       </div>
