@@ -82,6 +82,8 @@ export default function Popup() {
         tabsData={tabsData}
         className={screen.name === 'search' ? 'slide-in' : ''}
         switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+        isActive={screen.name === 'search'}
       />
       <LatestScreen
         detailsData={getLatestUsed(tabsData, 10)}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../Buttons';
 import Separator from '../Separator';
 
@@ -8,8 +8,32 @@ import Separator from '../Separator';
  * @param {*} param0
  * @returns
  */
-export default function SearchHeader({ oKey, switchToScreen }) {
-  const searchCount = 9;
+export default function SearchHeader(props) {
+  const {
+    switchToScreen, foundTabsData, performSearch, isActive, closeTabs, tabsData,
+  } = props;
+  const searchRef = useRef();
+  const searchCount = foundTabsData.length;
+  const ids = foundTabsData.map((item) => item.id);
+
+  useEffect(() => {
+    if (searchRef.current && isActive) {
+      const setFocusOnSearchBar = () => {
+        searchRef.current.focus();
+        searchRef.current.select();
+      };
+
+      // This must invoke after the transition!
+      setTimeout(setFocusOnSearchBar, 100);
+    }
+  }, [searchRef, isActive]);
+
+  // Re-fires search after tabsData changes
+  useEffect(() => {
+    if (searchRef.current && isActive) {
+      performSearch(searchRef);
+    }
+  }, [tabsData, searchRef, isActive]);
 
   return (
     <div className="header-container">
@@ -23,7 +47,8 @@ export default function SearchHeader({ oKey, switchToScreen }) {
               name="search-input"
               id="search-input"
               placeholder="Type here"
-              // autoFocus="autofocus" // @todo turn on first after animation transition!!
+              ref={searchRef}
+              onKeyUp={performSearch}
             />
             <div className="search-controls">
               <span className="search-count">{`(${searchCount})`}</span>
@@ -32,7 +57,7 @@ export default function SearchHeader({ oKey, switchToScreen }) {
           </div>
         </div>
 
-        <CloseAllHeaderBtn />
+        <CloseAllHeaderBtn onClick={() => closeTabs(ids)} />
       </div>
 
       <Separator />
