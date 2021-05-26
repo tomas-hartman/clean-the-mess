@@ -44,7 +44,7 @@ export default function Popup() {
 
   /** Listeners from background.js (bookmark all) */
   useEffect(() => {
-    const listenersCb = (message) => handlePopupListeners({ message, closeTabs, overviewData });
+    const listenersCb = (message) => handlePopupListeners({ message, closeCb: closeTabs, overviewData });
     browser.runtime.onMessage.addListener(listenersCb);
 
     return () => {
