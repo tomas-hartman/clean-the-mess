@@ -1,3 +1,7 @@
+import ReactDOM from 'react-dom';
+import React from 'react';
+import Confirm from '../popup/Components/Confirm';
+
 // Returns headerTitle for secondary screens
 const getHeaderTitle = (overviewUrl, type, count) => {
   let headerTitle = '';
@@ -31,13 +35,23 @@ const callWithConfirm = (question, onTrue, onFalse, ...args) => {
     closeTabs: `Are you sure you want to close ${args[0]} tabs?`,
   };
 
-  if (confirm(questions[question])) {
-    onTrue();
-    return true;
-  }
+  const portalRoot = document.querySelector('#main-container');
+  const portalElement = document.createElement('div');
 
-  onFalse();
-  return false;
+  const handleConfirm = () => {
+    onTrue();
+    portalRoot.removeChild(portalElement);
+  };
+
+  const handleCancel = () => {
+    onFalse();
+    portalRoot.removeChild(portalElement);
+  };
+
+  ReactDOM.render(
+    <Confirm message={questions[question]} onConfirm={handleConfirm} onCancel={handleCancel} />,
+    portalRoot.appendChild(portalElement),
+  );
 };
 
 export {
