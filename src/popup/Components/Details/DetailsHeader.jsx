@@ -12,7 +12,10 @@ export default function DetailsHeader(props) {
       <div id="header" className="control">
         <GoBackBtn handleClick={() => switchToScreen('overview')} />
         <div className="header-title">{title}</div>
-        <CloseAllHeaderBtn onClick={() => closeTabs(overviewData.ids)} />
+        <CloseAllHeaderBtn
+          onClick={() => closeTabs(overviewData?.ids)}
+          itemCount={overviewData?.ids.length}
+        />
       </div>
       <Separator />
     </div>
