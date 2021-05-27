@@ -57,7 +57,7 @@ export default function SearchHeader(props) {
           </div>
         </div>
 
-        <CloseAllHeaderBtn onClick={() => closeTabs(ids)} />
+        <CloseAllHeaderBtn onClick={() => closeTabs(ids)} itemCount={ids.length} />
       </div>
 
       <Separator />

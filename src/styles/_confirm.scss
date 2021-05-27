@@ -14,7 +14,7 @@
     &-box {
         background-color: var(--color-background);
         width: 75%;
-        height: 30%;
+        min-height: 30%;
         border-radius: 0.2rem;
         display: flex;
         flex-direction: column;

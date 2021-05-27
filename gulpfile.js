@@ -1,4 +1,6 @@
-const { watch, src, dest, parallel } = require('gulp');
+const {
+  watch, src, dest, parallel,
+} = require('gulp');
 const merge = require('gulp-merge-json');
 const sass = require('gulp-sass');
 const fs = require('fs');
@@ -19,26 +21,30 @@ const ignoredPatternsInCompilation = ['!src/icons/**', '!src/styles/**/*', '!src
 function common(browser) {
   const ignoredChromeOnly = ['!src/content/themedIco.chrome.js'];
   const ignoredFirefoxOnly = [];
-	
+
   const browserSpecific = browser === 'firefox' ? ignoredChromeOnly : ignoredFirefoxOnly;
 
-  // copy everything that is not js 
+  // copy everything that is not js
   return src(['src/**/*', '!src/**/*.jsx', ...ignoredPatternsInCompilation, ...browserSpecific])
     .pipe(dest(`dist/${browser}/`));
 }
 
 /**
  * Build js
- * @param {*} browser 
- * @returns 
+ * @param {*} browser
+ * @returns
  */
 function compileJsx(browser) {
   // compiles all js(x) files except for those with distinct files and dev folders
-  return src(['src/**/*.jsx', ...ignoredPatternsInCompilation])
-    .pipe(exec((file) => `npx parcel ${file.path} --dist-dir dist/${browser}/popup/`))
+  // Here needs to be path to the main entrypoint!
+  return src(['src/popup/*.jsx', ...ignoredPatternsInCompilation])
+    .pipe(exec((file) => {
+      console.log(file.path);
+
+      return `npx parcel ${file.path} --dist-dir dist/${browser}/popup/`;
+    }))
     .pipe(dest(`dist/${browser}/`));
 }
-
 
 // .pipe(exec(file => `git checkout ${file.path} customTemplatingThing`, options))
 
@@ -52,11 +58,11 @@ function manifest(browser) {
     .pipe(dest(`./dist/${browser}/`));
 }
 
-function styles(browser, _srcPath, _destPath){
+function styles(browser, _srcPath, _destPath) {
   const srcPath = _srcPath || 'src/styles/**/*.scss';
   const destPath = _destPath || `dist/${browser}/styles/`;
 
-  const options = browser ? {includePaths: `src/styles/${browser}/`} : {};
+  const options = browser ? { includePaths: `src/styles/${browser}/` } : {};
 
   return src(srcPath)
     .pipe(sass(options).on('error', sass.logError))
@@ -75,7 +81,7 @@ function server() {
   liveReloadServer.watch('src/dev/style-dev');
 
   app.use(connectLivereload());
-	
+
   const publicPath = express.static(path.join(__dirname, 'src/dev/style-dev'));
   const publicImages = express.static(path.join(__dirname, 'src/dev/style-dev', '../../icons/'));
 
@@ -98,16 +104,16 @@ function compileScssDev(cb) {
 function cleanUp(cb, browser, _options) {
   console.log('Cleaning after previous jobs.');
   const pathToClean = path.join(__dirname, `dist/${browser}`);
-	
-  fs.rmdir(pathToClean, {recursive: true}, cb);
+
+  fs.rmdir(pathToClean, { recursive: true }, cb);
 
   cb();
 }
 
 /**
- * Joint function 
+ * Joint function
  */
-function build(browser){
+function build(browser) {
   styles(browser);
   icons(browser);
   manifest(browser);
@@ -120,20 +126,20 @@ function build(browser){
  */
 function buildDevFirefox(cb) {
   build('firefox');
-    
+
   cb();
 }
 
 function buildDevChrome(cb) {
   build('chrome');
-    
+
   cb();
 }
 
 /**
  * Tasks
  */
-exports.build = function(cb) {
+exports.build = function (cb) {
   cleanUp(cb, 'firefox');
   cleanUp(cb, 'chrome');
 
@@ -141,14 +147,13 @@ exports.build = function(cb) {
   buildDevChrome(cb);
 };
 
-
-exports.styledev = function(){
+exports.styledev = function () {
   server();
 
   watch('./src/dev/style-dev/**/*.scss', compileScssDev);
 };
 
-exports.firefox = function(cb){
+exports.firefox = function (cb) {
   cleanUp(cb, 'firefox');
   buildDevFirefox(cb);
 
@@ -157,16 +162,16 @@ exports.firefox = function(cb){
   watch(['src/', '!src/dev/'], buildDevFirefox);
 };
 
-exports.chrome = function(cb){
+exports.chrome = function (cb) {
   cleanUp(cb, 'chrome');
   buildDevChrome(cb);
-	
+
   console.log('Waiting for changes...');
   // add some cleanup
   watch(['src/', '!src/dev/'], buildDevChrome);
 };
 
-exports.default = function(){
+exports.default = function () {
   console.log('Waiting for changes...');
   watch(['src/', '!src/dev/'], parallel(buildDevFirefox, buildDevChrome));
 };
