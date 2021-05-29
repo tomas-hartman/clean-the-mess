@@ -11,7 +11,8 @@
     "firefox:src": "npx web-ext run -s ./src",
     "chrome:src": "npx web-ext run -t chromium -s ./src",
     "firefox:build": "npx web-ext build -a ./build/firefox",
-    "chrome:build": "npx web-ext build -a ./build/chrome"
+    "chrome:build": "npx web-ext build -a ./build/chrome",
+    "build": "NODE_ENV=production gulp build"
   },
   "repository": {
     "type": "git",
@@ -57,5 +58,8 @@
     "gulp-merge-json": "^2.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "targets": {
+    "main": false
   }
 }
