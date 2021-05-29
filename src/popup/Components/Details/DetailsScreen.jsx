@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getHeaderTitle } from '../../../modules/helpers.refactor';
+import { getHeaderTitle } from '../../../modules/helpers';
 import DetailsHeader from './DetailsHeader';
 import DetailsItem from './DetailsItem';
 

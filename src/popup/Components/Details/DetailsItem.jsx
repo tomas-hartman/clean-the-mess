@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { bookmarkTab } from '../../../modules/bookmarks';
+import { bookmarkTab } from '../../../modules/bookmarks.refactor';
 
 import { escapeHTML, hasIgnoredProtocol } from '../../../modules/helpers';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
