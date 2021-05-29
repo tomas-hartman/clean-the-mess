@@ -34,19 +34,27 @@ function common(browser) {
  * @param {*} browser
  * @returns
  */
-function compileJsx(browser) {
+function compileJsx(browser, isProduction) {
+  const reportOptions = {
+    err: true, // default = true, false means don't write err
+    stderr: true, // default = true, false means don't write stderr
+    stdout: true, // default = true, false means don't write stdout
+  };
+
   // compiles all js(x) files except for those with distinct files and dev folders
-  // Here needs to be path to the main entrypoint!
+  /**
+   * @todo Here needs to be path to the main entrypoint!
+   */
   return src(['src/popup/*.jsx', ...ignoredPatternsInCompilation])
     .pipe(exec((file) => {
-      console.log(file.path);
+      const destination = `--dist-dir dist/${browser}/popup/`;
 
-      return `npx parcel ${file.path} --dist-dir dist/${browser}/popup/`;
+      if (isProduction) return `npx parcel build ${file.path} --no-cache ${destination}`;
+      return `npx parcel ${file.path} ${destination}`;
     }))
+    .pipe(exec.reporter(reportOptions))
     .pipe(dest(`dist/${browser}/`));
 }
-
-// .pipe(exec(file => `git checkout ${file.path} customTemplatingThing`, options))
 
 function manifest(browser) {
   const options = {
@@ -58,13 +66,20 @@ function manifest(browser) {
     .pipe(dest(`./dist/${browser}/`));
 }
 
-function styles(browser, _srcPath, _destPath) {
+function styles(browser, { srcPath: _srcPath, destPath: _destPath, isProduction }) {
   const srcPath = _srcPath || 'src/styles/**/*.scss';
   const destPath = _destPath || `dist/${browser}/styles/`;
 
-  const options = browser ? { includePaths: `src/styles/${browser}/` } : {};
+  const devOptions = browser ? { includePaths: `src/styles/${browser}/` } : {};
+  const prodOptions = {
+    outputStyle: 'compressed',
+    includePaths: `src/styles/${browser}/`,
+  };
+
+  const options = isProduction ? prodOptions : devOptions;
 
   return src(srcPath)
+    // .pipe(sass(options).on('error', sass.logError))
     .pipe(sass(options).on('error', sass.logError))
     .pipe(dest(destPath));
 }
@@ -97,7 +112,7 @@ function compileScssDev(cb) {
   const styleDevPath = 'src/dev/style-dev';
   const styleDevSrcPath = 'src/dev/style-dev/**/*.scss';
 
-  styles(null, styleDevSrcPath, styleDevPath);
+  styles(null, { srcPath: styleDevSrcPath, destPath: styleDevPath });
   cb();
 }
 
@@ -114,23 +129,25 @@ function cleanUp(cb, browser, _options) {
  * Joint function
  */
 function build(browser) {
-  styles(browser);
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  styles(browser, { isProduction });
   icons(browser);
   manifest(browser);
   common(browser);
-  compileJsx(browser);
+  compileJsx(browser, isProduction);
 }
 
 /**
  * Environment building
  */
-function buildDevFirefox(cb) {
+function buildFirefox(cb) {
   build('firefox');
 
   cb();
 }
 
-function buildDevChrome(cb) {
+function buildChrome(cb) {
   build('chrome');
 
   cb();
@@ -143,8 +160,8 @@ exports.build = function (cb) {
   cleanUp(cb, 'firefox');
   cleanUp(cb, 'chrome');
 
-  buildDevFirefox(cb);
-  buildDevChrome(cb);
+  buildFirefox(cb);
+  buildChrome(cb);
 };
 
 exports.styledev = function () {
@@ -155,23 +172,23 @@ exports.styledev = function () {
 
 exports.firefox = function (cb) {
   cleanUp(cb, 'firefox');
-  buildDevFirefox(cb);
+  buildFirefox(cb);
 
   console.log('Waiting for changes...');
   // add some cleanup
-  watch(['src/', '!src/dev/'], buildDevFirefox);
+  watch(['src/', '!src/dev/'], buildFirefox);
 };
 
 exports.chrome = function (cb) {
   cleanUp(cb, 'chrome');
-  buildDevChrome(cb);
+  buildChrome(cb);
 
   console.log('Waiting for changes...');
   // add some cleanup
-  watch(['src/', '!src/dev/'], buildDevChrome);
+  watch(['src/', '!src/dev/'], buildChrome);
 };
 
 exports.default = function () {
   console.log('Waiting for changes...');
-  watch(['src/', '!src/dev/'], parallel(buildDevFirefox, buildDevChrome));
+  watch(['src/', '!src/dev/'], parallel(buildFirefox, buildChrome));
 };
