@@ -5,5 +5,16 @@
             "matches": ["<all_urls>"],
             "js": ["content/themedIco.chrome.js"]
         }
-    ]
+    ],
+    "commands": {
+        "_execute_browser_action": {
+          "suggested_key": {
+            "default": "Alt+Shift+T",
+            "mac": "Alt+Shift+T"
+  
+  
+          },
+          "description": "Open extension popup"
+        }
+      }
 }

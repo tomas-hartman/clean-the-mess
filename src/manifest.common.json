@@ -41,17 +41,5 @@
             "light": "icons/png/ico-dark-32.png",
             "size": 32
           }]
-    },
-
-    "commands": {
-      "_execute_browser_action": {
-        "suggested_key": {
-          "default": "Alt+Shift+T",
-          "mac": "Alt+Shift+T"
-
-
-        },
-        "description": "Open extension popup"
-      }
     }
   }
