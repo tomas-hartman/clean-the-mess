@@ -1,3 +1,5 @@
+const { exec: execNode } = require('child_process');
+
 const {
   watch, src, dest, parallel,
 } = require('gulp');
@@ -5,7 +7,7 @@ const merge = require('gulp-merge-json');
 const sass = require('gulp-sass');
 const fs = require('fs');
 const path = require('path');
-const exec = require('gulp-exec');
+// const exec = require('gulp-exec');
 
 const express = require('express');
 const livereload = require('livereload');
@@ -13,7 +15,7 @@ const connectLivereload = require('connect-livereload');
 
 sass.compiler = require('node-sass');
 
-const ignoredPatternsInCompilation = ['!src/icons/**', '!src/styles/**/*', '!src/dev/**/*', '!src/*.json'];
+const ignoredPatternsInCompilation = ['!src/icons/**', '!src/styles/**/*', '!src/dev/**/*', '!src/*.json', '!src/background/background.js'];
 
 /**
  * Build single tasks
@@ -34,26 +36,38 @@ function common(browser) {
  * @param {*} browser
  * @returns
  */
-function compileJsx(browser, isProduction) {
-  const reportOptions = {
-    err: true, // default = true, false means don't write err
-    stderr: true, // default = true, false means don't write stderr
-    stdout: true, // default = true, false means don't write stdout
-  };
+function compileEntrypoints(browser, isProduction) {
+  // const reportOptions = {
+  //   err: true, // default = true, false means don't write err
+  //   stderr: true, // default = true, false means don't write stderr
+  //   stdout: true, // default = true, false means don't write stdout
+  // };
 
   // compiles all js(x) files except for those with distinct files and dev folders
   /**
    * @todo Here needs to be path to the main entrypoint!
    */
-  return src(['src/popup/*.jsx', ...ignoredPatternsInCompilation])
-    .pipe(exec((file) => {
-      const destination = `--dist-dir dist/${browser}/popup/`;
+  // return src(['src/popup/*.jsx', ...ignoredPatternsInCompilation])
+  // return src(['src/popup/Popup.jsx', 'src/background/background.js'])
+  //   .pipe(exec((file) => {
+  //     const destination = `--dist-dir dist/${browser}/`;
 
-      if (isProduction) return `npx parcel build ${file.path} --no-cache ${destination}`;
-      return `npx parcel ${file.path} ${destination}`;
-    }))
-    .pipe(exec.reporter(reportOptions))
-    .pipe(dest(`dist/${browser}/`));
+  //     console.log(file.path);
+
+  //     if (isProduction) return `npx parcel build 'src/popup/Popup.jsx' 'src/background/background.js' --no-cache ${destination}`;
+  //     // return `npx parcel ${file.path} ${destination}`;
+  //     return `npx parcel 'src/popup/Popup.jsx' 'src/background/background.js' ${destination}`;
+  //   }))
+  //   .pipe(exec.reporter(reportOptions))
+  //   .pipe(dest(`dist/${browser}/`));
+
+  // execNode(`npx parcel 'src/popup/Popup.jsx' 'src/background/background.js' --no-cache ${destination}`);
+
+  const destination = `--dist-dir dist/${browser}/`;
+
+  if (!isProduction) return execNode(`npx parcel 'src/popup/Popup.jsx' 'src/background/background.js' ${destination}`);
+
+  return execNode(`npx parcel build 'src/popup/Popup.jsx' 'src/background/background.js' --no-cache ${destination}`);
 }
 
 function manifest(browser) {
@@ -135,7 +149,7 @@ function build(browser) {
   icons(browser);
   manifest(browser);
   common(browser);
-  compileJsx(browser, isProduction);
+  compileEntrypoints(browser, isProduction);
 }
 
 /**
