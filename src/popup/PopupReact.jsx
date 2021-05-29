@@ -5,10 +5,9 @@ import OverviewScreen from './Components/Overview';
 import DetailsScreen from './Components/Details';
 import LatestScreen from './Components/Latest';
 import SearchScreen from './Components/Search/SearchScreen';
-import getOverview from '../modules/overview';
+import getOverview from '../modules/overview.refactor';
 
-import { getLatestUsed } from '../modules/details';
-import { getDetailsData } from '../modules/details.refactor';
+import { getDetailsData, getLatestUsed } from '../modules/details.refactor';
 import { handlePopupListeners } from '../modules/listeners';
 
 export default function Popup() {

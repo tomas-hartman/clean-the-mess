@@ -1,4 +1,4 @@
-import { getHash } from './helpers.js';
+import { getHash } from './helpers';
 
 /**
  * Function that creates data structure for overview grouping.
@@ -40,7 +40,7 @@ const getOverview = (tabs) => {
         originUrl = 'Localhost';
       } else if ((/^((\d{1,3}.){3}\d{1,3})(:|\/|\s|$)/g).test(tab.url)) {
         const array = tab.url.split(/:|\//);
-        originUrl = array[0];
+        [originUrl] = array;
       } else {
         originUrl = 'Other tabs';
       }

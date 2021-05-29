@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addBookmarkStatus } from '../../../modules/bookmarks';
+import { addBookmarkStatus } from '../../../modules/bookmarks.refactor';
 
 export default function BookmarkCloseBtn({
   data, handleClick, isHidden = false, isDetail = false,

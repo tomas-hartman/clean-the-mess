@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers.js';
+import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers';
 
 /**
  * Background

@@ -1,4 +1,4 @@
-import { handleBookmarkAll } from '../modules/bookmarks.js';
+import { handleBookmarkAll } from '../modules/bookmarks.refactor.js';
 
 /**
  * Listeners to messages from popup.js
