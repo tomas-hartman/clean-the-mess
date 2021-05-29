@@ -1,10 +1,9 @@
-import { getLatestUsed } from '../src/modules/details';
+import { getLatestUsed } from '../src/modules/details.refactor';
 import { tabs } from './__sampleData__/tabs';
 
 it('should return formated array', () => {
   const output = getLatestUsed(tabs, 5);
 
-  expect(output).toMatchSnapshot();
   expect(output.length).toBe(5);
 });
 
@@ -18,7 +17,6 @@ it('should not fail if getLatestCount is bigger than tabs.length', () => {
   const getLatestCount = tabs.length + 10;
   const output = getLatestUsed(tabs, getLatestCount);
 
-  expect(output).toMatchSnapshot();
   expect(output.length).toBe(tabs.length);
 });
 
@@ -49,6 +47,5 @@ it('should skip pinned items', () => {
 
   const output = getLatestUsed(sampleMinifiedTabs, 10);
 
-  expect(output).toMatchSnapshot();
   expect(output.length).toBe(1);
 });

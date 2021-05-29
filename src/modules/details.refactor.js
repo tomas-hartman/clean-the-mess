@@ -43,6 +43,8 @@ const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
  * @returns {Object[]}
  */
 const getDetailsData = (_screen, _tabsData) => {
+  console.log(_screen);
+
   if (!_screen?.options?.ids) return [];
 
   const { ids } = _screen?.options;

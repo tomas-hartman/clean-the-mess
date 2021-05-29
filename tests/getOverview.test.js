@@ -1,11 +1,4 @@
-import { getOverview } from '../src/modules/overview';
-import { tabs } from './__sampleData__/tabs';
-
-it('should return correct overview data', () => {
-  const output = getOverview(tabs);
-
-  expect(output).toMatchSnapshot();
-});
+import getOverview from '../src/modules/overview.refactor';
 
 it('overview should have valid properties', () => {
   const sampleMinifiedTabs = [
