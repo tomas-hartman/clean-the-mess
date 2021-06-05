@@ -10,7 +10,7 @@ import Confirm from '../popup/Components/Confirm';
  * @param  {...string} args
  * @todo tests!
  */
-const callWithConfirm = (question, onTrue, onFalse, ...args) => {
+export const callWithConfirm = (question, onTrue, onFalse, ...args) => {
   const questions = {
     bookmarkAll: `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
     closeTabs: `Are you sure you want to close ${args[0]} tabs?`,
@@ -34,5 +34,3 @@ const callWithConfirm = (question, onTrue, onFalse, ...args) => {
     portalRoot.appendChild(portalElement),
   );
 };
-
-export default callWithConfirm;

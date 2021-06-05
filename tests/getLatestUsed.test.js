@@ -1,4 +1,4 @@
-import { getLatestUsed } from '../src/modules/details.refactor';
+import { getLatestUsed } from '../src/_modules';
 import { tabs } from './__sampleData__/tabs';
 
 it('should return formated array', () => {

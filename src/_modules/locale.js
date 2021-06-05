@@ -1,4 +1,4 @@
-const locale = {
+export const locale = {
   string: 'cs-CZ',
   options: {
     year: 'numeric',
@@ -9,5 +9,3 @@ const locale = {
     second: 'numeric',
   },
 };
-
-export default locale;

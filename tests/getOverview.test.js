@@ -1,4 +1,4 @@
-import getOverview from '../src/modules/overview.refactor';
+import { getOverview } from '../src/_modules';
 
 it('overview should have valid properties', () => {
   const sampleMinifiedTabs = [

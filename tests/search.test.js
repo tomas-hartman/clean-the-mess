@@ -1,4 +1,4 @@
-import search from '../src/modules/search';
+import { search } from '../src/_modules';
 
 import { sampleMinifiedTabs } from './__sampleData__/tabs';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import callWithConfirm from '../../../modules/callWithConfirm';
+import { callWithConfirm } from '../../../_modules';
 
 export default function CloseAllHeaderBtn({ onClick, itemCount }) {
   const handleClick = () => {

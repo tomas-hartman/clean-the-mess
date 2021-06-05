@@ -1,4 +1,4 @@
-import { getDetailsData } from '../src/modules/details.refactor';
+import { getDetailsData } from '../src/_modules';
 
 import { tabs } from './__sampleData__/tabs';
 import { tabsOverview } from './__sampleData__/tabsOverview';

@@ -6,7 +6,7 @@ import { getHash } from './helpers';
  * @param {Object[]} tabs - Standard tabs object from browser
  * @returns {Object[]} Sorted array of objects that are used for overview grouping
  */
-const getOverview = (tabs) => {
+export const getOverview = (tabs) => {
   const output = [];
 
   tabs.forEach((tab) => {
@@ -69,5 +69,3 @@ const getOverview = (tabs) => {
 
   return output;
 };
-
-export default getOverview;
