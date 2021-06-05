@@ -14,6 +14,7 @@ build/**/
 !build/chrome/
 
 # Dist and dev temp files
+dist/test/*
 dist/firefox/*
 dist/chrome/*
 src/dev/style-dev/style.css

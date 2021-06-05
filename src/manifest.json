@@ -14,7 +14,7 @@
   ],
 
   "background": {
-    "scripts": ["background/background.html"]
+    "scripts": ["./background/background.js"]
   },
 
   "icons": {
