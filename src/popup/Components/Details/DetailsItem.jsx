@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { bookmarkTab } from '../../../modules/bookmarks';
 
-import { escapeHTML, hasIgnoredProtocol } from '../../../modules/helpers';
+import { escapeHTML, hasIgnoredProtocol, bookmarkTab } from '../../../_modules';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
 
 export default function DetailsItem(props) {

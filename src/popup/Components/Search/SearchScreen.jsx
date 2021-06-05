@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import search from '../../../modules/search';
+import { search } from '../../../_modules';
 import DetailsItem from '../Details/DetailsItem';
 import SearchHeader from './SearchHeader';
 

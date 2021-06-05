@@ -6,7 +6,7 @@
  */
 
 // search.perform() initiates the search
-const search = {
+export const search = {
   lettersToReplace: {
     before: 'žščřďťňáéíýóúíůäëïöüľĺŕćńóśźěığçşţâêîôûàèùąęįųłżőűãõåøķīāūßė',
     after: 'zscrdtnaeiyouiuaeioullrcnoszeigcstaeiouaeuaeiulzouaoaokiauße',
@@ -99,5 +99,3 @@ const search = {
     return output;
   },
 };
-
-export default search;

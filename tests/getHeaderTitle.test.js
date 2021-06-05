@@ -1,4 +1,4 @@
-import { getHeaderTitle } from '../src/modules/helpers';
+import { getHeaderTitle } from '../src/_modules';
 import { tabsOverview } from './__sampleData__/tabsOverview';
 
 it('getHeaderTitle should return correct results for details', () => {

@@ -4,7 +4,7 @@ const closeTabsInListener = (message, closeCb, overviewData) => {
   closeCb(ids);
 };
 
-const handlePopupListeners = (args) => {
+export const handlePopupListeners = (args) => {
   const { message, closeCb, overviewData } = args;
 
   // Finishes bookmark-all event by closing bookmarked items
@@ -18,8 +18,4 @@ const handlePopupListeners = (args) => {
       console.warn(message);
       break;
   }
-};
-
-export {
-  handlePopupListeners,
 };

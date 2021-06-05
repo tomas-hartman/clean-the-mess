@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import browser from 'webextension-polyfill';
+
 import OverviewScreen from './Components/Overview';
 import DetailsScreen from './Components/Details';
 import LatestScreen from './Components/Latest';
 import SearchScreen from './Components/Search/SearchScreen';
-import getOverview from '../modules/overview';
 
-import { getDetailsData, getLatestUsed } from '../modules/details';
-import { handlePopupListeners } from '../modules/listeners';
+import {
+  getOverview, getDetailsData, getLatestUsed, handlePopupListeners,
+} from '../_modules';
 
 export default function Popup() {
   const [screen, setScreen] = useState({ name: 'overview' });

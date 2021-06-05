@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import callWithConfirm from '../../../modules/callWithConfirm';
-import { getHeaderTitle } from '../../../modules/helpers';
+import { getHeaderTitle, callWithConfirm } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
 
 export default function OverviewItem(props) {

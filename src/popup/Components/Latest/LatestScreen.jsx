@@ -1,5 +1,5 @@
 import React from 'react';
-import { getHeaderTitle } from '../../../modules/helpers';
+import { getHeaderTitle } from '../../../_modules';
 import LatestHeader from './LatestHeader';
 import DetailsItem from '../Details/DetailsItem';
 
