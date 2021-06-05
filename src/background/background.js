@@ -1,4 +1,5 @@
-import { handleBookmarkAll } from '../modules/bookmarks.js';
+import browser from 'webextension-polyfill';
+import { handleBookmarkAll } from '../_modules';
 
 /**
  * Listeners to messages from popup.js

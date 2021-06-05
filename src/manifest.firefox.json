@@ -1,12 +1,12 @@
 {
-    "version": "2.0",
-    "commands": {
-        "_execute_browser_action": {
-          "suggested_key": {
-            "default": "Ctrl+Alt+T",
-            "mac": "Ctrl+Alt+T"
-          },
-          "description": "Open extension popup"
-        }
-      }
+  "version": "2.0",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+T",
+        "mac": "Ctrl+Alt+T"
+      },
+      "description": "Open extension popup"
+    }
+  }
 }
