@@ -4,7 +4,9 @@
   "description": "Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!",
   "main": "src/popup/popup.js",
   "scripts": {
-    "build": "parcel build src/manifest.json --dist-dir dist/test --no-content-hash --no-source-maps --no-cache --no-scope-hoist",
+    "build": "parcel build src/manifest.json --dist-dir dist/test --no-content-hash --no-source-maps --no-cache",
+    "bundle:chrome": "parcel build dist/.chrome-temp/manifest.json --dist-dir dist/chrome --no-content-hash --no-source-maps --no-cache",
+    "bundle:firefox": "parcel build dist/.firefox-temp/manifest.json --dist-dir dist/firefox --no-content-hash --no-cache",
     "watch": "parcel src/manifest.json --dist-dir dist/test --no-cache",
     "start": "npm run chrome && npm run firefox",
     "test": "jest",
@@ -12,9 +14,9 @@
     "chrome": "web-ext run -t chromium -s ./dist/chrome",
     "firefox:src": "web-ext run -s ./src",
     "chrome:src": "web-ext run -t chromium -s ./src",
-    "firefox:build": "web-ext build -a ./build/firefox",
-    "chrome:build": "web-ext build -a ./build/chrome",
-    "old-build": "NODE_ENV=production gulp build"
+    "build:firefox": "npm run bundle:firefox && web-ext build -a ./build/firefox",
+    "build:chrome": "npm run bundle:chrome && web-ext build -a ./build/chrome",
+    "lint": "web-ext lint -s"
   },
   "repository": {
     "type": "git",
@@ -41,7 +43,6 @@
     "@parcel/transformer-sass": "^2.0.0-beta.3.1",
     "@parcel/transformer-webextension": "^2.0.0-beta.3.1",
     "babel-jest": "^26.6.1",
-    "connect-livereload": "^0.6.1",
     "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
@@ -50,17 +51,17 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.1.0",
     "jest": "^26.6.1",
-    "livereload": "^0.9.1",
     "node-sass": "^5.0.0",
     "parcel": "^2.0.0-beta.3.1",
     "web-ext": "^6.1.0"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "del": "^6.0.0",
     "gulp-exec": "^5.0.0",
     "gulp-merge-json": "^2.1.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-template-html": "^0.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "webextension-polyfill": "^0.8.0"
@@ -70,9 +71,5 @@
   },
   "webExt": {
     "sourceDir": "dist/test"
-  },
-  "browserslist": [
-    "last 1 Chrome version",
-    "last 1 Firefox version"
-  ]
+  }
 }

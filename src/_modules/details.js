@@ -1,5 +1,5 @@
 /* eslint-disable no-continue */
-import locale from './locale';
+import { locale } from './locale';
 
 /**
  * Function that returns filtered array with details for latest used group
