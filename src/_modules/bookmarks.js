@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+import browser from 'webextension-polyfill';
 import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers';
 
 /**
