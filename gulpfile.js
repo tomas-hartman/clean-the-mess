@@ -98,7 +98,17 @@ exports.chrome = function (cb) {
   console.log('Waiting for changes...');
 };
 
-function bundleBrowserDependent(cb) {
+function bundleChromeDependent(cb) {
+  const distDir = 'src/';
+  const browser = 'chrome';
+
+  manifest(browser, distDir);
+  html(browser, distDir);
+
+  cb();
+}
+
+function bundleFirefoxDependent(cb) {
   const distDir = 'src/';
   const browser = 'chrome';
 
@@ -110,19 +120,21 @@ function bundleBrowserDependent(cb) {
 
 exports.devChrome = function (cb) {
   /**
-       * Copy src to dist .chrome-temp
-       * Compile manifest and html on the way
-       * build project from .chrome-temp to chrome
-       * delete .chrome-temp
-       */
+   * Copy src to dist .chrome-temp
+   * Compile manifest and html on the way
+   * build project from .chrome-temp to chrome
+   * delete .chrome-temp
+   */
+  bundleChromeDependent(cb);
 
-  const browser = 'chrome';
-
-  bundleBrowserDependent(cb);
-
-  //   cb();
-
-  watch(['src/manifest.*.json', 'src/popup/popup.*.html'], bundleBrowserDependent);
-
+  watch(['src/manifest.*.json', 'src/popup/popup.*.html'], bundleChromeDependent);
   console.log('Waiting for changes...');
+};
+
+exports.prebundleForChrome = function (cb) {
+  bundleChromeDependent(cb);
+};
+
+exports.prebundleForFirefox = function (cb) {
+  bundleFirefoxDependent(cb);
 };
