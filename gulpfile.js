@@ -1,208 +1,128 @@
-const { exec: execNode } = require('child_process');
-
 const {
   watch, src, dest, parallel,
 } = require('gulp');
+
+const { exec: execNode } = require('child_process');
+const del = require('del');
 const merge = require('gulp-merge-json');
-const sass = require('gulp-sass');
-const fs = require('fs');
-const path = require('path');
-// const exec = require('gulp-exec');
+const template = require('gulp-template-html');
+const rename = require('gulp-rename');
 
-const express = require('express');
-const livereload = require('livereload');
-const connectLivereload = require('connect-livereload');
+function cleanTemp(tempDir, cb) {
+  console.log(tempDir);
 
-sass.compiler = require('node-sass');
+  del(tempDir, { force: true });
+  cb();
+}
 
-const ignoredPatternsInCompilation = ['!src/icons/**', '!src/styles/**/*', '!src/dev/**/*', '!src/*.json', '!src/background/background.js'];
+function bundle(browser, cb) {
+//   const destDir = `dist/${browser}`;
 
-/**
- * Build single tasks
- */
-function common(browser) {
-  const ignoredChromeOnly = ['!src/content/themedIco.chrome.js'];
-  const ignoredFirefoxOnly = [];
+  execNode(`npm run build:${browser}`);
 
-  const browserSpecific = browser === 'firefox' ? ignoredChromeOnly : ignoredFirefoxOnly;
+  const tempDir = `dist/.${browser}-temp`;
+  cleanTemp(tempDir, cb);
+  cb();
+}
 
-  // copy everything that is not js
-  return src(['src/**/*', '!src/**/*.jsx', ...ignoredPatternsInCompilation, ...browserSpecific])
-    .pipe(dest(`dist/${browser}/`));
+function html(browser, tempDir) {
+  return src(`src/popup/popup.${browser}.html`)
+    .pipe(template('src/popup/popup.common.html'))
+    .pipe(rename('popup.html'))
+    .pipe(dest(`${tempDir}/popup`));
 }
 
 /**
- * Build js
- * @param {*} browser
- * @returns
+ * Generate manifest.json from chunks
  */
-function compileEntrypoints(browser, isProduction) {
-  // const reportOptions = {
-  //   err: true, // default = true, false means don't write err
-  //   stderr: true, // default = true, false means don't write stderr
-  //   stdout: true, // default = true, false means don't write stdout
-  // };
-
-  // compiles all js(x) files except for those with distinct files and dev folders
-  /**
-   * @todo Here needs to be path to the main entrypoint!
-   */
-  // return src(['src/popup/*.jsx', ...ignoredPatternsInCompilation])
-  // return src(['src/popup/Popup.jsx', 'src/background/background.js'])
-  //   .pipe(exec((file) => {
-  //     const destination = `--dist-dir dist/${browser}/`;
-
-  //     console.log(file.path);
-
-  //     if (isProduction) return `npx parcel build 'src/popup/Popup.jsx' 'src/background/background.js' --no-cache ${destination}`;
-  //     // return `npx parcel ${file.path} ${destination}`;
-  //     return `npx parcel 'src/popup/Popup.jsx' 'src/background/background.js' ${destination}`;
-  //   }))
-  //   .pipe(exec.reporter(reportOptions))
-  //   .pipe(dest(`dist/${browser}/`));
-
-  // execNode(`npx parcel 'src/popup/Popup.jsx' 'src/background/background.js' --no-cache ${destination}`);
-
-  const destination = `--dist-dir dist/${browser}/`;
-
-  if (!isProduction) return execNode(`npx parcel 'src/popup/Popup.jsx' 'src/background/background.js' ${destination}`);
-
-  return execNode(`npx parcel build 'src/popup/Popup.jsx' 'src/background/background.js' --no-cache ${destination}`);
-}
-
-function manifest(browser) {
+function manifest(browser, tempDir) {
   const options = {
     fileName: 'manifest.json',
   };
 
-  src(['src/manifest.common.json', `src/manifest.${browser}.json`])
+  return src(['src/manifest.common.json', `src/manifest.${browser}.json`])
     .pipe(merge(options))
-    .pipe(dest(`./dist/${browser}/`));
-}
-
-function styles(browser, { srcPath: _srcPath, destPath: _destPath, isProduction }) {
-  const srcPath = _srcPath || 'src/styles/**/*.scss';
-  const destPath = _destPath || `dist/${browser}/styles/`;
-
-  const devOptions = browser ? { includePaths: `src/styles/${browser}/` } : {};
-  const prodOptions = {
-    outputStyle: 'compressed',
-    includePaths: `src/styles/${browser}/`,
-  };
-
-  const options = isProduction ? prodOptions : devOptions;
-
-  return src(srcPath)
-    // .pipe(sass(options).on('error', sass.logError))
-    .pipe(sass(options).on('error', sass.logError))
-    .pipe(dest(destPath));
-}
-
-function icons(browser) {
-  return src(['src/icons/**/*.*', '!src/icons/unused/**']).pipe(dest(`dist/${browser}/icons`));
-}
-
-function server() {
-  const app = express();
-  const port = 3000;
-
-  const liveReloadServer = livereload.createServer();
-  liveReloadServer.watch('src/dev/style-dev');
-
-  app.use(connectLivereload());
-
-  const publicPath = express.static(path.join(__dirname, 'src/dev/style-dev'));
-  const publicImages = express.static(path.join(__dirname, 'src/dev/style-dev', '../../icons/'));
-
-  app.use(publicPath);
-  app.use('/icons', publicImages);
-
-  app.listen(port, () => {
-    console.log(`Started localhost on port ${port}`);
-  });
-}
-
-function compileScssDev(cb) {
-  const styleDevPath = 'src/dev/style-dev';
-  const styleDevSrcPath = 'src/dev/style-dev/**/*.scss';
-
-  styles(null, { srcPath: styleDevSrcPath, destPath: styleDevPath });
-  cb();
-}
-
-function cleanUp(cb, browser, _options) {
-  console.log('Cleaning after previous jobs.');
-  const pathToClean = path.join(__dirname, `dist/${browser}`);
-
-  fs.rmdir(pathToClean, { recursive: true }, cb);
-
-  cb();
+    .pipe(dest(tempDir));
 }
 
 /**
- * Joint function
+ * Copy common (shared) source files to temp dir in dist
+ *
+ * I need to handle manifest and popup.html manually
+ * I don't need to copy _dev dir
  */
-function build(browser) {
-  const isProduction = process.env.NODE_ENV === 'production';
+function common(tempDir) {
+  const exceptions = ['!src/manifest*.json', '!src/popup/popup*.html', '!src/_dev/'];
 
-  styles(browser, { isProduction });
-  icons(browser);
-  manifest(browser);
-  common(browser);
-  compileEntrypoints(browser, isProduction);
+  return src(['src/**/*', ...exceptions])
+    .pipe(dest(tempDir));
 }
 
-/**
- * Environment building
- */
-function buildFirefox(cb) {
-  build('firefox');
+function build(cb, browser) {
+  const tempDir = `dist/.${browser}-temp`;
+
+  common(tempDir);
+  manifest(browser, tempDir);
+  html(browser, tempDir);
+
+  bundle(browser, cb);
+
+  cleanTemp(tempDir, cb);
 
   cb();
 }
-
-function buildChrome(cb) {
-  build('chrome');
-
-  cb();
-}
-
-/**
- * Tasks
- */
-exports.build = function (cb) {
-  cleanUp(cb, 'firefox');
-  cleanUp(cb, 'chrome');
-
-  buildFirefox(cb);
-  buildChrome(cb);
-};
-
-exports.styledev = function () {
-  server();
-
-  watch('./src/dev/style-dev/**/*.scss', compileScssDev);
-};
 
 exports.firefox = function (cb) {
-  cleanUp(cb, 'firefox');
-  buildFirefox(cb);
+  /**
+     * Copy src to dist .chrome-temp
+     * Compile manifest and html on the way
+     * build project from .chrome-temp to chrome
+     * delete .chrome-temp
+     */
+  build(cb, 'firefox');
 
   console.log('Waiting for changes...');
   // add some cleanup
-  watch(['src/', '!src/dev/'], buildFirefox);
+//   watch(['src/', '!src/dev/'], buildFirefox);
 };
 
 exports.chrome = function (cb) {
-  cleanUp(cb, 'chrome');
-  buildChrome(cb);
+  /**
+     * Copy src to dist .chrome-temp
+     * Compile manifest and html on the way
+     * build project from .chrome-temp to chrome
+     * delete .chrome-temp
+     */
+  build(cb, 'chrome');
 
   console.log('Waiting for changes...');
-  // add some cleanup
-  watch(['src/', '!src/dev/'], buildChrome);
 };
 
-exports.default = function () {
+function bundleBrowserDependent(cb) {
+  const distDir = 'src/';
+  const browser = 'chrome';
+
+  manifest(browser, distDir);
+  html(browser, distDir);
+
+  cb();
+}
+
+exports.devChrome = function (cb) {
+  /**
+       * Copy src to dist .chrome-temp
+       * Compile manifest and html on the way
+       * build project from .chrome-temp to chrome
+       * delete .chrome-temp
+       */
+
+  const browser = 'chrome';
+
+  bundleBrowserDependent(cb);
+
+  //   cb();
+
+  watch(['src/manifest.*.json', 'src/popup/popup.*.html'], bundleBrowserDependent);
+
   console.log('Waiting for changes...');
-  watch(['src/', '!src/dev/'], parallel(buildFirefox, buildChrome));
 };
