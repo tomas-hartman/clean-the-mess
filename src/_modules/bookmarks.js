@@ -37,7 +37,9 @@ const bookmarkTabsToFolder = async (tabIds, parentId) => {
  */
 const mergeBookmarksInFolder = async (tabIds, foundItems, folderName) => {
   // Returns first folder of its name into which I will add the new files
-  const folder = foundItems.find((item) => item.type === 'folder');
+  // foundItems.find((item) => item.type === 'folder')
+
+  const folder = foundItems[0];
 
   if (!folder) {
     const newFolder = await browser.bookmarks.create({ title: folderName });
@@ -87,7 +89,7 @@ export const handleBookmarkAll = async (_data) => {
   const { overviewObject, index } = _data;
   const { bookmarks } = browser;
 
-  console.log(index);
+  // console.log(index);
 
   // It does not merge items in bookmark root
   if (overviewObject.ids.length === 1) {

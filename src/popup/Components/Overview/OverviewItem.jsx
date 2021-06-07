@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import browser from 'webextension-polyfill';
+
 import { getHeaderTitle, callWithConfirm } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
 

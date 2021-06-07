@@ -40,6 +40,10 @@
       "dark": "icons/png/ico-light-32.png",
       "light": "icons/png/ico-dark-32.png",
       "size": 32
+    }, {
+      "dark": "icons/png/ico-light-128.png",
+      "light": "icons/png/ico-dark-128.png",
+      "size": 128
     }]
   }
 }
