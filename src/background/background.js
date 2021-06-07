@@ -12,7 +12,7 @@ import { handleBookmarkAll } from '../_modules';
  * }
  */
 browser.runtime.onMessage.addListener((message) => {
-  console.log('Message', message);
+  // console.log('Message', message);
 
   switch (message.type) {
     case 'bookmark-all':
@@ -21,7 +21,7 @@ browser.runtime.onMessage.addListener((message) => {
 
       // This only works in chrome
     case 'darkScheme':
-      console.log('darkScheme');
+      // console.log('darkScheme');
       chrome.browserAction.setIcon({
         path: {
           16: '../icons/png/ico-dark-16.png',

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import browser from 'webextension-polyfill';
+
 import { escapeHTML, hasIgnoredProtocol, bookmarkTab } from '../../../_modules';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
 

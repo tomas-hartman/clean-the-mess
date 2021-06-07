@@ -1,4 +1,5 @@
 /* eslint-disable no-bitwise */
+import browser from 'webextension-polyfill';
 
 /**
  * Validates if url with given protocol can be bookmarked
