@@ -43,8 +43,8 @@
   .search-count {
     color: $search-input-color;
 
-    @if browser == "chrome" {
-      margin: 0px 8px 0px 4px;
+    @if $browser == "chrome" {
+      margin: 0px 12px 0px 4px;
     } @else {
       margin: 0px 4px;
     }

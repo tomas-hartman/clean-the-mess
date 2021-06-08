@@ -46,7 +46,7 @@ export default function SearchScreen(props) {
 
       <div className="body-container">
         <ul>
-          {foundTabsData.length > 1 ? foundItems : searchError}
+          {foundTabsData.length >= 1 ? foundItems : searchError}
         </ul>
       </div>
     </div>
