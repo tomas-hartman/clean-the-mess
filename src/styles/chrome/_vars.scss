@@ -1,0 +1,41 @@
+// Browser-related variables (chrome)
+$browser: "chrome"; // chrome or firefox
+
+$font-size: 13px; // font-size: 81.25%;
+$font-family: 'San Francisco', 'Segoe UI', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+// $font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
+
+$border-radius: 100%;
+$search-border-radius: 50px;
+
+$search-border: 2px solid transparent;
+$search-padding-left: 12px;
+$search-input-color: var(--color-font);
+
+$header-button-dimension: 27px;
+$item-button-dimension: 22px;
+
+$button-hover-color: var(--color-emphasis-light);
+$button-active-color: var(--color-emphasis-dark);
+
+$header-container-bg: var(--color-secondary-background);
+$search-container-color: inherit;
+
+$li-count-color: var(--color-secondary-font);
+$li-count-hover-color: var(--color-font);
+
+// Buttons
+$bookmark-close-size: 60%;
+
+@mixin item-buttons {
+    @include item-button(".remove", $removeIcon, 70%);
+    @include item-button(".bookmark", $bookmarkIcon, 60%);
+    @include item-button(".bookmark-all", $bookmarkAllIcon, 60%);
+    @include item-button(".get-in", $chGetInIcon, 40%, inherit, inherit);
+}
+
+@mixin header-buttons {
+    @include header-button(".close-all", $closeAllIcon, 50%);
+    @include header-button("#search-btn", $searchBtnIcon, 50%);
+    @include header-button(".back", $goBackIcon, 45%, var(--color-back-button));
+}

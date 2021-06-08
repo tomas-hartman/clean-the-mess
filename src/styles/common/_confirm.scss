@@ -1,0 +1,53 @@
+.confirm {
+    /* background-color: rgba(var(--color-alternative-background), 0.8); */
+    background-color: rgba(0,0,0, 0.6);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    &-box {
+        background-color: var(--color-background);
+        width: 75%;
+        min-height: 30%;
+        border-radius: 0.2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &-message-box {
+        padding: 0.8rem;
+        padding: 2rem;
+        line-height: 1.4rem;
+    }
+    
+    &-buttons-section {
+        padding: 0.8rem;
+        background-color: var(--color-secondary-background);
+        border-radius: 0.2rem;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    
+    /* Dont like these buttons, find another way */
+    &-btn {
+        padding: 0.4rem 0.8rem;
+        background-color: var(--color-emphasis-dark);
+        border: 1px;
+        color: var(--color-font);
+        border-radius: 0.2rem;
+        font-size: inherit;
+
+        &:hover {
+            background-color: var(--color-emphasis-light);
+        }
+    }
+    
+}
+

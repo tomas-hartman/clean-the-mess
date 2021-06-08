@@ -1,8 +1,25 @@
 node_modules/
 log
-src/icons/src
+src/dev/icons/src
 .vscode
 coverage/
+debug.log
+.DS_Store
+.parcel-cache
+.cache
 
 # Keep only specific builds
 build/**/
+!build/firefox/
+!build/chrome/
+
+# Dist and dev temp files
+dist/test/*
+dist/firefox/*
+dist/chrome/*
+dist/.*-temp
+src/dev/style-dev/style.css
+
+# Files generated during development
+src/popup/popup.html
+src/manifest.json

@@ -1,14 +1,15 @@
-const { getDetailsArray } = require("../src/popup/popup");
+import { getDetailsData } from '../src/_modules';
 
-const { tabs } = require("./__sampleData__/tabs");
-const { tabsOverview } = require("./__sampleData__/tabsOverview");
+import { tabs } from './__sampleData__/tabs';
+import { tabsOverview } from './__sampleData__/tabsOverview';
 
 it('should return array with details only for certain url', () => {
-    const overviewId = 0;
-    const output = getDetailsArray(0, tabsOverview, tabs);
+  const overviewId = 0;
+  const screenObject = { name: 'details', options: tabsOverview[0] };
 
-    expect(output).toMatchSnapshot();
-    expect(output.length).toBe(tabsOverview[overviewId].ids.length);
+  const output = getDetailsData(screenObject, tabs);
+
+  expect(output.length).toBe(tabsOverview[overviewId].ids.length);
 });
 
 // vymyslet failcase scénáře
