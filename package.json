@@ -4,14 +4,20 @@
   "description": "Hundreds of opened tabs? Dozens of useless duplicate tabs with opened emails, google searches, your favourite social networks and articles you wanted to read a month ago? Let's clean the mess!",
   "main": "src/popup/popup.js",
   "scripts": {
-    "start": "npm run chrome && npm run firefox",
+    "prebuild": "gulp prebuild --b $BROWSER",
+    "build": "parcel build dist/.$BROWSER-temp/manifest.json --no-content-hash --no-cache --no-source-maps --dist-dir dist/$BROWSER",
+    "postbuild": "rm -rf dist/.$BROWSER-temp",
+    "build:chrome": "BROWSER=chrome npm run build",
+    "build:firefox": "BROWSER=firefox npm run build",
+    "webext:build:firefox": "web-ext build -a ./build/firefox",
+    "webext:build:chrome": "web-ext build -a ./build/chrome",
     "test": "jest",
-    "firefox": "npx web-ext run -s ./dist/firefox",
-    "chrome": "npx web-ext run -t chromium -s ./dist/chrome",
-    "firefox:src": "npx web-ext run -s ./src",
-    "chrome:src": "npx web-ext run -t chromium -s ./src",
-    "firefox:build": "npx web-ext build -a ./build/firefox",
-    "chrome:build": "npx web-ext build -a ./build/chrome"
+    "start": "npm run chrome && npm run firefox",
+    "firefox": "web-ext run -s ./dist/firefox --bc",
+    "chrome": "web-ext run -t chromium -s ./dist/chrome --bc",
+    "dev:chrome": "gulp dev --b chrome & parcel src/manifest.json --dist-dir dist/chrome",
+    "dev:firefox": "gulp dev --b firefox & parcel src/manifest.json --dist-dir dist/firefox",
+    "lint": "web-ext lint -s"
   },
   "repository": {
     "type": "git",
@@ -29,22 +35,42 @@
   },
   "homepage": "https://github.com/tomas-hartman/clean-the-mess#readme",
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.1",
+    "@babel/preset-react": "^7.13.13",
+    "@parcel/config-webextension": "^2.0.0-beta.3.1",
+    "@parcel/transformer-js": "^2.0.0-beta.3.1",
+    "@parcel/transformer-sass": "^2.0.0-beta.3.1",
+    "@parcel/transformer-webextension": "^2.0.0-beta.3.1",
     "babel-jest": "^26.6.1",
-    "connect-livereload": "^0.6.1",
-    "eslint": "^7.12.1",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.1.0",
+    "gulp-clean": "^0.4.0",
     "jest": "^26.6.1",
-    "livereload": "^0.9.1",
     "node-sass": "^5.0.0",
+    "parcel": "^2.0.0-beta.3.1",
     "web-ext": "^6.1.0",
-    "webextension-polyfill": "^0.8.0"
+    "yargs": "^7.1.2"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "gulp-merge-json": "^2.1.1"
+    "gulp-merge-json": "^2.1.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-template-html": "^0.2.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webextension-polyfill": "^0.8.0"
+  },
+  "targets": {
+    "main": false
+  },
+  "webExt": {
+    "sourceDir": "dist/test"
   }
 }

@@ -1,0 +1,297 @@
+@import "mixins";
+@import "animations";
+@import "search";
+@import "confirm";
+
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0;
+  padding: 0;
+  max-width: 370px;
+  min-width: 350px;
+  width: auto;
+  overflow: hidden;
+  background-color: var(--color-background);
+  
+
+  font: caption;
+  
+  cursor: default;
+  user-select: none;
+  -moz-user-select: none;
+}
+
+body, input {
+  font-size: $font-size; // snad 13px?
+  font-weight: 400;
+  font-family: $font-family;
+  color: var(--color-font);
+}
+
+input {
+  color: $search-input-color;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+.hidden, .d-none {
+  display: none;
+}
+
+/* SCREEN
+<main id="main-container">
+  <div id="_screen_name_" class="screen">
+   ... (screen containers)
+  </div>
+</main> 
+*/
+// .screen: #overview, #details, #latest, #search
+.screen {
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#main-container {
+  left: 0px;
+  position: relative;
+  min-height: 300px;
+  max-height: 600px;
+  display: flex;
+}
+
+// Sliding (secondary) screens starting position
+.screen-details, .screen-latest, .screen-search {
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+
+  // Sem musím přidat animaci a pak nebude potřeba ... slide-out-reverse? jenom oddělám slide-in?
+  transform: translate(100%);
+  // left: 200%;
+  transition: transform 150ms cubic-bezier(.07, .95, 0, 1);
+}
+
+/**
+  .screen | #_screen_name_ has two containers: .header-container and .body-container (.ul-container might not be used anymore)
+*/
+.body-container, 
+.ul-container {
+  // overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.body-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+
+  ul {
+    list-style: none;
+    margin-block-start: auto;
+    margin-block-end: auto;
+    padding-inline-start: initial;
+  }
+}
+
+// HEADER
+.header-container {
+  // margin-top: 4px; // firefox-only
+  padding-top: 4px; // chrome or both
+  background-color: $header-container-bg;
+}
+
+#header {
+  display: grid;
+  grid-template-columns: 40px auto 40px;
+  align-content: center;
+  height: 30px;
+
+  .header-title {
+    justify-self: center;
+    align-self: center;
+  }
+}
+
+// Special case for header w/o back button (= overview)
+#header.header-overview {
+  grid-template-columns: auto 40px;
+
+  .header-title {
+    justify-self: initial;
+  }
+}
+
+#header,
+.header-title {
+  > span {
+    padding: 4px 16px;
+    height: 20px;
+    display: inline-block;
+    line-height: 20px;
+  }
+}
+
+// Special item inside header; it acts like li, but is a part of header
+#ten-unused {
+  margin-top: 4px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 4px 16px;
+  box-sizing: border-box;
+
+  > span {
+    display: inline-block;
+    line-height: 20px;
+  }
+
+  // Special item that acts like ordinary li
+  &:hover {
+    background-color: var(--color-link-hover);
+
+    .count {
+      color: $li-count-hover-color;
+    }
+  }
+}
+
+// Header buttons
+@include header-buttons;
+
+// Inactive button in search
+#header .btn-inactive {
+  opacity: 30%;
+
+  &:hover, &:active {
+    background-color: initial;
+  }
+}
+
+.separator {
+  border-bottom: 1px solid var(--color-separator);
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+.separator-bottom {
+  margin-bottom: 0;
+}
+
+// ITEMS: (layout and overall properties)
+li {
+  display: flex;
+  width: 100%;
+  height: 20px;
+  padding: 4px 0;
+  align-items: center;
+
+  &.detail {
+    height: 40px;
+  }
+
+  // Info on how many items are there in the category
+  .count {
+    flex-basis: auto;
+    color: $li-count-color;
+  }
+
+  &:hover {
+    background-color: var(--color-link-hover);
+  
+    .count {
+      color: $li-count-hover-color;
+    }
+  }
+}
+
+li#nothing-to-show {
+  height: auto;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+// Items: content
+// Common for all containers (".url-container", ".main-item-text-container", ".item-container", ".item-buttons-container")
+li > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 12px 0 16px;
+}
+
+$containers-margin: ".url-container", ".main-item-text-container", ".item-container", ".item-buttons-container";
+
+@each $container in $containers-margin {
+  #{$container} > div {
+    margin-left: 4px;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+}
+
+.item-text-container, 
+.item-buttons-container, 
+.main-item-text-container {
+  min-width: 0;
+}
+
+.item-buttons-container {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.main-item-text-container {
+  display: flex;
+  width: inherit;
+  justify-content: space-between;
+}
+
+// Title of item in detail
+.title.detail {
+  @include truncate-text;
+
+  word-break: keep-all;
+  margin-bottom: 2px;
+}
+
+// Overview & buttons
+.url,
+.last-displayed {
+  @include truncate-text;
+
+  &.detail {
+    font-style: italic;
+    word-break: keep-all;
+  }
+}
+
+// Buttons on items
+@include item-buttons;
+
+.bookmark {
+  &.bookmark-close {
+    background-image: $bookmarkCloseIcon;
+    background-size: $bookmark-close-size;
+  }
+  &.bookmarked {
+    background-image: $bookmarkedIcon;
+  }
+}

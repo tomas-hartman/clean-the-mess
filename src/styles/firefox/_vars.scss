@@ -1,11 +1,10 @@
-@import "icons";
-@import "colors";
-
 // Browser-related variables (chrome)
 $browser: "firefox"; // chrome or firefox
 
-$font-size: 12px; // font-size: 81.25%;
-$font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+// $font-size: 12px; // font-size: 81.25%;
+// $font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+$font-size: inherit;
+$font-family: inherit;
 
 $border-radius: 1px;
 $search-border-radius: $border-radius;
