@@ -6,6 +6,11 @@ import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './hel
  * Background
  */
 
+/** Sends bookmark-all message */
+export const bookmarkAll = (overviewObject, oId) => {
+  browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
+};
+
 const bookmarkTabsToFolder = async (tabIds, parentId) => {
   for (let i = 0; i < tabIds.length; i += 1) {
     try {
