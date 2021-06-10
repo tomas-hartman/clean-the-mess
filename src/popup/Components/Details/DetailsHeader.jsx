@@ -11,7 +11,10 @@ export default function DetailsHeader(props) {
     <div className="header-container">
       <div id="header" className="control">
         <GoBackBtn handleClick={() => switchToScreen('overview')} />
-        <div className="header-title">{title}</div>
+        <div className="header--details-title">
+          <div className="favicon header--favicon" style={{ backgroundImage: `url(${overviewData?.favicon})` }} />
+          <span>{title}</span>
+        </div>
         <CloseAllHeaderBtn
           onClick={() => closeTabs(overviewData?.ids)}
           itemCount={overviewData?.ids.length}

@@ -8,7 +8,7 @@ export default function OverviewHeader({ switchToScreen, openTabs }) {
   const overviewHeaderSection = (
     <>
       <div id="header" className="control header-overview">
-        <div className="header-title">
+        <div className="header-title header-overview-title">
           <span>
             You have
             {' '}

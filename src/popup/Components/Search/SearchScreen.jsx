@@ -19,7 +19,14 @@ export default function SearchScreen(props) {
   );
 
   const foundItems = foundTabsData.map((item, i) => (
-    <DetailsItem itemId={i} data={item} type={type} key={item.id} closeTabs={closeTabs} />
+    <DetailsItem
+      itemId={i}
+      data={item}
+      type={type}
+      key={item.id}
+      closeTabs={closeTabs}
+      showFavicon
+    />
   ));
 
   const performSearch = (ref) => {

@@ -32,6 +32,7 @@ export default function DetailsScreen(props) {
               type={type}
               key={itemData.id}
               closeTabs={closeTabs}
+              showFavicon
             />
           ))}
         </ul>

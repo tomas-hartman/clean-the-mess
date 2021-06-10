@@ -130,12 +130,24 @@ input:focus, textarea:focus, select:focus{
 }
 
 #header,
-.header-title {
+.header-overview-title {
   > span {
     padding: 4px 16px;
     height: 20px;
     display: inline-block;
     line-height: 20px;
+  }
+}
+
+.header {
+  &--details-title {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  &--favicon {
+    margin: 4px;
   }
 }
 
@@ -193,12 +205,8 @@ li {
   display: flex;
   width: 100%;
   height: 20px;
-  padding: 4px 0;
   align-items: center;
 
-  &.detail {
-    height: 40px;
-  }
 
   // Info on how many items are there in the category
   .count {
@@ -224,18 +232,52 @@ li#nothing-to-show {
 }
 
 // Items: content
-// Common for all containers (".url-container", ".main-item-text-container", ".item-container", ".item-buttons-container")
-li > div {
+.item {
   display: flex;
-  align-items: center;
+  width: 100%;
+  padding: 4px 12px;
+  box-sizing: border-box;
   justify-content: space-between;
 
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 12px 0 16px;
+  &-detail {
+    height: 48px;
+  }
+
+  &-overview {
+    height: 28px;
+  }
+
+  /* Items parts */
+  &--favicon {
+    margin-right: 8px;
+  }
+
+  &--text-container {
+    min-width: 0;
+    flex-basis: 100%;
+
+    &-overview {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 4px;
+    }
+  }
+
+  &--controls-container {
+    min-width: 0;
+    flex-shrink: 0;
+    display: flex;
+  }
 }
 
-$containers-margin: ".url-container", ".main-item-text-container", ".item-container", ".item-buttons-container";
+.favicon {
+  height: 16px;
+  width: 16px;
+  background-size: cover;
+  flex-shrink: 0;
+}
+
+$containers-margin: ".url-container", ".main-item-text-container", ".item-container", ".item-controls-container";
 
 @each $container in $containers-margin {
   #{$container} > div {
@@ -245,23 +287,6 @@ $containers-margin: ".url-container", ".main-item-text-container", ".item-contai
       margin-left: 0;
     }
   }
-}
-
-.item-text-container, 
-.item-buttons-container, 
-.main-item-text-container {
-  min-width: 0;
-}
-
-.item-buttons-container {
-  flex-shrink: 0;
-  display: flex;
-}
-
-.main-item-text-container {
-  display: flex;
-  width: inherit;
-  justify-content: space-between;
 }
 
 // Title of item in detail
