@@ -1,5 +1,44 @@
 import { getHash } from './helpers';
 
+const getOriginUrl = (tabData) => {
+  const url = new URL(tabData.url);
+  let originUrl = '';
+
+  try {
+    originUrl = url.origin;
+
+    if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:' || url.protocol === 'file:') {
+      switch (url.protocol) {
+        case 'about:':
+        case 'moz-extension:':
+        case 'chrome:':
+          originUrl = 'Browser tabs';
+          break;
+        case 'file:':
+          originUrl = 'Opened files';
+          break;
+        case 'localhost:':
+          originUrl = 'Localhost';
+          break;
+        default:
+          originUrl = 'Other tabs';
+          break;
+      }
+    }
+  } catch (err) {
+    if (tabData.url === 'localhost') {
+      originUrl = 'Localhost';
+    } else if ((/^((\d{1,3}.){3}\d{1,3})(:|\/|\s|$)/g).test(tabData.url)) {
+      const array = tabData.url.split(/:|\//);
+      [originUrl] = array;
+    } else {
+      originUrl = 'Other tabs';
+    }
+  }
+
+  return originUrl;
+};
+
 /**
  * Function that creates data structure for overview grouping.
  * @todo It also handles group naming, but it needs refactoring.
@@ -10,41 +49,7 @@ export const getOverview = (tabs) => {
   const output = [];
 
   tabs.forEach((tab) => {
-    let url = {};
-    let originUrl = '';
-
-    try {
-      url = new URL(tab.url);
-      originUrl = url.origin;
-
-      if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:' || url.protocol === 'file:') {
-        switch (url.protocol) {
-          case 'about:':
-          case 'moz-extension:':
-          case 'chrome:':
-            originUrl = 'Browser tabs';
-            break;
-          case 'file:':
-            originUrl = 'Opened files';
-            break;
-          case 'localhost:':
-            originUrl = 'Localhost';
-            break;
-          default:
-            originUrl = 'Other tabs';
-            break;
-        }
-      }
-    } catch (err) {
-      if (tab.url === 'localhost') {
-        originUrl = 'Localhost';
-      } else if ((/^((\d{1,3}.){3}\d{1,3})(:|\/|\s|$)/g).test(tab.url)) {
-        const array = tab.url.split(/:|\//);
-        [originUrl] = array;
-      } else {
-        originUrl = 'Other tabs';
-      }
-    }
+    const originUrl = getOriginUrl(tab);
 
     if (!tab.pinned) {
       if (output.some((website) => website.url === originUrl)) {
@@ -56,8 +61,13 @@ export const getOverview = (tabs) => {
         output[index].ids.push(tab.id);
       } else {
         const key = getHash(originUrl);
+
         output.push({
-          url: originUrl, count: 1, ids: [tab.id], key,
+          url: originUrl,
+          count: 1,
+          ids: [tab.id],
+          key,
+          favicon: tab.favIconUrl,
         });
       }
     }

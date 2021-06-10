@@ -6,7 +6,7 @@ import browser from 'webextension-polyfill';
  * @param {string} url Url to be validated
  * @returns {boolean}
  */
-const isSupportedProtocol = (url) => {
+export const isSupportedProtocol = (url) => {
   const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
   const urlObj = new URL(url);
 
@@ -19,7 +19,7 @@ const isSupportedProtocol = (url) => {
  * @param {string} url
  * @returns {Boolean}
  */
-const hasIgnoredProtocol = (url) => {
+export const hasIgnoredProtocol = (url) => {
   const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
   const { protocol } = new URL(url);
 
@@ -32,7 +32,7 @@ const hasIgnoredProtocol = (url) => {
  * Gets information about tab of given id
  * @param {number} id - id from tabs array
  */
-const getTabDataFromId = async (id) => {
+export const getTabDataFromId = async (id) => {
   const data = await browser.tabs.get(id);
   const { title, url } = await data;
 
@@ -44,7 +44,7 @@ const getTabDataFromId = async (id) => {
  * @see https://stackoverflow.com/a/57448862/11243775
  * @param {string} str
  */
-const escapeHTML = (str) => str.replace(/[&<>'"]/g,
+export const escapeHTML = (str) => str.replace(/[&<>'"]/g,
   (tag) => ({
     '&': '&amp;',
     '<': '&lt;',
@@ -59,7 +59,7 @@ const escapeHTML = (str) => str.replace(/[&<>'"]/g,
  * @param {string} value
  * @returns {string}
  */
-const getHash = (value) => {
+export const getHash = (value) => {
   let hash = 0; let i; let
     chr;
   for (i = 0; i < value.length; i += 1) {
@@ -71,7 +71,7 @@ const getHash = (value) => {
 };
 
 // Returns headerTitle for secondary screens
-const getHeaderTitle = (overviewUrl, type, count) => {
+export const getHeaderTitle = (overviewUrl, type, count) => {
   let headerTitle = '';
 
   if (type === 'details') {
@@ -89,11 +89,10 @@ const getHeaderTitle = (overviewUrl, type, count) => {
   return headerTitle;
 };
 
-export {
-  isSupportedProtocol,
-  hasIgnoredProtocol,
-  getTabDataFromId,
-  escapeHTML,
-  getHash,
-  getHeaderTitle,
+/**
+ *
+ * @param {number} id Tab id
+ */
+export const goToTab = async (id) => {
+  await browser.tabs.update(id, { active: true });
 };
