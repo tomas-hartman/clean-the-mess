@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import browser from 'webextension-polyfill';
 
-import { getHeaderTitle, callWithConfirm } from '../../../_modules';
+import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
 
 export default function OverviewItem(props) {
   const [isHidden, setIsHidden] = useState(true);
   const {
-    itemId, data, switchToScreen, closeTabs,
+    itemId,
+    data,
+    switchToScreen,
+    closeTabs,
+    showFavicon = true,
   } = props;
+
   const {
-    url, count, key, ids,
+    url, count, key, ids, favicon,
   } = data;
 
   const handleMouseOver = () => {
@@ -26,7 +30,7 @@ export default function OverviewItem(props) {
     const folderName = getHeaderTitle(_url, 'details');
 
     const onTrue = () => {
-      browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
+      bookmarkAll(overviewObject, oId);
     };
 
     const onFalse = () => {
@@ -55,7 +59,7 @@ export default function OverviewItem(props) {
 
   return (
     <li
-      className={`url-${itemId} overview-item`}
+      className={`url-${itemId} item item-overview`}
       data-key={key}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
@@ -65,29 +69,32 @@ export default function OverviewItem(props) {
       onKeyUp={handleMouseOut}
       role="menuitem"
     >
+
+      {(favicon && showFavicon) && <div className="favicon item--favicon" style={{ backgroundImage: `url(${favicon})` }} />}
+
       {/* https://stackoverflow.com/questions/34349136/react-how-to-capture-only-parents-onclick-event-and-not-children/47155034 */}
-      <div className="url-container">
-        <div
-          className="main-item-text-container"
-          onClick={() => switchToScreen('details', { ids, url, key })}
-          onKeyPress={() => switchToScreen('details', { ids, url, key })}
-          role="link"
-          tabIndex={0}
-        >
-          <div className="url" title={url}>{url}</div>
-          <div className="count">{`(${count})`}</div>
-        </div>
-        <div className="item-buttons-container">
-          {isBookmarkable && (
-            <BookmarkAllBtn
-              isHidden={isHidden}
-              onClick={() => bookmarkOverviewTabs(data, itemId)}
-            />
-          )}
-          <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data)} />
-          <GetInBtn isHidden={!isHidden} />
-        </div>
+      <div
+        className="item--text-container-overview item--text-container"
+        onClick={() => switchToScreen('details', { ids, url, key })}
+        onKeyPress={() => switchToScreen('details', { ids, url, key })}
+        role="link"
+        tabIndex={0}
+      >
+        <div className="url" title={url}>{url}</div>
+        <div className="count">{`(${count})`}</div>
       </div>
+
+      <div className="item--controls-container">
+        {isBookmarkable && (
+        <BookmarkAllBtn
+          isHidden={isHidden}
+          onClick={() => bookmarkOverviewTabs(data, itemId)}
+        />
+        )}
+        <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data)} />
+        <GetInBtn isHidden={!isHidden} />
+      </div>
+
     </li>
   );
 }

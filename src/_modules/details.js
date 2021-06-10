@@ -29,6 +29,7 @@ const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
     output.title = newTabs[i].title;
     output.id = newTabs[i].id;
     output.url = newTabs[i].url;
+    output.favIconUrl = newTabs[i].favIconUrl;
 
     latest.push(output);
   }
