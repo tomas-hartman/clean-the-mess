@@ -56,6 +56,7 @@ export default function OverviewItem(props) {
   };
 
   const isBookmarkable = ['Browser tabs'].includes(url) === false;
+  const displayedUrl = getHeaderTitle(url, 'details');
 
   return (
     <li
@@ -70,7 +71,7 @@ export default function OverviewItem(props) {
       role="menuitem"
     >
 
-      {(favicon && showFavicon) && <div className="favicon item--favicon" style={{ backgroundImage: `url(${favicon})` }} />}
+      {(showFavicon) && <div className="favicon item--favicon" style={{ backgroundImage: `url(${favicon})` }} />}
 
       {/* https://stackoverflow.com/questions/34349136/react-how-to-capture-only-parents-onclick-event-and-not-children/47155034 */}
       <div
@@ -80,7 +81,7 @@ export default function OverviewItem(props) {
         role="link"
         tabIndex={0}
       >
-        <div className="url" title={url}>{url}</div>
+        <div className="url" title={url}>{displayedUrl}</div>
         <div className="count">{`(${count})`}</div>
       </div>
 

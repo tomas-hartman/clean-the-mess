@@ -148,6 +148,7 @@ input:focus, textarea:focus, select:focus{
 
   &--favicon {
     margin: 4px;
+    margin-right: 8px;
   }
 }
 
@@ -225,6 +226,8 @@ li {
 
 li#nothing-to-show {
   height: auto;
+  padding: 8px 12px;
+  box-sizing: border-box;
 
   &:hover {
     background-color: transparent;
