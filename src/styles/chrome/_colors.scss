@@ -1,31 +1,31 @@
 // Chrome-dev
 :root {
-    --color-link-hover-purple: #c169ffb9;
-    --color-back-button: var(--color-background);
-    --color-link-hover: var(--color-emphasis-dark);
-    --color-emphasis-dark: #d7d7dbdc;
-    --color-emphasis-light: rgb(200,200,201);
-    --color-separator: #d7d7db;
-    --color-background: rgb(255, 255, 255);
-    --color-secondary-background: var(--color-background);
-    --color-alternative-background: rgb(241, 243, 244);
-    --color-font: #0c0c0d;
-    --color-secondary-font: rgb(98, 99, 101);
-    --color-alternative-font: var(--color-font);
-  }
+  --color-link-hover-purple: #c169ffb9;
+  --color-back-button: var(--color-background);
+  --color-link-hover: var(--color-emphasis-dark);
+  --color-emphasis-dark: #d7d7dbdc;
+  --color-emphasis-light: rgb(200,200,201);
+  --color-separator: #d7d7db;
+  --color-background: rgb(255, 255, 255);
+  --color-secondary-background: var(--color-background);
+  --color-alternative-background: rgb(241, 243, 244);
+  --color-font: #0c0c0d;
+  --color-secondary-font: rgb(98, 99, 101);
+  --color-alternative-font: var(--color-font);
+}
   
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-link-hover: #663399;
-      --color-back-button: darkorchid;
-      --color-emphasis-dark: #737373c1; // ???
-      --color-emphasis-light: rgb(75, 76, 79); // header button hover
-      --color-separator: rgb(63, 64, 66);
-      --color-background: rgb(41, 42, 45); // main background
-      --color-secondary-background: rgb(53, 54, 58); // header background
-      --color-alternative-background: rgb(32, 33, 36); // search background
-      --color-font: rgb(232, 234, 237); // chrome
-      --color-secondary-font: rgb(172, 174, 177); // icons + (2)
-      --color-alternative-font: rgb(95, 99, 104); // font in search
-    }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-link-hover: #663399;
+    --color-back-button: darkorchid;
+    --color-emphasis-dark: #737373c1; // ???
+    --color-emphasis-light: rgb(75, 76, 79); // header button hover
+    --color-separator: rgb(63, 64, 66);
+    --color-background: rgb(41, 42, 45); // main background
+    --color-secondary-background: rgb(53, 54, 58); // header background
+    --color-alternative-background: rgb(32, 33, 36); // search background
+    --color-font: rgb(232, 234, 237); // chrome
+    --color-secondary-font: rgb(172, 174, 177); // icons + (2)
+    --color-alternative-font: rgb(95, 99, 104); // font in search
   }
+}
