@@ -7,26 +7,29 @@ Clean the mess! a simple addon that is designed to help you with maintaining ord
 With its integrated search feature, Clean the mess! could also be used as a fast and simple tab manager, that lets you control your tabs and always find those you opened a week, a month or a year ago. And of course close those you don't find up to date anymore.
 
 ## Development readme
-Bundled and built using `parcel` and `gulp`. For testing in browser, `web-ext` is used.
+Bundled and built using `parcel` and `gulp`. `Webpack` is used to bundle style dev. For testing in browser, `web-ext` is used.
+
+__UI development:__
+Only bundles UI, no functionality maintained.
 
 ```sh
-# Style development
-# styles dir: src/dev/style-dev
+npm run dev:ui
 
-gulp styledev
+# in order to choose chrome or firefox, change path in src/_dev/style-dev/style.scss
 
-# localhost:3000
-# manual copy to src/styles + chrome/ or firefox/
+# accessible from: localhost:9000
 ```
 
-### Extension dev + debug
+__Extension dev + debug__
 
 ```sh
-npm run dev:firefox # starts devserver with autoreload, builds into dist/firefox
+npm run dev:firefox # starts parcel devserver with autoreload, builds into dist/firefox
 
 # In other terminal:
 
 npm run firefox # opens browser where extension can be tested
+
+# accessible from: localhost:1234
 ```
 
 Dev can be started for one browser at a time only.

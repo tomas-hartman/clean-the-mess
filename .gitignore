@@ -17,6 +17,7 @@ build/**/
 dist/test/*
 dist/firefox/*
 dist/chrome/*
+dist/webpack/*
 dist/.*-temp
 src/dev/style-dev/style.css
 
