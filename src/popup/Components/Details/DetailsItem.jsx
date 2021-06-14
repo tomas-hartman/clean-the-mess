@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import browser from 'webextension-polyfill';
 
-import { escapeHTML, hasIgnoredProtocol, bookmarkTab } from '../../../_modules';
+import { hasIgnoredProtocol, bookmarkTab } from '../../../_modules';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
 
 export default function DetailsItem(props) {
@@ -14,8 +14,7 @@ export default function DetailsItem(props) {
     id, title, url, date,
   } = data;
 
-  const decodedUrl = escapeHTML(decodeURI(url));
-  const escapedTitle = escapeHTML(title);
+  const decodedUrl = decodeURI(url);
 
   const urlCls = type === 'url' ? '' : 'hidden';
   const lastDisplayedCls = type === 'lastDisplayed' ? '' : 'hidden';
@@ -57,7 +56,7 @@ export default function DetailsItem(props) {
           role="link"
           tabIndex={0}
         >
-          <div className="title detail" title={escapedTitle}>{escapedTitle}</div>
+          <div className="title detail" title={title}>{title}</div>
           <div className={`url detail ${urlCls}`} title={decodedUrl}>{decodedUrl}</div>
           <div className={`last-displayed detail ${lastDisplayedCls}`} title={date}>{date}</div>
         </div>
