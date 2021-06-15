@@ -38,6 +38,21 @@ Dev can be started for one browser at a time only.
 
 Can be started for multiple browsers at once.
 
+
+__Firefox:__
+
 ```sh
+npm install
+
 npm run build:firefox # builds production version into dist/firefox
+npm run webext:build:firefox # packages build in dist/firefox to build/firefox/clean_the_mess-xyz.zip
+```
+
+__Chrome:__
+
+```sh
+npm install
+
+npm run build:chrome # builds production version into dist/chrome
+npm run webext:build:chrome # packages build in dist/chrome to build/chrome/clean_the_mess-xyz.zip
 ```

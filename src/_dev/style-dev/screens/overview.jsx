@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import OverviewScreen from '../../../popup/Components/Overview/OverviewScreen';
 import { getOverview } from '../../../_modules';
-import { tabs } from '../samples/tabs';
+import { tabs } from '../samples/firefox/tabs';
 
 const tabsOverview = getOverview(tabs);
 

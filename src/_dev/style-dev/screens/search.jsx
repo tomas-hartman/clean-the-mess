@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import SearchScreen from '../../../popup/Components/Search/SearchScreen';
 // import { getOverview } from '../../../_modules';
-import { tabs } from '../samples/tabs';
+import { tabs } from '../samples/firefox/tabs';
 
 // const overviewData = getOverview(tabs);
 // const detailsData = getDetailsData(screen, tabsData);

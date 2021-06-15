@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import LatestScreen from '../../../popup/Components/Latest';
 import { getLatestUsed, getOverview } from '../../../_modules';
-import { tabs } from '../samples/tabs';
+import { tabs } from '../samples/firefox/tabs';
 
 const overviewData = getOverview(tabs);
 const latestUsed = getLatestUsed(tabs, 10);
