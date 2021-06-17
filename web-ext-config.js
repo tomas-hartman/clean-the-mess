@@ -65,6 +65,7 @@ module.exports = {
       'https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options',
       'https://www.google.com/search?client=firefox-b-d&q=web-ext+tabs',
       'about:debugging#/runtime/this-firefox',
+      'https://www.google.com/intl/en_us/chrome/',
     ],
   },
 };
