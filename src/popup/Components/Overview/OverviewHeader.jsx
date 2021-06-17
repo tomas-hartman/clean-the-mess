@@ -3,9 +3,10 @@ import { GetInBtn, SearchBtn } from '../Buttons';
 import Separator from '../Separator';
 
 export default function OverviewHeader({ switchToScreen, openTabs }) {
-  return (
-    <div className="header-container">
+  const isChrome = process.env.BROWSER_NAME === 'chrome';
 
+  const overviewHeaderSection = (
+    <>
       <div id="header" className="control header-overview">
         <div className="header-title">
           <span>
@@ -20,16 +21,30 @@ export default function OverviewHeader({ switchToScreen, openTabs }) {
       </div>
 
       <Separator />
+    </>
+  );
 
+  const latestSection = (
+    <>
       <div
         id="ten-unused"
         onClick={() => switchToScreen('latest')}
+        onKeyPress={() => switchToScreen('latest')}
+        role="link"
+        tabIndex={0}
       >
         <span>10 longest inactive tabs</span>
         <GetInBtn />
       </div>
 
       <Separator />
+    </>
+  );
+
+  return (
+    <div className="header-container">
+      {overviewHeaderSection}
+      {!isChrome && latestSection}
     </div>
   );
 }
