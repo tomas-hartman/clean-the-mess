@@ -1,4 +1,5 @@
 {
+  "version": "2.0.2",
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": ["content/themedIco.chrome.js"]

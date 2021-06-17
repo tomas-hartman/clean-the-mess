@@ -5,7 +5,7 @@
   "main": "src/popup/popup.js",
   "scripts": {
     "prebuild": "gulp prebuild --b $BROWSER",
-    "build": "parcel build dist/.$BROWSER-temp/manifest.json --no-content-hash --no-cache --no-source-maps --dist-dir dist/$BROWSER",
+    "build": "NODE_ENV=$BROWSER parcel build dist/.$BROWSER-temp/manifest.json --no-content-hash --no-cache --no-source-maps --dist-dir dist/$BROWSER",
     "postbuild": "rm -rf dist/.$BROWSER-temp",
     "build:chrome": "BROWSER=chrome npm run build",
     "build:firefox": "BROWSER=firefox npm run build",
@@ -15,8 +15,8 @@
     "start": "npm run chrome && npm run firefox",
     "firefox": "web-ext run -s ./dist/firefox --bc",
     "chrome": "web-ext run -t chromium -s ./dist/chrome --bc",
-    "dev:chrome": "gulp dev --b chrome & parcel src/manifest.json --dist-dir dist/chrome",
-    "dev:firefox": "gulp dev --b firefox & parcel src/manifest.json --dist-dir dist/firefox",
+    "dev:chrome": "gulp dev --b chrome & NODE_ENV=chrome parcel src/manifest.json --dist-dir dist/chrome",
+    "dev:firefox": "gulp dev --b firefox & NODE_ENV=firefox parcel src/manifest.json --dist-dir dist/firefox",
     "lint": "web-ext lint -s"
   },
   "repository": {

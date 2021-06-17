@@ -18,6 +18,8 @@ export default function Popup() {
   const [tabsData, setTabsData] = useState([]);
   const [refresh, setRefresh] = useState(true);
 
+  const isChrome = process.env.BROWSER_NAME === 'chrome';
+
   /** Load & prepare tabs & overview data */
   useEffect(() => {
     (async () => {
@@ -57,37 +59,53 @@ export default function Popup() {
     };
   }, [overviewData]);
 
+  const overviewScreen = (
+    <OverviewScreen
+      overviewData={overviewData}
+      headerData={{ openTabs: tabsData.length }}
+      className={screen.name === 'overview' ? 'slide-in-reverse' : ''}
+      switchToScreen={switchToScreen}
+      closeTabs={closeTabs}
+    />
+  );
+
+  const detailsScreen = (
+    <DetailsScreen
+      detailsData={getDetailsData(screen, tabsData)}
+      overviewData={overviewData?.find((item) => item.key === screen?.options?.key)}
+      className={screen.name === 'details' ? 'slide-in' : ''}
+      switchToScreen={switchToScreen}
+      closeTabs={closeTabs}
+      isActive={screen.name === 'details'}
+    />
+  );
+
+  const searchScreen = (
+    <SearchScreen
+      tabsData={tabsData}
+      className={screen.name === 'search' ? 'slide-in' : ''}
+      switchToScreen={switchToScreen}
+      closeTabs={closeTabs}
+      isActive={screen.name === 'search'}
+    />
+  );
+
+  const latestScreen = (
+    <LatestScreen
+      detailsData={getLatestUsed(tabsData, 10)}
+      overviewData={screen.options}
+      className={screen.name === 'latest' ? 'slide-in' : ''}
+      switchToScreen={switchToScreen}
+      closeTabs={closeTabs}
+    />
+  );
+
   return (
     <div className="body-container">
-      <OverviewScreen
-        overviewData={overviewData}
-        headerData={{ openTabs: tabsData.length }}
-        className={screen.name === 'overview' ? 'slide-in-reverse' : ''}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-      />
-      <DetailsScreen
-        detailsData={getDetailsData(screen, tabsData)}
-        overviewData={overviewData?.find((item) => item.key === screen?.options?.key)}
-        className={screen.name === 'details' ? 'slide-in' : ''}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-        isActive={screen.name === 'details'}
-      />
-      <SearchScreen
-        tabsData={tabsData}
-        className={screen.name === 'search' ? 'slide-in' : ''}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-        isActive={screen.name === 'search'}
-      />
-      <LatestScreen
-        detailsData={getLatestUsed(tabsData, 10)}
-        overviewData={screen.options}
-        className={screen.name === 'latest' ? 'slide-in' : ''}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-      />
+      {overviewScreen}
+      {detailsScreen}
+      {searchScreen}
+      {!isChrome && latestScreen}
     </div>
   );
 }
