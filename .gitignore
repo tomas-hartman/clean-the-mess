@@ -12,6 +12,7 @@ debug.log
 build/**/
 !build/firefox/
 !build/chrome/
+build/**/src*
 
 # Dist and dev temp files
 dist/test/*
