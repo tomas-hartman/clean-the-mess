@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Clean the mess",
-  "version": "2.0.1",
+  "version": "2.0.3",
 
   "author": "Tomas Hartman",
   "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
