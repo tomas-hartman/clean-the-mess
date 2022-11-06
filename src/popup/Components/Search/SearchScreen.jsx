@@ -5,7 +5,7 @@ import SearchHeader from './SearchHeader';
 
 export default function SearchScreen(props) {
   const {
-    tabsData, className: extraClass, switchToScreen, isActive, closeTabs,
+    tabsData, className: extraClass, switchToScreen, isActive, closeTabs, showFavicons,
   } = props;
   const [foundTabsData, setFoundTabsData] = useState([]);
   const type = 'url';
@@ -25,7 +25,7 @@ export default function SearchScreen(props) {
       type={type}
       key={item.id}
       closeTabs={closeTabs}
-      showFavicon
+      showFavicon={showFavicons}
     />
   ));
 

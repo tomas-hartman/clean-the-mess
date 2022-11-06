@@ -10,7 +10,7 @@ import DetailsItem from '../Details/DetailsItem';
  */
 export default function DetailsScreen(props) {
   const {
-    detailsData, overviewData, className: extraClass, switchToScreen, closeTabs,
+    detailsData, overviewData, className: extraClass, switchToScreen, closeTabs, showFavicons,
   } = props;
   const type = 'lastDisplayed';
   const headerTitle = getHeaderTitle(0, 'latest', 10);
@@ -32,7 +32,7 @@ export default function DetailsScreen(props) {
               type={type}
               key={itemData.id}
               closeTabs={closeTabs}
-              showFavicon
+              showFavicon={showFavicons}
             />
           ))}
         </ul>

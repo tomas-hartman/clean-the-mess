@@ -9,6 +9,7 @@ export default function OverviewScreen(props) {
     headerData,
     switchToScreen,
     closeTabs,
+    showFavicons,
   } = props;
   const { openTabs } = headerData;
 
@@ -25,6 +26,7 @@ export default function OverviewScreen(props) {
                 key={itemData.key}
                 switchToScreen={switchToScreen}
                 closeTabs={closeTabs}
+                showFavicon={showFavicons}
               />
             );
           })}

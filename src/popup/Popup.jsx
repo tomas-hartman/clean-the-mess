@@ -11,12 +11,15 @@ import SearchScreen from './Components/Search/SearchScreen';
 import {
   getOverview, getDetailsData, getLatestUsed, handlePopupListeners,
 } from '../_modules';
+import { useFavicons } from './hooks/useFavicons';
 
 export default function Popup() {
   const [screen, setScreen] = useState({ name: 'overview' });
   const [overviewData, setOverviewData] = useState([]);
   const [tabsData, setTabsData] = useState([]);
   const [refresh, setRefresh] = useState(true);
+
+  const showFavicons = useFavicons();
 
   const isChrome = process.env.BROWSER_NAME === 'chrome';
 
@@ -66,6 +69,7 @@ export default function Popup() {
       className={screen.name === 'overview' ? 'slide-in-reverse' : ''}
       switchToScreen={switchToScreen}
       closeTabs={closeTabs}
+      showFavicons={showFavicons}
     />
   );
 
@@ -87,6 +91,7 @@ export default function Popup() {
       switchToScreen={switchToScreen}
       closeTabs={closeTabs}
       isActive={screen.name === 'search'}
+      showFavicons={showFavicons}
     />
   );
 
@@ -97,6 +102,7 @@ export default function Popup() {
       className={screen.name === 'latest' ? 'slide-in' : ''}
       switchToScreen={switchToScreen}
       closeTabs={closeTabs}
+      showFavicons={showFavicons}
     />
   );
 
