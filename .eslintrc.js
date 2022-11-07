@@ -8,8 +8,10 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
-    'airbnb',
+    'plugin:@typescript-eslint/recommended',
+    // 'airbnb',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -18,7 +20,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    'react', 'jest',
+    'react', 'jest', '@typescript-eslint'
   ],
   rules: {
     'linebreak-style': [
@@ -31,5 +33,6 @@ module.exports = {
     'arrow-body-style': 'off',
     'react/prop-types': 0,
     'import/prefer-default-export': 'off',
+    'import/extensions': 'never',
   },
 };
