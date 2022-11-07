@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { VFC } from 'react';
+import { SwitchToScreenType } from '../../Popup';
 import { GetInBtn, SearchBtn } from '../Buttons';
 import { Separator } from '../Separator';
 
-export default function OverviewHeader({ switchToScreen, openTabs }) {
+
+
+type OverviewHeaderProps = {
+  switchToScreen: SwitchToScreenType,
+  openTabs: number
+};
+
+export const OverviewHeader: VFC<OverviewHeaderProps> = ({ switchToScreen, openTabs }) => {
   const isChrome = process.env.BROWSER_NAME === 'chrome';
 
   const overviewHeaderSection = (
@@ -47,4 +55,4 @@ export default function OverviewHeader({ switchToScreen, openTabs }) {
       {!isChrome && latestSection}
     </div>
   );
-}
+};

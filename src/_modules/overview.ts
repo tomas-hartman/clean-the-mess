@@ -1,5 +1,5 @@
 import { Tabs } from 'webextension-polyfill';
-import { Overview } from '../types';
+import { Overview, OverviewItem } from '../types';
 import { getHash } from './helpers';
 
 const getOriginUrl = (tabData: Tabs.Tab) => {
@@ -38,12 +38,12 @@ const getOriginUrl = (tabData: Tabs.Tab) => {
  * @returns {Object[]} Sorted array of objects that are used for overview grouping
  */
 export const getOverview = (tabs: Tabs.Tab[]): Overview => {
-  const output: Overview = [];
+  const output: Required<OverviewItem>[] = [];
 
   tabs.forEach((tab) => {
     const originUrl = getOriginUrl(tab);
 
-    if (!tab.pinned) {
+    if (!tab.pinned && tab.id !== undefined) {
       if (output.some((website) => website.url === originUrl)) {
         const index = output.findIndex(
           (website) => website.url === originUrl,

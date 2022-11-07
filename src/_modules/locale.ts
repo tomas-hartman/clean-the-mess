@@ -8,4 +8,4 @@ export const locale = {
     minute: 'numeric',
     second: 'numeric',
   },
-};
+} as const;

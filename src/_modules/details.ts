@@ -1,37 +1,43 @@
 /* eslint-disable no-continue */
+import { Tabs } from 'webextension-polyfill';
+import { Screen } from '../types';
 import { locale } from './locale';
 
 /**
  * Function that returns filtered array with details for latest used group
  * @todo Work on detailed and better filtered return array
- * @param {Array} innerTabsData tabs query array
+ * @param {Tabs.Tab[]} innerTabsData tabs query array
  * @param {Number} numOfLatest optional, is equal to 10 normally
  * @returns {Object[]} Array with filtered items from tabs object
  */
-const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
+const getLatestUsed = (innerTabsData: Tabs.Tab[], numOfLatest = 10) => {
   const newTabs = innerTabsData.slice(0);
   let iterationsNum = numOfLatest;
   const latest = [];
 
   if (innerTabsData.length < iterationsNum) iterationsNum = innerTabsData.length;
 
-  newTabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
+  newTabs.sort((a, b) => {
+    if(!a.lastAccessed || !b.lastAccessed) return 0;
+    
+    return a.lastAccessed - b.lastAccessed
+  });
 
   for (let i = 0; i < iterationsNum; i += 1) {
-    if (newTabs[i].pinned) continue;
+    const lastAccessed = newTabs[i].lastAccessed;
 
-    const output = {};
+    if (newTabs[i].pinned || !lastAccessed) continue;
 
-    const dateToFormat = newTabs[i].lastAccessed ? new Date(newTabs[i].lastAccessed) : new Date();
+    const dateToFormat = new Date(lastAccessed);
     const date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 
-    output.date = date;
-    output.title = newTabs[i].title;
-    output.id = newTabs[i].id;
-    output.url = newTabs[i].url;
-    output.favIconUrl = newTabs[i].favIconUrl;
-
-    latest.push(output);
+    latest.push({
+      date,
+      title: newTabs[i].title,
+      id: newTabs[i].id,
+      url: newTabs[i].url,
+      favIconUrl: newTabs[i].favIconUrl,
+    });
   }
 
   return latest;
@@ -43,7 +49,7 @@ const getLatestUsed = (innerTabsData, numOfLatest = 10) => {
  * @param {Object} _tabsData tabsData object
  * @returns {Object[]}
  */
-const getDetailsData = (_screen, _tabsData) => {
+const getDetailsData = (_screen: Screen, _tabsData: Tabs.Tab[]) => {
   if (!_screen?.options?.ids) return [];
 
   const { ids } = _screen?.options;
@@ -53,7 +59,13 @@ const getDetailsData = (_screen, _tabsData) => {
     array.push(..._tabsData.filter((tab) => tab.id === ids[i]));
   }
 
-  array.sort((a, b) => b.lastAccessed - a.lastAccessed);
+  array.sort((a, b) => {
+    if(b.lastAccessed && a.lastAccessed) {
+      return b.lastAccessed - a.lastAccessed
+    }
+
+    return b.index - a.index
+  });
 
   return array;
 };

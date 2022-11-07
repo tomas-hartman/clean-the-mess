@@ -1,14 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { VFC, useEffect } from 'react';
+import { Tabs } from 'webextension-polyfill';
+import { OverviewItem } from '../../../types';
 import { getHeaderTitle } from '../../../_modules';
-import DetailsHeader from './DetailsHeader';
-import DetailsItem from './DetailsItem';
+import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { DetailsHeader } from './DetailsHeader';
+import { DetailsItem } from './DetailsItem';
 
-export default function DetailsScreen(props) {
-  const {
-    detailsData, overviewData, className: extraClass, switchToScreen, closeTabs, isActive,
-  } = props;
+interface DetailsScreenProps {
+  detailsData: Tabs.Tab[],
+  overviewData?: OverviewItem,
+  className?: string,
+  switchToScreen: SwitchToScreenType,
+  closeTabs: CloseTabs,
+  isActive: boolean,
+};
+
+export const DetailsScreen: VFC<DetailsScreenProps> = ({detailsData, overviewData, className: extraClass = "", switchToScreen, closeTabs, isActive}) => {
   const type = 'url';
   const headerTitle = getHeaderTitle(overviewData?.url, 'details');
+
+  console.log(detailsData);
 
   useEffect(() => {
     if (isActive && detailsData.length === 0) {
@@ -39,4 +50,4 @@ export default function DetailsScreen(props) {
       </div>
     </div>
   );
-}
+};

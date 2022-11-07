@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import browser, { Events, Tabs } from 'webextension-polyfill';
+import browser, { Tabs } from 'webextension-polyfill';
 
-import OverviewScreen from './Components/Overview';
-import DetailsScreen from './Components/Details';
+import { OverviewScreen } from './Components/Overview';
+import { DetailsScreen } from './Components/Details';
+
 import LatestScreen from './Components/Latest';
 import SearchScreen from './Components/Search/SearchScreen';
 
@@ -12,10 +13,13 @@ import {
   getOverview, getDetailsData, getLatestUsed, handlePopupListeners,
 } from '../_modules';
 import { useFavicons } from './hooks/useFavicons';
-import { Overview, OverviewItem, ScreenName, Screens } from '../types';
+import { Overview, Screen, ScreenName, Screens } from '../types';
+
+export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void; 
+export type CloseTabs = (ids?: number | number[]) => Promise<void>
 
 export default function Popup() {
-  const [screen, setScreen] = useState<{name: ScreenName, options?: Screens[ScreenName]}>({ name: 'overview' });
+  const [screen, setScreen] = useState<Screen>({ name: 'overview' });
   const [overviewData, setOverviewData] = useState<Overview>([]);
   const [tabsData, setTabsData] = useState<Tabs.Tab[]>([]);
   const [refresh, setRefresh] = useState(true);
@@ -40,13 +44,13 @@ export default function Popup() {
 
   const forceRefresh = () => setRefresh(true);
 
-  type SwitchToScreenType = <T extends ScreenName>(next: T, options: Screens[T]) => void; 
-
   const switchToScreen: SwitchToScreenType = (nextScreen, options) => {
     setScreen({ name: nextScreen, options: options });
   };
 
-  const closeTabs = async (ids: number | number[]) => {
+  const closeTabs = async (ids?: number | number[]) => {
+    if(!ids) return;
+
     await browser.tabs.remove(ids);
     forceRefresh();
   };

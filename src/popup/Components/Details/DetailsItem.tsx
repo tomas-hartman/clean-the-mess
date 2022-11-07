@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, VFC } from 'react';
+import { Tabs } from 'webextension-polyfill';
 
 import { hasIgnoredProtocol, bookmarkTab, goToTab } from '../../../_modules';
+import { CloseTabs } from '../../Popup';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
 
-function DetailsItem(props) {
+interface DetailsItemProps {
+  itemId: number,
+  data: Tabs.Tab,
+  type: unknown,
+  closeTabs: CloseTabs,
+  showFavicon?: boolean,
+}
+
+export const DetailsItem: VFC<DetailsItemProps> = props => {
   const [isHidden, setIsHidden] = useState(true);
   const {
     itemId,
@@ -17,7 +27,7 @@ function DetailsItem(props) {
     id, title, url, date, favIconUrl,
   } = data;
 
-  const decodedUrl = decodeURI(url);
+  const decodedUrl = url ? decodeURI(url) : "Unknown website";
 
   const urlCls = type === 'url' ? '' : 'hidden';
   const lastDisplayedCls = type === 'lastDisplayed' ? '' : 'hidden';
@@ -30,7 +40,7 @@ function DetailsItem(props) {
     setIsHidden(true);
   };
 
-  const bookmarkCloseTab = (tabData) => {
+  const bookmarkCloseTab = (tabData: Tabs.Tab) => {
     bookmarkTab(tabData);
     closeTabs(id);
   };
@@ -88,6 +98,4 @@ function DetailsItem(props) {
       </div>
     </li>
   );
-}
-
-export default DetailsItem;
+};
