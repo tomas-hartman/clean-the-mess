@@ -1,6 +1,6 @@
 import React from 'react';
 import { GetInBtn, SearchBtn } from '../Buttons';
-import Separator from '../Separator';
+import { Separator } from '../Separator';
 
 export default function OverviewHeader({ switchToScreen, openTabs }) {
   const isChrome = process.env.BROWSER_NAME === 'chrome';

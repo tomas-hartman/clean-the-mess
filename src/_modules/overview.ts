@@ -1,42 +1,34 @@
+import { Tabs } from 'webextension-polyfill';
+import { Overview } from '../types';
 import { getHash } from './helpers';
 
-const getOriginUrl = (tabData) => {
-  const url = new URL(tabData.url);
-  let originUrl = '';
-
-  try {
-    originUrl = url.origin;
-
-    if (originUrl === 'null' || url.protocol === 'moz-extension:' || url.protocol === 'chrome:' || url.protocol === 'file:') {
+const getOriginUrl = (tabData: Tabs.Tab) => {
+  if(!tabData.url) return "Other tabs";
+  
+    const url = new URL(tabData.url);
+  
+    if(!(url.protocol === "http:" || url.protocol === "https:")) {
       switch (url.protocol) {
         case 'about:':
         case 'moz-extension:':
         case 'chrome:':
-          originUrl = 'Browser tabs';
-          break;
+          return 'Browser tabs';
         case 'file:':
-          originUrl = 'Opened files';
-          break;
-        case 'localhost:':
-          originUrl = 'Localhost';
-          break;
+          return 'Opened files';
         default:
-          originUrl = 'Other tabs';
-          break;
+          return 'Other tabs';
       }
     }
-  } catch (err) {
-    if (tabData.url === 'localhost') {
-      originUrl = 'Localhost';
-    } else if ((/^((\d{1,3}.){3}\d{1,3})(:|\/|\s|$)/g).test(tabData.url)) {
-      const array = tabData.url.split(/:|\//);
-      [originUrl] = array;
-    } else {
-      originUrl = 'Other tabs';
+  
+    if (url.hostname === 'localhost') {
+      return 'Localhost';
     }
-  }
-
-  return originUrl;
+    
+    if(url.origin) {
+      return url.origin
+    }
+  
+    return 'Other tabs';
 };
 
 /**
@@ -45,8 +37,8 @@ const getOriginUrl = (tabData) => {
  * @param {Object[]} tabs - Standard tabs object from browser
  * @returns {Object[]} Sorted array of objects that are used for overview grouping
  */
-export const getOverview = (tabs) => {
-  const output = [];
+export const getOverview = (tabs: Tabs.Tab[]): Overview => {
+  const output: Overview = [];
 
   tabs.forEach((tab) => {
     const originUrl = getOriginUrl(tab);

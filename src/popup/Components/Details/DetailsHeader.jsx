@@ -1,5 +1,5 @@
 import React from 'react';
-import Separator from '../Separator';
+import { Separator } from '../Separator';
 import { CloseAllHeaderBtn, GoBackBtn } from '../Buttons';
 
 export default function DetailsHeader(props) {

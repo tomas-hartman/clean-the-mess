@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { VFC } from 'react';
 
-function Confirm({ message, onConfirm, onCancel }) {
+interface ConfirmProps {
+  message: string, 
+  onConfirm: () => void, 
+  onCancel: () => void
+}
+
+export const Confirm: VFC<ConfirmProps> = ({ message, onConfirm, onCancel }) => {
   return (
     <div className="confirm">
       <div className="confirm-box">
@@ -18,5 +24,3 @@ function Confirm({ message, onConfirm, onCancel }) {
     </div>
   );
 }
-
-export default Confirm;

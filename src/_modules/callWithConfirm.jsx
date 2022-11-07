@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import Confirm from '../popup/Components/Confirm';
+import { Confirm } from '../popup/Components/Confirm';
 
 /**
  * Function that calls another one after that one is confirmed

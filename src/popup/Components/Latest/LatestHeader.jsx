@@ -1,5 +1,5 @@
 import React from 'react';
-import Separator from '../Separator';
+import { Separator } from '../Separator';
 import { GoBackBtn } from '../Buttons';
 
 export default function LatestHeader(props) {
