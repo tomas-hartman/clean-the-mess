@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
-import browser from 'webextension-polyfill';
+import browser, { Tabs } from 'webextension-polyfill';
+import { Overview, OverviewItem } from '../types';
 import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers';
 
 /**
@@ -7,11 +8,11 @@ import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './hel
  */
 
 /** Sends bookmark-all message */
-export const bookmarkAll = (overviewObject, oId) => {
+export const bookmarkAll = (overviewObject: Overview, oId: number) => {
   browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
 };
 
-const bookmarkTabsToFolder = async (tabIds, parentId) => {
+const bookmarkTabsToFolder = async (tabIds: number[], parentId: string | null) => {
   for (let i = 0; i < tabIds.length; i += 1) {
     try {
       const [title, url] = await getTabDataFromId(tabIds[i]);
@@ -19,12 +20,13 @@ const bookmarkTabsToFolder = async (tabIds, parentId) => {
       /**
        * This does not search only in the given folder but everywhere!
        * Currently a feature (to keep bookmarks clean), but it could be reconsidered.
+       * @todo Fix empty string
       */
-      const duplicates = await browser.bookmarks.search(url);
+      const duplicates = await browser.bookmarks.search(url || "");
 
       if (duplicates.length === 0 && isSupportedProtocol(url)) {
         await browser.bookmarks
-          .create({ title, url, parentId })
+          .create({ title, url, parentId: parentId ?? undefined })
           .catch((err) => console.log(err));
       } else console.log(`Item with url ${url} already exists and was skipped.`);
     } catch (err) {
@@ -40,7 +42,7 @@ const bookmarkTabsToFolder = async (tabIds, parentId) => {
  * @param {array} foundItems Array of items already found in bookmarks (usually should be 0 or 1)
  * @param {string} folderName Name of new folder in case it should be created
  */
-const mergeBookmarksInFolder = async (tabIds, foundItems, folderName) => {
+const mergeBookmarksInFolder = async (tabIds: number[], foundItems: browser.Bookmarks.BookmarkTreeNode[], folderName: string) => {
   // Returns first folder of its name into which I will add the new files
   // foundItems.find((item) => item.type === 'folder')
 
@@ -77,6 +79,11 @@ const mergeBookmarksInFolder = async (tabIds, foundItems, folderName) => {
   }
 };
 
+type BookmarkSetter = {
+  overviewObject: OverviewItem,
+  index: number
+}
+
 /**
  * Handles bookmark-all calls.
  *
@@ -90,14 +97,18 @@ const mergeBookmarksInFolder = async (tabIds, foundItems, folderName) => {
  * @param {Object} _data.overviewObject tabsOverview item
  * @param {number} _data.index tabsOverview id
  */
-export const handleBookmarkAll = async (_data) => {
+export const handleBookmarkAll = async (_data: BookmarkSetter) => {
   const { overviewObject, index } = _data;
   const { bookmarks } = browser;
 
-  // console.log(index);
+
+  if(!overviewObject.ids) {
+    console.warn("overview object had no ids")
+    return;
+  }
 
   // It does not merge items in bookmark root
-  if (overviewObject.ids.length === 1) {
+  if (overviewObject.ids?.length === 1) {
     await bookmarkTabsToFolder(overviewObject.ids, null);
     console.log('done');
 
@@ -107,7 +118,7 @@ export const handleBookmarkAll = async (_data) => {
     return;
   }
 
-  const folderName = (new URL(overviewObject.url)).hostname;
+  const folderName = overviewObject.url ? (new URL(overviewObject.url)).hostname : "Bookmark folder";
   const searchResults = await bookmarks.search({ title: folderName });
 
   if (await searchResults.length === 0) {
@@ -131,7 +142,7 @@ export const handleBookmarkAll = async (_data) => {
  * Adds bookmark status to given element
  * @param {Object} item Object from screen detailed object
  */
-export const addBookmarkStatus = async (item) => {
+export const addBookmarkStatus = async (item: Tabs.Tab) => {
   // I will not check for duplicate items with some special protocols in bookmarks
   if (hasIgnoredProtocol(item.url)) return 'hidden';
 
@@ -152,7 +163,7 @@ export const addBookmarkStatus = async (item) => {
  * @param {string} title
  * @param {number} _id
  */
-export const bookmarkTab = async (data) => {
+export const bookmarkTab = async (data: {url: string, title: string, id?: number}) => {
   const { url, title } = data;
 
   if (isSupportedProtocol(url)) {
