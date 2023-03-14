@@ -13,7 +13,7 @@ interface DetailsScreenProps {
   switchToScreen: SwitchToScreenType,
   closeTabs: CloseTabs,
   isActive: boolean,
-};
+}
 
 export const DetailsScreen: VFC<DetailsScreenProps> = ({detailsData, overviewData, className: extraClass = "", switchToScreen, closeTabs, isActive}) => {
   const type = 'url';

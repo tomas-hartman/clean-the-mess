@@ -9,7 +9,7 @@ interface DetailsHeaderProps {
   switchToScreen: SwitchToScreenType,
   overviewData?: OverviewItem,
   closeTabs: CloseTabs,
-};
+}
 
 export const DetailsHeader: VFC<DetailsHeaderProps> = ({title, switchToScreen, overviewData, closeTabs}) => {
   return (

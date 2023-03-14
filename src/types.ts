@@ -1,6 +1,6 @@
 import { Tabs } from "webextension-polyfill";
 
-export interface OverviewItem { 
+export type OverviewItem = { 
   url: Tabs.Tab["url"],
   count: number,
   ids?: number[],

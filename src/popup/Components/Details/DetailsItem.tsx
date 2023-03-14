@@ -24,8 +24,11 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
   } = props;
 
   const {
-    id, title, url, date, favIconUrl,
+    id, title, url, favIconUrl,
   } = data;
+
+  // @ts-expect-error date is ff-only feature
+  const date = data.date || undefined;
 
   const decodedUrl = url ? decodeURI(url) : "Unknown website";
 
@@ -76,7 +79,7 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
       >
         <div className="title detail" title={title}>{title}</div>
         <div className={`url detail ${urlCls}`} title={decodedUrl}>{decodedUrl}</div>
-        <div className={`last-displayed detail ${lastDisplayedCls}`} title={date}>{date}</div>
+        {date && <div className={`last-displayed detail ${lastDisplayedCls}`} title={date}>{date}</div>}
       </div>
 
       <div className="item--controls-container">

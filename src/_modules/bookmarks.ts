@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import browser, { Tabs } from 'webextension-polyfill';
-import { Overview, OverviewItem } from '../types';
+import { OverviewItem } from '../types';
 import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers';
 
 /**
@@ -8,7 +8,7 @@ import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './hel
  */
 
 /** Sends bookmark-all message */
-export const bookmarkAll = (overviewObject: Overview, oId: number) => {
+export const bookmarkAll = (overviewObject: OverviewItem, oId: number) => {
   browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
 };
 
@@ -163,7 +163,7 @@ export const addBookmarkStatus = async (item: Tabs.Tab) => {
  * @param {string} title
  * @param {number} _id
  */
-export const bookmarkTab = async (data: {url: string, title: string, id?: number}) => {
+export const bookmarkTab = async (data: Tabs.Tab) => {
   const { url, title } = data;
 
   if (isSupportedProtocol(url)) {

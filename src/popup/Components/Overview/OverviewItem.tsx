@@ -1,5 +1,5 @@
 import React, { useState, VFC } from 'react';
-import { OverviewItem as OverviewItemType } from '../../../types';
+import type { OverviewItem as OverviewItemType } from '../../../types';
 
 import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
