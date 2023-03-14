@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, VFC } from 'react';
+import type { OverviewItem as OverviewItemType } from '../../../types';
 
 import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
+import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
 
-export default function OverviewItem(props) {
+type OverviewItemProps = {
+  itemId: number,
+  data: OverviewItemType,
+  switchToScreen: SwitchToScreenType,
+  closeTabs: CloseTabs,
+  showFavicon: boolean,
+};
+
+export const OverviewItem: VFC<OverviewItemProps> = props => {
   const [isHidden, setIsHidden] = useState(true);
   const {
     itemId,
@@ -25,7 +35,7 @@ export default function OverviewItem(props) {
     setIsHidden(true);
   };
 
-  const bookmarkOverviewTabs = (overviewObject, oId) => {
+  const bookmarkOverviewTabs = (overviewObject: OverviewItemType, oId: number) => {
     const { url: _url, count: _count } = overviewObject;
     const folderName = getHeaderTitle(_url, 'details');
 
@@ -37,10 +47,10 @@ export default function OverviewItem(props) {
       console.log('Nothing invoked.');
     };
 
-    callWithConfirm('bookmarkAll', onTrue, onFalse, _count, folderName);
+    callWithConfirm('bookmarkAll', onTrue, onFalse, `${_count}`, folderName);
   };
 
-  const closeOverviewTabs = (overviewObject) => {
+  const closeOverviewTabs = (overviewObject: OverviewItemType) => {
     const { ids: _ids, count: _count } = overviewObject;
 
     const onFalse = () => {
@@ -48,14 +58,14 @@ export default function OverviewItem(props) {
     };
 
     if (_count > 10) {
-      callWithConfirm('closeTabs', () => closeTabs(_ids), onFalse, _count);
+      callWithConfirm('closeTabs', () => closeTabs(_ids), onFalse, `${_count}`);
       return;
     }
 
     closeTabs(_ids);
   };
 
-  const isBookmarkable = ['Browser tabs'].includes(url) === false;
+  const isBookmarkable = !!url && ['Browser tabs'].includes(url) === false;
   const displayedUrl = getHeaderTitle(url, 'details');
 
   return (
@@ -98,4 +108,4 @@ export default function OverviewItem(props) {
 
     </li>
   );
-}
+};

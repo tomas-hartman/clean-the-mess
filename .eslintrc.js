@@ -8,8 +8,14 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
-    'airbnb',
+    'plugin:@typescript-eslint/recommended',
   ],
+  settings: {
+    react: {
+      version: "detect"
+    }
+  },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -18,18 +24,20 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    'react', 'jest',
+    'react', 'jest', '@typescript-eslint'
   ],
   rules: {
     'linebreak-style': [
       'error',
       'unix',
     ],
-    'no-unused-vars': ['error', {
+    'no-unused-vars': "off",
+    '@typescript-eslint/no-unused-vars': ['error', {
       vars: 'all', args: 'after-used', ignoreRestSiblings: false, argsIgnorePattern: '^_',
     }],
     'arrow-body-style': 'off',
     'react/prop-types': 0,
     'import/prefer-default-export': 'off',
+    'import/extensions': 'off',
   },
 };

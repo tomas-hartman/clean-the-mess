@@ -6,8 +6,11 @@ import browser from 'webextension-polyfill';
  * @param {string} url Url to be validated
  * @returns {boolean}
  */
-export const isSupportedProtocol = (url) => {
+export const isSupportedProtocol = (url?: string): boolean => {
   const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
+
+  if(!url) return false;
+
   const urlObj = new URL(url);
 
   return supportedProtocols.indexOf(urlObj.protocol) !== -1;
@@ -16,25 +19,26 @@ export const isSupportedProtocol = (url) => {
 /**
  * Checks if url has some of the special protocols, that do not work
  * well with certain features and APIs such as bookmarks
- * @param {string} url
+ * @param {string | undefined} url
  * @returns {Boolean}
  */
-export const hasIgnoredProtocol = (url) => {
+export const hasIgnoredProtocol = (url?: string): boolean => {
   const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
+
+  if(!url) return false;
+
   const { protocol } = new URL(url);
 
-  if (ignoredProtocols.includes(protocol)) {
-    return true;
-  } return false;
+  return ignoredProtocols.includes(protocol);
 };
 
 /**
  * Gets information about tab of given id
  * @param {number} id - id from tabs array
  */
-export const getTabDataFromId = async (id) => {
+export const getTabDataFromId = async (id: number) => {
   const data = await browser.tabs.get(id);
-  const { title, url } = await data;
+  const { title, url } = data;
 
   return [title, url];
 };
@@ -44,14 +48,14 @@ export const getTabDataFromId = async (id) => {
  * @see https://stackoverflow.com/a/57448862/11243775
  * @param {string} str
  */
-export const escapeHTML = (str) => str.replace(/[&<>'"]/g,
+export const escapeHTML = (str: string) => str.replace(/[&<>'"]/g,
   (tag) => ({
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
     '\'': '&#39;',
     '"': '&quot;',
-  }[tag]));
+  }[tag]) || "");
 
 /**
  * Function that converts string to hash. Used to set unique keys in getOverview.
@@ -59,7 +63,7 @@ export const escapeHTML = (str) => str.replace(/[&<>'"]/g,
  * @param {string} value
  * @returns {string}
  */
-export const getHash = (value) => {
+export const getHash = (value: string): string => {
   let hash = 0; let i; let
     chr;
   for (i = 0; i < value.length; i += 1) {
@@ -67,32 +71,34 @@ export const getHash = (value) => {
     hash = ((hash << 5) - hash) + chr;
     hash |= 0; // Convert to 32bit integer
   }
-  return hash;
+  return `${hash}`;
 };
 
+
 // Returns headerTitle for secondary screens
-export const getHeaderTitle = (overviewUrl, type, count) => {
-  let headerTitle = '';
+export const getHeaderTitle = (overviewUrl: string | undefined, type: "details" | "latest", count?: number) => {
+  if(type === "details") {
+    if(!overviewUrl) return "";
 
-  if (type === 'details') {
     try {
-      headerTitle = new URL(overviewUrl).host;
-    } catch (error) {
-      if (overviewUrl) {
-        headerTitle = overviewUrl;
-      } else headerTitle = '';
+      return new URL(overviewUrl).host
+    } catch {
+      return overviewUrl
     }
-  } else if (type === 'latest') {
-    headerTitle = `${count} longest unused tabs`;
-  } else headerTitle = null;
+  }
 
-  return headerTitle;
+  if(type === "latest") {
+    return `${count} longest unused tabs`
+  }
+
+  return "";
 };
 
 /**
- *
- * @param {number} id Tab id
+ * @param {number | undefined} id Tab id
  */
-export const goToTab = async (id) => {
+export const goToTab = async (id: number | undefined) => {
+  if(!id) return;
+
   await browser.tabs.update(id, { active: true });
 };

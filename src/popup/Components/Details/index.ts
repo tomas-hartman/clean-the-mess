@@ -1,0 +1,1 @@
+export { DetailsScreen } from './DetailsScreen';

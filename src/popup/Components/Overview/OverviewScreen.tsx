@@ -1,8 +1,24 @@
-import React from 'react';
-import OverviewHeader from './OverviewHeader';
-import OverviewItem from './OverviewItem';
+import React, { VFC } from 'react';
+import { Overview } from '../../../types';
+import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { OverviewHeader } from './OverviewHeader';
+import { OverviewItem } from './OverviewItem';
 
-export default function OverviewScreen(props) {
+interface HeaderData {
+  /** Number of open tabs */
+  openTabs: number
+}
+
+interface OverviewScreenProps {
+  className: string,
+  overviewData: Overview,
+  headerData: HeaderData,
+  switchToScreen: SwitchToScreenType,
+  closeTabs: CloseTabs,
+  showFavicons: boolean,
+}
+
+export const OverviewScreen: VFC<OverviewScreenProps> = (props) => {
   const {
     className: extraClass,
     overviewData,

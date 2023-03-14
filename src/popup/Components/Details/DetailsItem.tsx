@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, VFC } from 'react';
+import { Tabs } from 'webextension-polyfill';
 
 import { hasIgnoredProtocol, bookmarkTab, goToTab } from '../../../_modules';
+import { CloseTabs } from '../../Popup';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../Buttons';
 
-function DetailsItem(props) {
+interface DetailsItemProps {
+  itemId: number,
+  data: Tabs.Tab,
+  type: unknown,
+  closeTabs: CloseTabs,
+  showFavicon?: boolean,
+}
+
+export const DetailsItem: VFC<DetailsItemProps> = props => {
   const [isHidden, setIsHidden] = useState(true);
   const {
     itemId,
@@ -14,10 +24,13 @@ function DetailsItem(props) {
   } = props;
 
   const {
-    id, title, url, date, favIconUrl,
+    id, title, url, favIconUrl,
   } = data;
 
-  const decodedUrl = decodeURI(url);
+  // @ts-expect-error date is ff-only feature
+  const date = data.date || undefined;
+
+  const decodedUrl = url ? decodeURI(url) : "Unknown website";
 
   const urlCls = type === 'url' ? '' : 'hidden';
   const lastDisplayedCls = type === 'lastDisplayed' ? '' : 'hidden';
@@ -30,7 +43,7 @@ function DetailsItem(props) {
     setIsHidden(true);
   };
 
-  const bookmarkCloseTab = (tabData) => {
+  const bookmarkCloseTab = (tabData: Tabs.Tab) => {
     bookmarkTab(tabData);
     closeTabs(id);
   };
@@ -66,7 +79,7 @@ function DetailsItem(props) {
       >
         <div className="title detail" title={title}>{title}</div>
         <div className={`url detail ${urlCls}`} title={decodedUrl}>{decodedUrl}</div>
-        <div className={`last-displayed detail ${lastDisplayedCls}`} title={date}>{date}</div>
+        {date && <div className={`last-displayed detail ${lastDisplayedCls}`} title={date}>{date}</div>}
       </div>
 
       <div className="item--controls-container">
@@ -88,6 +101,4 @@ function DetailsItem(props) {
       </div>
     </li>
   );
-}
-
-export default DetailsItem;
+};

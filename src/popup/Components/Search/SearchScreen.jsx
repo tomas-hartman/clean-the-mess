@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { search } from '../../../_modules';
-import DetailsItem from '../Details/DetailsItem';
+import { DetailsItem } from '../Details/DetailsItem';
 import SearchHeader from './SearchHeader';
 
 export default function SearchScreen(props) {
