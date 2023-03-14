@@ -59,7 +59,6 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "file-loader": "^6.2.0",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "jest": "^27.5.1",
@@ -67,9 +66,6 @@
     "parcel": "^2.3.1",
     "typescript": "^4.8.4",
     "web-ext": "^6.1.0",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2",
     "yargs": "^7.1.2"
   },
   "dependencies": {
