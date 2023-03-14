@@ -13,7 +13,7 @@
   ],
 
   "background": {
-    "scripts": ["background/background.js"]
+    "scripts": ["background/background.ts"]
   },
 
   "options_ui": {
