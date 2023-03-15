@@ -33,6 +33,7 @@ module.exports = {
     'arrow-body-style': 'off',
     'react/prop-types': 0,
     'import/prefer-default-export': 'off',
-    'import/extensions': 'off'
+    'import/extensions': 'off',
+    "indent": ["error", 2],
   }
 };
