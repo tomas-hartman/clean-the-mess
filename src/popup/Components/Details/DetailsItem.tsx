@@ -84,12 +84,12 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
 
       <div className="item--controls-container">
         {!hasIgnoredProtocol(url) && (
-        <BookmarkCloseBtn
-          data={data}
-          isHidden={isHidden}
-          isDetail
-          handleClick={() => bookmarkCloseTab(data)}
-        />
+          <BookmarkCloseBtn
+            data={data}
+            isHidden={isHidden}
+            isDetail
+            handleClick={() => bookmarkCloseTab(data)}
+          />
         )}
         <CloseBtn
           isHidden={isHidden}

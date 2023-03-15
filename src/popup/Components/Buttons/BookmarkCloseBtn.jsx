@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { addBookmarkStatus } from '../../../_modules';
 
-export default function BookmarkCloseBtn({
-  data, handleClick, isHidden = false, isDetail = false,
-}) {
+export const BookmarkCloseBtn = (
+  {
+    data, handleClick, isHidden = false, isDetail = false,
+  }
+) => {
   const [bookmarkStatus, setBookmarkStatus] = useState(undefined);
   const hiddenCls = isHidden ? 'hidden' : '';
 
@@ -30,4 +32,4 @@ export default function BookmarkCloseBtn({
       <span className="hidden">{buttonTitle}</span>
     </button>
   );
-}
+};

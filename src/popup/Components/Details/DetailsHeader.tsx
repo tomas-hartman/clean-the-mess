@@ -23,7 +23,7 @@ export const DetailsHeader: VFC<DetailsHeaderProps> = ({title, switchToScreen, o
         <CloseAllHeaderBtn
           onClick={() => closeTabs(overviewData?.ids)}
           itemCount={overviewData?.ids && typeof overviewData.ids !== "number" && overviewData.ids.length}
-          />
+        />
       </div>
       <Separator />
     </div>

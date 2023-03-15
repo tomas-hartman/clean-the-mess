@@ -6,7 +6,7 @@ import React from 'react';
  * @param {Function} param0.handleClick switchToScreen function with desired destination
  * @returns {JSX.Element}
  */
-export default function GoBackBtn({ handleClick }) {
+export const GoBackBtn = ({ handleClick }) => {
   return (
     <button
       type="button"
@@ -19,4 +19,5 @@ export default function GoBackBtn({ handleClick }) {
       </span>
     </button>
   );
-}
+};
+

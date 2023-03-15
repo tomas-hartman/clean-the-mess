@@ -1,7 +1,8 @@
 import React from 'react';
-import { callWithConfirm } from '../../../_modules';
 
-export default function CloseAllHeaderBtn({ onClick, itemCount }) {
+import { callWithConfirm } from '../../../_modules/callWithConfirm';
+
+export const CloseAllHeaderBtn = ({ onClick, itemCount }) => {
   const handleClick = () => {
     if (itemCount > 15) {
       callWithConfirm('closeTabs', onClick, () => true, itemCount);
@@ -16,4 +17,4 @@ export default function CloseAllHeaderBtn({ onClick, itemCount }) {
       <span className="hidden">Close all listed tabs</span>
     </button>
   );
-}
+};

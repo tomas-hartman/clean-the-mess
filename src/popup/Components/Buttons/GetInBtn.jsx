@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function GetInBtn({ isHidden = false }) {
+export const GetInBtn = ({ isHidden = false }) => {
   const isHiddenCls = isHidden ? 'hidden' : '';
 
   return (
@@ -8,4 +8,4 @@ export default function GetInBtn({ isHidden = false }) {
       <span className="hidden">Get in</span>
     </button>
   );
-}
+};

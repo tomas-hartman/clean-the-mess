@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CloseBtn(props) {
+export const CloseBtn = props => {
   const {
     tId, isHidden = false, isDetail = false, closeTabs,
   } = props;
@@ -15,4 +15,5 @@ export default function CloseBtn(props) {
       <span className="hidden">Close tab</span>
     </button>
   );
-}
+};
+

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function BookmarkAllBtn({ isHidden = false, onClick }) {
+export const BookmarkAllBtn = ({ isHidden = false, onClick }) => {
   const hiddenCls = isHidden ? 'hidden' : '';
 
   return (
@@ -8,4 +8,4 @@ export default function BookmarkAllBtn({ isHidden = false, onClick }) {
       <span className="hidden">Bookmark and close all items</span>
     </button>
   );
-}
+};

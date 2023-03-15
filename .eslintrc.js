@@ -35,5 +35,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/extensions': 'off',
     "indent": ["error", 2],
+    "object-curly-spacing": ["error", "always"]
   }
 };
