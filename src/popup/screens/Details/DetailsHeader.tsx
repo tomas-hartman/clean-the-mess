@@ -1,8 +1,8 @@
 import { VFC } from 'react';
-import { CloseAllHeaderBtn, GoBackBtn } from '../../Components/Buttons';
+import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { OverviewItem } from '../../../types';
-import { DetailHeader } from '../../Components/DetailHeader';
+import { DetailHeader } from '../../components/DetailHeader';
 
 interface DetailsHeaderProps {
   title: string,

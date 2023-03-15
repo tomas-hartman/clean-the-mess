@@ -3,7 +3,7 @@ import { Tabs } from 'webextension-polyfill';
 
 import { hasIgnoredProtocol, bookmarkTab, goToTab } from '../../../_modules';
 import { CloseTabs } from '../../Popup';
-import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../../Components/Buttons';
+import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../../components/Buttons';
 
 interface DetailsItemProps {
   itemId: number,

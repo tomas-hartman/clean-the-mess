@@ -3,7 +3,7 @@ import type { OverviewItem as OverviewItemType } from '../../../types';
 
 import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
-import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../Components/Buttons';
+import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
 
 type OverviewItemProps = {
   itemId: number,

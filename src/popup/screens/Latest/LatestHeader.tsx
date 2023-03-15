@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { GoBackBtn } from '../../Components/Buttons';
-import { DetailHeader } from '../../Components/DetailHeader';
+import { GoBackBtn } from '../../components/Buttons';
+import { DetailHeader } from '../../components/DetailHeader';
 
 type LatestHeaderProps = {
   title: string

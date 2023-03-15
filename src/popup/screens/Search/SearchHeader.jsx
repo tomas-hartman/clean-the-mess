@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { CloseAllHeaderBtn, GoBackBtn } from '../../Components/Buttons';
-import { Separator } from '../../Components/Separator';
+import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
+import { Separator } from '../../components/Separator';
 
 /**
  * @todo implement search functionality

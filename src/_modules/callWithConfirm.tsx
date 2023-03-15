@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { Confirm } from '../popup/Components/Confirm';
+import { Confirm } from '../popup/components/Confirm';
 
 type Question = "bookmarkAll" | "closeTabs"
 
