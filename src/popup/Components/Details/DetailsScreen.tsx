@@ -15,7 +15,7 @@ interface DetailsScreenProps {
   isActive: boolean,
 }
 
-export const DetailsScreen: VFC<DetailsScreenProps> = ({detailsData, overviewData, className: extraClass = "", switchToScreen, closeTabs, isActive}) => {
+export const DetailsScreen: VFC<DetailsScreenProps> = ({ detailsData, overviewData, className: extraClass = "", switchToScreen, closeTabs, isActive }) => {
   const type = 'url';
   const headerTitle = getHeaderTitle(overviewData?.url, 'details');
 
