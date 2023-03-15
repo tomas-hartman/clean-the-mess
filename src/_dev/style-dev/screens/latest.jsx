@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 // import '../style.scss';
 
-import LatestScreen from '../../../popup/Components/Latest';
+import LatestScreen from '../../../popup/screens/Latest';
 import { getLatestUsed, getOverview } from '../../../_modules';
 import { tabs } from '../samples/firefox/tabs';
 

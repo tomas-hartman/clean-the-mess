@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import browser, { Tabs } from 'webextension-polyfill';
 
-import { OverviewScreen } from './Components/Overview';
-import { DetailsScreen } from './Components/Details';
+import { OverviewScreen } from './screens/Overview';
+import { DetailsScreen } from './screens/Details';
 
-import LatestScreen from './Components/Latest';
-import SearchScreen from './Components/Search/SearchScreen';
+import LatestScreen from './screens/Latest';
+import SearchScreen from './screens/Search/SearchScreen';
 
 import {
   getOverview, getDetailsData, getLatestUsed, handlePopupListeners,

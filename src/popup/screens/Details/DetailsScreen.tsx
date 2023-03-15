@@ -1,4 +1,4 @@
-import React, { VFC, useEffect } from 'react';
+import { VFC, useEffect } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { OverviewItem } from '../../../types';
 import { getHeaderTitle } from '../../../_modules';

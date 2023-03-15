@@ -1,9 +1,7 @@
-import React, { VFC } from 'react';
+import { VFC } from 'react';
 import { SwitchToScreenType } from '../../Popup';
-import { GetInBtn, SearchBtn } from '../Buttons';
-import { Separator } from '../Separator';
-
-
+import { GetInBtn, SearchBtn } from '../../Components/Buttons';
+import { Separator } from '../../Components/Separator';
 
 type OverviewHeaderProps = {
   switchToScreen: SwitchToScreenType,

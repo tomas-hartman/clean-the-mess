@@ -1,9 +1,9 @@
-import React, { useState, VFC } from 'react';
+import { useState, VFC } from 'react';
 import type { OverviewItem as OverviewItemType } from '../../../types';
 
 import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
-import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../Buttons';
+import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../Components/Buttons';
 
 type OverviewItemProps = {
   itemId: number,
@@ -97,10 +97,10 @@ export const OverviewItem: VFC<OverviewItemProps> = props => {
 
       <div className="item--controls-container">
         {isBookmarkable && (
-        <BookmarkAllBtn
-          isHidden={isHidden}
-          onClick={() => bookmarkOverviewTabs(data, itemId)}
-        />
+          <BookmarkAllBtn
+            isHidden={isHidden}
+            onClick={() => bookmarkOverviewTabs(data, itemId)}
+          />
         )}
         <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data)} />
         <GetInBtn isHidden={!isHidden} />

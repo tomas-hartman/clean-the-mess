@@ -1,9 +1,8 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 
 // import '../style.scss';
 
-import { OverviewScreen } from '../../../popup/Components/Overview/OverviewScreen';
+import { OverviewScreen } from '../../../popup/screens/Overview/OverviewScreen';
 import { getOverview } from '../../../_modules';
 import { tabs } from '../samples/firefox/tabs';
 
