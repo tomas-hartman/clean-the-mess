@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import { VFC } from 'react';
 import { Overview } from '../../../types';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { OverviewHeader } from './OverviewHeader';

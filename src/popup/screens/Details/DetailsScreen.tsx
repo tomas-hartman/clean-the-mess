@@ -4,7 +4,7 @@ import { OverviewItem } from '../../../types';
 import { getHeaderTitle } from '../../../_modules';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { DetailsHeader } from './DetailsHeader';
-import { DetailsItem } from './DetailsItem';
+import { DetailsItem } from '../../components/DetailItem';
 
 interface DetailsScreenProps {
   detailsData: Tabs.Tab[],
@@ -15,7 +15,14 @@ interface DetailsScreenProps {
   isActive: boolean,
 }
 
-export const DetailsScreen: VFC<DetailsScreenProps> = ({ detailsData, overviewData, className: extraClass = "", switchToScreen, closeTabs, isActive }) => {
+export const DetailsScreen: VFC<DetailsScreenProps> = ({ 
+  detailsData, 
+  overviewData, 
+  className: extraClass = '', 
+  switchToScreen, 
+  closeTabs, 
+  isActive 
+}) => {
   const type = 'url';
   const headerTitle = getHeaderTitle(overviewData?.url, 'details');
 

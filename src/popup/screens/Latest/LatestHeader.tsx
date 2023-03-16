@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { GoBackBtn } from '../../components/Buttons';
 import { DetailHeader } from '../../components/DetailHeader';
+import { SwitchToScreenType } from '../../Popup';
 
 type LatestHeaderProps = {
   title: string
-  switchToScreen: (e: string) => void
+  switchToScreen: SwitchToScreenType
 }
 
 export const LatestHeader: FC<LatestHeaderProps> = ({ switchToScreen, title }) => (

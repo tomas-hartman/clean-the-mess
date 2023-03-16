@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Go back button. Used on screen headers.
  * @param {Object} param0

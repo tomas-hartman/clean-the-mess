@@ -55,7 +55,7 @@ export const escapeHTML = (str: string) => str.replace(/[&<>'"]/g,
     '>': '&gt;',
     '\'': '&#39;',
     '"': '&quot;',
-  }[tag]) || "");
+  }[tag]) || '');
 
 /**
  * Function that converts string to hash. Used to set unique keys in getOverview.
@@ -76,9 +76,10 @@ export const getHash = (value: string): string => {
 
 
 // Returns headerTitle for secondary screens
-export const getHeaderTitle = (overviewUrl: string | undefined, type: "details" | "latest", count?: number) => {
-  if(type === "details") {
-    if(!overviewUrl) return "";
+// TODO: make reasonable with types
+export const getHeaderTitle = (overviewUrl: string | undefined, type: 'details' | 'latest', count?: number) => {
+  if(type === 'details') {
+    if(!overviewUrl) return '';
 
     try {
       return new URL(overviewUrl).host
@@ -87,11 +88,11 @@ export const getHeaderTitle = (overviewUrl: string | undefined, type: "details" 
     }
   }
 
-  if(type === "latest") {
+  if(type === 'latest') {
     return `${count} longest unused tabs`
   }
 
-  return "";
+  return '';
 };
 
 /**

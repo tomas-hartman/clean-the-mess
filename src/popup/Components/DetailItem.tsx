@@ -1,14 +1,16 @@
-import React, { useState, VFC } from 'react';
+import { useState, VFC } from 'react';
 import { Tabs } from 'webextension-polyfill';
 
-import { hasIgnoredProtocol, bookmarkTab, goToTab } from '../../../_modules';
-import { CloseTabs } from '../../Popup';
-import { GetInBtn, BookmarkCloseBtn, CloseBtn } from '../../components/Buttons';
+import { hasIgnoredProtocol, bookmarkTab, goToTab } from '../../_modules';
+import { CloseTabs } from '../Popup';
+import { GetInBtn, BookmarkCloseBtn, CloseBtn } from './Buttons';
+
+type DetailItemType = 'url' | 'lastDisplayed'
 
 interface DetailsItemProps {
   itemId: number,
   data: Tabs.Tab,
-  type: unknown,
+  type: DetailItemType,
   closeTabs: CloseTabs,
   showFavicon?: boolean,
 }
@@ -30,10 +32,10 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
   // @ts-expect-error date is ff-only feature
   const date = data.date || undefined;
 
-  const decodedUrl = url ? decodeURI(url) : "Unknown website";
+  const decodedUrl = url ? decodeURI(url) : 'Unknown website';
 
-  const urlCls = type === 'url' ? '' : 'hidden';
-  const lastDisplayedCls = type === 'lastDisplayed' ? '' : 'hidden';
+  // const urlCls = type === 'url' ? '' : 'hidden';
+  // const lastDisplayedCls = type === 'lastDisplayed' ? '' : 'hidden';
 
   const handleMouseOver = () => {
     setIsHidden(false);
@@ -78,8 +80,10 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
         tabIndex={0}
       >
         <div className="title detail" title={title}>{title}</div>
-        <div className={`url detail ${urlCls}`} title={decodedUrl}>{decodedUrl}</div>
-        {date && <div className={`last-displayed detail ${lastDisplayedCls}`} title={date}>{date}</div>}
+        {type === 'url' && <div className="url detail" title={decodedUrl}>{decodedUrl}</div>}
+        {(date && type === 'lastDisplayed') && (
+          <div className="last-displayed detail" title={date}>{date}</div>
+        )}
       </div>
 
       <div className="item--controls-container">

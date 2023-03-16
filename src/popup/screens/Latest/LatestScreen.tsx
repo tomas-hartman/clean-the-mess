@@ -1,26 +1,35 @@
 import { getHeaderTitle } from '../../../_modules';
 import { LatestHeader } from './LatestHeader';
-import { DetailsItem } from '../Details/DetailsItem';
+import { DetailsItem } from '../../components/DetailItem';
+import { FC } from 'react';
+import { Tabs } from 'webextension-polyfill';
+import { CloseTabs, SwitchToScreenType } from '../../Popup';
+
+type LatestScreenProps = {
+  detailsData: Tabs.Tab[],
+  className: string, 
+  switchToScreen: SwitchToScreenType,
+  closeTabs: CloseTabs,
+  showFavicons: boolean
+}
 
 /**
  * OldestTabs, longest inactive
  * @param {*} props
  * @returns
  */
-export default function DetailsScreen(props) {
+export const DetailsScreen: FC<LatestScreenProps> = props => {
   const {
-    detailsData, overviewData, className: extraClass, switchToScreen, closeTabs, showFavicons,
+    detailsData, className: extraClass, switchToScreen, closeTabs, showFavicons,
   } = props;
   const type = 'lastDisplayed';
-  const headerTitle = getHeaderTitle(0, 'latest', 10);
+  const headerTitle = getHeaderTitle('_', 'latest', 10);
 
   return (
     <div className={`screen screen-latest ${extraClass}`}>
       <LatestHeader
-        overviewData={overviewData}
         title={headerTitle}
         switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
       />
       <div className="body-container">
         <ul>
@@ -38,4 +47,4 @@ export default function DetailsScreen(props) {
       </div>
     </div>
   );
-}
+};
