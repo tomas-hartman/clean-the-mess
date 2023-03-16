@@ -1,3 +1,1 @@
-import LatestScreen from './LatestScreen';
-
-export default LatestScreen;
+export { LatestScreen } from './LatestScreen';

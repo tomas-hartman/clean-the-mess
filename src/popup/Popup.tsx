@@ -5,15 +5,15 @@ import browser, { Tabs } from 'webextension-polyfill';
 
 import { OverviewScreen } from './screens/Overview';
 import { DetailsScreen } from './screens/Details';
-
-import LatestScreen from './screens/Latest';
-import SearchScreen from './screens/Search/SearchScreen';
+import { LatestScreen } from './screens/Latest';
+import { SearchScreen } from './screens/Search';
 
 import {
   getOverview, getDetailsData, getLatestUsed, handlePopupListeners,
 } from '../_modules';
 import { useFavicons } from './hooks/useFavicons';
 import { Overview, Screen, ScreenName, Screens } from '../types';
+import classNames from 'classnames';
 
 export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void; 
 export type CloseTabs = (ids?: number | number[]) => Promise<void>
@@ -71,47 +71,50 @@ export default function Popup() {
   }, [overviewData]);
 
   const overviewScreen = (
-    <OverviewScreen
-      overviewData={overviewData}
-      headerData={{ openTabs: tabsData.length }}
-      className={screen.name === 'overview' ? 'slide-in-reverse' : ''}
-      switchToScreen={switchToScreen}
-      closeTabs={closeTabs}
-      showFavicons={showFavicons}
-    />
+    <div id="overview" className={classNames('screen', 'slide-out', screen.name === 'overview' && 'slide-in-reverse')}>
+      <OverviewScreen
+        overviewData={overviewData}
+        headerData={{ openTabs: tabsData.length }}
+        switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+        showFavicons={showFavicons}
+      />
+    </div>
   );
 
   const detailsScreen = (
-    <DetailsScreen
-      detailsData={getDetailsData(screen, tabsData)}
-      overviewData={overviewData?.find((item) => item.key === screen?.options?.key)}
-      className={screen.name === 'details' ? 'slide-in' : ''}
-      switchToScreen={switchToScreen}
-      closeTabs={closeTabs}
-      isActive={screen.name === 'details'}
-    />
+    <div className={classNames('screen', 'screen-details', screen.name === 'details' && 'slide-in')}>
+      <DetailsScreen
+        detailsData={getDetailsData(screen, tabsData)}
+        overviewData={overviewData?.find((item) => item.key === screen?.options?.key)}
+        switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+        isActive={screen.name === 'details'}
+      />
+    </div>
   );
 
   const searchScreen = (
-    <SearchScreen
-      tabsData={tabsData}
-      className={screen.name === 'search' ? 'slide-in' : ''}
-      switchToScreen={switchToScreen}
-      closeTabs={closeTabs}
-      isActive={screen.name === 'search'}
-      showFavicons={showFavicons}
-    />
+    <div className={classNames('screen', 'screen-search', screen.name === 'search' && 'slide-in')}>
+      <SearchScreen
+        tabsData={tabsData}
+        switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+        isActive={screen.name === 'search'}
+        showFavicons={showFavicons}
+      />
+    </div>
   );
 
   const latestScreen = (
-    <LatestScreen
-      detailsData={getLatestUsed(tabsData, 10)}
-      overviewData={screen.options}
-      className={screen.name === 'latest' ? 'slide-in' : ''}
-      switchToScreen={switchToScreen}
-      closeTabs={closeTabs}
-      showFavicons={showFavicons}
-    />
+    <div className={classNames('screen', 'screen-latest', screen.name === 'latest' && 'slide-in')}>
+      <LatestScreen
+        detailsData={getLatestUsed(tabsData, 10)}
+        switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+        showFavicons={showFavicons}
+      />
+    </div>
   );
 
   return (

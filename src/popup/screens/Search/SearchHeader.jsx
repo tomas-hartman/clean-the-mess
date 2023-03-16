@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { Separator } from '../../components/Separator';
 
@@ -39,7 +39,6 @@ export default function SearchHeader(props) {
     <div className="header-container">
       <div id="header" className="control">
         <GoBackBtn handleClick={() => switchToScreen('overview')} />
-
         <div className="header-title">
           <div className="search-container">
             <input
@@ -56,12 +55,9 @@ export default function SearchHeader(props) {
             </div>
           </div>
         </div>
-
         <CloseAllHeaderBtn onClick={() => closeTabs(ids)} itemCount={ids.length} />
       </div>
-
       <Separator />
-
     </div>
   );
 }

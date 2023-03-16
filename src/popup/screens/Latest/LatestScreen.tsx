@@ -7,7 +7,6 @@ import { CloseTabs, SwitchToScreenType } from '../../Popup';
 
 type LatestScreenProps = {
   detailsData: Tabs.Tab[],
-  className: string, 
   switchToScreen: SwitchToScreenType,
   closeTabs: CloseTabs,
   showFavicons: boolean
@@ -18,15 +17,12 @@ type LatestScreenProps = {
  * @param {*} props
  * @returns
  */
-export const DetailsScreen: FC<LatestScreenProps> = props => {
-  const {
-    detailsData, className: extraClass, switchToScreen, closeTabs, showFavicons,
-  } = props;
+export const LatestScreen: FC<LatestScreenProps> = ({ detailsData, switchToScreen, closeTabs, showFavicons }) => {
   const type = 'lastDisplayed';
   const headerTitle = getHeaderTitle('_', 'latest', 10);
 
   return (
-    <div className={`screen screen-latest ${extraClass}`}>
+    <>
       <LatestHeader
         title={headerTitle}
         switchToScreen={switchToScreen}
@@ -45,6 +41,6 @@ export const DetailsScreen: FC<LatestScreenProps> = props => {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };

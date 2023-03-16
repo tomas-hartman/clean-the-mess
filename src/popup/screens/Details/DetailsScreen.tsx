@@ -9,7 +9,6 @@ import { DetailsItem } from '../../components/DetailItem';
 interface DetailsScreenProps {
   detailsData: Tabs.Tab[],
   overviewData?: OverviewItem,
-  className?: string,
   switchToScreen: SwitchToScreenType,
   closeTabs: CloseTabs,
   isActive: boolean,
@@ -18,7 +17,6 @@ interface DetailsScreenProps {
 export const DetailsScreen: VFC<DetailsScreenProps> = ({ 
   detailsData, 
   overviewData, 
-  className: extraClass = '', 
   switchToScreen, 
   closeTabs, 
   isActive 
@@ -35,7 +33,7 @@ export const DetailsScreen: VFC<DetailsScreenProps> = ({
   }, [detailsData]);
 
   return (
-    <div className={`screen screen-details ${extraClass}`}>
+    <>
       <DetailsHeader
         title={headerTitle}
         overviewData={overviewData}
@@ -55,6 +53,6 @@ export const DetailsScreen: VFC<DetailsScreenProps> = ({
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };

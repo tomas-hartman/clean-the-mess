@@ -10,7 +10,6 @@ interface HeaderData {
 }
 
 interface OverviewScreenProps {
-  className: string,
   overviewData: Overview,
   headerData: HeaderData,
   switchToScreen: SwitchToScreenType,
@@ -18,19 +17,17 @@ interface OverviewScreenProps {
   showFavicons: boolean,
 }
 
-export const OverviewScreen: VFC<OverviewScreenProps> = (props) => {
-  const {
-    className: extraClass,
-    overviewData,
-    headerData,
-    switchToScreen,
-    closeTabs,
-    showFavicons,
-  } = props;
+export const OverviewScreen: VFC<OverviewScreenProps> = ({
+  overviewData,
+  headerData,
+  switchToScreen,
+  closeTabs,
+  showFavicons,
+}) => {
   const { openTabs } = headerData;
 
   return (
-    <div id="overview" className={`screen slide-out ${extraClass}`}>
+    <>
       <OverviewHeader switchToScreen={switchToScreen} openTabs={openTabs} />
       <div className="body-container">
         <ul id="list">
@@ -48,6 +45,6 @@ export const OverviewScreen: VFC<OverviewScreenProps> = (props) => {
           })}
         </ul>
       </div>
-    </div>
+    </>
   );
 }

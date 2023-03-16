@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
+import { Tabs } from 'webextension-polyfill';
 import { search } from '../../../_modules';
-import { DetailsItem } from '../Details/DetailsItem';
+import { DetailsItem } from '../../components/DetailItem';
+import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import SearchHeader from './SearchHeader';
 
-export default function SearchScreen(props) {
-  const {
-    tabsData, className: extraClass, switchToScreen, isActive, closeTabs, showFavicons,
-  } = props;
-  const [foundTabsData, setFoundTabsData] = useState([]);
+type SearchScreenProps = {
+    tabsData: Tabs.Tab[],
+    switchToScreen: SwitchToScreenType,
+    closeTabs: CloseTabs,
+    isActive: boolean,
+    showFavicons: boolean
+}
+
+export const SearchScreen: FC<SearchScreenProps> = ({ 
+  tabsData,
+  switchToScreen,
+  isActive,
+  closeTabs,
+  showFavicons 
+}) => {
+  const [foundTabsData, setFoundTabsData] = useState<Tabs.Tab[]>([]);
   const type = 'url';
 
   const searchError = (
@@ -29,6 +42,7 @@ export default function SearchScreen(props) {
     />
   ));
 
+  // @ts-expect-error needs proper typing
   const performSearch = (ref) => {
     const { value } = ref.target ? ref.target : ref.current;
 
@@ -39,8 +53,7 @@ export default function SearchScreen(props) {
   };
 
   return (
-    <div className={`screen screen-search ${extraClass}`}>
-
+    <>
       <SearchHeader
         oKey={1}
         switchToScreen={switchToScreen}
@@ -50,12 +63,11 @@ export default function SearchScreen(props) {
         closeTabs={closeTabs}
         isActive={isActive}
       />
-
       <div className="body-container">
         <ul>
           {foundTabsData.length >= 1 ? foundItems : searchError}
         </ul>
       </div>
-    </div>
+    </>
   );
-}
+};

@@ -14,7 +14,7 @@ export type Screens = {
   'details': { 
     ids: OverviewItem['ids'], 
     url?: string, 
-    key: string 
+    key: number 
   },
   'latest': undefined,
   'search': undefined,
