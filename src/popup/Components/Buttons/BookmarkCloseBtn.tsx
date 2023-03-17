@@ -1,12 +1,23 @@
-import { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import { FC, useEffect, useState } from 'react';
+import { Tabs } from 'webextension-polyfill';
 import { addBookmarkStatus } from '../../../_modules';
 
-export const BookmarkCloseBtn = (
+type BookmarkCloseBtnProps = {
+  data: Tabs.Tab
+  handleClick: () => void 
+  isHidden: boolean
+  isDetail: boolean
+}
+
+type BookmarkStatus = 'hidden' | 'bookmarked' | 'bookmark-close'
+
+export const BookmarkCloseBtn: FC<BookmarkCloseBtnProps> = (
   {
     data, handleClick, isHidden = false, isDetail = false,
   }
 ) => {
-  const [bookmarkStatus, setBookmarkStatus] = useState(undefined);
+  const [bookmarkStatus, setBookmarkStatus] = useState<BookmarkStatus | null>(null);
   const hiddenCls = isHidden ? 'hidden' : '';
 
   const bookmarkResult = addBookmarkStatus(data);
@@ -25,7 +36,7 @@ export const BookmarkCloseBtn = (
   return (
     <button
       type="button"
-      className={`bookmark ${bookmarkStatus} ${isDetail} ${hiddenCls}`}
+      className={classNames('bookmark', bookmarkStatus, isDetail, hiddenCls)}
       title={buttonTitle}
       onClick={!isBookmarked ? handleClick : undefined}
     >

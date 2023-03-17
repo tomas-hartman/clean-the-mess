@@ -1,10 +1,14 @@
+import { FC } from 'react';
+
+type GoBackBtnProps = {
+  /** switchToScreen function with desired destination */
+  handleClick: () => void;
+}
+
 /**
  * Go back button. Used on screen headers.
- * @param {Object} param0
- * @param {Function} param0.handleClick switchToScreen function with desired destination
- * @returns {JSX.Element}
  */
-export const GoBackBtn = ({ handleClick }) => {
+export const GoBackBtn: FC<GoBackBtnProps> = ({ handleClick }) => {
   return (
     <button
       type="button"

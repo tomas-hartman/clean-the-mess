@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState, VFC } from 'react';
 import { Tabs } from 'webextension-polyfill';
 
@@ -15,24 +16,19 @@ interface DetailsItemProps {
   showFavicon?: boolean,
 }
 
-export const DetailsItem: VFC<DetailsItemProps> = props => {
+export const DetailsItem: VFC<DetailsItemProps> = ({
+  itemId,
+  data,
+  type,
+  closeTabs,
+  showFavicon = false,
+}) => {
   const [isHidden, setIsHidden] = useState(true);
-  const {
-    itemId,
-    data,
-    type,
-    closeTabs,
-    showFavicon = false,
-  } = props;
-
-  const {
-    id, title, url, favIconUrl,
-  } = data;
 
   // @ts-expect-error date is ff-only feature
   const date = data.date || undefined;
 
-  const decodedUrl = url ? decodeURI(url) : 'Unknown website';
+  const decodedUrl = data.url ? decodeURI(data.url) : 'Unknown website';
 
   // const urlCls = type === 'url' ? '' : 'hidden';
   // const lastDisplayedCls = type === 'lastDisplayed' ? '' : 'hidden';
@@ -47,14 +43,14 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
 
   const bookmarkCloseTab = (tabData: Tabs.Tab) => {
     bookmarkTab(tabData);
-    closeTabs(id);
+    closeTabs(data.id);
   };
 
   return (
     <li
       id={`item-${itemId}`}
-      className="detail item item-detail"
-      data-tab-id={id}
+      className={classNames('detail', 'item', 'item-detail')}
+      data-tab-id={data.id}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
       onFocus={handleMouseOver}
@@ -62,24 +58,24 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
       role="menuitem"
     >
 
-      {(favIconUrl && showFavicon)
+      {(data.favIconUrl && showFavicon)
       && (
         <div
           className="favicon item--favicon"
           style={{
-            backgroundImage: `url(${favIconUrl})`,
+            backgroundImage: `url(${data.favIconUrl})`,
           }}
         />
       )}
 
       <div
         className="item--text-container"
-        onClick={() => { goToTab(id); }}
-        onKeyPress={() => { goToTab(id); }}
+        onClick={() => { goToTab(data.id); }}
+        onKeyPress={() => { goToTab(data.id); }}
         role="link"
         tabIndex={0}
       >
-        <div className="title detail" title={title}>{title}</div>
+        <div className="title detail" title={data.title}>{data.title}</div>
         {type === 'url' && <div className="url detail" title={decodedUrl}>{decodedUrl}</div>}
         {(date && type === 'lastDisplayed') && (
           <div className="last-displayed detail" title={date}>{date}</div>
@@ -87,7 +83,7 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
       </div>
 
       <div className="item--controls-container">
-        {!hasIgnoredProtocol(url) && (
+        {!hasIgnoredProtocol(data.url) && (
           <BookmarkCloseBtn
             data={data}
             isHidden={isHidden}
@@ -98,7 +94,7 @@ export const DetailsItem: VFC<DetailsItemProps> = props => {
         <CloseBtn
           isHidden={isHidden}
           isDetail
-          tId={id}
+          tId={data.id}
           closeTabs={closeTabs}
         />
         <GetInBtn isHidden={!isHidden} />

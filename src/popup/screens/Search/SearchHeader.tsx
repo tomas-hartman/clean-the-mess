@@ -1,26 +1,28 @@
-import { useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
+import { Tabs } from 'webextension-polyfill';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { Separator } from '../../components/Separator';
+import { CloseTabs, SwitchToScreenType } from '../../Popup';
 
-/**
- * @todo implement search functionality
- * @todo oid: which items should be deleted
- * @param {*} param0
- * @returns
- */
-export default function SearchHeader(props) {
-  const {
-    switchToScreen, foundTabsData, performSearch, isActive, closeTabs, tabsData,
-  } = props;
-  const searchRef = useRef();
+interface SearchHeaderProps {
+  switchToScreen: SwitchToScreenType;
+  foundTabsData: Tabs.Tab[];
+  performSearch: (searchTerm: string) => void;
+  isActive: boolean;
+  closeTabs: CloseTabs;
+  tabsData: Tabs.Tab[];
+}
+
+export const SearchHeader: FC<SearchHeaderProps> = ({ switchToScreen, foundTabsData, performSearch, isActive, closeTabs, tabsData }) => {
+  const searchRef = useRef<HTMLInputElement | null>(null);
   const searchCount = foundTabsData.length;
-  const ids = foundTabsData.map((item) => item.id);
+  const ids = foundTabsData.filter((item): item is Required<Tabs.Tab> => item.id !== undefined).map(item => item.id);
 
   useEffect(() => {
     if (searchRef.current && isActive) {
       const setFocusOnSearchBar = () => {
-        searchRef.current.focus();
-        searchRef.current.select();
+        searchRef.current?.focus();
+        searchRef.current?.select();
       };
 
       // This must invoke after the transition!
@@ -31,9 +33,9 @@ export default function SearchHeader(props) {
   // Re-fires search after tabsData changes
   useEffect(() => {
     if (searchRef.current && isActive) {
-      performSearch(searchRef);
+      performSearch(searchRef.current.value);
     }
-  }, [tabsData, searchRef, isActive]);
+  }, [tabsData, searchRef, isActive, performSearch]);
 
   return (
     <div className="header-container">
@@ -47,7 +49,7 @@ export default function SearchHeader(props) {
               id="search-input"
               placeholder="Type here"
               ref={searchRef}
-              onKeyUp={performSearch}
+              onKeyUp={item => performSearch(item.currentTarget.value)}
             />
             <div className="search-controls">
               <span className="search-count">{`(${searchCount})`}</span>
@@ -60,4 +62,4 @@ export default function SearchHeader(props) {
       <Separator />
     </div>
   );
-}
+};

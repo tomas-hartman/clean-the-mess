@@ -1,8 +1,12 @@
-import React from 'react';
-
+import { FC } from 'react';
 import { callWithConfirm } from '../../../_modules/callWithConfirm';
 
-export const CloseAllHeaderBtn = ({ onClick, itemCount }) => {
+type CloseAllHeaderBtnProps = {
+  onClick: () => void, 
+  itemCount: number
+}
+
+export const CloseAllHeaderBtn: FC<CloseAllHeaderBtnProps> = ({ onClick, itemCount }) => {
   const handleClick = () => {
     if (itemCount > 15) {
       callWithConfirm('closeTabs', onClick, () => true, itemCount);
