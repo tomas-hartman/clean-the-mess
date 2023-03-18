@@ -3,7 +3,7 @@ import { Confirm } from '../popup/components/Confirm';
 
 type Question = 'bookmarkAll' | 'closeTabs'
 
-const getConfirmableQuestions = (question: Question, args: string[]) => ({
+const getConfirmableQuestions = (question: Question, args: (string | number)[]) => ({
   bookmarkAll: `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
   closeTabs: `Are you sure you want to close ${args[0]} tabs?`,
 })[question];
