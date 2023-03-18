@@ -37,6 +37,6 @@ $bookmark-close-size: 70%;
 
 @mixin header-buttons {
     @include header-button(".close-all", $closeAllIcon, 60%);
-    @include header-button("#search-btn", $searchBtnIcon, 60%);
+    @include header-button(".search-btn", $searchBtnIcon, 60%);
     @include header-button(".back", $goBackIcon, 50%, var(--color-back-button));
 }

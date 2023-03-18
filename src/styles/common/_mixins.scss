@@ -1,6 +1,6 @@
 // .close-all, #search-btn (.back later)
 @mixin header-button ($btn-name, $img, $img-size, $bck-color: inherit, $hover-color: $button-hover-color, $active-color: $button-active-color) {
-    #header #{$btn-name} {
+    #{$btn-name}.header-button {
         width: $header-button-dimension;
         height: $header-button-dimension;
 
