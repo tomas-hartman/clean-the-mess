@@ -3,22 +3,22 @@
     #{$btn-name}.header-button {
         width: $header-button-dimension;
         height: $header-button-dimension;
-
-        justify-self: center;
-        align-self: center;
-        text-align: center;
-        line-height: $header-button-dimension;
-        font-size: 1.15em;
         border-radius: $border-radius;
-        display: block;
 
         border: 0;
+        padding: 0;
 
         background-color: $bck-color;
-        background-image: $img;
-        background-size: $img-size;
-        background-position: center;
-        background-repeat: no-repeat;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: rgba(12, 12, 13);
+
+        @media (prefers-color-scheme: dark) {
+          color: rgba(249, 249, 250, 0.8); // TODO fix opacity!
+        }
 
         @if $btn-name==".back" {
             transform: rotate(180deg);
@@ -38,19 +38,19 @@
     #{$btn-name} {
         width: $item-button-dimension;
         height: $item-button-dimension;
-
         border-radius: $border-radius;
-        align-self: center;
-        text-align: center;
         flex-shrink: 0;
 
         border: 0;
 
         background-image: $img;
-        background-size: $img-size;
-        background-repeat: no-repeat;
-        background-position: center;
         background-color: inherit;
+
+        color: rgba(12, 12, 13);
+
+        @media (prefers-color-scheme: dark) {
+          color: rgba(249, 249, 250, 0.8); // TODO fix opacity!
+        }
 
         &:hover {
             background-color: $hover-color;

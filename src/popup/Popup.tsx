@@ -14,6 +14,7 @@ import {
 import { useFavicons } from './hooks/useFavicons';
 import { Overview, Screen, ScreenName, Screens } from '../types';
 import classNames from 'classnames';
+import { isChrome } from './utils';
 
 export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void; 
 export type CloseTabs = (ids?: number | number[]) => Promise<void>
@@ -25,8 +26,6 @@ export default function Popup() {
   const [refresh, setRefresh] = useState(true);
 
   const showFavicons = useFavicons();
-
-  const isChrome = process.env.BROWSER_NAME === 'chrome';
 
   /** Load & prepare tabs & overview data */
   useEffect(() => {
@@ -122,7 +121,7 @@ export default function Popup() {
       {overviewScreen}
       {detailsScreen}
       {searchScreen}
-      {!isChrome && latestScreen}
+      {!isChrome() && latestScreen}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { addBookmarkStatus } from '../../../_modules';
+import { Icon } from '../Icon';
 
 type BookmarkCloseBtnProps = {
   data: Tabs.Tab
@@ -40,6 +41,7 @@ export const BookmarkCloseBtn: FC<BookmarkCloseBtnProps> = (
       title={buttonTitle}
       onClick={!isBookmarked ? handleClick : undefined}
     >
+      <Icon name='BookmarkStar' size={12} />
       <span className="hidden">{buttonTitle}</span>
     </button>
   );

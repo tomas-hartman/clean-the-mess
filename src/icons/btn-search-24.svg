@@ -5,16 +5,10 @@
 <style type="text/css">
 	.st0 {
 		fill: none;
-		stroke: rgba(12, 12, 13);
+		stroke: currentColor;
 		stroke-width: 2.5;
 		stroke-linecap: round;
 		stroke-miterlimit: 10;
-	}
-
-	@media (prefers-color-scheme: dark) {
-		.st0 {
-			stroke: rgba(249, 249, 250, 0.8);
-		}
 	}
 </style>
 <circle class="st0" cx="8.5" cy="8.5" r="6.5"/>

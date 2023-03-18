@@ -4,17 +4,11 @@
 	<style type="text/css">
 		.st0 {
 			fill: none;
-			stroke: rgba(12, 12, 13);
+			stroke: currentColor;
 			stroke-width: 2;
 			stroke-linecap: round;
 			stroke-linejoin: round;
 			stroke-miterlimit: 10;
-		}
-
-		@media (prefers-color-scheme: dark) {
-			.st0 {
-				stroke: rgba(249, 249, 250, 0.8);
-			}
 		}
 	</style>
 	<polyline class="st0" points="6,2 12,8 6,14 " />
