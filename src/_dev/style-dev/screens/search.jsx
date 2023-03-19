@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 // import '../style.scss';
 
-import SearchScreen from '../../../popup/Components/Search/SearchScreen';
+import SearchScreen from '../../../popup/screens/Search/SearchScreen';
 // import { getOverview } from '../../../_modules';
 import { tabs } from '../samples/firefox/tabs';
 

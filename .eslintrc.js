@@ -4,40 +4,45 @@ module.exports = {
     es2021: true,
     browser: true,
     node: true,
-    'jest/globals': true,
+    'jest/globals': true
   },
   extends: [
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended', 
+    'plugin:react-hooks/recommended',
+    'plugin:react/jsx-runtime', 
+    'plugin:@typescript-eslint/recommended', 
+    'plugin:storybook/recommended'
   ],
   settings: {
     react: {
-      version: "detect"
+      version: 'detect'
     }
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: 'module'
   },
-  plugins: [
-    'react', 'jest', '@typescript-eslint'
-  ],
+  plugins: ['react', 'jest', '@typescript-eslint'],
   rules: {
-    'linebreak-style': [
-      'error',
-      'unix',
-    ],
-    'no-unused-vars': "off",
+    'linebreak-style': ['error', 'unix'],
+    'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error', {
-      vars: 'all', args: 'after-used', ignoreRestSiblings: false, argsIgnorePattern: '^_',
+      vars: 'all',
+      args: 'after-used',
+      ignoreRestSiblings: false,
+      argsIgnorePattern: '^_'
     }],
     'arrow-body-style': 'off',
-    'react/prop-types': 0,
     'import/prefer-default-export': 'off',
     'import/extensions': 'off',
-  },
+    'indent': ['error', 2],
+    'object-curly-spacing': ['error', 'always'],
+    'quotes': ['error', 'single'],
+    'react/prop-types': 0,
+    'react/jsx-curly-brace-presence': ['error']
+  }
 };

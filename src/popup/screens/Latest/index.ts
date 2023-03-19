@@ -1,0 +1,1 @@
+export { LatestScreen } from './LatestScreen';

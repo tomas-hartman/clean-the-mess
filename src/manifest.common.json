@@ -13,13 +13,12 @@
   ],
 
   "background": {
-    "scripts": ["background/background.js"]
+    "scripts": ["background/background.ts"]
   },
 
   "options_ui": {
     "page": "options/options.html",
-    "browser_style": true,
-    "chrome_style": true
+    "browser_style": true
   },
 
   "browser_specific_settings": {

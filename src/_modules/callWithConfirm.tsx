@@ -1,10 +1,9 @@
 import ReactDOM from 'react-dom';
-import React from 'react';
-import { Confirm } from '../popup/Components/Confirm';
+import { Confirm } from '../popup/components/Confirm';
 
-type Question = "bookmarkAll" | "closeTabs"
+type Question = 'bookmarkAll' | 'closeTabs'
 
-const getConfirmableQuestions = (question: Question, args: string[]) => ({
+const getConfirmableQuestions = (question: Question, args: (string | number)[]) => ({
   bookmarkAll: `Are you sure you want to add ${args[0]} tabs to "${args[1]}" folder in bookmarks and close them?`,
   closeTabs: `Are you sure you want to close ${args[0]} tabs?`,
 })[question];
@@ -17,7 +16,7 @@ const getConfirmableQuestions = (question: Question, args: string[]) => ({
  * @param  {...string} args
  * @todo tests!
  */
-export const callWithConfirm = (question: Question, onTrue: () => void, onFalse: () => void, ...args: string[]) => {
+export const callWithConfirm = (question: Question, onTrue: () => void, onFalse: () => void, ...args: (string | number)[]) => {
   const portalRoot = document.querySelector('#main-container')!; // TODO
   const portalElement = document.createElement('div');
 

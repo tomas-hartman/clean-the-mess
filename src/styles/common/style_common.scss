@@ -110,13 +110,18 @@ input:focus, textarea:focus, select:focus{
 
 #header {
   display: grid;
-  grid-template-columns: 40px auto 40px;
+  grid-template-columns: 32px auto 32px;
   align-content: center;
-  height: 30px;
+  height: 32px;
+  padding-left: 4px;
+  padding-right: 4px;
+  gap: 4px;
+  justify-items: stretch;
 
   .header-title {
     justify-self: center;
     align-self: center;
+    width: 100%;
   }
 }
 
@@ -132,7 +137,9 @@ input:focus, textarea:focus, select:focus{
 #header,
 .header-overview-title {
   > span {
-    padding: 4px 16px;
+    // padding: 4px 16px;
+    // padding-inline-start: 8px;
+    padding: 4px 8px;
     height: 20px;
     display: inline-block;
     line-height: 20px;
@@ -160,8 +167,7 @@ input:focus, textarea:focus, select:focus{
   justify-content: space-between;
   align-items: center;
 
-  width: 100%;
-  padding: 4px 16px;
+  padding: 4px 12px;
   box-sizing: border-box;
 
   > span {
@@ -322,4 +328,12 @@ $containers-margin: ".url-container", ".main-item-text-container", ".item-contai
   &.bookmarked {
     background-image: $bookmarkedIcon;
   }
+}
+
+// TODO
+.go-back-button-ico {
+  transform: rotate(180deg);
+  color: rgb(133, 133, 230);
+  height: 16px;
+  width: 16px;
 }

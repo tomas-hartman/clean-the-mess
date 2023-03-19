@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 // import '../style.scss';
 
-import { DetailsScreen } from '../../../popup/Components/Details/DetailsScreen';
+import { DetailsScreen } from '../../../popup/screens/Details/DetailsScreen';
 import { getOverview } from '../../../_modules';
 import { tabs } from '../samples/firefox/tabs';
 
