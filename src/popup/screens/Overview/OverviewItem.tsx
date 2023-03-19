@@ -4,28 +4,21 @@ import type { OverviewItem as OverviewItemType } from '../../../types';
 import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
+import { useTabs } from '../../hooks';
 
 type OverviewItemProps = {
-  itemId: number,
-  data: OverviewItemType,
-  switchToScreen: SwitchToScreenType,
-  closeTabs: CloseTabs,
-  showFavicon: boolean,
+  itemId: number;
+  data: OverviewItemType;
+  switchToScreen: SwitchToScreenType;
+  closeTabs: CloseTabs;
+  showFavicon: boolean;
 };
 
-export const OverviewItem: VFC<OverviewItemProps> = props => {
+export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, switchToScreen, showFavicon = true }) => {
   const [isHidden, setIsHidden] = useState(true);
-  const {
-    itemId,
-    data,
-    switchToScreen,
-    closeTabs,
-    showFavicon = true,
-  } = props;
+  const { closeTabs } = useTabs();
 
-  const {
-    url, count, key, ids, favicon,
-  } = data;
+  const { url, count, key, ids, favicon } = data;
 
   const handleMouseOver = () => {
     setIsHidden(false);
@@ -80,8 +73,7 @@ export const OverviewItem: VFC<OverviewItemProps> = props => {
       onKeyUp={handleMouseOut}
       role="menuitem"
     >
-
-      {(showFavicon) && <div className="favicon item--favicon" style={{ backgroundImage: `url(${favicon})` }} />}
+      {showFavicon && <div className="favicon item--favicon" style={{ backgroundImage: `url(${favicon})` }} />}
 
       {/* https://stackoverflow.com/questions/34349136/react-how-to-capture-only-parents-onclick-event-and-not-children/47155034 */}
       <div
@@ -91,21 +83,17 @@ export const OverviewItem: VFC<OverviewItemProps> = props => {
         role="link"
         tabIndex={0}
       >
-        <div className="url" title={url}>{displayedUrl}</div>
+        <div className="url" title={url}>
+          {displayedUrl}
+        </div>
         <div className="count">{`(${count})`}</div>
       </div>
 
       <div className="item--controls-container">
-        {isBookmarkable && (
-          <BookmarkAllBtn
-            isHidden={isHidden}
-            onClick={() => bookmarkOverviewTabs(data, itemId)}
-          />
-        )}
+        {isBookmarkable && <BookmarkAllBtn isHidden={isHidden} onClick={() => bookmarkOverviewTabs(data, itemId)} />}
         <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data)} />
         <GetInBtn isHidden={!isHidden} />
       </div>
-
     </li>
   );
 };

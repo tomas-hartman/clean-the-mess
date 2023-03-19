@@ -1,50 +1,38 @@
-import { VFC } from 'react';
-import { Overview } from '../../../types';
-import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { useEffect, VFC } from 'react';
+import { useFavicons, useOverview, useTabs } from '../../hooks';
+import { SwitchToScreenType } from '../../Popup';
 import { OverviewHeader } from './OverviewHeader';
 import { OverviewItem } from './OverviewItem';
 
-interface HeaderData {
-  /** Number of open tabs */
-  openTabs: number
-}
-
 interface OverviewScreenProps {
-  overviewData: Overview,
-  headerData: HeaderData,
-  switchToScreen: SwitchToScreenType,
-  closeTabs: CloseTabs,
-  showFavicons: boolean,
+  switchToScreen: SwitchToScreenType;
 }
 
-export const OverviewScreen: VFC<OverviewScreenProps> = ({
-  overviewData,
-  headerData,
-  switchToScreen,
-  closeTabs,
-  showFavicons,
-}) => {
-  const { openTabs } = headerData;
+export const OverviewScreen: VFC<OverviewScreenProps> = ({ switchToScreen }) => {
+  const { tabs, closeTabs } = useTabs();
+  const { overview } = useOverview();
+
+  const showFavicons = useFavicons();
+
+  const items = overview.map((itemData, id) => {
+    return (
+      <OverviewItem
+        itemId={id}
+        data={itemData}
+        key={itemData.key}
+        switchToScreen={switchToScreen}
+        closeTabs={closeTabs}
+        showFavicon={showFavicons}
+      />
+    );
+  });
 
   return (
     <>
-      <OverviewHeader switchToScreen={switchToScreen} openTabs={openTabs} />
+      <OverviewHeader switchToScreen={switchToScreen} openTabs={tabs.length} />
       <div className="body-container">
-        <ul id="list">
-          {overviewData.map((itemData, id) => {
-            return (
-              <OverviewItem
-                itemId={id}
-                data={itemData}
-                key={itemData.key}
-                switchToScreen={switchToScreen}
-                closeTabs={closeTabs}
-                showFavicon={showFavicons}
-              />
-            );
-          })}
-        </ul>
+        <ul id="list">{items}</ul>
       </div>
     </>
   );
-}
+};
