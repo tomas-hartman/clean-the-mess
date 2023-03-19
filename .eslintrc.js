@@ -1,49 +1,50 @@
 module.exports = {
+  root: true,
   env: {
     webextensions: true,
     es2021: true,
     browser: true,
     node: true,
-    'jest/globals': true
+    'jest/globals': true,
   },
   extends: [
-    'prettier',
-    'plugin:react/recommended', 
+    'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:react/jsx-runtime', 
-    'plugin:@typescript-eslint/recommended', 
-    'plugin:storybook/recommended'
+    'plugin:react/jsx-runtime',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:storybook/recommended',
+    'prettier',
   ],
   settings: {
     react: {
-      version: 'detect'
-    }
+      version: 'detect',
+    },
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 12,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['react', 'jest', '@typescript-eslint'],
   rules: {
     'linebreak-style': ['error', 'unix'],
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', {
-      vars: 'all',
-      args: 'after-used',
-      ignoreRestSiblings: false,
-      argsIgnorePattern: '^_'
-    }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: false,
+        argsIgnorePattern: '^_',
+      },
+    ],
     'arrow-body-style': 'off',
-    'import/prefer-default-export': 'off',
     'import/extensions': 'off',
-    'indent': ['error', 2],
-    'object-curly-spacing': ['error', 'always'],
-    // 'quotes': ['error', 'single'],
+    // 'object-curly-spacing': ['error', 'always'],
     'react/prop-types': 0,
-    'react/jsx-curly-brace-presence': ['error']
-  }
+    'react/jsx-curly-brace-presence': ['error'],
+  },
 };
