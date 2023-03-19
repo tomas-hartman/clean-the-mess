@@ -20,10 +20,10 @@ export const OverviewHeader: VFC<OverviewHeaderProps> = ({ switchToScreen, openT
             {' '}
             <span id="open-tabs-count">{openTabs}</span>
             {' '}
-            opened tabs in this window.
+            open tabs in this window.
           </span>
         </div>
-        <SearchBtn switchToScreen={switchToScreen} />
+        <SearchBtn switchToScreen={switchToScreen} style={{ justifySelf: 'end' }}  />
       </div>
 
       <Separator />
