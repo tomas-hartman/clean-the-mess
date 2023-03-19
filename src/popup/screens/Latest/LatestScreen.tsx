@@ -2,34 +2,32 @@ import { getHeaderTitle } from '../../../_modules';
 import { LatestHeader } from './LatestHeader';
 import { DetailsItem } from '../../components/DetailItem';
 import { FC } from 'react';
-import { Tabs } from 'webextension-polyfill';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { useFavicons, useLatestTabs } from '../../hooks';
 
 type LatestScreenProps = {
-  detailsData: Tabs.Tab[],
-  switchToScreen: SwitchToScreenType,
-  closeTabs: CloseTabs,
-  showFavicons: boolean
-}
+  switchToScreen: SwitchToScreenType;
+  closeTabs: CloseTabs;
+};
 
 /**
  * OldestTabs, longest inactive
  * @param {*} props
  * @returns
  */
-export const LatestScreen: FC<LatestScreenProps> = ({ detailsData, switchToScreen, closeTabs, showFavicons }) => {
+export const LatestScreen: FC<LatestScreenProps> = ({ switchToScreen, closeTabs }) => {
   const type = 'lastDisplayed';
   const headerTitle = getHeaderTitle('_', 'latest', 10);
 
+  const { latestTabs } = useLatestTabs({ numOfLatest: 10 });
+  const showFavicons = useFavicons();
+
   return (
     <>
-      <LatestHeader
-        title={headerTitle}
-        switchToScreen={switchToScreen}
-      />
+      <LatestHeader title={headerTitle} switchToScreen={switchToScreen} />
       <div className="body-container">
         <ul>
-          {detailsData.map((itemData, i) => (
+          {latestTabs.map((itemData, i) => (
             <DetailsItem
               itemId={i}
               data={itemData}

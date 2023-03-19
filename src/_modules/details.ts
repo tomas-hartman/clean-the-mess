@@ -10,7 +10,7 @@ import { locale } from './locale';
  * @param {Number} numOfLatest optional, is equal to 10 normally
  * @returns {Object[]} Array with filtered items from tabs object
  */
-const getLatestUsed = (innerTabsData: Tabs.Tab[], numOfLatest = 10) => {
+const getLatestUsed = (innerTabsData: Tabs.Tab[], numOfLatest = 10): Tabs.Tab[] => {
   const newTabs = innerTabsData.slice(0);
   let iterationsNum = numOfLatest;
   const latest = [];
@@ -18,8 +18,8 @@ const getLatestUsed = (innerTabsData: Tabs.Tab[], numOfLatest = 10) => {
   if (innerTabsData.length < iterationsNum) iterationsNum = innerTabsData.length;
 
   newTabs.sort((a, b) => {
-    if(!a.lastAccessed || !b.lastAccessed) return 0;
-    
+    if (!a.lastAccessed || !b.lastAccessed) return 0;
+
     return a.lastAccessed - b.lastAccessed
   });
 
@@ -32,11 +32,8 @@ const getLatestUsed = (innerTabsData: Tabs.Tab[], numOfLatest = 10) => {
     const date = new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 
     latest.push({
+      ...newTabs[i],
       date,
-      title: newTabs[i].title,
-      id: newTabs[i].id,
-      url: newTabs[i].url,
-      favIconUrl: newTabs[i].favIconUrl,
     });
   }
 
@@ -60,7 +57,7 @@ const getDetailsData = (_screen: Screen, _tabsData: Tabs.Tab[]) => {
   }
 
   array.sort((a, b) => {
-    if(b.lastAccessed && a.lastAccessed) {
+    if (b.lastAccessed && a.lastAccessed) {
       return b.lastAccessed - a.lastAccessed
     }
 

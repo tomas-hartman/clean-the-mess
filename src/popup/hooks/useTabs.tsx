@@ -2,12 +2,24 @@ import { useCallback, useEffect, useState } from 'react';
 import browser, { Tabs } from 'webextension-polyfill';
 
 export const useTabs = () => {
-  const [tabs, setTabs] = useState<Tabs.Tab[]>([])
-  const [refreshToken, setRefreshToken] = useState(0)
+  const [tabs, setTabs] = useState<Tabs.Tab[]>([]);
+  const [refreshToken, setRefreshToken] = useState(0);
 
-  const refreshTabs = () => setRefreshToken(refreshToken + 1);
+  const refreshTabs = useCallback(() => {
+    setRefreshToken(refreshToken + 1);
+  }, [refreshToken]);
 
   const getTabs = useCallback(async () => await browser.tabs.query({ currentWindow: true }), []);
+
+  const closeTabs = useCallback(
+    async (ids?: number | number[]) => {
+      if (!ids) return;
+
+      await browser.tabs.remove(ids);
+      refreshTabs();
+    },
+    [refreshTabs],
+  );
 
   useEffect(() => {
     async function getData() {
@@ -17,5 +29,5 @@ export const useTabs = () => {
     getData();
   }, [getTabs, refreshToken]);
 
-  return { tabs, refreshTabs };
-}
+  return { tabs, refreshTabs, closeTabs };
+};

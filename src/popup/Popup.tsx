@@ -1,64 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import browser, { Tabs } from 'webextension-polyfill';
+import browser from 'webextension-polyfill';
 
 import { OverviewScreen } from './screens/Overview';
 import { DetailsScreen } from './screens/Details';
 import { LatestScreen } from './screens/Latest';
 import { SearchScreen } from './screens/Search';
 
-import {
-  getOverview, getDetailsData, getLatestUsed, handlePopupListeners,
-} from '../_modules';
-import { useFavicons } from './hooks/useFavicons';
-import { Overview, Screen, ScreenName, Screens } from '../types';
+import { useOverview, useTabs } from './hooks';
+
+import { handlePopupListeners } from '../_modules';
+import { Screen, ScreenName, Screens } from '../types';
 import classNames from 'classnames';
 import { isChrome } from './utils';
 
-export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void; 
-export type CloseTabs = (ids?: number | number[]) => Promise<void>
+export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void;
+export type CloseTabs = (ids?: number | number[]) => Promise<void>;
 
 export default function Popup() {
   const [screen, setScreen] = useState<Screen>({ name: 'overview' });
-  const [overviewData, setOverviewData] = useState<Overview>([]);
-  const [tabsData, setTabsData] = useState<Tabs.Tab[]>([]);
-  const [refresh, setRefresh] = useState(true);
 
-  const showFavicons = useFavicons();
+  const { tabs, closeTabs, overview: rrr } = useTabs();
+  const { overview } = useOverview(tabs);
 
-  /** Load & prepare tabs & overview data */
-  useEffect(() => {
-    (async () => {
-      if (refresh) {
-        const tabsDataVar = await browser.tabs.query({ currentWindow: true });
-        const overviewDataVar = getOverview(tabsDataVar);
+  console.log(tabs);
+  console.log(overview);
+  console.log(rrr);
 
-        setOverviewData(overviewDataVar);
-        setTabsData(tabsDataVar);
-        setRefresh(false);
-      }
-    })();
-  }, [refresh]);
-
-  const forceRefresh = () => setRefresh(true);
-
-  const switchToScreen: SwitchToScreenType = (nextScreen, options) => {
+  const switchToScreen: SwitchToScreenType = useCallback((nextScreen, options) => {
     setScreen({ name: nextScreen, options: options });
-  };
-
-  const closeTabs = async (ids?: number | number[]) => {
-    if(!ids) return;
-
-    await browser.tabs.remove(ids);
-    forceRefresh();
-  };
+  }, []);
 
   /** Listeners from background.js (bookmark all) */
   /** @todo replace any */
   useEffect(() => {
     const listenersCb = (message: any) => {
-      handlePopupListeners({ message, closeCb: closeTabs, overviewData });
+      handlePopupListeners({ message, closeCb: closeTabs, overviewData: overview });
     };
 
     browser.runtime.onMessage.addListener(listenersCb);
@@ -67,53 +45,45 @@ export default function Popup() {
       // remove listener
       browser.runtime.onMessage.removeListener(listenersCb);
     };
-  }, [overviewData]);
+  }, [overview, closeTabs]);
 
-  const overviewScreen = (
-    <div id="overview" className={classNames('screen', 'slide-out', screen.name === 'overview' && 'slide-in-reverse')}>
-      <OverviewScreen
-        overviewData={overviewData}
-        headerData={{ openTabs: tabsData.length }}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-        showFavicons={showFavicons}
-      />
-    </div>
+  const overviewScreen = useMemo(
+    () => (
+      <div
+        id="overview"
+        className={classNames('screen', 'slide-out', screen.name === 'overview' && 'slide-in-reverse')}
+      >
+        <OverviewScreen switchToScreen={switchToScreen} />
+      </div>
+    ),
+    [screen.name, switchToScreen],
   );
 
-  const detailsScreen = (
-    <div className={classNames('screen', 'screen-details', screen.name === 'details' && 'slide-in')}>
-      <DetailsScreen
-        detailsData={getDetailsData(screen, tabsData)}
-        overviewData={overviewData?.find((item) => item.key === screen?.options?.key)}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-        isActive={screen.name === 'details'}
-      />
-    </div>
+  const detailsScreen = useMemo(
+    () => (
+      <div className={classNames('screen', 'screen-details', screen.name === 'details' && 'slide-in')}>
+        <DetailsScreen screen={screen} switchToScreen={switchToScreen} isActive={screen.name === 'details'} />
+      </div>
+    ),
+    [screen, switchToScreen],
   );
 
-  const searchScreen = (
-    <div className={classNames('screen', 'screen-search', screen.name === 'search' && 'slide-in')}>
-      <SearchScreen
-        tabsData={tabsData}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-        isActive={screen.name === 'search'}
-        showFavicons={showFavicons}
-      />
-    </div>
+  const searchScreen = useMemo(
+    () => (
+      <div className={classNames('screen', 'screen-search', screen.name === 'search' && 'slide-in')}>
+        <SearchScreen switchToScreen={switchToScreen} isActive={screen.name === 'search'} />
+      </div>
+    ),
+    [screen.name, switchToScreen],
   );
 
-  const latestScreen = (
-    <div className={classNames('screen', 'screen-latest', screen.name === 'latest' && 'slide-in')}>
-      <LatestScreen
-        detailsData={getLatestUsed(tabsData, 10)}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-        showFavicons={showFavicons}
-      />
-    </div>
+  const latestScreen = useMemo(
+    () => (
+      <div className={classNames('screen', 'screen-latest', screen.name === 'latest' && 'slide-in')}>
+        <LatestScreen switchToScreen={switchToScreen} closeTabs={closeTabs} />
+      </div>
+    ),
+    [screen.name, switchToScreen, closeTabs],
   );
 
   return (

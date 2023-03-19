@@ -1,53 +1,48 @@
-import { VFC, useEffect } from 'react';
-import { Tabs } from 'webextension-polyfill';
-import { OverviewItem } from '../../../types';
-import { getHeaderTitle } from '../../../_modules';
-import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { VFC, useEffect, useMemo } from 'react';
+import { Screen } from '../../../types';
+import { getDetailsData, getHeaderTitle } from '../../../_modules';
+import { SwitchToScreenType } from '../../Popup';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';
+import { useOverview, useTabs } from '../../hooks';
 
 interface DetailsScreenProps {
-  detailsData: Tabs.Tab[],
-  overviewData?: OverviewItem,
-  switchToScreen: SwitchToScreenType,
-  closeTabs: CloseTabs,
-  isActive: boolean,
+  switchToScreen: SwitchToScreenType;
+  isActive: boolean;
+  screen: Screen;
 }
 
-export const DetailsScreen: VFC<DetailsScreenProps> = ({ 
-  detailsData, 
-  overviewData, 
-  switchToScreen, 
-  closeTabs, 
-  isActive 
-}) => {
+export const DetailsScreen: VFC<DetailsScreenProps> = ({ switchToScreen, isActive, screen }) => {
+  const { tabs, closeTabs } = useTabs();
+  const { overview } = useOverview(tabs); // TODO: get item
+
+  const details = useMemo(() => getDetailsData(screen, tabs), [screen, tabs]);
+  const overviewItem = useMemo(
+    () => overview.find(item => item.key === screen.options?.key),
+    [overview, screen.options?.key],
+  );
+
   const type = 'url';
-  const headerTitle = getHeaderTitle(overviewData?.url, 'details');
+  const headerTitle = getHeaderTitle(overviewItem?.url, 'details');
 
   useEffect(() => {
-    if (isActive && detailsData.length === 0) {
+    if (isActive && details.length === 0) {
       switchToScreen('overview');
     }
-  }, [detailsData]);
+  }, [details]);
 
   return (
     <>
       <DetailsHeader
         title={headerTitle}
-        overviewData={overviewData}
+        overviewData={overviewItem}
         switchToScreen={switchToScreen}
         closeTabs={closeTabs}
       />
       <div className="body-container">
         <ul>
-          {detailsData.map((itemData, i) => (
-            <DetailsItem
-              itemId={i}
-              data={itemData}
-              type={type}
-              key={itemData.id}
-              closeTabs={closeTabs}
-            />
+          {details.map((itemData, i) => (
+            <DetailsItem itemId={i} data={itemData} type={type} key={itemData.id} closeTabs={closeTabs} />
           ))}
         </ul>
       </div>

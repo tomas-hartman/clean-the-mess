@@ -2,24 +2,18 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { search } from '../../../_modules';
 import { DetailsItem } from '../../components/DetailItem';
-import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { useFavicons, useTabs } from '../../hooks';
+import { SwitchToScreenType } from '../../Popup';
 import { SearchHeader } from './SearchHeader';
 
 type SearchScreenProps = {
-  tabsData: Tabs.Tab[],
-  switchToScreen: SwitchToScreenType,
-  closeTabs: CloseTabs,
-  isActive: boolean,
-  showFavicons: boolean
-}
+  switchToScreen: SwitchToScreenType;
+  isActive: boolean;
+};
 
-export const SearchScreen: FC<SearchScreenProps> = ({ 
-  tabsData,
-  switchToScreen,
-  isActive,
-  closeTabs,
-  showFavicons 
-}) => {
+export const SearchScreen: FC<SearchScreenProps> = ({ switchToScreen, isActive }) => {
+  const { tabs, closeTabs } = useTabs();
+  const showFavicons = useFavicons();
   const [foundTabsData, setFoundTabsData] = useState<Tabs.Tab[]>([]);
   const type = 'url';
 
@@ -31,23 +25,29 @@ export const SearchScreen: FC<SearchScreenProps> = ({
     </li>
   );
 
-  const foundItems = useMemo(() => 
-    foundTabsData.map((item, i) => (
-      <DetailsItem
-        itemId={i}
-        data={item}
-        type={type}
-        key={item.id}
-        closeTabs={closeTabs}
-        showFavicon={showFavicons}
-      />
-    )), [closeTabs, foundTabsData, showFavicons]);
+  const foundItems = useMemo(
+    () =>
+      foundTabsData.map((item, i) => (
+        <DetailsItem
+          itemId={i}
+          data={item}
+          type={type}
+          key={item.id}
+          closeTabs={closeTabs}
+          showFavicon={showFavicons}
+        />
+      )),
+    [closeTabs, foundTabsData, showFavicons],
+  );
 
-  const performSearch = useCallback((searchTerm: string) => {
-    const result = search.perform(tabsData, searchTerm);
+  const performSearch = useCallback(
+    (searchTerm: string) => {
+      const result = search.perform(tabs, searchTerm);
 
-    setFoundTabsData(result);
-  }, [tabsData]);
+      setFoundTabsData(result);
+    },
+    [tabs],
+  );
 
   return (
     <>
@@ -55,15 +55,13 @@ export const SearchScreen: FC<SearchScreenProps> = ({
         // oKey={1}
         switchToScreen={switchToScreen}
         foundTabsData={foundTabsData}
-        tabsData={tabsData}
+        tabsData={tabs}
         performSearch={performSearch}
         closeTabs={closeTabs}
         isActive={isActive}
       />
       <div className="body-container">
-        <ul>
-          {foundTabsData.length >= 1 ? foundItems : searchError}
-        </ul>
+        <ul>{foundTabsData.length >= 1 ? foundItems : searchError}</ul>
       </div>
     </>
   );

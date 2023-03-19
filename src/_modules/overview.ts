@@ -3,32 +3,32 @@ import { Overview, OverviewItem } from '../types';
 import { getHash } from './helpers';
 
 const getOriginUrl = (tabData: Tabs.Tab) => {
-  if(!tabData.url) return "Other tabs";
-  
-    const url = new URL(tabData.url);
-  
-    if(!(url.protocol === "http:" || url.protocol === "https:")) {
-      switch (url.protocol) {
-        case 'about:':
-        case 'moz-extension:':
-        case 'chrome:':
-          return 'Browser tabs';
-        case 'file:':
-          return 'Opened files';
-        default:
-          return 'Other tabs';
-      }
+  if (!tabData.url) return "Other tabs";
+
+  const url = new URL(tabData.url);
+
+  if (!(url.protocol === "http:" || url.protocol === "https:")) {
+    switch (url.protocol) {
+      case 'about:':
+      case 'moz-extension:':
+      case 'chrome:':
+        return 'Browser tabs';
+      case 'file:':
+        return 'Opened files';
+      default:
+        return 'Other tabs';
     }
-  
-    if (url.hostname === 'localhost') {
-      return 'Localhost';
-    }
-    
-    if(url.origin) {
-      return url.origin
-    }
-  
-    return 'Other tabs';
+  }
+
+  if (url.hostname === 'localhost') {
+    return 'Localhost';
+  }
+
+  if (url.origin) {
+    return url.origin
+  }
+
+  return 'Other tabs';
 };
 
 /**
