@@ -24,8 +24,6 @@ export const DetailsScreen: VFC<DetailsScreenProps> = ({
   const type = 'url';
   const headerTitle = getHeaderTitle(overviewData?.url, 'details');
 
-  console.log(detailsData);
-
   useEffect(() => {
     if (isActive && detailsData.length === 0) {
       switchToScreen('overview');

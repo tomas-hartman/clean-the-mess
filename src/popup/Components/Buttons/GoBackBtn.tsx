@@ -11,8 +11,6 @@ export type GoBackBtnProps = {
  * Go back button. Used on screen headers.
  */
 export const GoBackBtn: FC<GoBackBtnProps> = ({ handleClick }) => {
-  console.log(Icon)
-
   return (
     <>
       <button
