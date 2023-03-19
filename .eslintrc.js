@@ -7,6 +7,7 @@ module.exports = {
     'jest/globals': true
   },
   extends: [
+    'prettier',
     'plugin:react/recommended', 
     'plugin:react-hooks/recommended',
     'plugin:react/jsx-runtime', 
@@ -41,7 +42,7 @@ module.exports = {
     'import/extensions': 'off',
     'indent': ['error', 2],
     'object-curly-spacing': ['error', 'always'],
-    'quotes': ['error', 'single'],
+    // 'quotes': ['error', 'single'],
     'react/prop-types': 0,
     'react/jsx-curly-brace-presence': ['error']
   }
