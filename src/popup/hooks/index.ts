@@ -1,4 +1,2 @@
-export * from './useTabs'
+export * from './useData'
 export * from './useFavicons'
-export * from './useOverview'
-export * from './useLatestTabs'

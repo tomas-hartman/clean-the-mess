@@ -2,7 +2,7 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { search } from '../../../_modules';
 import { DetailsItem } from '../../components/DetailItem';
-import { useFavicons, useTabs } from '../../hooks';
+import { useFavicons, useData } from '../../hooks';
 import { SwitchToScreenType } from '../../Popup';
 import { SearchHeader } from './SearchHeader';
 
@@ -12,7 +12,7 @@ type SearchScreenProps = {
 };
 
 export const SearchScreen: FC<SearchScreenProps> = ({ switchToScreen, isActive }) => {
-  const { tabs, closeTabs } = useTabs();
+  const { tabs, closeTabs } = useData();
   const showFavicons = useFavicons();
   const [foundTabsData, setFoundTabsData] = useState<Tabs.Tab[]>([]);
   const type = 'url';

@@ -1,16 +1,20 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { getLatestUsed } from '../../_modules';
-import { useTabs } from './useTabs';
+import { DataContext } from '../DataProvider';
 
 type UseLatestTabsProps = {
   numOfLatest: number;
 };
 
 export const useLatestTabs = ({ numOfLatest }: UseLatestTabsProps) => {
-  const { tabs } = useTabs();
+  const { tabs } = useContext(DataContext);
 
   const latestTabs = useMemo(() => {
-    return getLatestUsed(tabs, numOfLatest || 10);
+    if (tabs) {
+      return getLatestUsed(tabs, numOfLatest || 10);
+    }
+
+    return [];
   }, [numOfLatest, tabs]);
 
   return { latestTabs };

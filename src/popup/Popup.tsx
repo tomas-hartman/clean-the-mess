@@ -8,12 +8,12 @@ import { DetailsScreen } from './screens/Details';
 import { LatestScreen } from './screens/Latest';
 import { SearchScreen } from './screens/Search';
 
-import { useOverview, useTabs } from './hooks';
-
 import { handlePopupListeners } from '../_modules';
 import { Screen, ScreenName, Screens } from '../types';
 import classNames from 'classnames';
 import { isChrome } from './utils';
+import { DataProvider } from './DataProvider';
+import { useData } from './hooks/useData';
 
 export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void;
 export type CloseTabs = (ids?: number | number[]) => Promise<void>;
@@ -21,12 +21,7 @@ export type CloseTabs = (ids?: number | number[]) => Promise<void>;
 export default function Popup() {
   const [screen, setScreen] = useState<Screen>({ name: 'overview' });
 
-  const { tabs, closeTabs, overview: rrr } = useTabs();
-  const { overview } = useOverview(tabs);
-
-  console.log(tabs);
-  console.log(overview);
-  console.log(rrr);
+  const { closeTabs, overview } = useData();
 
   const switchToScreen: SwitchToScreenType = useCallback((nextScreen, options) => {
     setScreen({ name: nextScreen, options: options });
@@ -80,19 +75,21 @@ export default function Popup() {
   const latestScreen = useMemo(
     () => (
       <div className={classNames('screen', 'screen-latest', screen.name === 'latest' && 'slide-in')}>
-        <LatestScreen switchToScreen={switchToScreen} closeTabs={closeTabs} />
+        <LatestScreen switchToScreen={switchToScreen} />
       </div>
     ),
-    [screen.name, switchToScreen, closeTabs],
+    [screen.name, switchToScreen],
   );
 
   return (
-    <div className="body-container">
-      {overviewScreen}
-      {detailsScreen}
-      {searchScreen}
-      {!isChrome() && latestScreen}
-    </div>
+    <DataProvider>
+      <div className="body-container">
+        {overviewScreen}
+        {detailsScreen}
+        {searchScreen}
+        {!isChrome() && latestScreen}
+      </div>
+    </DataProvider>
   );
 }
 

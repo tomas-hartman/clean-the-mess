@@ -1,5 +1,6 @@
-import { useEffect, VFC } from 'react';
-import { useFavicons, useOverview, useTabs } from '../../hooks';
+import { VFC } from 'react';
+import { useData } from '../../hooks/useData';
+import { useFavicons } from '../../hooks';
 import { SwitchToScreenType } from '../../Popup';
 import { OverviewHeader } from './OverviewHeader';
 import { OverviewItem } from './OverviewItem';
@@ -9,8 +10,7 @@ interface OverviewScreenProps {
 }
 
 export const OverviewScreen: VFC<OverviewScreenProps> = ({ switchToScreen }) => {
-  const { tabs, closeTabs } = useTabs();
-  const { overview } = useOverview();
+  const { tabs, closeTabs, overview } = useData();
 
   const showFavicons = useFavicons();
 

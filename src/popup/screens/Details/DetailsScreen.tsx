@@ -4,7 +4,7 @@ import { getDetailsData, getHeaderTitle } from '../../../_modules';
 import { SwitchToScreenType } from '../../Popup';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';
-import { useOverview, useTabs } from '../../hooks';
+import { useData } from '../../hooks';
 
 interface DetailsScreenProps {
   switchToScreen: SwitchToScreenType;
@@ -13,8 +13,7 @@ interface DetailsScreenProps {
 }
 
 export const DetailsScreen: VFC<DetailsScreenProps> = ({ switchToScreen, isActive, screen }) => {
-  const { tabs, closeTabs } = useTabs();
-  const { overview } = useOverview(tabs); // TODO: get item
+  const { tabs, closeTabs, overview } = useData();
 
   const details = useMemo(() => getDetailsData(screen, tabs), [screen, tabs]);
   const overviewItem = useMemo(

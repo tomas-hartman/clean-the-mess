@@ -4,7 +4,6 @@ import type { OverviewItem as OverviewItemType } from '../../../types';
 import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
-import { useTabs } from '../../hooks';
 
 type OverviewItemProps = {
   itemId: number;
@@ -14,9 +13,14 @@ type OverviewItemProps = {
   showFavicon: boolean;
 };
 
-export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, switchToScreen, showFavicon = true }) => {
+export const OverviewItem: VFC<OverviewItemProps> = ({
+  itemId,
+  data,
+  switchToScreen,
+  showFavicon = true,
+  closeTabs,
+}) => {
   const [isHidden, setIsHidden] = useState(true);
-  const { closeTabs } = useTabs();
 
   const { url, count, key, ids, favicon } = data;
 
