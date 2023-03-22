@@ -102,7 +102,7 @@ export const handleBookmarkAll = async (_data: BookmarkSetter) => {
   const { bookmarks } = browser;
 
 
-  if(!overviewObject.ids) {
+  if (!overviewObject.ids) {
     console.warn("overview object had no ids")
     return;
   }
@@ -142,7 +142,7 @@ export const handleBookmarkAll = async (_data: BookmarkSetter) => {
  * Adds bookmark status to given element
  * @param {Object} item Object from screen detailed object
  */
-export const addBookmarkStatus = async (item: Tabs.Tab) => {
+export const getBookmarkStatus = async (item: Tabs.Tab) => {
   // I will not check for duplicate items with some special protocols in bookmarks
   if (hasIgnoredProtocol(item.url)) return 'hidden';
 
