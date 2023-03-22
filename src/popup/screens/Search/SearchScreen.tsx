@@ -1,9 +1,8 @@
-import { FC, useCallback, useMemo, useState } from 'react';
-import { Tabs } from 'webextension-polyfill';
-import { search } from '../../../_modules';
+import { FC, useMemo } from 'react';
 import { DetailsItem } from '../../components/DetailItem';
-import { useFavicons, useData } from '../../hooks';
+import { useFavicons, useData, useSearch } from '../../hooks';
 import { SwitchToScreenType } from '../../Popup';
+import { SearchError } from './SearchError';
 import { SearchHeader } from './SearchHeader';
 
 type SearchScreenProps = {
@@ -13,21 +12,14 @@ type SearchScreenProps = {
 
 export const SearchScreen: FC<SearchScreenProps> = ({ switchToScreen, isActive }) => {
   const { tabs, closeTabs } = useData();
-  const showFavicons = useFavicons();
-  const [foundTabsData, setFoundTabsData] = useState<Tabs.Tab[]>([]);
-  const type = 'url';
+  const { search, result } = useSearch({ tabs });
 
-  const searchError = (
-    <li id="nothing-to-show">
-      <div className="item-container error">
-        Nothing to display. Either nothing was found or the search hasn&apos;t started yet.
-      </div>
-    </li>
-  );
+  const showFavicons = useFavicons();
+  const type = 'url';
 
   const foundItems = useMemo(
     () =>
-      foundTabsData.map((item, i) => (
+      result.map((item, i) => (
         <DetailsItem
           itemId={i}
           data={item}
@@ -37,16 +29,7 @@ export const SearchScreen: FC<SearchScreenProps> = ({ switchToScreen, isActive }
           showFavicon={showFavicons}
         />
       )),
-    [closeTabs, foundTabsData, showFavicons],
-  );
-
-  const performSearch = useCallback(
-    (searchTerm: string) => {
-      const result = search.perform(tabs, searchTerm);
-
-      setFoundTabsData(result);
-    },
-    [tabs],
+    [closeTabs, result, showFavicons],
   );
 
   return (
@@ -54,14 +37,14 @@ export const SearchScreen: FC<SearchScreenProps> = ({ switchToScreen, isActive }
       <SearchHeader
         // oKey={1}
         switchToScreen={switchToScreen}
-        foundTabsData={foundTabsData}
+        foundTabsData={result}
         tabsData={tabs}
-        performSearch={performSearch}
+        performSearch={search}
         closeTabs={closeTabs}
         isActive={isActive}
       />
       <div className="body-container">
-        <ul>{foundTabsData.length >= 1 ? foundItems : searchError}</ul>
+        <ul>{result.length >= 1 ? foundItems : <SearchError />}</ul>
       </div>
     </>
   );
