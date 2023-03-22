@@ -1,19 +1,18 @@
 import { VFC, useEffect, useMemo } from 'react';
 import { Screen } from '../../../types';
 import { getDetailsData, getHeaderTitle } from '../../../_modules';
-import { SwitchToScreenType } from '../../Popup';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';
-import { useData } from '../../hooks';
+import { useData, useNavigate } from '../../hooks';
 
 interface DetailsScreenProps {
-  switchToScreen: SwitchToScreenType;
   isActive: boolean;
   screen: Screen;
 }
 
-export const DetailsScreen: VFC<DetailsScreenProps> = ({ switchToScreen, isActive, screen }) => {
+export const DetailsScreen: VFC<DetailsScreenProps> = ({ isActive, screen }) => {
   const { tabs, closeTabs, overview } = useData();
+  const { switchToScreen } = useNavigate();
 
   const details = useMemo(() => getDetailsData(screen, tabs), [screen, tabs]);
   const overviewItem = useMemo(
@@ -28,16 +27,11 @@ export const DetailsScreen: VFC<DetailsScreenProps> = ({ switchToScreen, isActiv
     if (isActive && details.length === 0) {
       switchToScreen('overview');
     }
-  }, [details]);
+  }, [details, switchToScreen, isActive]);
 
   return (
     <>
-      <DetailsHeader
-        title={headerTitle}
-        overviewData={overviewItem}
-        switchToScreen={switchToScreen}
-        closeTabs={closeTabs}
-      />
+      <DetailsHeader title={headerTitle} overviewData={overviewItem} closeTabs={closeTabs} />
       <div className="body-container">
         <ul>
           {details.map((itemData, i) => (

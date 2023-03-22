@@ -1,26 +1,19 @@
 import { useMemo, useState, VFC } from 'react';
 import type { OverviewItem as OverviewItemType } from '../../../types';
-
 import { getHeaderTitle } from '../../../_modules';
-import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
 import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
+import { CloseTabs, useNavigate } from '../../hooks';
 
 type OverviewItemProps = {
   itemId: number;
   data: OverviewItemType;
-  switchToScreen: SwitchToScreenType;
   closeTabs: CloseTabs;
   showFavicon: boolean;
 };
 
-export const OverviewItem: VFC<OverviewItemProps> = ({
-  itemId,
-  data,
-  switchToScreen,
-  showFavicon = true,
-  closeTabs,
-}) => {
+export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon = true, closeTabs }) => {
+  const { switchToScreen } = useNavigate();
   const [isHidden, setIsHidden] = useState(true);
 
   const { url, count, key, ids, favicon } = data;

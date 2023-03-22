@@ -1,16 +1,14 @@
 import { FC, useMemo } from 'react';
 import { DetailsItem } from '../../components/DetailItem';
 import { useFavicons, useData, useSearch } from '../../hooks';
-import { SwitchToScreenType } from '../../Popup';
 import { SearchError } from './SearchError';
 import { SearchHeader } from './SearchHeader';
 
 type SearchScreenProps = {
-  switchToScreen: SwitchToScreenType;
   isActive: boolean;
 };
 
-export const SearchScreen: FC<SearchScreenProps> = ({ switchToScreen, isActive }) => {
+export const SearchScreen: FC<SearchScreenProps> = ({ isActive }) => {
   const { tabs, closeTabs } = useData();
   const { search, result } = useSearch({ tabs });
 
@@ -36,7 +34,6 @@ export const SearchScreen: FC<SearchScreenProps> = ({ switchToScreen, isActive }
     <>
       <SearchHeader
         // oKey={1}
-        switchToScreen={switchToScreen}
         foundTabsData={result}
         tabsData={tabs}
         performSearch={search}

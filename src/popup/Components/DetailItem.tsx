@@ -3,7 +3,7 @@ import { useCallback, useState, VFC } from 'react';
 import { Tabs } from 'webextension-polyfill';
 
 import { hasIgnoredProtocol, bookmarkTab, goToTab } from '../../_modules';
-import { CloseTabs } from '../Popup';
+import { CloseTabs } from '../hooks';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from './Buttons';
 
 type DetailItemType = 'url' | 'lastDisplayed';
