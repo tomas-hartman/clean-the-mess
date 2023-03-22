@@ -1,9 +1,10 @@
-import { useState, VFC } from 'react';
+import { useMemo, useState, VFC } from 'react';
 import type { OverviewItem as OverviewItemType } from '../../../types';
 
-import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
+import { getHeaderTitle } from '../../../_modules';
 import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
+import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
 
 type OverviewItemProps = {
   itemId: number;
@@ -32,38 +33,11 @@ export const OverviewItem: VFC<OverviewItemProps> = ({
     setIsHidden(true);
   };
 
-  const bookmarkOverviewTabs = (overviewObject: OverviewItemType, oId: number) => {
-    const { url: _url, count: _count } = overviewObject;
-    const folderName = getHeaderTitle(_url, 'details');
+  const isBookmarkable = useMemo(() => {
+    return !!url && ['Browser tabs'].includes(url) === false;
+  }, [url]);
 
-    const onTrue = () => {
-      bookmarkAll(overviewObject, oId);
-    };
-
-    const onFalse = () => {
-      console.log('Nothing invoked.');
-    };
-
-    callWithConfirm('bookmarkAll', onTrue, onFalse, `${_count}`, folderName);
-  };
-
-  const closeOverviewTabs = (overviewObject: OverviewItemType) => {
-    const { ids: _ids, count: _count } = overviewObject;
-
-    const onFalse = () => {
-      console.log('Request to close tabs from overview was declined.');
-    };
-
-    if (_count > 10) {
-      callWithConfirm('closeTabs', () => closeTabs(_ids), onFalse, `${_count}`);
-      return;
-    }
-
-    closeTabs(_ids);
-  };
-
-  const isBookmarkable = !!url && ['Browser tabs'].includes(url) === false;
-  const displayedUrl = getHeaderTitle(url, 'details');
+  const displayedUrl = useMemo(() => getHeaderTitle(url, 'details'), [url]);
 
   return (
     <li
@@ -95,7 +69,7 @@ export const OverviewItem: VFC<OverviewItemProps> = ({
 
       <div className="item--controls-container">
         {isBookmarkable && <BookmarkAllBtn isHidden={isHidden} onClick={() => bookmarkOverviewTabs(data, itemId)} />}
-        <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data)} />
+        <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data, closeTabs)} />
         <GetInBtn isHidden={!isHidden} />
       </div>
     </li>
