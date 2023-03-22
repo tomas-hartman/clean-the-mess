@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DataContext } from '../DataProvider';
+import { DataContext } from '../providers/DataProvider';
 import { useLatestTabs } from './useLatestTabs';
 import { useOverview } from './useOverview';
 

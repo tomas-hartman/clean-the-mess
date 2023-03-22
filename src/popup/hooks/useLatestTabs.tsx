@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react';
 import { getLatestUsed } from '../../_modules';
-import { DataContext } from '../DataProvider';
+import { DataContext } from '../providers/DataProvider';
 
 type UseLatestTabsProps = {
   numOfLatest: number;

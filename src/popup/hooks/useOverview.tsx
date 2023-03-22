@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react';
 import { getOverview } from '../../_modules';
-import { DataContext } from '../DataProvider';
+import { DataContext } from '../providers/DataProvider';
 
 export const useOverview = () => {
   const { tabs } = useContext(DataContext);

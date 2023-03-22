@@ -12,7 +12,7 @@ import { handlePopupListeners } from '../_modules';
 import { Screen, ScreenName, Screens } from '../types';
 import classNames from 'classnames';
 import { isChrome } from './utils';
-import { DataProvider } from './DataProvider';
+import { DataProvider } from './providers/DataProvider';
 import { useData } from './hooks/useData';
 
 export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void;
