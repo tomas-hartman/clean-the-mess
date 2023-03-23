@@ -2,10 +2,9 @@ import { FC, useEffect, useRef } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { Separator } from '../../components/Separator';
-import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { CloseTabs, useNavigate } from '../../hooks';
 
 interface SearchHeaderProps {
-  switchToScreen: SwitchToScreenType;
   foundTabsData: Tabs.Tab[];
   performSearch: (searchTerm: string) => void;
   isActive: boolean;
@@ -13,8 +12,16 @@ interface SearchHeaderProps {
   tabsData: Tabs.Tab[];
 }
 
-export const SearchHeader: FC<SearchHeaderProps> = ({ switchToScreen, foundTabsData, performSearch, isActive, closeTabs, tabsData }) => {
+export const SearchHeader: FC<SearchHeaderProps> = ({
+  foundTabsData,
+  performSearch,
+  isActive,
+  closeTabs,
+  tabsData,
+}) => {
   const searchRef = useRef<HTMLInputElement | null>(null);
+  const { switchToScreen } = useNavigate();
+
   const searchCount = foundTabsData.length;
   const ids = foundTabsData.filter((item): item is Required<Tabs.Tab> => item.id !== undefined).map(item => item.id);
 
@@ -53,7 +60,9 @@ export const SearchHeader: FC<SearchHeaderProps> = ({ switchToScreen, foundTabsD
             />
             <div className="search-controls">
               <span className="search-count">{`(${searchCount})`}</span>
-              <button type="button" className="clear-search hidden">x</button>
+              <button type="button" className="clear-search hidden">
+                x
+              </button>
             </div>
           </div>
         </div>

@@ -1,16 +1,19 @@
 import { FC } from 'react';
 import { GoBackBtn } from '../../components/Buttons';
 import { DetailHeader } from '../../components/DetailHeader';
-import { SwitchToScreenType } from '../../Popup';
+import { useNavigate } from '../../hooks';
 
 type LatestHeaderProps = {
-  title: string
-  switchToScreen: SwitchToScreenType
-}
+  title: string;
+};
 
-export const LatestHeader: FC<LatestHeaderProps> = ({ switchToScreen, title }) => (
-  <DetailHeader>
-    <GoBackBtn handleClick={() => switchToScreen('overview')} />
-    <div className="header-title">{title}</div>
-  </DetailHeader>
-);
+export const LatestHeader: FC<LatestHeaderProps> = ({ title }) => {
+  const { switchToScreen } = useNavigate();
+
+  return (
+    <DetailHeader>
+      <GoBackBtn handleClick={() => switchToScreen('overview')} />
+      <div className="header-title">{title}</div>
+    </DetailHeader>
+  );
+};

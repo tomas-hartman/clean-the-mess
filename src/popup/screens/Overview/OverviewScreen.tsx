@@ -1,50 +1,26 @@
 import { VFC } from 'react';
-import { Overview } from '../../../types';
-import { CloseTabs, SwitchToScreenType } from '../../Popup';
+import { useData } from '../../hooks/useData';
+import { useFavicons } from '../../hooks';
 import { OverviewHeader } from './OverviewHeader';
 import { OverviewItem } from './OverviewItem';
 
-interface HeaderData {
-  /** Number of open tabs */
-  openTabs: number
-}
+export const OverviewScreen: VFC = () => {
+  const { tabs, closeTabs, overview } = useData();
 
-interface OverviewScreenProps {
-  overviewData: Overview,
-  headerData: HeaderData,
-  switchToScreen: SwitchToScreenType,
-  closeTabs: CloseTabs,
-  showFavicons: boolean,
-}
+  const showFavicons = useFavicons();
 
-export const OverviewScreen: VFC<OverviewScreenProps> = ({
-  overviewData,
-  headerData,
-  switchToScreen,
-  closeTabs,
-  showFavicons,
-}) => {
-  const { openTabs } = headerData;
+  const items = overview.map((itemData, id) => {
+    return (
+      <OverviewItem itemId={id} data={itemData} key={itemData.key} closeTabs={closeTabs} showFavicon={showFavicons} />
+    );
+  });
 
   return (
     <>
-      <OverviewHeader switchToScreen={switchToScreen} openTabs={openTabs} />
+      <OverviewHeader openTabs={tabs.length} />
       <div className="body-container">
-        <ul id="list">
-          {overviewData.map((itemData, id) => {
-            return (
-              <OverviewItem
-                itemId={id}
-                data={itemData}
-                key={itemData.key}
-                switchToScreen={switchToScreen}
-                closeTabs={closeTabs}
-                showFavicon={showFavicons}
-              />
-            );
-          })}
-        </ul>
+        <ul id="list">{items}</ul>
       </div>
     </>
   );
-}
+};

@@ -1,17 +1,18 @@
 import { VFC } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
-import { CloseTabs, SwitchToScreenType } from '../../Popup';
 import { OverviewItem } from '../../../types';
 import { DetailHeader } from '../../components/DetailHeader';
+import { CloseTabs, useNavigate } from '../../hooks';
 
 interface DetailsHeaderProps {
-  title: string,
-  switchToScreen: SwitchToScreenType,
-  overviewData?: OverviewItem,
-  closeTabs: CloseTabs,
+  title: string;
+  overviewData?: OverviewItem;
+  closeTabs: CloseTabs;
 }
 
-export const DetailsHeader: VFC<DetailsHeaderProps> = ({ title, switchToScreen, overviewData, closeTabs }) => {
+export const DetailsHeader: VFC<DetailsHeaderProps> = ({ title, overviewData, closeTabs }) => {
+  const { switchToScreen } = useNavigate();
+
   return (
     <DetailHeader>
       <GoBackBtn handleClick={() => switchToScreen('overview')} />

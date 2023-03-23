@@ -1,14 +1,14 @@
 import { VFC } from 'react';
-import { SwitchToScreenType } from '../../Popup';
 import { GetInBtn, SearchBtn } from '../../components/Buttons';
 import { Separator } from '../../components/Separator';
+import { useNavigate } from '../../hooks';
 
 type OverviewHeaderProps = {
-  switchToScreen: SwitchToScreenType,
-  openTabs: number
+  openTabs: number;
 };
 
-export const OverviewHeader: VFC<OverviewHeaderProps> = ({ switchToScreen, openTabs }) => {
+export const OverviewHeader: VFC<OverviewHeaderProps> = ({ openTabs }) => {
+  const { switchToScreen } = useNavigate();
   const isChrome = process.env.BROWSER_NAME === 'chrome';
 
   const overviewHeaderSection = (
@@ -16,14 +16,10 @@ export const OverviewHeader: VFC<OverviewHeaderProps> = ({ switchToScreen, openT
       <div id="header" className="control header-overview">
         <div className="header-title header-overview-title">
           <span>
-            You have
-            {' '}
-            <span id="open-tabs-count">{openTabs}</span>
-            {' '}
-            open tabs in this window.
+            You have <span id="open-tabs-count">{openTabs}</span> open tabs in this window.
           </span>
         </div>
-        <SearchBtn switchToScreen={switchToScreen} style={{ justifySelf: 'end' }}  />
+        <SearchBtn switchToScreen={switchToScreen} style={{ justifySelf: 'end' }} />
       </div>
 
       <Separator />
