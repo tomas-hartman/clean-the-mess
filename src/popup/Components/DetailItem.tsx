@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { useCallback, useState, VFC } from 'react';
 import { Tabs } from 'webextension-polyfill';
 
@@ -43,7 +43,7 @@ export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTa
   return (
     <li
       id={`item-${itemId}`}
-      className={classNames('detail', 'item', 'item-detail')}
+      className={clsx('detail', 'item', 'item-detail')}
       data-tab-id={data.id}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}

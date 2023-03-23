@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { FC } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { useBookmarkStatus } from '../../hooks';
@@ -24,7 +24,7 @@ export const BookmarkCloseBtn: FC<BookmarkCloseBtnProps> = ({
   return (
     <button
       type="button"
-      className={classNames('bookmark', bookmarkStatus, isDetail, { hidden: isHidden })}
+      className={clsx('bookmark', bookmarkStatus, isDetail, { hidden: isHidden })}
       title={buttonTitle}
       onClick={!isBookmarked ? handleClick : undefined}
     >

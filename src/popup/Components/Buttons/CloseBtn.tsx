@@ -1,5 +1,5 @@
+import clsx from 'clsx';
 import { FC } from 'react';
-import classNames from 'classnames';
 import { Icon } from '../Icon';
 
 interface CloseBtnProps {
@@ -10,18 +10,18 @@ interface CloseBtnProps {
 }
 
 export const CloseBtn: FC<CloseBtnProps> = ({ tId, isHidden = false, isDetail = false, closeTabs }) => {
-  const buttonClasses = classNames('remove', {
-    'hidden': isHidden,
-    'isDetail': isDetail,
+  const buttonClasses = clsx('remove', {
+    hidden: isHidden,
+    isDetail: isDetail,
   });
 
   const handleClick = () => {
-    tId && closeTabs(tId)
+    tId && closeTabs(tId);
   };
 
   return (
     <button type="button" className={buttonClasses} title="Close tab" onClick={handleClick}>
-      <Icon name="Remove" size={12} /> 
+      <Icon name="Remove" size={12} />
       <span className="hidden">Close tab</span>
     </button>
   );
