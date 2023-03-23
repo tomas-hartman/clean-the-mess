@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
+import { DetailHeader } from '../../components/DetailHeader';
 import { Separator } from '../../components/Separator';
 import { CloseTabs, useNavigate } from '../../hooks';
 
@@ -46,7 +47,7 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
 
   return (
     <div className="header-container">
-      <div id="header" className="control">
+      <DetailHeader>
         <GoBackBtn handleClick={() => switchToScreen('overview')} />
         <div className="header-title">
           <div className="search-container">
@@ -67,8 +68,7 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
           </div>
         </div>
         <CloseAllHeaderBtn onClick={() => closeTabs(ids)} itemCount={ids.length} />
-      </div>
-      <Separator />
+      </DetailHeader>
     </div>
   );
 };

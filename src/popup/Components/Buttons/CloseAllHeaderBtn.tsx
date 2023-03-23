@@ -5,12 +5,12 @@ import { Icon } from '../Icon';
 
 type CloseAllHeaderBtnProps = {
   onClick: () => void;
-  itemCount: number;
+  itemCount?: number;
 };
 
 export const CloseAllHeaderBtn: FC<CloseAllHeaderBtnProps> = ({ onClick, itemCount }) => {
   const handleClick = () => {
-    if (itemCount > 15) {
+    if (itemCount && itemCount > 15) {
       callWithConfirm('closeTabs', onClick, () => true, itemCount);
       return;
     }

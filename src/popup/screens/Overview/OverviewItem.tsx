@@ -4,6 +4,7 @@ import { getHeaderTitle } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
 import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
 import { CloseTabs, useNavigate } from '../../hooks';
+import { Favicon } from '../../components/Favicon';
 
 type OverviewItemProps = {
   itemId: number;
@@ -44,7 +45,8 @@ export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon
       onKeyUp={handleMouseOut}
       role="menuitem"
     >
-      {showFavicon && <div className="favicon item--favicon" style={{ backgroundImage: `url(${favicon})` }} />}
+      {/* TODO: add marginRight: 12px */}
+      {showFavicon && <Favicon src={favicon} />}
 
       {/* https://stackoverflow.com/questions/34349136/react-how-to-capture-only-parents-onclick-event-and-not-children/47155034 */}
       <div

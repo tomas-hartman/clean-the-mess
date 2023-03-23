@@ -16,16 +16,17 @@ body {
   width: auto;
   overflow: hidden;
   background-color: var(--color-background);
-  
+
 
   font: caption;
-  
+
   cursor: default;
   user-select: none;
   -moz-user-select: none;
 }
 
-body, input {
+body,
+input {
   font-size: $font-size; // snad 13px?
   font-weight: 400;
   font-family: $font-family;
@@ -36,11 +37,14 @@ input {
   color: $search-input-color;
 }
 
-input:focus, textarea:focus, select:focus{
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
-.hidden, .d-none {
+.hidden,
+.d-none {
   display: none;
 }
 
@@ -68,7 +72,9 @@ input:focus, textarea:focus, select:focus{
 }
 
 // Sliding (secondary) screens starting position
-.screen-details, .screen-latest, .screen-search {
+.screen-details,
+.screen-latest,
+.screen-search {
   box-sizing: border-box;
   position: absolute;
   height: 100%;
@@ -82,7 +88,7 @@ input:focus, textarea:focus, select:focus{
 /**
   .screen | #_screen_name_ has two containers: .header-container and .body-container (.ul-container might not be used anymore)
 */
-.body-container, 
+.body-container,
 .ul-container {
   // overflow-y: scroll;
   overflow-y: auto;
@@ -102,62 +108,6 @@ input:focus, textarea:focus, select:focus{
 }
 
 // HEADER
-.header-container {
-  // margin-top: 4px; // firefox-only
-  padding-top: 4px; // chrome or both
-  background-color: $header-container-bg;
-}
-
-#header {
-  display: grid;
-  grid-template-columns: 32px auto 32px;
-  align-content: center;
-  height: 32px;
-  padding-left: 4px;
-  padding-right: 4px;
-  gap: 4px;
-  justify-items: stretch;
-
-  .header-title {
-    justify-self: center;
-    align-self: center;
-    width: 100%;
-  }
-}
-
-// Special case for header w/o back button (= overview)
-#header.header-overview {
-  grid-template-columns: auto 40px;
-
-  .header-title {
-    justify-self: initial;
-  }
-}
-
-#header,
-.header-overview-title {
-  > span {
-    // padding: 4px 16px;
-    // padding-inline-start: 8px;
-    padding: 4px 8px;
-    height: 20px;
-    display: inline-block;
-    line-height: 20px;
-  }
-}
-
-.header {
-  &--details-title {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-  }
-
-  &--favicon {
-    margin: 4px;
-    margin-right: 8px;
-  }
-}
 
 // Special item inside header; it acts like li, but is a part of header
 #ten-unused {
@@ -170,7 +120,7 @@ input:focus, textarea:focus, select:focus{
   padding: 4px 12px;
   box-sizing: border-box;
 
-  > span {
+  >span {
     display: inline-block;
     line-height: 20px;
   }
@@ -192,19 +142,10 @@ input:focus, textarea:focus, select:focus{
 #header .btn-inactive {
   opacity: 30%;
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     background-color: initial;
   }
-}
-
-.separator {
-  border-bottom: 1px solid var(--color-separator);
-  margin-bottom: 4px;
-  margin-top: 4px;
-}
-
-.separator-bottom {
-  margin-bottom: 0;
 }
 
 // ITEMS: (layout and overall properties)
@@ -223,7 +164,7 @@ li {
 
   &:hover {
     background-color: var(--color-link-hover);
-  
+
     .count {
       color: $li-count-hover-color;
     }
@@ -257,9 +198,6 @@ li#nothing-to-show {
   }
 
   /* Items parts */
-  &--favicon {
-    margin-right: 12px;
-  }
 
   &--text-container {
     min-width: 0;
@@ -279,17 +217,13 @@ li#nothing-to-show {
   }
 }
 
-.favicon {
-  height: 16px;
-  width: 16px;
-  background-size: cover;
-  flex-shrink: 0;
-}
-
-$containers-margin: ".url-container", ".main-item-text-container", ".item-container", ".item-controls-container";
+$containers-margin: ".url-container",
+".main-item-text-container",
+".item-container",
+".item-controls-container";
 
 @each $container in $containers-margin {
-  #{$container} > div {
+  #{$container}>div {
     margin-left: 4px;
 
     &:first-of-type {
@@ -325,6 +259,7 @@ $containers-margin: ".url-container", ".main-item-text-container", ".item-contai
     background-image: $bookmarkCloseIcon;
     background-size: $bookmark-close-size;
   }
+
   &.bookmarked {
     background-image: $bookmarkedIcon;
   }

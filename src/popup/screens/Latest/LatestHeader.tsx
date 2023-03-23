@@ -1,7 +1,9 @@
+import clsx from 'clsx';
 import { FC } from 'react';
 import { GoBackBtn } from '../../components/Buttons';
 import { DetailHeader } from '../../components/DetailHeader';
 import { useNavigate } from '../../hooks';
+import { latestHeaderTitle } from './LatestHeader.css';
 
 type LatestHeaderProps = {
   title: string;
@@ -13,7 +15,7 @@ export const LatestHeader: FC<LatestHeaderProps> = ({ title }) => {
   return (
     <DetailHeader>
       <GoBackBtn handleClick={() => switchToScreen('overview')} />
-      <div className="header-title">{title}</div>
+      <div className={clsx('header-title', latestHeaderTitle)}>{title}</div>
     </DetailHeader>
   );
 };
