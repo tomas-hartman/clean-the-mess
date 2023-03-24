@@ -109,32 +109,6 @@ select:focus {
 
 // HEADER
 
-// Special item inside header; it acts like li, but is a part of header
-#ten-unused {
-  margin-top: 4px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 4px 12px;
-  box-sizing: border-box;
-
-  >span {
-    display: inline-block;
-    line-height: 20px;
-  }
-
-  // Special item that acts like ordinary li
-  &:hover {
-    background-color: var(--color-link-hover);
-
-    .count {
-      color: $li-count-hover-color;
-    }
-  }
-}
-
 // Header buttons
 @include header-buttons;
 
@@ -168,16 +142,6 @@ li {
     .count {
       color: $li-count-hover-color;
     }
-  }
-}
-
-li#nothing-to-show {
-  height: auto;
-  padding: 8px 12px;
-  box-sizing: border-box;
-
-  &:hover {
-    background-color: transparent;
   }
 }
 

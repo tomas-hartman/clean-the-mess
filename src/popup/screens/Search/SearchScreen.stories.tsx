@@ -19,7 +19,5 @@ export default meta;
 type Story = StoryObj<typeof SearchScreen>;
 
 export const Screen: Story = {
-  args: {
-    tabsData: tabs,
-  },
+  args: {},
 };

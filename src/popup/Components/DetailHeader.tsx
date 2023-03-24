@@ -5,7 +5,7 @@ import { Separator } from './Separator';
 
 export const DetailHeader: FC<PropsWithChildren<unknown>> = ({ children }) => (
   <div className={clsx(detailHeaderContainer)}>
-    <div /* id="header" */ className={clsx(detailHeaderContent)}>{children}</div>
+    <div className={clsx(detailHeaderContent)}>{children}</div>
     <Separator />
   </div>
 );
