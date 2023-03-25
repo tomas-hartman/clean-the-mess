@@ -19,7 +19,9 @@ export const OverviewScreen: VFC = () => {
     <>
       <OverviewHeader openTabs={tabs.length} />
       <div className="body-container">
-        <ul id="list">{items}</ul>
+        <ul id="list" className="temp_ul">
+          {items}
+        </ul>
       </div>
     </>
   );

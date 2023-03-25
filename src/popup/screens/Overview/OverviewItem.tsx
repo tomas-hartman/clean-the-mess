@@ -5,6 +5,7 @@ import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/
 import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
 import { CloseTabs, useNavigate } from '../../hooks';
 import { Favicon } from '../../components/Favicon';
+import clsx from 'clsx';
 
 type OverviewItemProps = {
   itemId: number;
@@ -35,7 +36,7 @@ export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon
 
   return (
     <li
-      className={`url-${itemId} item item-overview`}
+      className={clsx(`url-${itemId}`, `item item-overview`, 'temp_li')}
       data-key={key}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}

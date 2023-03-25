@@ -41,7 +41,7 @@ export const SearchScreen: FC<SearchScreenProps> = ({ isActive }) => {
         isActive={isActive}
       />
       <div className="body-container">
-        <ul>{result.length >= 1 ? foundItems : <SearchError />}</ul>
+        <ul className="temp_ul">{result.length >= 1 ? foundItems : <SearchError />}</ul>
       </div>
     </>
   );

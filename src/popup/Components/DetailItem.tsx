@@ -1,12 +1,14 @@
-import clsx from 'clsx';
-import { useCallback, useState, VFC } from 'react';
+import { useCallback, useMemo, useState, VFC } from 'react';
 import { Tabs } from 'webextension-polyfill';
 
-import { hasIgnoredProtocol, bookmarkTab, goToTab } from '../../_modules';
+import { hasIgnoredProtocol, bookmarkTab, goToTab, getFormatedDate } from '../../_modules';
 import { CloseTabs } from '../hooks';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from './Buttons';
+import { detailItem, detailItemControls } from './DetailItem.css';
+import { DetailItemBody } from './DetailItemBody';
+import { Favicon } from './Favicon';
 
-type DetailItemType = 'url' | 'lastDisplayed';
+export type DetailItemType = 'url' | 'lastDisplayed';
 
 interface DetailsItemProps {
   itemId: number;
@@ -19,18 +21,16 @@ interface DetailsItemProps {
 export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTabs, showFavicon = false }) => {
   const [isHidden, setIsHidden] = useState(true);
 
-  // @ts-expect-error date is ff-only feature
-  const date = data.date || undefined;
+  const date = getFormatedDate(data.lastAccessed) || '';
+  const decodedUrl = useMemo(() => (data.url ? decodeURI(data.url) : 'Unknown website'), [data.url]);
 
-  const decodedUrl = data.url ? decodeURI(data.url) : 'Unknown website';
-
-  const handleMouseOver = () => {
+  const handleMouseOver = useCallback(() => {
     setIsHidden(false);
-  };
+  }, []);
 
-  const handleMouseOut = () => {
+  const handleMouseOut = useCallback(() => {
     setIsHidden(true);
-  };
+  }, []);
 
   const bookmarkCloseTab = useCallback(
     (tabData: Tabs.Tab) => {
@@ -43,7 +43,7 @@ export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTa
   return (
     <li
       id={`item-${itemId}`}
-      className={clsx('detail', 'item', 'item-detail')}
+      className={detailItem}
       data-tab-id={data.id}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
@@ -51,42 +51,21 @@ export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTa
       onBlur={handleMouseOut}
       role="menuitem"
     >
-      {data.favIconUrl && showFavicon && (
-        <div
-          className="favicon item--favicon"
-          style={{
-            backgroundImage: `url(${data.favIconUrl})`,
-          }}
-        />
-      )}
+      {/* Favicon */}
+      {showFavicon && data.favIconUrl && <Favicon src={data.favIconUrl} />}
 
-      <div
-        className="item--text-container"
-        onClick={() => {
-          goToTab(data.id);
-        }}
-        onKeyPress={() => {
-          goToTab(data.id);
-        }}
-        role="link"
-        tabIndex={0}
-      >
-        <div className="title detail" title={data.title}>
-          {data.title}
-        </div>
-        {type === 'url' && (
-          <div className="url detail" title={decodedUrl}>
-            {decodedUrl}
-          </div>
-        )}
-        {date && type === 'lastDisplayed' && (
-          <div className="last-displayed detail" title={date}>
-            {date}
-          </div>
-        )}
-      </div>
+      {/* Body */}
+      <DetailItemBody
+        date={date}
+        decodedUrl={decodedUrl}
+        id={data.id}
+        title={data.title}
+        type={type}
+        goToTab={goToTab}
+      />
 
-      <div className="item--controls-container">
+      {/* Controls */}
+      <div className={detailItemControls}>
         {!hasIgnoredProtocol(data.url) && (
           <BookmarkCloseBtn tab={data} isHidden={isHidden} isDetail handleClick={() => bookmarkCloseTab(data)} />
         )}

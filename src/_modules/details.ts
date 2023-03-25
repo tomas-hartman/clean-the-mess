@@ -3,12 +3,21 @@ import { Tabs } from 'webextension-polyfill';
 import { Screen } from '../types';
 import { locale } from './locale';
 
+
+export const getFormatedDate = (lastAccessed?: number) => {
+  if (!lastAccessed) return;
+
+  const dateToFormat = new Date(lastAccessed);
+  return new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
+}
+
 /**
  * Function that returns filtered array with details for latest used group
  * @todo Work on detailed and better filtered return array
  * @param {Tabs.Tab[]} innerTabsData tabs query array
  * @param {Number} numOfLatest optional, is equal to 10 normally
  * @returns {Object[]} Array with filtered items from tabs object
+ * @todo make more efficient
  */
 const getLatestUsed = (innerTabsData: Tabs.Tab[], numOfLatest = 10): Tabs.Tab[] => {
   const newTabs = innerTabsData.slice(0);

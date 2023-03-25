@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { tabs } from '../../../tests/__sampleData__/tabs';
+import { detailed } from "../../../tests/__sampleData__/detailedArray"
 
 import { DetailsItem } from './DetailItem';
 
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof DetailsItem>;
 
 export const ItemComponent: Story = {
   args: {
-    data: tabs[0],
+    data: detailed[1],
   },
   name: 'Detail Item',
 };

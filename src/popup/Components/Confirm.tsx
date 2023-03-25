@@ -1,4 +1,6 @@
 import { VFC } from 'react';
+import { confirmBox, confirmButtonSection, confirmMessage, confirmOverlay } from './Confirm.css';
+import { ConfirmButton } from './ConfirmButton';
 import { Separator } from './Separator';
 
 interface ConfirmProps {
@@ -9,18 +11,14 @@ interface ConfirmProps {
 
 export const Confirm: VFC<ConfirmProps> = ({ message, onConfirm, onCancel }) => {
   return (
-    <div className="confirm">
-      <div className="confirm-box">
-        <div className="confirm-message-box">{message}</div>
+    <div className={confirmOverlay}>
+      <div className={confirmBox}>
+        <div className={confirmMessage}>{message}</div>
         <div className="confirm-buttons-section-wrapper">
           <Separator />
-          <div className="confirm-buttons-section">
-            <button className="confirm-btn" type="button" onClick={onCancel}>
-              Cancel
-            </button>
-            <button className="confirm-btn" type="button" onClick={onConfirm}>
-              OK
-            </button>
+          <div className={confirmButtonSection}>
+            <ConfirmButton text="Cancel" onClick={onCancel} />
+            <ConfirmButton text="OK" onClick={onConfirm} />
           </div>
         </div>
       </div>

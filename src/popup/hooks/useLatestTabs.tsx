@@ -6,6 +6,7 @@ type UseLatestTabsProps = {
   numOfLatest: number;
 };
 
+// TODO: add sort feature!
 export const useLatestTabs = ({ numOfLatest }: UseLatestTabsProps) => {
   const { tabs } = useContext(DataContext);
 

@@ -24,6 +24,13 @@ body {
   -moz-user-select: none;
 }
 
+.temp_ul {
+  list-style: none;
+  margin-block-start: auto;
+  margin-block-end: auto;
+  padding-inline-start: initial;
+}
+
 body,
 input {
   font-size: $font-size; // snad 13px?
@@ -99,12 +106,7 @@ select:focus {
 
 }
 
-.temp_ul {
-  list-style: none;
-  margin-block-start: auto;
-  margin-block-end: auto;
-  padding-inline-start: initial;
-}
+
 
 // HEADER
 

@@ -33,7 +33,7 @@ export const DetailsScreen: VFC<DetailsScreenProps> = ({ isActive, screen }) => 
     <>
       <DetailsHeader title={headerTitle} overviewData={overviewItem} closeTabs={closeTabs} />
       <div className="body-container">
-        <ul>
+        <ul className="temp_ul">
           {details.map((itemData, i) => (
             <DetailsItem itemId={i} data={itemData} type={type} key={itemData.id} closeTabs={closeTabs} />
           ))}

@@ -20,7 +20,7 @@ export const LatestScreen: FC = () => {
     <>
       <LatestHeader title={headerTitle} />
       <div className="body-container">
-        <ul>
+        <ul className="temp_ul">
           {latestTabs.map((itemData, i) => (
             <DetailsItem
               itemId={i}
