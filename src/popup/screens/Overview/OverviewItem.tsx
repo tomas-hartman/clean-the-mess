@@ -45,7 +45,6 @@ export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon
 
   return (
     <li
-      // className={clsx(`url-${itemId}`, `item item-overview`, 'temp_li')}
       className={overviewItem}
       data-key={key}
       onMouseOver={handleMouseOver}

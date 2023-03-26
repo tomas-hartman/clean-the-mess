@@ -4,7 +4,7 @@
   --color-back-button: var(--color-background);
   --color-link-hover: var(--color-emphasis-dark);
   --color-emphasis-dark: #d7d7dbdc;
-  --color-emphasis-light: rgb(200,200,201);
+  --color-emphasis-light: rgb(200, 200, 201);
   --color-separator: #d7d7db;
   --color-background: rgb(255, 255, 255);
   --color-secondary-background: var(--color-background);
@@ -12,8 +12,13 @@
   --color-font: #0c0c0d;
   --color-secondary-font: rgb(98, 99, 101);
   --color-alternative-font: var(--color-font);
+
+  --font-size: 13px;
+  --font-family: 'San Francisco', 'Segoe UI', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+
+  --search-input-color: var(--color-font);
 }
-  
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-link-hover: #663399;

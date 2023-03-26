@@ -1,8 +1,8 @@
 // Browser-related variables (chrome)
 $browser: "chrome"; // chrome or firefox
 
-$font-size: 13px; // font-size: 81.25%;
-$font-family: 'San Francisco', 'Segoe UI', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
+$font-size: var(--font-size); // font-size: 81.25%;
+$font-family: var(--font-family);
 // $font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
 
 $border-radius: 100%;
@@ -28,14 +28,14 @@ $li-count-hover-color: var(--color-font);
 $bookmark-close-size: 60%;
 
 @mixin item-buttons {
-    @include item-button(".remove", $removeIcon, 70%);
-    @include item-button(".bookmark", $bookmarkIcon, 60%);
-    @include item-button(".bookmark-all", $bookmarkAllIcon, 60%);
-    @include item-button(".get-in", $chGetInIcon, 40%, inherit, inherit);
+  @include item-button(".remove", $removeIcon, 70%);
+  @include item-button(".bookmark", $bookmarkIcon, 60%);
+  @include item-button(".bookmark-all", $bookmarkAllIcon, 60%);
+  @include item-button(".get-in", $chGetInIcon, 40%, inherit, inherit);
 }
 
 @mixin header-buttons {
-    @include header-button(".close-all", $closeAllIcon, 50%);
-    @include header-button(".search-btn", $searchBtnIcon, 50%);
-    @include header-button(".back", $goBackIcon, 45%, var(--color-back-button));
+  @include header-button(".close-all", $closeAllIcon, 50%);
+  @include header-button(".search-btn", $searchBtnIcon, 50%);
+  @include header-button(".back", $goBackIcon, 45%, var(--color-back-button));
 }

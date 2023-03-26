@@ -1,31 +1,36 @@
 // Firefox
 :root {
-    --color-link-hover-purple: #c169ffb9;
-    --color-back-button: var(--color-background);
-    --color-link-hover: var(--color-emphasis-dark);
-    --color-emphasis-dark: #d7d7dbdc;
-    --color-emphasis-light: #ededf0d0;
-    --color-separator: #d7d7db;
-    --color-background: #ffffff;
+  --color-link-hover-purple: #c169ffb9;
+  --color-back-button: var(--color-background);
+  --color-link-hover: var(--color-emphasis-dark);
+  --color-emphasis-dark: #d7d7dbdc;
+  --color-emphasis-light: #ededf0d0;
+  --color-separator: #d7d7db;
+  --color-background: #ffffff;
+  --color-secondary-background: var(--color-background);
+  --color-alternative-background: rgb(255, 255, 255);
+  --color-font: #0c0c0d;
+  --color-secondary-font: #737373;
+  --color-alternative-font: #0c0c0d; // font in search
+
+  --font-size: inherit;
+  --font-family: inherit;
+
+  --search-input-color: var(--color-alternative-font);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-link-hover: #663399;
+    --color-back-button: darkorchid;
+    --color-emphasis-dark: #737373c1;
+    --color-emphasis-light: #7373738a;
+    --color-separator: #7373738a;
+    --color-background: #4a4a4f;
     --color-secondary-background: var(--color-background);
-    --color-alternative-background: rgb(255, 255, 255);
-    --color-font: #0c0c0d;
-    --color-secondary-font: #737373;
+    --color-alternative-background: rgb(255, 255, 255); // search background
+    --color-font: #ffffff;
+    --color-secondary-font: #f9f9fa;
     --color-alternative-font: #0c0c0d; // font in search
   }
-  
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-link-hover: #663399;
-      --color-back-button: darkorchid;
-      --color-emphasis-dark: #737373c1;
-      --color-emphasis-light: #7373738a;
-      --color-separator: #7373738a;
-      --color-background: #4a4a4f;
-      --color-secondary-background: var(--color-background);
-      --color-alternative-background: rgb(255, 255, 255); // search background
-      --color-font: #ffffff;
-      --color-secondary-font: #f9f9fa;
-      --color-alternative-font: #0c0c0d; // font in search
-    }
-  }
+}

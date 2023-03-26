@@ -4,6 +4,7 @@ import browser from 'webextension-polyfill';
 import { handlePopupListeners } from '../../_modules';
 import { useNavigate } from '../hooks';
 import { useData } from '../hooks/useData';
+import { screen as screenStyle, screenBase, screenBodyContainer } from '../Popup.css';
 import { isChrome } from '../utils';
 import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
@@ -31,7 +32,7 @@ export const Router = () => {
 
   const overviewScreen = useMemo(
     () => (
-      <div id="overview" className={clsx('screen', 'slide-out', screen.name === 'overview' && 'slide-in-reverse')}>
+      <div id="overview" className={clsx(screenBase, 'slide-out', screen.name === 'overview' && 'slide-in-reverse')}>
         <OverviewScreen />
       </div>
     ),
@@ -40,7 +41,7 @@ export const Router = () => {
 
   const detailsScreen = useMemo(
     () => (
-      <div className={clsx('screen', 'screen-details', screen.name === 'details' && 'slide-in')}>
+      <div className={clsx(screenStyle, screen.name === 'details' && 'slide-in')}>
         <DetailsScreen screen={screen} isActive={screen.name === 'details'} />
       </div>
     ),
@@ -49,7 +50,7 @@ export const Router = () => {
 
   const searchScreen = useMemo(
     () => (
-      <div className={clsx('screen', 'screen-search', screen.name === 'search' && 'slide-in')}>
+      <div className={clsx(screenStyle, screen.name === 'search' && 'slide-in')}>
         <SearchScreen isActive={screen.name === 'search'} />
       </div>
     ),
@@ -58,7 +59,7 @@ export const Router = () => {
 
   const latestScreen = useMemo(
     () => (
-      <div className={clsx('screen', 'screen-latest', screen.name === 'latest' && 'slide-in')}>
+      <div className={clsx(screenStyle, screen.name === 'latest' && 'slide-in')}>
         <LatestScreen />
       </div>
     ),
@@ -66,7 +67,7 @@ export const Router = () => {
   );
 
   return (
-    <div className="body-container">
+    <div className={screenBodyContainer}>
       {overviewScreen}
       {detailsScreen}
       {searchScreen}

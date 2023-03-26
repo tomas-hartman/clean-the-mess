@@ -2,13 +2,12 @@ import { FC } from 'react';
 import { getHeaderTitle } from '../../../_modules';
 import { DetailsItem } from '../../components/DetailItem';
 import { useData, useFavicons } from '../../hooks';
+import { screenBodyContainer } from '../../Popup.css';
 import { screenList } from '../Overview/OverviewScreen.css';
 import { LatestHeader } from './LatestHeader';
 
 /**
  * OldestTabs, longest inactive
- * @param {*} props
- * @returns
  */
 export const LatestScreen: FC = () => {
   const type = 'lastDisplayed';
@@ -20,7 +19,7 @@ export const LatestScreen: FC = () => {
   return (
     <>
       <LatestHeader title={headerTitle} />
-      <div className="body-container">
+      <div className={screenBodyContainer}>
         <ul className={screenList}>
           {latestTabs.map((itemData, i) => (
             <DetailsItem
