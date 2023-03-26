@@ -92,6 +92,7 @@
   },
   "dependencies": {
     "@vanilla-extract/css": "^1.10.0",
+    "@vanilla-extract/recipes": "^0.4.0",
     "clsx": "^1.2.1",
     "gulp-merge-json": "^2.1.1",
     "gulp-rename": "^2.0.0",

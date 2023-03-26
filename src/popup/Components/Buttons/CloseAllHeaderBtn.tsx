@@ -1,7 +1,6 @@
-import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { callWithConfirm } from '../../../_modules/callWithConfirm';
-import { Icon } from '../Icon';
+import { Button } from './Button';
 
 type CloseAllHeaderBtnProps = {
   onClick: () => void;
@@ -9,24 +8,14 @@ type CloseAllHeaderBtnProps = {
 };
 
 export const CloseAllHeaderBtn: FC<CloseAllHeaderBtnProps> = ({ onClick, itemCount }) => {
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (itemCount && itemCount > 15) {
       callWithConfirm('closeTabs', onClick, () => true, itemCount);
       return;
     }
 
     onClick();
-  };
+  }, [itemCount, onClick]);
 
-  return (
-    <button
-      type="button"
-      className={clsx('close-all', 'header-button')}
-      title="Close all listed tabs"
-      onClick={handleClick}
-    >
-      <Icon name="RemoveBig" size={16} />
-      <span className="hidden">Close all listed tabs</span>
-    </button>
-  );
+  return <Button onClick={handleClick} icon="RemoveBig" size="large" title="Close all listed tabs" />;
 };

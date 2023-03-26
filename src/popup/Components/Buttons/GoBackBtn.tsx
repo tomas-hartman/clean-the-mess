@@ -1,22 +1,14 @@
-import clsx from 'clsx';
 import { FC } from 'react';
-import { Icon } from '../Icon';
+import { Button } from './Button';
 
 export type GoBackBtnProps = {
   /** switchToScreen function with desired destination */
-  handleClick: () => void;
+  onClick: () => void;
 };
 
 /**
  * Go back button. Used on screen headers.
  */
-export const GoBackBtn: FC<GoBackBtnProps> = ({ handleClick }) => {
-  return (
-    <>
-      <button type="button" className={clsx('back', 'go-back', 'header-button')} title="Back" onClick={handleClick}>
-        <Icon name="ArrowBig" size={18} />
-        <span className="hidden">Back</span>
-      </button>
-    </>
-  );
-};
+export const GoBackBtn: FC<GoBackBtnProps> = ({ onClick }) => (
+  <Button onClick={onClick} icon="ArrowBig" size="large" title="Back" isBack />
+);
