@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { DetailItemType } from './DetailItem';
-import { detailItemBody, detailItemBodyText } from './DetailItem.css';
+import { detailItemBody, detailItemBodyExtraText, detailItemBodyText } from './DetailItem.css';
 
 type DetailItemBodyProps = {
   id?: number;
@@ -17,12 +17,12 @@ export const DetailItemBody: FC<DetailItemBodyProps> = ({ id, title, goToTab, da
       {title}
     </span>
     {type === 'url' && (
-      <span className={detailItemBodyText} title={decodedUrl}>
+      <span className={detailItemBodyExtraText} title={decodedUrl}>
         {decodedUrl}
       </span>
     )}
     {date && type === 'lastDisplayed' && (
-      <span className={detailItemBodyText} title={date}>
+      <span className={detailItemBodyExtraText} title={date}>
         {date}
       </span>
     )}

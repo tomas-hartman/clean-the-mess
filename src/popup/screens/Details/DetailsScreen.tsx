@@ -4,6 +4,7 @@ import { getDetailsData, getHeaderTitle } from '../../../_modules';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';
 import { useData, useNavigate } from '../../hooks';
+import { screenList } from '../Overview/OverviewScreen.css';
 
 interface DetailsScreenProps {
   isActive: boolean;
@@ -33,7 +34,7 @@ export const DetailsScreen: VFC<DetailsScreenProps> = ({ isActive, screen }) => 
     <>
       <DetailsHeader title={headerTitle} overviewData={overviewItem} closeTabs={closeTabs} />
       <div className="body-container">
-        <ul className="temp_ul">
+        <ul className={screenList}>
           {details.map((itemData, i) => (
             <DetailsItem itemId={i} data={itemData} type={type} key={itemData.id} closeTabs={closeTabs} />
           ))}

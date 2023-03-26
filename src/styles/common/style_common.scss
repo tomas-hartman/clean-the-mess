@@ -24,13 +24,6 @@ body {
   -moz-user-select: none;
 }
 
-.temp_ul {
-  list-style: none;
-  margin-block-start: auto;
-  margin-block-end: auto;
-  padding-inline-start: initial;
-}
-
 body,
 input {
   font-size: $font-size; // snad 13px?
@@ -103,10 +96,7 @@ select:focus {
   display: flex;
   width: 100%;
   flex-direction: column;
-
 }
-
-
 
 // HEADER
 
@@ -143,60 +133,6 @@ select:focus {
     .count {
       color: $li-count-hover-color;
     }
-  }
-}
-
-// Items: content
-.item {
-  &-overview {
-    height: 28px;
-  }
-
-  /* Items parts */
-
-  &--text-container {
-    // min-width: 0;
-    // flex-basis: 100%;
-
-    &-overview {
-      display: flex;
-      justify-content: space-between;
-      padding-right: 4px;
-    }
-  }
-}
-
-$containers-margin: ".url-container",
-".main-item-text-container",
-".item-container",
-".item-controls-container";
-
-@each $container in $containers-margin {
-  #{$container}>div {
-    margin-left: 4px;
-
-    &:first-of-type {
-      margin-left: 0;
-    }
-  }
-}
-
-// Title of item in detail
-.title.detail {
-  @include truncate-text;
-
-  word-break: keep-all;
-  margin-bottom: 2px;
-}
-
-// Overview & buttons
-.url,
-.last-displayed {
-  @include truncate-text;
-
-  &.detail {
-    font-style: italic;
-    word-break: keep-all;
   }
 }
 

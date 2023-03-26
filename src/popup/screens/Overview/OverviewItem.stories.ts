@@ -14,6 +14,7 @@ type Story = StoryObj<typeof OverviewItem>;
 
 export const Item: Story = {
   args: {
-    data: overviewData[0]
+    data: overviewData[0],
+    showFavicon: true
   },
 };

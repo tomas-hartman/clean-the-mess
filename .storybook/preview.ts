@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/react";
 
 import "../src/styles/firefox/style.scss";
+import '../src/popup/Popup.css';
 
 const preview: Preview = {
   parameters: {

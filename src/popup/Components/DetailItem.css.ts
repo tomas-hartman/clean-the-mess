@@ -1,16 +1,19 @@
 import { style } from "@vanilla-extract/css";
 
-export const detailItem = style({
+export const itemContainer = style({
   listStyle: "none",
   display: "flex",
   gap: 8,
-  padding: "8px 12px",
   alignItems: "center",
 
   ":hover": {
     backgroundColor: "var(--color-link-hover)",
   }
 })
+
+export const detailItem = style([itemContainer, {
+  padding: "8px 12px",
+}])
 
 export const detailItemBody = style({
   flexBasis: "100%",
@@ -24,6 +27,10 @@ export const detailItemBodyText = style({
   display: "inline-block",
   textOverflow: "ellipsis"
 })
+
+export const detailItemBodyExtraText = style([detailItemBodyText, {
+  fontStyle: "italic"
+}])
 
 export const detailItemControls = style({
   display: "inline-flex",

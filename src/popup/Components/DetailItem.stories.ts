@@ -22,6 +22,7 @@ type Story = StoryObj<typeof DetailsItem>;
 export const ItemComponent: Story = {
   args: {
     data: detailed[1],
+    type: "url"
   },
   name: 'Detail Item',
 };

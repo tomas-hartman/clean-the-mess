@@ -1,8 +1,9 @@
-import { getHeaderTitle } from '../../../_modules';
-import { LatestHeader } from './LatestHeader';
-import { DetailsItem } from '../../components/DetailItem';
 import { FC } from 'react';
-import { useFavicons, useData } from '../../hooks';
+import { getHeaderTitle } from '../../../_modules';
+import { DetailsItem } from '../../components/DetailItem';
+import { useData, useFavicons } from '../../hooks';
+import { screenList } from '../Overview/OverviewScreen.css';
+import { LatestHeader } from './LatestHeader';
 
 /**
  * OldestTabs, longest inactive
@@ -20,7 +21,7 @@ export const LatestScreen: FC = () => {
     <>
       <LatestHeader title={headerTitle} />
       <div className="body-container">
-        <ul className="temp_ul">
+        <ul className={screenList}>
           {latestTabs.map((itemData, i) => (
             <DetailsItem
               itemId={i}

@@ -1,14 +1,14 @@
+import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import browser from 'webextension-polyfill';
-import { OverviewScreen } from './Overview';
+import { handlePopupListeners } from '../../_modules';
+import { useNavigate } from '../hooks';
+import { useData } from '../hooks/useData';
+import { isChrome } from '../utils';
 import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
+import { OverviewScreen } from './Overview';
 import { SearchScreen } from './Search';
-import { handlePopupListeners } from '../../_modules';
-import { isChrome } from '../utils';
-import { useData } from '../hooks/useData';
-import { useNavigate } from '../hooks';
-import clsx from 'clsx';
 
 export const Router = () => {
   const { closeTabs, overview } = useData();

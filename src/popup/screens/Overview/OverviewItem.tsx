@@ -1,11 +1,12 @@
-import { useMemo, useState, VFC } from 'react';
+import { useCallback, useMemo, useState, VFC } from 'react';
 import type { OverviewItem as OverviewItemType } from '../../../types';
 import { getHeaderTitle } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
-import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
-import { CloseTabs, useNavigate } from '../../hooks';
 import { Favicon } from '../../components/Favicon';
-import clsx from 'clsx';
+import { CloseTabs, useNavigate } from '../../hooks';
+import { overviewItem, overviewItemControls, overviewItemCount } from './OverviewItem.css';
+import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
+import { OverviewItemBody } from './OverviewItemBody';
 
 type OverviewItemProps = {
   itemId: number;
@@ -28,6 +29,14 @@ export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon
     setIsHidden(true);
   };
 
+  const handleDetailClick = useCallback(() => {
+    switchToScreen('details', {
+      ids,
+      url,
+      key,
+    });
+  }, [ids, key, url, switchToScreen]);
+
   const isBookmarkable = useMemo(() => {
     return !!url && ['Browser tabs'].includes(url) === false;
   }, [url]);
@@ -36,7 +45,8 @@ export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon
 
   return (
     <li
-      className={clsx(`url-${itemId}`, `item item-overview`, 'temp_li')}
+      // className={clsx(`url-${itemId}`, `item item-overview`, 'temp_li')}
+      className={overviewItem}
       data-key={key}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
@@ -49,21 +59,10 @@ export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon
       {/* TODO: add marginRight: 12px */}
       {showFavicon && <Favicon src={favicon} />}
 
-      {/* https://stackoverflow.com/questions/34349136/react-how-to-capture-only-parents-onclick-event-and-not-children/47155034 */}
-      <div
-        className="item--text-container-overview item--text-container"
-        onClick={() => switchToScreen('details', { ids, url, key })}
-        onKeyPress={() => switchToScreen('details', { ids, url, key })}
-        role="link"
-        tabIndex={0}
-      >
-        <div className="url" title={url}>
-          {displayedUrl}
-        </div>
-        <div className="count">{`(${count})`}</div>
-      </div>
+      <OverviewItemBody url={url} displayedUrl={displayedUrl} onDetailClick={handleDetailClick} />
 
-      <div className="item--controls-container">
+      <div className={overviewItemControls}>
+        <span className={overviewItemCount}>{`(${count})`}</span>
         {isBookmarkable && <BookmarkAllBtn isHidden={isHidden} onClick={() => bookmarkOverviewTabs(data, itemId)} />}
         <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data, closeTabs)} />
         <GetInBtn isHidden={!isHidden} />

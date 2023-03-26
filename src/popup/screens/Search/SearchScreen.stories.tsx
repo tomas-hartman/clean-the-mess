@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { tabs } from '../../../../tests/__sampleData__/tabs';
 
 import { SearchScreen } from './SearchScreen';
 
