@@ -49,7 +49,7 @@ globalStyle("input:focus, textarea:focus, select:focus", {
 })
 
 globalStyle(".hidden", {
-  display: "none",
+  display: "none !important",
 })
 
 export const screenBase = style({

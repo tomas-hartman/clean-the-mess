@@ -17,7 +17,7 @@ export const DetailsHeader: VFC<DetailsHeaderProps> = ({ title, overviewData, cl
 
   return (
     <DetailHeader>
-      <GoBackBtn handleClick={() => switchToScreen('overview')} />
+      <GoBackBtn onClick={() => switchToScreen('overview')} />
       <div className={detailsHeaderTitle}>
         <Favicon src={overviewData?.favicon} />
         <span>{title}</span>

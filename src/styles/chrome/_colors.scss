@@ -13,10 +13,38 @@
   --color-secondary-font: rgb(98, 99, 101);
   --color-alternative-font: var(--color-font);
 
+  --color-font-button: #0c0c0dcc; // TODO implement better
+
+
+  // FROM SCSS VARS (_vars.scss)
+
+  /* Browser-related variables (chrome) */
+  --browser: "chrome";
+
   --font-size: 13px;
   --font-family: 'San Francisco', 'Segoe UI', 'Helvetica Neue', 'Ubuntu', 'Roboto', 'sans-serif';
 
+  --border-radius: 100%;
+  --search-border-radius: 50px;
+
+  --search-border: 2px solid transparent;
+  --search-padding-left: 12px;
   --search-input-color: var(--color-font);
+
+  // --header-button-dimension: 27px;
+  // --item-button-dimension: 22px;
+
+  --large-button-dimension: 27px;
+  --small-button-dimension: 22px;
+
+  --button-hover-color: var(--color-emphasis-light);
+  --button-active-color: var(--color-emphasis-dark);
+
+  --header-container-bg: var(--color-secondary-background);
+  --search-container-color: inherit;
+
+  --li-count-color: var(--color-secondary-font);
+  --li-count-hover-color: var(--color-font);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,5 +60,7 @@
     --color-font: rgb(232, 234, 237); // chrome
     --color-secondary-font: rgb(172, 174, 177); // icons + (2)
     --color-alternative-font: rgb(95, 99, 104); // font in search
+
+    --color-font-button: rgba(249, 249, 250, 0.8); // TODO is this the color?
   }
 }

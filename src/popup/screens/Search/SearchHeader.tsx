@@ -48,7 +48,7 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
   return (
     <div className="header-container">
       <DetailHeader>
-        <GoBackBtn handleClick={() => switchToScreen('overview')} />
+        <GoBackBtn onClick={() => switchToScreen('overview')} />
         <div className="header-title">
           <div className="search-container">
             <input

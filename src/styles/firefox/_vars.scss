@@ -28,15 +28,15 @@ $li-count-hover-color: inherit;
 // Buttons
 $bookmark-close-size: 70%;
 
-@mixin item-buttons {
-  @include item-button(".remove", $removeIcon, 75%);
-  @include item-button(".bookmark", $bookmarkIcon, 70%);
-  @include item-button(".bookmark-all", $bookmarkAllIcon, 70%);
-  @include item-button(".get-in", $getInIcon, 60%, inherit, inherit);
-}
+// @mixin item-buttons {
+//   @include item-button(".remove", $removeIcon, 75%);
+//   @include item-button(".bookmark", $bookmarkIcon, 70%);
+//   @include item-button(".bookmark-all", $bookmarkAllIcon, 70%);
+//   @include item-button(".get-in", $getInIcon, 60%, inherit, inherit);
+// }
 
-@mixin header-buttons {
-  @include header-button(".close-all", $closeAllIcon, 60%);
-  @include header-button(".search-btn", $searchBtnIcon, 60%);
-  @include header-button(".back", $goBackIcon, 50%, var(--color-back-button));
-}
+// @mixin header-buttons {
+//   @include header-button(".close-all", $closeAllIcon, 60%);
+//   @include header-button(".search-btn", $searchBtnIcon, 60%);
+//   @include header-button(".back", $goBackIcon, 50%, var(--color-back-button));
+// }

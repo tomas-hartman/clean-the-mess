@@ -40,6 +40,13 @@ export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTa
     [closeTabs, data.id],
   );
 
+  const handleCloseTab = useCallback(
+    (tId: Tabs.Tab['id']) => {
+      tId && closeTabs(tId);
+    },
+    [closeTabs],
+  );
+
   return (
     <li
       id={`item-${itemId}`}
@@ -67,9 +74,9 @@ export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTa
       {/* Controls */}
       <div className={detailItemControls}>
         {!hasIgnoredProtocol(data.url) && (
-          <BookmarkCloseBtn tab={data} isHidden={isHidden} isDetail handleClick={() => bookmarkCloseTab(data)} />
+          <BookmarkCloseBtn tab={data} isHidden={isHidden} onClick={() => bookmarkCloseTab(data)} />
         )}
-        <CloseBtn isHidden={isHidden} isDetail tId={data.id} closeTabs={closeTabs} />
+        <CloseBtn isHidden={isHidden} onClick={() => handleCloseTab(data.id)} />
         <GetInBtn isHidden={!isHidden} />
       </div>
     </li>

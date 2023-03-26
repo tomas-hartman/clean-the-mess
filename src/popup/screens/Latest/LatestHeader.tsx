@@ -14,7 +14,7 @@ export const LatestHeader: FC<LatestHeaderProps> = ({ title }) => {
 
   return (
     <DetailHeader>
-      <GoBackBtn handleClick={() => switchToScreen('overview')} />
+      <GoBackBtn onClick={() => switchToScreen('overview')} />
       <div className={clsx('header-title', latestHeaderTitle)}>{title}</div>
     </DetailHeader>
   );

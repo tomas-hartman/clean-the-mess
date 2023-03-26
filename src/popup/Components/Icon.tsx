@@ -2,11 +2,16 @@ import clsx from 'clsx';
 import { FC } from 'react';
 import { IconName, Icons } from '../../icons/icons';
 
-type ButtonSize = 12 | 16 | 18;
+type IconSize = 14 | 18;
+
+export const ICON_SIZES = {
+  large: 18,
+  small: 14,
+} as const;
 
 type IconProps = {
   name: IconName;
-  size: ButtonSize;
+  size: IconSize;
 };
 
 export const Icon: FC<IconProps> = ({ name, size }) => {
