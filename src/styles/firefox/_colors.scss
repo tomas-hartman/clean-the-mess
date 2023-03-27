@@ -41,20 +41,20 @@
   // --li-count-hover-color: inherit;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-link-hover: #663399;
-    --color-back-button: darkorchid;
-    --color-emphasis-dark: #737373c1;
-    --color-emphasis-light: #7373738a;
-    --color-separator: #7373738a;
-    --color-background: #4a4a4f;
-    --color-secondary-background: var(--color-background);
-    --color-alternative-background: rgb(255, 255, 255); // search background
-    --color-font: #ffffff;
-    --color-secondary-font: #f9f9fa;
-    --color-alternative-font: #0c0c0d; // font in search
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --color-link-hover: #663399;
+//     --color-back-button: darkorchid;
+//     --color-emphasis-dark: #737373c1;
+//     --color-emphasis-light: #7373738a;
+//     --color-separator: #7373738a;
+//     --color-background: #4a4a4f;
+//     --color-secondary-background: var(--color-background);
+//     --color-alternative-background: rgb(255, 255, 255); // search background
+//     --color-font: #ffffff;
+//     --color-secondary-font: #f9f9fa;
+//     --color-alternative-font: #0c0c0d; // font in search
 
-    --color-font-button: #f9f9facc;
-  }
-}
+//     --color-font-button: #f9f9facc;
+//   }
+// }
