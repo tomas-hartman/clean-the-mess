@@ -1,33 +1,59 @@
 import { createGlobalTheme } from "@vanilla-extract/css";
 import { themeColorContract, themeUtilsContract } from "./themes.css";
 
+const firefoxPalette = {
+  accent: {
+    1: "#c169ffb9",
+    2: "#663399",
+    3: "#9932cc" // darkOrchid
+  },
+  neutral: {
+    100: "#ffffff",
+    98: "#f9f9fa",
+    86: "#d7d7db",
+    48: "#737373",
+    32: "#4a4a4f",
+    3: "#0c0c0d",
+    0: "#000"
+  },
+  transparent: {
+    98_080: "#f9f9facc",
+    94_082: "#ededf0d0",
+    86_086: "#d7d7dbdc",
+    48_076: "#737373c1",
+    48_054: "#7373738a",
+    3_080: "#0c0c0dcc",
+  },
+}
+
+
 export const themeFirefoxLightScheme = createGlobalTheme(":root", themeColorContract, {
   color: {
-    colorFont: "#0c0c0d",
-    colorFontSecondary: "#737373",
-    colorFontAlternative: "#0c0c0d",
+    colorFont: firefoxPalette.neutral[3],
+    colorFontSecondary: firefoxPalette.neutral[48],
+    colorFontAlternative: firefoxPalette.neutral[3],
 
-    colorBackground: "#ffffff",
-    colorBackgroundSecondary: "#ffffff",
-    colorBackgroundAlternative: "#ffffff",
+    colorBackground: firefoxPalette.neutral[100],
+    colorBackgroundSecondary: firefoxPalette.neutral[100],
+    colorBackgroundAlternative: firefoxPalette.neutral[100],
 
-    colorSeparator: "#d7d7db",
+    colorSeparator: firefoxPalette.neutral[86],
 
-    colorEmphasisDark: "#d7d7dbdc",
-    colorEmphasisLight: "#ededf0d0",
+    colorEmphasisDark: firefoxPalette.transparent[86086],
+    colorEmphasisLight: firefoxPalette.transparent[94082],
 
-    colorLinkHover: "#d7d7dbdc",
-    colorLinkHoverPurple: "#c169ffb9",
+    colorLinkHover: firefoxPalette.transparent[86086],
+    colorLinkHoverPurple: firefoxPalette.accent[1],
 
-    colorBackButton: "#ffffff",
+    colorBackButton: firefoxPalette.neutral[100],
 
-    colorButtonFont: "#0c0c0dcc",
-    colorButtonHover: "#ededf0d0", // emphasis light
-    colorButtonActive: "#d7d7dbdc", // emphasis dark
+    colorButtonFont: firefoxPalette.transparent[3080],
+    colorButtonHover: firefoxPalette.transparent[94082],
+    colorButtonActive: firefoxPalette.transparent[86086],
 
     colorBackgroundHeaderContainer: "inherit",
-    colorSearchContainer: "#0c0c0d", // var(--color-alternative-font)
-    colorSearchInputColor: "#0c0c0d",
+    colorSearchContainer: firefoxPalette.neutral[3],
+    colorSearchInputColor: firefoxPalette.neutral[3],
 
     colorLiCount: "inherit",
     colorLiHover: "inherit",
@@ -36,31 +62,31 @@ export const themeFirefoxLightScheme = createGlobalTheme(":root", themeColorCont
 
 export const themeFirefoxDarkScheme = createGlobalTheme(":root", themeColorContract, {
   color: {
-    "colorFont": "#ffffff",
-    "colorFontSecondary": "#f9f9fa",
-    "colorFontAlternative": "#0c0c0d",
+    "colorFont": firefoxPalette.neutral[100],
+    "colorFontSecondary": firefoxPalette.neutral[98],
+    "colorFontAlternative": firefoxPalette.neutral[3],
 
-    "colorBackground": "#4a4a4f",
-    "colorBackgroundSecondary": "var(--color-background)",
-    "colorBackgroundAlternative": "rgb(255, 255, 255)",
+    "colorBackground": firefoxPalette.neutral[32],
+    "colorBackgroundSecondary": firefoxPalette.neutral[32],
+    "colorBackgroundAlternative": firefoxPalette.neutral[100],
 
-    "colorSeparator": "#7373738a",
+    "colorSeparator": firefoxPalette.transparent[48054],
 
-    "colorEmphasisDark": "#737373c1",
-    "colorEmphasisLight": "#7373738a",
+    "colorEmphasisDark": firefoxPalette.transparent[48076],
+    "colorEmphasisLight": firefoxPalette.transparent[48054],
 
-    "colorLinkHover": "#663399",
-    colorLinkHoverPurple: "#c169ffb9",
+    "colorLinkHover": firefoxPalette.accent[2],
+    colorLinkHoverPurple: firefoxPalette.accent[1],
 
-    "colorBackButton": "darkorchid",
+    "colorBackButton": firefoxPalette.accent[3],
 
-    "colorButtonFont": "#f9f9facc",
-    colorButtonHover: "var(--color-emphasis-light)",
-    colorButtonActive: "var(--color-emphasis-dark)",
+    "colorButtonFont": firefoxPalette.transparent[94082],
+    colorButtonHover: firefoxPalette.transparent[48054],
+    colorButtonActive: firefoxPalette.transparent[48076],
 
     colorBackgroundHeaderContainer: "inherit",
-    colorSearchContainer: "var(--color-alternative-font)",
-    colorSearchInputColor: "var(--color-alternative-font)",
+    colorSearchContainer: firefoxPalette.neutral[3],
+    colorSearchInputColor: firefoxPalette.neutral[3],
 
     colorLiCount: "inherit",
     colorLiHover: "inherit",
