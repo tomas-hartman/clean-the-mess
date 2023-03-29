@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { themeContract } from "../../../styles/themes.css";
 import { itemContainer } from "../../components/DetailItem.css";
 
 export const overviewItem = style([itemContainer, {
@@ -19,5 +20,5 @@ export const overviewItemControls = style({
 })
 
 export const overviewItemCount = style({
-  color: "var(--color-secondary-font)",
+  color: themeContract.color.fontSecondary,
 })

@@ -4,7 +4,7 @@ import { RouterProvider } from './providers/RouterProvider';
 import { Router } from './screens/Router';
 
 // TODO: is it neccessary to import it here?
-import '../../Popup.css';
+// import '../../Popup.css';
 
 export default function Popup() {
   return (

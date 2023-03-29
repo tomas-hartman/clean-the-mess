@@ -1,8 +1,9 @@
 import { style } from "@vanilla-extract/css";
+import { themeContract } from "../../styles/themes.css";
 
 export const detailHeaderContainer = style({
   paddingTop: 4, // chrome or both
-  backgroundColor: "var(--color-secondary-background)",
+  backgroundColor: themeContract.color.backgroundSecondary,
 })
 
 export const headerContentBase = style({

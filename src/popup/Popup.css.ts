@@ -1,4 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
+import { themeContract, themeUtilsContract } from "../styles/themes.css";
 
 globalStyle("html, body", {
   display: 'flex',
@@ -10,7 +11,7 @@ globalStyle("html, body", {
   minWidth: '350px',
   width: 'auto',
   overflow: 'hidden',
-  backgroundColor: 'var(--color-background)',
+  backgroundColor: themeContract.color.background,
   font: 'caption',
   cursor: 'default',
   userSelect: 'none'
@@ -18,9 +19,9 @@ globalStyle("html, body", {
 
 globalStyle("body, input", {
   fontWeight: 400,
-  fontSize: "var(--font-size)",
-  fontFamily: "var(--font-family)",
-  color: "var(--color-font)",
+  fontSize: themeUtilsContract.font.fontSize,
+  fontFamily: themeUtilsContract.font.fontFamily,
+  color: themeContract.color.font,
 })
 
 globalStyle("ul", {
@@ -41,7 +42,7 @@ globalStyle("#main-container",
 )
 
 globalStyle("input", {
-  color: "var(--search-input-color)",
+  color: themeContract.color.searchInputColor,
 })
 
 globalStyle("input:focus, textarea:focus, select:focus", {

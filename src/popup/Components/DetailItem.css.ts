@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { themeContract } from "../../styles/themes.css";
 
 export const itemContainer = style({
   listStyle: "none",
@@ -7,7 +8,7 @@ export const itemContainer = style({
   alignItems: "center",
 
   ":hover": {
-    backgroundColor: "var(--color-link-hover)",
+    backgroundColor: themeContract.color.linkHover,
   }
 })
 

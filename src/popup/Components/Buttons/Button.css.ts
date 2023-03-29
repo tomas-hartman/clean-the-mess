@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
+import { themeContract, themeUtilsContract } from "../../../styles/themes.css";
 
 export const button = recipe({
   base: {
@@ -10,31 +11,31 @@ export const button = recipe({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "inherit",
-    color: "var(--color-font-button)",
+    color: themeContract.color.buttonFont,
 
     ":hover": {
-      backgroundColor: "var(--button-hover-color)",
+      backgroundColor: themeContract.color.buttonHover,
     },
 
     ":active": {
-      backgroundColor: "var(--button-active-color)"
+      backgroundColor: themeContract.color.buttonActive
     }
   },
 
   variants: {
     size: {
       large: {
-        width: "var(--large-button-dimension)", // TODO proper vars from VE
-        height: "var(--large-button-dimension)",
+        width: themeUtilsContract.components.largeButtonSize, // TODO proper vars from VE
+        height: themeUtilsContract.components.largeButtonSize,
       },
       small: {
-        width: "var(--small-button-dimension)",
-        height: "var(--small-button-dimension)",
+        width: themeUtilsContract.components.smallButtonSize,
+        height: themeUtilsContract.components.smallButtonSize,
       }
     },
     isBack: {
       true: {
-        backgroundColor: "var(--color-back-button)",
+        backgroundColor: themeContract.color.backButton,
         transform: "rotate(180deg)",
       }
     }
@@ -47,16 +48,6 @@ export const getIn = style({
   alignItems: "center",
   backgroundColor: "inherit",
 
-  width: "var(--small-button-dimension)",
-  height: "var(--small-button-dimension)",
+  width: themeUtilsContract.components.smallButtonSize,
+  height: themeUtilsContract.components.smallButtonSize,
 })
-
-// #{$btn-name}.header-button {
-//   width: $header-button-dimension;
-//   height: $header-button-dimension;
-//   border-radius: $border-radius;
-
-//   border: 0;
-//   padding: 0;
-
-// }

@@ -1,9 +1,12 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
 
+import { useColorScheme } from '../src/popup/hooks';
+
 import '../src/styles/firefox/style.scss';
 import '../src/popup/Popup.css';
-import { themeFirefox } from '../src/styles/firefox.theme.css';
+import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../src/styles/firefoxTheme.css';
+import clsx from 'clsx';
 
 const preview: Preview = {
   parameters: {
@@ -19,11 +22,15 @@ const preview: Preview = {
     },
   },
   decorators: [
-    Story => (
-      <div className={themeFirefox}>
-        <Story />
-      </div>
-    ),
+    Story => {
+      const { darkSchemeOn } = useColorScheme();
+
+      return (
+        <div className={clsx(darkSchemeOn ? themeFirefoxDarkScheme : themeFirefoxLightScheme, themeFirefoxUtils)}>
+          <Story />
+        </div>
+      );
+    },
   ],
 };
 

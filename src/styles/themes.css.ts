@@ -1,40 +1,40 @@
-import { createGlobalThemeContract } from "@vanilla-extract/css";
+import { createThemeContract } from "@vanilla-extract/css";
 
 // Changes on light-dark scheme axis
-export const themeColorContract = createGlobalThemeContract({
+export const themeContract = createThemeContract({
   color: {
-    colorFont: 'color-font',
-    colorFontSecondary: 'color-font-secondary',
-    colorFontAlternative: 'color-font-alternative',
-    colorBackground: 'color-background',
-    colorBackgroundSecondary: 'color-background-secondary',
-    colorBackgroundAlternative: 'color-background-alternative',
+    font: 'color-font',
+    fontSecondary: 'color-font-secondary',
+    fontAlternative: 'color-font-alternative',
+    background: 'color-background',
+    backgroundSecondary: 'color-background-secondary',
+    backgroundAlternative: 'color-background-alternative',
 
-    colorSeparator: 'color-separator',
+    separator: 'color-separator',
 
-    colorEmphasisDark: 'color-emphasis-dark',
-    colorEmphasisLight: 'color-emphasis-light',
+    emphasisDark: 'color-emphasis-dark',
+    emphasisLight: 'color-emphasis-light',
 
-    colorLinkHover: 'color-link-hover',
-    colorLinkHoverPurple: 'color-link-hover-purple',
+    linkHover: 'color-link-hover',
+    linkHoverPurple: 'color-link-hover-purple',
 
-    colorBackButton: 'color-back-button',
+    backButton: 'color-back-button',
 
-    colorButtonFont: 'color-button-font',
-    colorButtonHover: 'color-button-hover',
-    colorButtonActive: 'color-button-active',
+    buttonFont: 'color-button-font',
+    buttonHover: 'color-button-hover',
+    buttonActive: 'color-button-active',
 
-    colorBackgroundHeaderContainer: 'color-background-header-container',
-    colorSearchContainer: 'color-search-container',
-    colorSearchInputColor: 'color-search-input-color',
+    backgroundHeaderContainer: 'color-background-header-container',
+    searchContainer: 'color-search-container',
+    searchInputColor: 'color-search-input-color',
 
-    colorLiCount: 'color-li-count',
-    colorLiHover: 'color-li-hover',
+    liCount: 'color-li-count',
+    liHover: 'color-li-hover',
   }
 });
 
 // Changes only on browser axis
-export const themeUtilsContract = createGlobalThemeContract({
+export const themeUtilsContract = createThemeContract({
   font: {
     fontSize: 'font-size',
     fontFamily: 'font-family',

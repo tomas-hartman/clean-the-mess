@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { themeContract } from '../../../styles/themes.css';
 
 export const overviewHeaderLatestItems = style({
   marginTop: '4px',
@@ -9,7 +10,7 @@ export const overviewHeaderLatestItems = style({
   boxSizing: 'border-box',
 
   ':hover': {
-    backgroundColor: 'var(--color-link-hover)',
+    backgroundColor: themeContract.color.linkHover,
   },
 });
 

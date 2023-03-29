@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import browser from 'webextension-polyfill';
+import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../../styles/firefoxTheme.css';
 import { handlePopupListeners } from '../../_modules';
-import { useNavigate } from '../hooks';
+import { useColorScheme, useNavigate } from '../hooks';
 import { useData } from '../hooks/useData';
 import { screen as screenStyle, screenBase, screenBodyContainer } from '../Popup.css';
 import { isChrome } from '../utils';
@@ -14,6 +15,7 @@ import { SearchScreen } from './Search';
 export const Router = () => {
   const { closeTabs, overview } = useData();
   const { screen } = useNavigate();
+  const { darkSchemeOn } = useColorScheme();
 
   /** Listeners from background.js (bookmark all) */
   /** @todo replace any */
@@ -67,7 +69,13 @@ export const Router = () => {
   );
 
   return (
-    <div className={screenBodyContainer}>
+    <div
+      className={clsx(
+        darkSchemeOn ? themeFirefoxDarkScheme : themeFirefoxLightScheme,
+        themeFirefoxUtils,
+        screenBodyContainer,
+      )}
+    >
       {overviewScreen}
       {detailsScreen}
       {searchScreen}
