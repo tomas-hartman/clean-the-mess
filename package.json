@@ -62,6 +62,7 @@
     "@types/webextension-polyfill": "^0.10.0",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
+    "@vanilla-extract/parcel-transformer": "^1.0.0",
     "@vanilla-extract/webpack-plugin": "^2.2.0",
     "babel-jest": "^27.5.1",
     "css-loader": "^6.7.3",
