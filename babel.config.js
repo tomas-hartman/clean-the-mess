@@ -1,6 +1,6 @@
 // This is neccessary for storybook to work. Parcel does not use it.
 module.exports = {
-  'presets': [
+  presets: [
     [
       '@babel/preset-env',
       {
