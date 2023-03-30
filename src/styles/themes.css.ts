@@ -1,7 +1,7 @@
-import { createThemeContract } from "@vanilla-extract/css";
+import { createGlobalThemeContract } from "@vanilla-extract/css";
 
 // Changes on light-dark scheme axis
-export const themeContract = createThemeContract({
+export const themeContract = createGlobalThemeContract({
   color: {
     font: 'color-font',
     fontSecondary: 'color-font-secondary',
@@ -34,7 +34,7 @@ export const themeContract = createThemeContract({
 });
 
 // Changes only on browser axis
-export const themeUtilsContract = createThemeContract({
+export const themeUtilsContract = createGlobalThemeContract({
   font: {
     fontSize: 'font-size',
     fontFamily: 'font-family',

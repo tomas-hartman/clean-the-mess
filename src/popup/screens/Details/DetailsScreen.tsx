@@ -5,7 +5,7 @@ import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';
 import { useData, useNavigate } from '../../hooks';
 import { screenList } from '../Overview/OverviewScreen.css';
-import { screenBodyContainer } from '../../Popup.css';
+import { screenBodyContainer } from '../Router.css';
 
 interface DetailsScreenProps {
   isActive: boolean;

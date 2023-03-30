@@ -1,5 +1,5 @@
-import { globalStyle, style } from "@vanilla-extract/css";
-import { themeContract, themeUtilsContract } from "../styles/themes.css";
+import { globalStyle } from "@vanilla-extract/css"
+import { themeContract, themeUtilsContract } from "../styles/themes.css"
 
 globalStyle("html, body", {
   display: 'flex',
@@ -14,7 +14,7 @@ globalStyle("html, body", {
   backgroundColor: themeContract.color.background,
   font: 'caption',
   cursor: 'default',
-  userSelect: 'none'
+  userSelect: 'none',
 })
 
 globalStyle("body, input", {
@@ -51,22 +51,4 @@ globalStyle("input:focus, textarea:focus, select:focus", {
 
 globalStyle(".hidden", {
   display: "none !important",
-})
-
-export const screenBase = style({
-  top: 0,
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-})
-
-export const screen = style([screenBase, {
-  position: 'absolute',
-  height: '100%',
-  transform: 'translate(100%)',
-  transition: 'transform 150ms cubic-bezier(.07, .95, 0, 1)',
-}])
-
-export const screenBodyContainer = style({
-  overflowY: "auto",
 })

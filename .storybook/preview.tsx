@@ -5,6 +5,7 @@ import { useColorScheme } from '../src/popup/hooks';
 
 import '../src/styles/firefox/style.scss';
 import '../src/popup/Popup.css';
+
 import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../src/styles/firefoxTheme.css';
 import clsx from 'clsx';
 
@@ -26,7 +27,7 @@ const preview: Preview = {
       const { darkSchemeOn } = useColorScheme();
 
       return (
-        <div className={clsx(darkSchemeOn ? themeFirefoxDarkScheme : themeFirefoxLightScheme, themeFirefoxUtils)}>
+        <div className={clsx(themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils)}>
           <Story />
         </div>
       );

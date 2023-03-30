@@ -1,21 +1,22 @@
 import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import browser from 'webextension-polyfill';
-import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../../styles/firefoxTheme.css';
 import { handlePopupListeners } from '../../_modules';
 import { useColorScheme, useNavigate } from '../hooks';
 import { useData } from '../hooks/useData';
-import { screen as screenStyle, screenBase, screenBodyContainer } from '../Popup.css';
+import { screen as screenStyle, screenBase, screenBodyContainer } from './Router.css';
 import { isChrome } from '../utils';
 import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
 import { OverviewScreen } from './Overview';
 import { SearchScreen } from './Search';
+import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../../styles/firefoxTheme.css';
 
 export const Router = () => {
   const { closeTabs, overview } = useData();
   const { screen } = useNavigate();
-  const { darkSchemeOn } = useColorScheme();
+
+  const {} = useColorScheme();
 
   /** Listeners from background.js (bookmark all) */
   /** @todo replace any */
@@ -68,14 +69,9 @@ export const Router = () => {
     [screen.name],
   );
 
+  // TODO maybe theme firefox scheme is not neccessary here?
   return (
-    <div
-      className={clsx(
-        darkSchemeOn ? themeFirefoxDarkScheme : themeFirefoxLightScheme,
-        themeFirefoxUtils,
-        screenBodyContainer,
-      )}
-    >
+    <div className={clsx(screenBodyContainer, themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils)}>
       {overviewScreen}
       {detailsScreen}
       {searchScreen}

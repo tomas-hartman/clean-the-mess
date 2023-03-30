@@ -9,7 +9,8 @@ export const useColorScheme = () => {
 
   useEffect(() => {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', listener)
-  }, [listener])
+    document.getElementsByTagName("html")[0].dataset.theme = darkSchemeOn ? "dark" : "light"
+  }, [listener, darkSchemeOn])
 
   return {
     darkSchemeOn

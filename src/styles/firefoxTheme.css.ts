@@ -1,4 +1,4 @@
-import { createTheme } from "@vanilla-extract/css";
+import { createGlobalTheme } from "@vanilla-extract/css";
 import { themeContract, themeUtilsContract } from "./themes.css";
 
 const firefoxPalette = {
@@ -27,7 +27,7 @@ const firefoxPalette = {
 }
 
 
-export const themeFirefoxLightScheme = createTheme(themeContract, {
+export const themeFirefoxLightScheme = createGlobalTheme(":root", themeContract, {
   color: {
     font: firefoxPalette.neutral[3],
     fontSecondary: firefoxPalette.neutral[48],
@@ -60,7 +60,7 @@ export const themeFirefoxLightScheme = createTheme(themeContract, {
   },
 })
 
-export const themeFirefoxDarkScheme = createTheme(themeContract, {
+export const themeFirefoxDarkScheme = createGlobalTheme("html[data-theme='dark']", themeContract, {
   color: {
     "font": firefoxPalette.neutral[100],
     "fontSecondary": firefoxPalette.neutral[98],
@@ -93,7 +93,7 @@ export const themeFirefoxDarkScheme = createTheme(themeContract, {
   }
 })
 
-export const themeFirefoxUtils = createTheme(themeUtilsContract, {
+export const themeFirefoxUtils = createGlobalTheme(":root", themeUtilsContract, {
   font: {
     fontSize: "inherit",
     fontFamily: "inherit",

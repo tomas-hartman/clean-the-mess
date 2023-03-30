@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { getHeaderTitle } from '../../../_modules';
 import { DetailsItem } from '../../components/DetailItem';
 import { useData, useFavicons } from '../../hooks';
-import { screenBodyContainer } from '../../Popup.css';
+import { screenBodyContainer } from '../Router.css';
 import { screenList } from '../Overview/OverviewScreen.css';
 import { LatestHeader } from './LatestHeader';
 
