@@ -1,7 +1,6 @@
 import { FC, useMemo } from 'react';
 import { DetailsItem } from '../../components/DetailItem';
 import { useFavicons, useData, useSearch } from '../../hooks';
-import { screenBodyContainer } from '../Router.css';
 import { screenList } from '../Overview/OverviewScreen.css';
 import { SearchError } from './SearchError';
 import { SearchHeader } from './SearchHeader';
@@ -42,9 +41,7 @@ export const SearchScreen: FC<SearchScreenProps> = ({ isActive }) => {
         closeTabs={closeTabs}
         isActive={isActive}
       />
-      <div className={screenBodyContainer}>
-        <ul className={screenList}>{result.length >= 1 ? foundItems : <SearchError />}</ul>
-      </div>
+      <ul className={screenList}>{result.length >= 1 ? foundItems : <SearchError />}</ul>
     </>
   );
 };

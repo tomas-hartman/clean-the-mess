@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { getHeaderTitle } from '../../../_modules';
 import { DetailsItem } from '../../components/DetailItem';
 import { useData, useFavicons } from '../../hooks';
-import { screenBodyContainer } from '../Router.css';
 import { screenList } from '../Overview/OverviewScreen.css';
 import { LatestHeader } from './LatestHeader';
 
@@ -19,20 +18,18 @@ export const LatestScreen: FC = () => {
   return (
     <>
       <LatestHeader title={headerTitle} />
-      <div className={screenBodyContainer}>
-        <ul className={screenList}>
-          {latestTabs.map((itemData, i) => (
-            <DetailsItem
-              itemId={i}
-              data={itemData}
-              type={type}
-              key={itemData.id}
-              closeTabs={closeTabs}
-              showFavicon={showFavicons}
-            />
-          ))}
-        </ul>
-      </div>
+      <ul className={screenList}>
+        {latestTabs.map((itemData, i) => (
+          <DetailsItem
+            itemId={i}
+            data={itemData}
+            type={type}
+            key={itemData.id}
+            closeTabs={closeTabs}
+            showFavicon={showFavicons}
+          />
+        ))}
+      </ul>
     </>
   );
 };

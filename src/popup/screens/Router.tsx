@@ -2,8 +2,7 @@ import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import browser from 'webextension-polyfill';
 import { handlePopupListeners } from '../../_modules';
-import { useColorScheme, useNavigate } from '../hooks';
-import { useData } from '../hooks/useData';
+import { useNavigate, useData } from '../hooks';
 import {
   screen as screenStyle,
   overviewScreen as overviewScreenStyle,
@@ -18,13 +17,10 @@ import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
 import { OverviewScreen } from './Overview';
 import { SearchScreen } from './Search';
-import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../../styles/firefoxTheme.css';
 
 export const Router = () => {
   const { closeTabs, overview } = useData();
   const { screen } = useNavigate();
-
-  const {} = useColorScheme();
 
   /** Listeners from background.js (bookmark all) */
   /** @todo replace any */
@@ -43,10 +39,7 @@ export const Router = () => {
 
   const overviewScreen = useMemo(
     () => (
-      <div
-        // id="overview"
-        className={clsx(overviewScreenStyle, overviewSlideOut, screen.name === 'overview' && overviewSlideIn)}
-      >
+      <div className={clsx(overviewScreenStyle, overviewSlideOut, screen.name === 'overview' && overviewSlideIn)}>
         <OverviewScreen />
       </div>
     ),
@@ -80,9 +73,8 @@ export const Router = () => {
     [screen.name],
   );
 
-  // TODO maybe theme firefox scheme is not neccessary here?
   return (
-    <div className={clsx(screenBodyContainer, themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils)}>
+    <div className={clsx(screenBodyContainer)}>
       {overviewScreen}
       {detailsScreen}
       {searchScreen}

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { DetailsHeader } from './DetailsHeader';
+import overviewData from '../../../_dev/search-dev/overview-data';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof DetailsHeader> = {
@@ -19,6 +20,7 @@ type Story = StoryObj<typeof DetailsHeader>;
 
 export const Header: Story = {
   args: {
-    title: 'Header name'
+    title: 'Header name',
+    overviewData: overviewData[0]
   },
 };

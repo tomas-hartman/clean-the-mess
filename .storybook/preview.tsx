@@ -3,8 +3,7 @@ import type { Preview } from '@storybook/react';
 
 import { useColorScheme } from '../src/popup/hooks';
 
-// import '../src/styles/firefox/style.scss';
-import '../src/popup/Popup.css';
+import '../src/styles/global.css';
 
 import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../src/styles/firefoxTheme.css';
 import clsx from 'clsx';

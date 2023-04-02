@@ -15,7 +15,10 @@ export const screenBodyContainer = style({
 export const screen = style({
   position: "absolute",
   width: "100%",
+  height: "100%",
   top: 0,
+  display: "flex",
+  flexDirection: "column",
 })
 
 export const overviewScreen = style([screen, {

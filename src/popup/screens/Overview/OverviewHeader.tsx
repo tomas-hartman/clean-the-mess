@@ -3,6 +3,7 @@ import { Separator } from '../../components/Separator';
 import { useNavigate } from '../../hooks';
 import { OverviewHeaderLatestItems } from './OverviewHeaderLatestItems';
 import { OverviewHeaderUpperItem } from './OverviewHeaderUpperItem';
+import { overviewHeaderContainer } from './OverviewHeader.css';
 
 type OverviewHeaderProps = {
   openTabs: number;
@@ -14,7 +15,7 @@ export const OverviewHeader: VFC<OverviewHeaderProps> = ({ openTabs }) => {
   const { switchToScreen } = useNavigate();
 
   return (
-    <div className="header-container">
+    <div className={overviewHeaderContainer}>
       <OverviewHeaderUpperItem openTabs={openTabs} switchToScreen={switchToScreen} />
       <Separator />
       {!isChrome && <OverviewHeaderLatestItems switchToScreen={switchToScreen} />}

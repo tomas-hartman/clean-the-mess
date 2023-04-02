@@ -1,15 +1,11 @@
 import { globalStyle } from "@vanilla-extract/css"
-import { themeContract, themeUtilsContract } from "../styles/themes.css"
+import { themeContract, themeUtilsContract } from "./themes.css"
 
 globalStyle("html, body", {
   padding: 0,
   margin: 0,
   boxSizing: 'border-box',
   overflow: 'hidden',
-
-  // display: 'flex',
-  // flexDirection: 'column',
-  // padding: '10px',
 
   font: 'caption',
   cursor: 'default',
@@ -18,8 +14,6 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   backgroundColor: themeContract.color.background,
-
-
 })
 
 globalStyle("body, input", {
@@ -35,24 +29,6 @@ globalStyle("ul", {
   marginBlockEnd: 'auto',
   paddingInlineStart: 'initial',
 })
-
-globalStyle("#main-container",
-  {
-    // boxSizing: "border-box",
-    // position: "relative",
-    // left: "0px",
-
-    // maxWidth: '370px',
-    // minWidth: '350px',
-    // width: 'auto',
-
-    // minHeight: "300px",
-    // maxHeight: "600px",
-
-    // display: "flex",
-    // padding: "10px",
-  }
-)
 
 globalStyle("input", {
   color: themeContract.color.searchInputColor,
