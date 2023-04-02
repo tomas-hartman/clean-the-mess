@@ -2,19 +2,24 @@ import { globalStyle } from "@vanilla-extract/css"
 import { themeContract, themeUtilsContract } from "../styles/themes.css"
 
 globalStyle("html, body", {
-  display: 'flex',
-  flexDirection: 'column',
-  boxSizing: 'border-box',
-  padding: '10px',
+  padding: 0,
   margin: 0,
-  maxWidth: '370px',
-  minWidth: '350px',
-  width: 'auto',
+  boxSizing: 'border-box',
   overflow: 'hidden',
-  backgroundColor: themeContract.color.background,
+
+  // display: 'flex',
+  // flexDirection: 'column',
+  // padding: '10px',
+
   font: 'caption',
   cursor: 'default',
   userSelect: 'none',
+})
+
+globalStyle("body", {
+  backgroundColor: themeContract.color.background,
+
+
 })
 
 globalStyle("body, input", {
@@ -33,11 +38,19 @@ globalStyle("ul", {
 
 globalStyle("#main-container",
   {
-    position: "relative",
-    left: "0px",
-    minHeight: "300px",
-    maxHeight: "600px",
-    display: "flex"
+    // boxSizing: "border-box",
+    // position: "relative",
+    // left: "0px",
+
+    // maxWidth: '370px',
+    // minWidth: '350px',
+    // width: 'auto',
+
+    // minHeight: "300px",
+    // maxHeight: "600px",
+
+    // display: "flex",
+    // padding: "10px",
   }
 )
 

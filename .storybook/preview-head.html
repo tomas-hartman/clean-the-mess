@@ -3,11 +3,23 @@
   Object.defineProperty(globalThis, "chrome", {
     value: {
       runtime: {
-        id: "mock"
+        id: "mock",
+        onMessage: {
+          addListener: () => true,
+          removeListener: () => true
+        }
       },
       bookmarks: {
         search: () => []
-      }
+      },
+      storage: {
+        sync: {
+          get: () => true
+        },
+      },
+      tabs: {
+        query: () => []
+      },
     },
     enumerable: false,
     configurable: true,

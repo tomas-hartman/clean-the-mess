@@ -4,7 +4,15 @@ import browser from 'webextension-polyfill';
 import { handlePopupListeners } from '../../_modules';
 import { useColorScheme, useNavigate } from '../hooks';
 import { useData } from '../hooks/useData';
-import { screen as screenStyle, screenBase, screenBodyContainer } from './Router.css';
+import {
+  screen as screenStyle,
+  overviewScreen as overviewScreenStyle,
+  screenBodyContainer,
+  screenSlideOut,
+  screenSlideIn,
+  overviewSlideIn,
+  overviewSlideOut,
+} from './Router.css';
 import { isChrome } from '../utils';
 import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
@@ -35,7 +43,10 @@ export const Router = () => {
 
   const overviewScreen = useMemo(
     () => (
-      <div id="overview" className={clsx(screenBase, 'slide-out', screen.name === 'overview' && 'slide-in-reverse')}>
+      <div
+        // id="overview"
+        className={clsx(overviewScreenStyle, overviewSlideOut, screen.name === 'overview' && overviewSlideIn)}
+      >
         <OverviewScreen />
       </div>
     ),
@@ -44,7 +55,7 @@ export const Router = () => {
 
   const detailsScreen = useMemo(
     () => (
-      <div className={clsx(screenStyle, screen.name === 'details' && 'slide-in')}>
+      <div className={clsx(screenStyle, screenSlideOut, screen.name === 'details' && screenSlideIn)}>
         <DetailsScreen screen={screen} isActive={screen.name === 'details'} />
       </div>
     ),
@@ -53,7 +64,7 @@ export const Router = () => {
 
   const searchScreen = useMemo(
     () => (
-      <div className={clsx(screenStyle, screen.name === 'search' && 'slide-in')}>
+      <div className={clsx(screenStyle, screenSlideOut, screen.name === 'search' && screenSlideIn)}>
         <SearchScreen isActive={screen.name === 'search'} />
       </div>
     ),
@@ -62,7 +73,7 @@ export const Router = () => {
 
   const latestScreen = useMemo(
     () => (
-      <div className={clsx(screenStyle, screen.name === 'latest' && 'slide-in')}>
+      <div className={clsx(screenStyle, screenSlideOut, screen.name === 'latest' && screenSlideIn)}>
         <LatestScreen />
       </div>
     ),
