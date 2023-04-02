@@ -54,6 +54,7 @@ export const themeFirefoxLightScheme = createGlobalTheme(":root", themeContract,
     backgroundHeaderContainer: "inherit",
     searchContainer: firefoxPalette.neutral[3],
     searchInputColor: firefoxPalette.neutral[3],
+    searchBackground: "inherit", // chrome: var(--color-alternative-background);
 
     liCount: "inherit",
     liHover: "inherit",
@@ -87,6 +88,7 @@ export const themeFirefoxDarkScheme = createGlobalTheme("html[data-theme='dark']
     backgroundHeaderContainer: "inherit",
     searchContainer: firefoxPalette.neutral[3],
     searchInputColor: firefoxPalette.neutral[3],
+    searchBackground: "inherit",
 
     liCount: "inherit",
     liHover: "inherit",

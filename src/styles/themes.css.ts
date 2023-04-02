@@ -27,6 +27,7 @@ export const themeContract = createGlobalThemeContract({
     backgroundHeaderContainer: 'color-background-header-container',
     searchContainer: 'color-search-container',
     searchInputColor: 'color-search-input-color',
+    searchBackground: "color-search-background",
 
     liCount: 'color-li-count',
     liHover: 'color-li-hover',
