@@ -1,4 +1,4 @@
-import { createGlobalThemeContract } from "@vanilla-extract/css";
+import { createGlobalThemeContract } from '@vanilla-extract/css';
 
 // Changes on light-dark scheme axis
 export const themeContract = createGlobalThemeContract({
@@ -19,6 +19,8 @@ export const themeContract = createGlobalThemeContract({
     linkHoverPurple: 'color-link-hover-purple',
 
     backButton: 'color-back-button',
+    backButtonFont: 'color-back-button-font',
+    getInButtonFont: 'get-in-button-font',
 
     buttonFont: 'color-button-font',
     buttonHover: 'color-button-hover',
@@ -27,11 +29,11 @@ export const themeContract = createGlobalThemeContract({
     backgroundHeaderContainer: 'color-background-header-container',
     searchContainer: 'color-search-container',
     searchInputColor: 'color-search-input-color',
-    searchBackground: "color-search-background",
+    searchBackground: 'color-search-background',
 
     liCount: 'color-li-count',
     liHover: 'color-li-hover',
-  }
+  },
 });
 
 // Changes only on browser axis
@@ -53,8 +55,8 @@ export const themeUtilsContract = createGlobalThemeContract({
   },
   misc: {
     browser: 'browser',
-  }
-})
+  },
+});
 
 // export const themeContract = createGlobalThemeContract({
 //   color: {
@@ -106,4 +108,3 @@ export const themeUtilsContract = createGlobalThemeContract({
 //     browser: null,
 //   }
 // });
-

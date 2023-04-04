@@ -98,6 +98,7 @@
     "gulp-merge-json": "^2.1.1",
     "gulp-rename": "^2.0.0",
     "gulp-template-html": "^0.2.2",
+    "polished": "^4.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "webextension-polyfill": "^0.10.0"
