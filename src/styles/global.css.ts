@@ -14,6 +14,13 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   backgroundColor: themeContract.color.background,
+
+  // TODO: Ideally make dependant on overview height
+  // minHeight: 300,
+  // maxHeight: 600,
+
+  width: 360,
+  height: 450,
 })
 
 globalStyle("body, input", {

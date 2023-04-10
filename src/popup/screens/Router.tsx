@@ -6,7 +6,6 @@ import { useNavigate, useData } from '../hooks';
 import {
   screen as screenStyle,
   overviewScreen as overviewScreenStyle,
-  screenBodyContainer,
   screenSlideOut,
   screenSlideIn,
   overviewSlideIn,
@@ -74,11 +73,11 @@ export const Router = () => {
   );
 
   return (
-    <div className={clsx(screenBodyContainer)}>
+    <>
       {overviewScreen}
       {detailsScreen}
       {searchScreen}
       {!isChrome() && latestScreen}
-    </div>
+    </>
   );
 };
