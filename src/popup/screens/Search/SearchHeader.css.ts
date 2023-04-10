@@ -9,6 +9,7 @@ export const searchContainer = style({
   paddingLeft: 8,
   paddingRight: 8,
   gap: 4,
+  borderRadius: themeUtilsContract.components.searchBorderRadius,
 })
 
 export const searchInput = style({

@@ -19,6 +19,7 @@ export const themeContract = createGlobalThemeContract({
     linkHoverPurple: 'color-link-hover-purple',
 
     backButton: 'color-back-button',
+    backButtonHover: 'color-back-button-hover',
     backButtonFont: 'color-back-button-font',
     getInButtonFont: 'get-in-button-font',
 

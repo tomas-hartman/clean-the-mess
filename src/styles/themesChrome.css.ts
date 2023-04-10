@@ -47,6 +47,7 @@ const all = {
   searchContainerColor: 'inherit',
   liCountColor: palette.color8,
   liCountHoverColor: palette.color7,
+  backButtonHover: palette.color2,
 }
 
 const dark = {
@@ -61,7 +62,8 @@ const dark = {
   colorFont: palette.color18,
   colorSecondaryFont: palette.color19,
   colorAlternativeFont: palette.color20,
-  colorFontButton: palette.color21
+  colorFontButton: palette.color19,
+  backButtonHover: palette.color10,
 }
 
 export const themeChromeLightScheme = createGlobalTheme(':root', themeContract, {
@@ -82,6 +84,7 @@ export const themeChromeLightScheme = createGlobalTheme(':root', themeContract, 
     linkHoverPurple: all.colorLinkHoverPurple,
 
     backButton: all.colorBackButton,
+    backButtonHover: all.colorBackButton,
     backButtonFont: all.colorFontButton,
     getInButtonFont: all.colorFontButton,
 
@@ -99,7 +102,7 @@ export const themeChromeLightScheme = createGlobalTheme(':root', themeContract, 
   }
 })
 
-export const themeChromeDarkScheme = createGlobalTheme(':root', themeContract, {
+export const themeChromeDarkScheme = createGlobalTheme("html[data-theme='dark']", themeContract, {
   color: {
     font: dark.colorFont,
     fontSecondary: dark.colorSecondaryFont,
@@ -117,11 +120,12 @@ export const themeChromeDarkScheme = createGlobalTheme(':root', themeContract, {
     linkHoverPurple: all.colorLinkHoverPurple,
 
     backButton: dark.colorBackButton,
-    backButtonFont: dark.colorFontButton,
+    backButtonHover: dark.backButtonHover,
+    backButtonFont: dark.colorFont,
     getInButtonFont: dark.colorFontButton,
 
     buttonFont: dark.colorFontButton,
-    buttonHover: all.buttonHoverColor,
+    buttonHover: dark.colorSecondaryBackground,
     buttonActive: all.buttonActiveColor,
 
     backgroundHeaderContainer: all.headerContainerBg,

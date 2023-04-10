@@ -5,6 +5,7 @@ import { useColorScheme } from '../src/popup/hooks';
 
 import '../src/styles/global.css';
 import '../src/styles/themesFirefox.css';
+// import '../src/styles/themesChrome.css';
 
 const preview: Preview = {
   parameters: {

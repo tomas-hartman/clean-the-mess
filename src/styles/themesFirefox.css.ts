@@ -48,6 +48,7 @@ export const themeFirefoxLightScheme = createGlobalTheme(':root', themeContract,
     linkHoverPurple: firefoxPalette.accent[1],
 
     backButton: firefoxPalette.neutral[100],
+    backButtonHover: firefoxPalette.neutral[100],
     backButtonFont: firefoxPalette.transparent[3080],
     getInButtonFont: firefoxPalette.transparent[3020],
 
@@ -84,6 +85,7 @@ export const themeFirefoxDarkScheme = createGlobalTheme("html[data-theme='dark']
     linkHoverPurple: firefoxPalette.accent[1],
 
     backButton: firefoxPalette.accent[3],
+    backButtonHover: firefoxPalette.accent[3],
     backButtonFont: firefoxPalette.transparent[98080],
     getInButtonFont: firefoxPalette.transparent[98050],
 

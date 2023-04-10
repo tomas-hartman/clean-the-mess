@@ -1,7 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, themeUtilsContract } from "../../../styles/themes.css";
-import { theme } from "webextension-polyfill";
 
 export const button = recipe({
   base: {
@@ -13,6 +12,7 @@ export const button = recipe({
     alignItems: "center",
     backgroundColor: "inherit",
     color: themeContract.color.buttonFont,
+    borderRadius: themeUtilsContract.radii.borderRadius,
 
     ":hover": {
       backgroundColor: themeContract.color.buttonHover,
@@ -39,6 +39,10 @@ export const button = recipe({
         backgroundColor: themeContract.color.backButton,
         color: themeContract.color.backButtonFont,
         transform: "rotate(180deg)",
+
+        ":hover": {
+          backgroundColor: themeContract.color.backButtonHover,
+        }
       }
     }
   }
