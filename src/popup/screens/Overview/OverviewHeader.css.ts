@@ -7,7 +7,7 @@ export const overviewHeaderContainer = style({
 })
 
 export const overviewHeaderContent = style([headerContentBase, {
-  gridTemplateColumns: "auto 40px"
+  gridTemplateColumns: "auto 32px"
 }])
 
 export const overviewHeaderTitle = style([headerTitleBase, {

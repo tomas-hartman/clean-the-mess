@@ -4,5 +4,5 @@ export const detailsHeaderTitle = style({
   justifyContent: 'center',
   display: 'flex',
   alignItems: 'center',
-  gap: 4,
+  gap: 8,
 })

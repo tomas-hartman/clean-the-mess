@@ -1,5 +1,6 @@
 export const tabsOverview = [
   {
+    key: 2,
     url: 'https://www.google.com',
     count: 5,
     ids: [77, 80, 92, 97, 99],
