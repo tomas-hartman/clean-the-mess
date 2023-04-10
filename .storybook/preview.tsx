@@ -4,9 +4,7 @@ import type { Preview } from '@storybook/react';
 import { useColorScheme } from '../src/popup/hooks';
 
 import '../src/styles/global.css';
-
-import { themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils } from '../src/styles/firefoxTheme.css';
-import clsx from 'clsx';
+import '../src/styles/themesFirefox.css';
 
 const preview: Preview = {
   parameters: {
@@ -23,14 +21,9 @@ const preview: Preview = {
   },
   decorators: [
     Story => {
-      const { darkSchemeOn } = useColorScheme();
+      useColorScheme();
 
-      return (
-        // @ts-expect-error TODO: classes must be imported here in order for theming to work properly.
-        <div className={clsx(themeFirefoxDarkScheme, themeFirefoxLightScheme, themeFirefoxUtils)}>
-          <Story />
-        </div>
-      );
+      return <Story />;
     },
   ],
 };
