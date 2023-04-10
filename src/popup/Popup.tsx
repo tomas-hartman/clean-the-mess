@@ -4,11 +4,15 @@ import { RouterProvider } from './providers/RouterProvider';
 import { Router } from './screens/Router';
 import { useColorScheme } from './hooks';
 
+// Global theme style
+
 import '../styles/global.css';
 
-// Global theme style
-// TODO: theming
-import '../styles/firefoxTheme.css';
+if (process.env.BROWSER === 'firefox') {
+  import('../styles/themesFirefox.css');
+} else {
+  import('../styles/themesChrome.css');
+}
 
 export default function Popup() {
   useColorScheme();
