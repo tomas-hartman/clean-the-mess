@@ -14,13 +14,13 @@ export const confirmOverlay = style({
 })
 
 export const confirmBox = style({
-  backgroundColor: themeContract.color.background,
+  backgroundColor: themeContract.palette.background,
   width: "75%",
   minHeight: "30%",
   borderRadius: "0.2rem",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
 })
 
 export const confirmMessage = style({
@@ -31,7 +31,7 @@ export const confirmMessage = style({
 
 export const confirmButtonSection = style({
   padding: '0.8rem',
-  backgroundColor: themeContract.color.backgroundSecondary,
+  backgroundColor: themeContract.palette.headerBackground,
   borderRadius: '0.2rem',
   display: 'flex',
   justifyContent: 'space-evenly'
@@ -39,13 +39,13 @@ export const confirmButtonSection = style({
 
 export const confirmButton = style({
   padding: '0.4rem 0.8rem',
-  backgroundColor: themeContract.color.emphasisDark,
+  backgroundColor: themeContract.palette.confirmButtonBackground,
   border: '1px',
-  color: themeContract.color.font,
+  color: themeContract.palette.fontColor,
   borderRadius: '0.2rem',
   fontSize: 'inherit',
 
   ":hover": {
-    backgroundColor: themeContract.color.emphasisLight,
+    backgroundColor: themeContract.palette.confirmButtonHover,
   },
 })

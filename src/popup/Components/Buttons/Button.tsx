@@ -11,10 +11,11 @@ type ButtonProps = {
   isHidden?: boolean;
   size: 'small' | 'large';
   isBack?: boolean;
+  isOverview?: boolean;
 };
 
-export const Button: FC<ButtonProps> = ({ onClick: handleClick, icon, title, isHidden, size, isBack }) => {
-  const buttonClasses = clsx({ hidden: isHidden }, button({ size, isBack }));
+export const Button: FC<ButtonProps> = ({ onClick: handleClick, icon, title, isHidden, size, isBack, isOverview }) => {
+  const buttonClasses = clsx({ hidden: isHidden }, button({ size, isBack, isOverview }));
 
   return (
     <button type="button" className={buttonClasses} title={title} onClick={handleClick}>

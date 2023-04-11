@@ -15,7 +15,7 @@ export const OverviewHeaderUpperItem: FC<OverviewHeaderUpperItemProps> = ({ open
       <div className={clsx(overviewHeaderTitle)}>
         <span className={clsx(overviewHeaderMessage)}>You have {openTabs ?? 'no'} open tabs in this window.</span>
       </div>
-      <SearchBtn onClick={() => switchToScreen('search')} />
+      <SearchBtn onClick={() => switchToScreen('search')} isOverview />
     </div>
   );
 };

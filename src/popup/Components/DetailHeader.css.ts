@@ -3,7 +3,7 @@ import { themeContract } from "../../styles/themes.css";
 
 export const detailHeaderContainer = style({
   paddingTop: 4, // chrome or both
-  backgroundColor: themeContract.color.backgroundSecondary,
+  backgroundColor: themeContract.palette.headerBackground,
 })
 
 export const headerContentBase = style({

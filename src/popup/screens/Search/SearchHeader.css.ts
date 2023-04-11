@@ -4,7 +4,7 @@ import { themeContract, themeUtilsContract } from "../../../styles/themes.css";
 export const searchContainer = style({
   display: "flex",
   backgroundColor: "white", // TODO
-  color: themeContract.color.searchContainer,
+  color: themeContract.palette.searchBackground,
   alignItems: "center",
   paddingLeft: 8,
   paddingRight: 8,
@@ -24,5 +24,5 @@ export const searchInput = style({
 })
 
 export const searchControls = style({
-  color: themeContract.color.searchInputColor,
+  color: themeContract.palette.searchFontColor,
 })

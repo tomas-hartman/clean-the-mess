@@ -20,5 +20,5 @@ export const overviewItemControls = style({
 })
 
 export const overviewItemCount = style({
-  color: themeContract.color.fontSecondary,
+  color: themeContract.palette.itemSecondaryFontColor,
 })

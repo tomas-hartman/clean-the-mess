@@ -1,5 +1,6 @@
 import { createGlobalTheme } from "@vanilla-extract/css";
 import { themeContract, themeUtilsContract } from "./themes.css";
+import { darken, transparentize } from "polished";
 
 // TODO: improve color definitions
 const palette = {
@@ -47,7 +48,9 @@ const all = {
   searchContainerColor: 'inherit',
   liCountColor: palette.color8,
   liCountHoverColor: palette.color7,
-  backButtonHover: palette.color2,
+  backButtonHover: palette.color1,
+  headerBackgroundHover: palette.color3,
+  itemButtonHover: palette.color4,
 }
 
 const dark = {
@@ -64,77 +67,58 @@ const dark = {
   colorAlternativeFont: palette.color20,
   colorFontButton: palette.color19,
   backButtonHover: palette.color10,
+  headerBackgroundHover: palette.color15,
+  itemButtonHover: transparentize(0.3, darken(0.1, palette.color10)),
+  overviewHeaderButtonHover: palette.color14,
 }
 
 export const themeChromeLightScheme = createGlobalTheme(':root', themeContract, {
-  color: {
-    font: all.colorFont,
-    fontSecondary: all.colorSecondaryFont,
-    fontAlternative: all.colorAlternativeFont,
+  palette: {
+    fontColor: all.colorFont,
     background: all.colorBackground,
-    backgroundSecondary: all.colorSecondaryBackground,
-    backgroundAlternative: all.colorAlternativeBackground,
-
-    separator: all.colorSeparator,
-
-    emphasisDark: all.colorEmphasisDark,
-    emphasisLight: all.colorEmphasisLight,
-
-    linkHover: all.colorLinkHover,
-    linkHoverPurple: all.colorLinkHoverPurple,
-
-    backButton: all.colorBackButton,
-    backButtonHover: all.colorBackButton,
-    backButtonFont: all.colorFontButton,
-    getInButtonFont: all.colorFontButton,
-
-    buttonFont: all.colorFontButton,
-    buttonHover: all.buttonHoverColor,
-    buttonActive: all.buttonActiveColor,
-
-    backgroundHeaderContainer: all.headerContainerBg,
-    searchContainer: all.searchContainerColor,
-    searchInputColor: all.searchInputColor,
-    searchBackground: "inherit",
-
-    liCount: all.liCountColor,
-    liHover: all.liCountHoverColor,
+    headerBackground: all.colorSecondaryBackground,
+    headerButtonColor: all.colorFontButton,
+    headerButtonHover: all.headerBackgroundHover,
+    overviewHeaderButtonHover: all.headerBackgroundHover,
+    accentHeaderButtonFontColor: all.colorFontButton,
+    accentHeaderButtonBackground: all.colorBackButton,
+    accentHeaderButtonHover: all.backButtonHover,
+    itemSecondaryFontColor: all.colorSecondaryFont,
+    itemArrowButtonColor: all.colorFontButton,
+    itemHover: all.colorLinkHover,
+    itemButtonColor: all.colorFontButton,
+    itemButtonHover: all.buttonHoverColor,
+    itemButtonActive: all.buttonActiveColor,
+    separatorColor: all.colorSeparator,
+    searchBackground: all.searchContainerColor,
+    searchFontColor: all.searchInputColor,
+    confirmButtonBackground: all.colorEmphasisDark,
+    confirmButtonHover: all.colorEmphasisLight
   }
 })
 
 export const themeChromeDarkScheme = createGlobalTheme("html[data-theme='dark']", themeContract, {
-  color: {
-    font: dark.colorFont,
-    fontSecondary: dark.colorSecondaryFont,
-    fontAlternative: dark.colorAlternativeFont,
+  palette: {
+    fontColor: dark.colorFont,
     background: dark.colorBackground,
-    backgroundSecondary: dark.colorSecondaryBackground,
-    backgroundAlternative: dark.colorAlternativeBackground,
-
-    separator: dark.colorSeparator,
-
-    emphasisDark: dark.colorEmphasisDark,
-    emphasisLight: dark.colorEmphasisLight,
-
-    linkHover: dark.colorLinkHover,
-    linkHoverPurple: all.colorLinkHoverPurple,
-
-    backButton: dark.colorBackButton,
-    backButtonHover: dark.backButtonHover,
-    backButtonFont: dark.colorFont,
-    getInButtonFont: dark.colorFontButton,
-
-    buttonFont: dark.colorFontButton,
-    buttonHover: dark.colorSecondaryBackground,
-    buttonActive: all.buttonActiveColor,
-
-    backgroundHeaderContainer: all.headerContainerBg,
-    searchContainer: all.searchContainerColor,
-    searchInputColor: all.searchInputColor,
-    searchBackground: "inherit",
-
-    liCount: "inherit",
-    liHover: "inherit",
+    headerBackground: dark.colorSecondaryBackground,
+    headerButtonColor: dark.colorFontButton,
+    headerButtonHover: dark.headerBackgroundHover,
+    overviewHeaderButtonHover: dark.overviewHeaderButtonHover,
+    accentHeaderButtonFontColor: dark.colorFont,
+    accentHeaderButtonBackground: dark.colorBackButton,
+    accentHeaderButtonHover: dark.backButtonHover,
+    itemSecondaryFontColor: dark.colorSecondaryFont,
+    itemArrowButtonColor: dark.colorFontButton,
+    itemHover: dark.colorLinkHover, // or colorLinkHoverPurple?
+    itemButtonColor: dark.colorFontButton,
+    itemButtonHover: dark.itemButtonHover,
+    itemButtonActive: all.buttonActiveColor,
+    separatorColor: dark.colorSeparator,
+    searchBackground: all.searchContainerColor, // chrome: var(--color-alternative-background); - dark!
+    searchFontColor: all.searchInputColor,
+    confirmButtonBackground: dark.colorEmphasisDark,
+    confirmButtonHover: dark.colorEmphasisLight
   }
 })
 

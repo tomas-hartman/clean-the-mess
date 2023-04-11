@@ -30,77 +30,53 @@ const firefoxPalette = {
 };
 
 export const themeFirefoxLightScheme = createGlobalTheme(':root', themeContract, {
-  color: {
-    font: firefoxPalette.neutral[3],
-    fontSecondary: firefoxPalette.neutral[48],
-    fontAlternative: firefoxPalette.neutral[3],
-
+  palette: {
+    fontColor: firefoxPalette.neutral[3],
     background: firefoxPalette.neutral[100],
-    backgroundSecondary: firefoxPalette.neutral[100],
-    backgroundAlternative: firefoxPalette.neutral[100],
-
-    separator: firefoxPalette.neutral[86],
-
-    emphasisDark: firefoxPalette.transparent[86086],
-    emphasisLight: firefoxPalette.transparent[94082],
-
-    linkHover: firefoxPalette.transparent[86086],
-    linkHoverPurple: firefoxPalette.accent[1],
-
-    backButton: firefoxPalette.neutral[100],
-    backButtonHover: firefoxPalette.neutral[100],
-    backButtonFont: firefoxPalette.transparent[3080],
-    getInButtonFont: firefoxPalette.transparent[3020],
-
-    buttonFont: firefoxPalette.transparent[3080],
-    buttonHover: firefoxPalette.transparent[94082],
-    buttonActive: firefoxPalette.transparent[86086],
-
-    backgroundHeaderContainer: 'inherit',
-    searchContainer: firefoxPalette.neutral[3],
-    searchInputColor: firefoxPalette.neutral[3],
-    searchBackground: 'inherit', // chrome: var(--color-alternative-background);
-
-    liCount: 'inherit',
-    liHover: 'inherit',
-  },
+    headerBackground: firefoxPalette.neutral[100],
+    headerButtonColor: firefoxPalette.transparent[3080],
+    headerButtonHover: firefoxPalette.transparent[94082],
+    overviewHeaderButtonHover: firefoxPalette.transparent[94082],
+    accentHeaderButtonFontColor: firefoxPalette.transparent[3080],
+    accentHeaderButtonBackground: firefoxPalette.neutral[100],
+    accentHeaderButtonHover: firefoxPalette.accent[1],
+    itemSecondaryFontColor: firefoxPalette.neutral[48],
+    itemArrowButtonColor: firefoxPalette.transparent[3020],
+    itemHover: firefoxPalette.transparent[86086],
+    itemButtonColor: firefoxPalette.transparent[3080],
+    itemButtonHover: firefoxPalette.transparent[94082],
+    itemButtonActive: firefoxPalette.transparent[86086],
+    separatorColor: firefoxPalette.neutral[86],
+    searchBackground: firefoxPalette.neutral[3],
+    searchFontColor: firefoxPalette.neutral[3],
+    confirmButtonBackground: firefoxPalette.transparent[86086],
+    confirmButtonHover: firefoxPalette.transparent[94082]
+  }
 });
 
 export const themeFirefoxDarkScheme = createGlobalTheme("html[data-theme='dark']", themeContract, {
-  color: {
-    font: firefoxPalette.neutral[100],
-    fontSecondary: firefoxPalette.neutral[98],
-    fontAlternative: firefoxPalette.neutral[3],
-
+  palette: {
+    fontColor: firefoxPalette.neutral[100],
     background: firefoxPalette.neutral[32],
-    backgroundSecondary: firefoxPalette.neutral[32],
-    backgroundAlternative: firefoxPalette.neutral[100],
-
-    separator: firefoxPalette.transparent[48054],
-
-    emphasisDark: firefoxPalette.transparent[48076],
-    emphasisLight: firefoxPalette.transparent[48054],
-
-    linkHover: firefoxPalette.accent[2],
-    linkHoverPurple: firefoxPalette.accent[1],
-
-    backButton: firefoxPalette.accent[3],
-    backButtonHover: firefoxPalette.accent[3],
-    backButtonFont: firefoxPalette.transparent[98080],
-    getInButtonFont: firefoxPalette.transparent[98050],
-
-    buttonFont: firefoxPalette.transparent[98080],
-    buttonHover: firefoxPalette.transparent[48054],
-    buttonActive: firefoxPalette.transparent[48076],
-
-    backgroundHeaderContainer: 'inherit',
-    searchContainer: firefoxPalette.neutral[3],
-    searchInputColor: firefoxPalette.neutral[3],
-    searchBackground: 'inherit',
-
-    liCount: 'inherit',
-    liHover: 'inherit',
-  },
+    headerBackground: firefoxPalette.neutral[32],
+    headerButtonColor: firefoxPalette.transparent[98080],
+    headerButtonHover: firefoxPalette.transparent[48054],
+    overviewHeaderButtonHover: firefoxPalette.transparent[48054],
+    accentHeaderButtonFontColor: firefoxPalette.transparent[98080],
+    accentHeaderButtonBackground: firefoxPalette.accent[3],
+    accentHeaderButtonHover: firefoxPalette.accent[2],
+    itemSecondaryFontColor: firefoxPalette.neutral[98],
+    itemArrowButtonColor: firefoxPalette.transparent[98050],
+    itemHover: firefoxPalette.accent[2], // accent 1?
+    itemButtonColor: firefoxPalette.transparent[98080],
+    itemButtonHover: firefoxPalette.transparent[48054],
+    itemButtonActive: firefoxPalette.transparent[48076],
+    separatorColor: firefoxPalette.transparent[48054],
+    searchBackground: firefoxPalette.neutral[3],
+    searchFontColor: firefoxPalette.neutral[3],
+    confirmButtonBackground: firefoxPalette.transparent[48076],
+    confirmButtonHover: firefoxPalette.transparent[48054]
+  }
 });
 
 export const themeFirefoxUtils = createGlobalTheme(':root', themeUtilsContract, {

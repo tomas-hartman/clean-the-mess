@@ -13,7 +13,7 @@ globalStyle("html, body", {
 })
 
 globalStyle("body", {
-  backgroundColor: themeContract.color.background,
+  backgroundColor: themeContract.palette.background,
 
   // TODO: Ideally make dependant on overview height
   // minHeight: 300,
@@ -27,7 +27,7 @@ globalStyle("body, input", {
   fontWeight: 400,
   fontSize: themeUtilsContract.font.fontSize,
   fontFamily: themeUtilsContract.font.fontFamily,
-  color: themeContract.color.font,
+  color: themeContract.palette.fontColor,
 })
 
 globalStyle("ul", {
@@ -38,7 +38,7 @@ globalStyle("ul", {
 })
 
 globalStyle("input", {
-  color: themeContract.color.searchInputColor,
+  color: themeContract.palette.searchFontColor,
 })
 
 globalStyle("input:focus, textarea:focus, select:focus", {

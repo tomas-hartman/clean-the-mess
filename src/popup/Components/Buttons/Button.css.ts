@@ -11,15 +11,15 @@ export const button = recipe({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "inherit",
-    color: themeContract.color.buttonFont,
+    color: themeContract.palette.itemButtonColor,
     borderRadius: themeUtilsContract.radii.borderRadius,
 
     ":hover": {
-      backgroundColor: themeContract.color.buttonHover,
+      backgroundColor: themeContract.palette.itemButtonHover,
     },
 
     ":active": {
-      backgroundColor: themeContract.color.buttonActive
+      backgroundColor: themeContract.palette.itemButtonActive
     }
   },
 
@@ -28,6 +28,11 @@ export const button = recipe({
       large: {
         width: themeUtilsContract.components.largeButtonSize, // TODO proper vars from VE
         height: themeUtilsContract.components.largeButtonSize,
+        color: themeContract.palette.headerButtonColor,
+
+        ":hover": {
+          backgroundColor: themeContract.palette.headerButtonHover
+        }
       },
       small: {
         width: themeUtilsContract.components.smallButtonSize,
@@ -36,16 +41,23 @@ export const button = recipe({
     },
     isBack: {
       true: {
-        backgroundColor: themeContract.color.backButton,
-        color: themeContract.color.backButtonFont,
+        backgroundColor: themeContract.palette.accentHeaderButtonBackground,
+        color: themeContract.palette.accentHeaderButtonFontColor,
         transform: "rotate(180deg)",
 
         ":hover": {
-          backgroundColor: themeContract.color.backButtonHover,
+          backgroundColor: themeContract.palette.accentHeaderButtonHover,
+        }
+      }
+    },
+    isOverview: {
+      true: {
+        ":hover": {
+          backgroundColor: themeContract.palette.overviewHeaderButtonHover
         }
       }
     }
-  }
+  },
 })
 
 export const getIn = style({

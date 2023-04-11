@@ -10,7 +10,7 @@ export const overviewHeaderLatestItems = style({
   boxSizing: 'border-box',
 
   ':hover': {
-    backgroundColor: themeContract.color.linkHover,
+    backgroundColor: themeContract.palette.itemHover,
   },
 });
 

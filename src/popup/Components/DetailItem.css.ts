@@ -8,7 +8,7 @@ export const itemContainer = style({
   alignItems: "center",
 
   ":hover": {
-    backgroundColor: themeContract.color.linkHover,
+    backgroundColor: themeContract.palette.itemHover,
   }
 })
 

@@ -15,7 +15,7 @@ export const GetInBtn: FC<GetInBtnProps> = ({ isHidden = false }) => {
   });
 
   return (
-    <div className={buttonClasses} style={{ color: themeContract.color.getInButtonFont }}>
+    <div className={buttonClasses} style={{ color: themeContract.palette.itemArrowButtonColor }}>
       {isChrome() ? (
         <Icon name="ArrowFilledCh" size={ICON_SIZES.small} />
       ) : (
