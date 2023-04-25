@@ -40,7 +40,7 @@
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.14.1",
     "@babel/preset-react": "^7.13.13",
-    "@parcel/config-webextension": "^2.3.1",
+    "@parcel/config-webextension": "^2.8.3",
     "@parcel/transformer-js": "^2.3.1",
     "@parcel/transformer-sass": "^2.3.1",
     "@parcel/transformer-webextension": "^2.3.1",
@@ -57,7 +57,7 @@
     "gulp-clean": "^0.4.0",
     "jest": "^27.5.1",
     "node-sass": "^7.0.1",
-    "parcel": "^2.3.1",
+    "parcel": "^2.8.3",
     "web-ext": "^6.1.0",
     "yargs": "^7.1.2"
   },
