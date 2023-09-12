@@ -3,16 +3,14 @@ import { DetailItemType } from './DetailItem';
 import { detailItemBody, detailItemBodyExtraText, detailItemBodyText } from './DetailItem.css';
 
 type DetailItemBodyProps = {
-  id?: number;
   title?: string;
   decodedUrl: string;
   date: string;
   type: DetailItemType;
-  goToTab: (id?: number) => void;
 };
 
-export const DetailItemBody: FC<DetailItemBodyProps> = ({ id, title, goToTab, date, decodedUrl, type }) => (
-  <div className={detailItemBody} onClick={() => goToTab(id)} onKeyPress={() => goToTab(id)} role="link" tabIndex={0}>
+export const DetailItemBody: FC<DetailItemBodyProps> = ({ title, date, decodedUrl, type }) => (
+  <div className={detailItemBody}>
     <span className={detailItemBodyText} title={title}>
       {title}
     </span>

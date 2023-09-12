@@ -57,21 +57,13 @@ export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTa
       onFocus={handleMouseOver}
       onBlur={handleMouseOut}
       role="menuitem"
+      onClick={() => goToTab(data.id)}
+      tabIndex={0}
     >
-      {/* Favicon */}
       {showFavicon && data.favIconUrl && <Favicon src={data.favIconUrl} />}
 
-      {/* Body */}
-      <DetailItemBody
-        date={date}
-        decodedUrl={decodedUrl}
-        id={data.id}
-        title={data.title}
-        type={type}
-        goToTab={goToTab}
-      />
+      <DetailItemBody date={date} decodedUrl={decodedUrl} title={data.title} type={type} />
 
-      {/* Controls */}
       <div className={detailItemControls}>
         {!hasIgnoredProtocol(data.url) && (
           <BookmarkCloseBtn tab={data} isHidden={isHidden} onClick={() => bookmarkCloseTab(data)} />
