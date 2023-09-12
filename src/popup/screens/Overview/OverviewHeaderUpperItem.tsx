@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 import { SearchBtn } from '../../components/Buttons';
-import { SwitchToScreenType } from '../../providers/RouterProvider';
+import { SwitchToScreenType } from '../../providers';
 import { overviewHeaderContent, overviewHeaderMessage, overviewHeaderTitle } from './OverviewHeader.css';
 
 type OverviewHeaderUpperItemProps = {

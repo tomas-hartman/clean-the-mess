@@ -3,8 +3,9 @@ import { Screen } from '../../../types';
 import { getDetailsData, getHeaderTitle } from '../../../_modules';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';
-import { useData, useNavigate } from '../../hooks';
+import { useData } from '../../hooks';
 import { screenList } from '../Overview/OverviewScreen.css';
+import { useNavigate } from '../../providers';
 
 interface DetailsScreenProps {
   isActive: boolean;

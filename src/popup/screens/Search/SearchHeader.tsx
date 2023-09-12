@@ -2,9 +2,10 @@ import { FC, useEffect, useRef } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { DetailHeader } from '../../components/DetailHeader';
-import { CloseTabs, useNavigate } from '../../hooks';
+import { CloseTabs } from '../../hooks';
 import { searchContainer, searchControls, searchInput } from './SearchHeader.css';
 import clsx from 'clsx';
+import { useNavigate } from '../../providers';
 
 interface SearchHeaderProps {
   foundTabsData: Tabs.Tab[];

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 import { GetInBtn } from '../../components/Buttons';
-import { SwitchToScreenType } from '../../providers/RouterProvider';
+import { SwitchToScreenType } from '../../providers';
 import { overviewHeaderLatestItems, overviewHeaderLatestItemsTitle } from './OverviewHeaderLatestItems.css';
 
 export const OverviewHeaderLatestItems: FC<{ switchToScreen: SwitchToScreenType }> = ({ switchToScreen }) => (

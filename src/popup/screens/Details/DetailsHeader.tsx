@@ -2,9 +2,10 @@ import { VFC } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { OverviewItem } from '../../../types';
 import { DetailHeader } from '../../components/DetailHeader';
-import { CloseTabs, useNavigate } from '../../hooks';
+import { CloseTabs } from '../../hooks';
 import { detailsHeaderTitle } from './DetailsHeader.css';
 import { Favicon } from '../../components/Favicon';
+import { useNavigate } from '../../providers';
 
 interface DetailsHeaderProps {
   title: string;

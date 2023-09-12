@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { DataProvider } from './providers/DataProvider';
-import { RouterProvider } from './providers/RouterProvider';
+import { NavigationProvider } from './providers';
 import { Router } from './screens/Router';
 import { useColorScheme } from './hooks';
 
@@ -19,9 +19,9 @@ export default function Popup() {
 
   return (
     <DataProvider>
-      <RouterProvider>
+      <NavigationProvider>
         <Router />
-      </RouterProvider>
+      </NavigationProvider>
     </DataProvider>
   );
 }

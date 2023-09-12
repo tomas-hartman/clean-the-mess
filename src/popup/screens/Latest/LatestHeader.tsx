@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 import { GoBackBtn } from '../../components/Buttons';
 import { DetailHeader } from '../../components/DetailHeader';
-import { useNavigate } from '../../hooks';
+import { useNavigate } from '../../providers';
 import { latestHeaderTitle } from './LatestHeader.css';
 
 type LatestHeaderProps = {
