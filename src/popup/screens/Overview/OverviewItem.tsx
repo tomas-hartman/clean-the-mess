@@ -53,12 +53,14 @@ export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon
       onBlur={handleMouseOut}
       onKeyDown={handleMouseOver}
       onKeyUp={handleMouseOut}
+      onClick={handleDetailClick}
       role="menuitem"
+      tabIndex={0}
     >
       {/* TODO: add marginRight: 12px */}
       {showFavicon && <Favicon src={favicon} />}
 
-      <OverviewItemBody url={url} displayedUrl={displayedUrl} onDetailClick={handleDetailClick} />
+      <OverviewItemBody url={url} displayedUrl={displayedUrl} />
 
       <div className={overviewItemControls}>
         <span className={overviewItemCount}>{`(${count})`}</span>

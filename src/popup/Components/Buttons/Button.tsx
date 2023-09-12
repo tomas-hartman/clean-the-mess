@@ -18,7 +18,15 @@ export const Button: FC<ButtonProps> = ({ onClick: handleClick, icon, title, isH
   const buttonClasses = clsx({ hidden: isHidden }, button({ size, isBack, isOverview }));
 
   return (
-    <button type="button" className={buttonClasses} title={title} onClick={handleClick}>
+    <button
+      type="button"
+      className={buttonClasses}
+      title={title}
+      onClick={e => {
+        e.stopPropagation();
+        handleClick();
+      }}
+    >
       <Icon name={icon} size={ICON_SIZES[size]} />
       <span className="hidden">{title}</span>
     </button>
