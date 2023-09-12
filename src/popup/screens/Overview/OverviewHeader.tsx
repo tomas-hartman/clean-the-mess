@@ -18,8 +18,12 @@ export const OverviewHeader: VFC<OverviewHeaderProps> = ({ openTabs }) => {
     <div className={overviewHeaderContainer}>
       <OverviewHeaderUpperItem openTabs={openTabs} switchToScreen={switchToScreen} />
       <Separator />
-      {!isChrome && <OverviewHeaderLatestItems switchToScreen={switchToScreen} />}
-      <Separator />
+      {!isChrome && (
+        <>
+          <OverviewHeaderLatestItems switchToScreen={switchToScreen} />
+          <Separator />
+        </>
+      )}
     </div>
   );
 };
