@@ -32,7 +32,7 @@
     "mozilla",
     "tabs"
   ],
-  "author": "Tomas Hartman",
+  "author": "Tomas Hartman <tomas.hartman@hotmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/tomas-hartman/clean-the-mess/issues"
@@ -108,5 +108,10 @@
   },
   "webExt": {
     "sourceDir": "dist/test"
-  }
+  },
+  "workspaces": [
+    "packages/chrome",
+    "packages/firefox",
+    "packages/common"
+  ]
 }
