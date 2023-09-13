@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-manifest": "node ../../scripts/merge-manifests.js -f ./manifest.firefox.json  > ./manifest.json",
     "prebuild": "npm run generate-manifest",
-    "build": "parcel build ./manifest.json --no-content-hash --no-cache --no-source-maps --dist-dir dist"
+    "build": "parcel build ./manifest.json --no-content-hash --no-cache --no-source-maps --dist-dir dist",
+    "start": "web-ext run -s ./dist --bc -c ../../web-ext-config.js",
+    "predev": "npm run generate-manifest",
+    "dev": "parcel ./manifest.json --dist-dir dist"
   },
   "dependencies": {
     "webextension-polyfill": "^0.10.0"
