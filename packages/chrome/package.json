@@ -2,10 +2,12 @@
   "name": "clean-the-mess-chrome",
   "version": "2.1.0-dev.0",
   "description": "",
-  "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-manifest": "node ../../scripts/merge-manifests.js -f ./manifest.chrome.json  > ./manifest.json",
+    "prebuild": "npm run generate-manifest",
+    "build": "parcel build ./manifest.json --no-content-hash --no-cache --no-source-maps --dist-dir dist"
   },
   "author": "Tomas Hartman <tomas.hartman@hotmail.com>",
   "license": "ISC"

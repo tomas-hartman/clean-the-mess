@@ -1,9 +1,11 @@
 {
-  "version": "2.1.001",
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "js": ["content/themedIco.chrome.js"]
-  }],
+  "version": "2.1.002",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["../../packages/common/src/content/themedIco.chrome.js"]
+    }
+  ],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {

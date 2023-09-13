@@ -21,7 +21,10 @@
     "lint": "web-ext lint -s",
     "dev:ui": "webpack serve",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "merge:manifests": "node ./scripts/merge-manifests.js > ggg.json",
+    "new:build:firefox": "npm run build -w packages/firefox",
+    "new:build:chrome": "npm run build -w packages/chrome"
   },
   "repository": {
     "type": "git",
@@ -98,6 +101,8 @@
     "gulp-merge-json": "^2.1.1",
     "gulp-rename": "^2.0.0",
     "gulp-template-html": "^0.2.2",
+    "minimist": "^1.2.8",
+    "node-jq": "^4.0.1",
     "polished": "^4.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
