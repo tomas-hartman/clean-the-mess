@@ -5,13 +5,7 @@ import Popup from './Popup';
 const meta: Meta<typeof Popup> = {
   title: 'Popup',
   component: Popup,
-  decorators: [
-    Story => (
-      <>
-        <Story />
-      </>
-    ),
-  ],
+  decorators: [Story => <Story />],
 };
 
 export default meta;

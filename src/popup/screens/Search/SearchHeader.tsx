@@ -54,7 +54,6 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
         <input
           type="search"
           name="search-input"
-          // id="search-input"
           className={searchInput}
           placeholder="Type here"
           ref={searchRef}
