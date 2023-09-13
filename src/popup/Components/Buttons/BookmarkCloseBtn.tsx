@@ -1,35 +1,27 @@
-import classNames from 'classnames';
 import { FC } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { useBookmarkStatus } from '../../hooks';
-import { Icon } from '../Icon';
+import { Button } from './Button';
 
 type BookmarkCloseBtnProps = {
   tab: Tabs.Tab;
-  handleClick: () => void;
+  onClick: () => void;
   isHidden: boolean;
-  isDetail: boolean;
 };
 
-export const BookmarkCloseBtn: FC<BookmarkCloseBtnProps> = ({
-  tab,
-  handleClick,
-  isHidden = false,
-  isDetail = false,
-}) => {
-  const { bookmarkStatus, isBookmarked } = useBookmarkStatus({ tab });
+export const BookmarkCloseBtn: FC<BookmarkCloseBtnProps> = ({ tab, onClick: handleClick, isHidden = false }) => {
+  const { isBookmarked } = useBookmarkStatus({ tab });
 
   const buttonTitle = isBookmarked ? 'Already bookmarked!' : 'Bookmark and close tab';
+  const buttonIcon = isBookmarked ? 'BookmarkStarFull' : 'BookmarkClose';
 
   return (
-    <button
-      type="button"
-      className={classNames('bookmark', bookmarkStatus, isDetail, { hidden: isHidden })}
+    <Button
       title={buttonTitle}
-      onClick={!isBookmarked ? handleClick : undefined}
-    >
-      <Icon name={isBookmarked ? 'BookmarkStarFull' : 'BookmarkClose'} size={12} />
-      <span className="hidden">{buttonTitle}</span>
-    </button>
+      onClick={!isBookmarked ? handleClick : () => true}
+      icon={buttonIcon}
+      size="small"
+      isHidden={isHidden}
+    />
   );
 };

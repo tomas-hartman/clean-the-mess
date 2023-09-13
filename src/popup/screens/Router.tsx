@@ -1,14 +1,21 @@
+import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import browser from 'webextension-polyfill';
-import { OverviewScreen } from './Overview';
+import { handlePopupListeners } from '../../_modules';
+import { useNavigate, useData } from '../hooks';
+import {
+  screen as screenStyle,
+  overviewScreen as overviewScreenStyle,
+  screenSlideOut,
+  screenSlideIn,
+  overviewSlideIn,
+  overviewSlideOut,
+} from './Router.css';
+import { isChrome } from '../utils';
 import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
+import { OverviewScreen } from './Overview';
 import { SearchScreen } from './Search';
-import { handlePopupListeners } from '../../_modules';
-import classNames from 'classnames';
-import { isChrome } from '../utils';
-import { useData } from '../hooks/useData';
-import { useNavigate } from '../hooks';
 
 export const Router = () => {
   const { closeTabs, overview } = useData();
@@ -31,10 +38,7 @@ export const Router = () => {
 
   const overviewScreen = useMemo(
     () => (
-      <div
-        id="overview"
-        className={classNames('screen', 'slide-out', screen.name === 'overview' && 'slide-in-reverse')}
-      >
+      <div className={clsx(overviewScreenStyle, overviewSlideOut, screen.name === 'overview' && overviewSlideIn)}>
         <OverviewScreen />
       </div>
     ),
@@ -43,7 +47,7 @@ export const Router = () => {
 
   const detailsScreen = useMemo(
     () => (
-      <div className={classNames('screen', 'screen-details', screen.name === 'details' && 'slide-in')}>
+      <div className={clsx(screenStyle, screenSlideOut, screen.name === 'details' && screenSlideIn)}>
         <DetailsScreen screen={screen} isActive={screen.name === 'details'} />
       </div>
     ),
@@ -52,7 +56,7 @@ export const Router = () => {
 
   const searchScreen = useMemo(
     () => (
-      <div className={classNames('screen', 'screen-search', screen.name === 'search' && 'slide-in')}>
+      <div className={clsx(screenStyle, screenSlideOut, screen.name === 'search' && screenSlideIn)}>
         <SearchScreen isActive={screen.name === 'search'} />
       </div>
     ),
@@ -61,7 +65,7 @@ export const Router = () => {
 
   const latestScreen = useMemo(
     () => (
-      <div className={classNames('screen', 'screen-latest', screen.name === 'latest' && 'slide-in')}>
+      <div className={clsx(screenStyle, screenSlideOut, screen.name === 'latest' && screenSlideIn)}>
         <LatestScreen />
       </div>
     ),
@@ -69,11 +73,11 @@ export const Router = () => {
   );
 
   return (
-    <div className="body-container">
+    <>
       {overviewScreen}
       {detailsScreen}
       {searchScreen}
       {!isChrome() && latestScreen}
-    </div>
+    </>
   );
 };

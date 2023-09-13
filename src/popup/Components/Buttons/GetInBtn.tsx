@@ -1,21 +1,27 @@
 import { FC } from 'react';
-import classNames from 'classnames';
-import { Icon } from '../Icon';
+import { Icon, ICON_SIZES } from '../Icon';
 import { isChrome } from '../../utils';
+import clsx from 'clsx';
+import { getIn } from './Button.css';
+import { themeContract } from '../../../styles/themes.css';
 
 interface GetInBtnProps {
   isHidden?: boolean;
 }
 
 export const GetInBtn: FC<GetInBtnProps> = ({ isHidden = false }) => {
-  const buttonClasses = classNames('get-in', {
-    'hidden': isHidden
+  const buttonClasses = clsx(getIn, {
+    hidden: isHidden,
   });
 
   return (
-    <button type="button" className={buttonClasses}>
-      {isChrome() ? <Icon name='ArrowFilledCh' size={12} /> : <Icon name='ArrowBold' size={12} />}
+    <div className={buttonClasses} style={{ color: themeContract.palette.itemArrowButtonColor }}>
+      {isChrome() ? (
+        <Icon name="ArrowFilledCh" size={ICON_SIZES.small} />
+      ) : (
+        <Icon name="ArrowBold" size={ICON_SIZES.small} />
+      )}
       <span className="hidden">Get in</span>
-    </button>
+    </div>
   );
 };

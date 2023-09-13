@@ -1,8 +1,11 @@
 import { FC, useEffect, useRef } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
-import { Separator } from '../../components/Separator';
-import { CloseTabs, useNavigate } from '../../hooks';
+import { DetailHeader } from '../../components/DetailHeader';
+import { CloseTabs } from '../../hooks';
+import { searchContainer, searchControls, searchInput } from './SearchHeader.css';
+import clsx from 'clsx';
+import { useNavigate } from '../../providers';
 
 interface SearchHeaderProps {
   foundTabsData: Tabs.Tab[];
@@ -45,30 +48,22 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
   }, [tabsData, searchRef, isActive, performSearch]);
 
   return (
-    <div className="header-container">
-      <div id="header" className="control">
-        <GoBackBtn handleClick={() => switchToScreen('overview')} />
-        <div className="header-title">
-          <div className="search-container">
-            <input
-              type="search"
-              name="search-input"
-              id="search-input"
-              placeholder="Type here"
-              ref={searchRef}
-              onKeyUp={item => performSearch(item.currentTarget.value)}
-            />
-            <div className="search-controls">
-              <span className="search-count">{`(${searchCount})`}</span>
-              <button type="button" className="clear-search hidden">
-                x
-              </button>
-            </div>
-          </div>
+    <DetailHeader>
+      <GoBackBtn onClick={() => switchToScreen('overview')} />
+      <div className={clsx('search-container', searchContainer)}>
+        <input
+          type="search"
+          name="search-input"
+          className={searchInput}
+          placeholder="Type here"
+          ref={searchRef}
+          onKeyUp={item => performSearch(item.currentTarget.value)}
+        />
+        <div className={searchControls}>
+          <span className="search-count">{`(${searchCount})`}</span>
         </div>
-        <CloseAllHeaderBtn onClick={() => closeTabs(ids)} itemCount={ids.length} />
       </div>
-      <Separator />
-    </div>
+      <CloseAllHeaderBtn onClick={() => closeTabs(ids)} itemCount={ids.length} />
+    </DetailHeader>
   );
 };

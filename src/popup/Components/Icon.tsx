@@ -1,16 +1,21 @@
-import classNames from 'classnames'
-import { FC } from 'react'
-import { IconName, Icons } from '../../icons/icons'
+import clsx from 'clsx';
+import { FC } from 'react';
+import { IconName, Icons } from '../../icons/icons';
 
-type ButtonSize = 12 | 16 | 18
+type IconSize = 14 | 18;
+
+export const ICON_SIZES = {
+  large: 18,
+  small: 14,
+} as const;
 
 type IconProps = {
-  name: IconName
-  size: ButtonSize
-}
+  name: IconName;
+  size: IconSize;
+};
 
 export const Icon: FC<IconProps> = ({ name, size }) => {
-  const Component = Icons[name]
-  
-  return <Component className={classNames('icon', `icon-${size}`)} style={{ height: size, width: size, display: 'flex' }} /> 
-}
+  const Component = Icons[name];
+
+  return <Component className={clsx('icon', `icon-${size}`)} style={{ height: size, width: size, display: 'flex' }} />;
+};

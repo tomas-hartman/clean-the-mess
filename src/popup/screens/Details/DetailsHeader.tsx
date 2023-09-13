@@ -2,7 +2,10 @@ import { VFC } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { OverviewItem } from '../../../types';
 import { DetailHeader } from '../../components/DetailHeader';
-import { CloseTabs, useNavigate } from '../../hooks';
+import { CloseTabs } from '../../hooks';
+import { detailsHeaderTitle } from './DetailsHeader.css';
+import { Favicon } from '../../components/Favicon';
+import { useNavigate } from '../../providers';
 
 interface DetailsHeaderProps {
   title: string;
@@ -15,9 +18,9 @@ export const DetailsHeader: VFC<DetailsHeaderProps> = ({ title, overviewData, cl
 
   return (
     <DetailHeader>
-      <GoBackBtn handleClick={() => switchToScreen('overview')} />
-      <div className="header--details-title">
-        <div className="favicon header--favicon" style={{ backgroundImage: `url(${overviewData?.favicon})` }} />
+      <GoBackBtn onClick={() => switchToScreen('overview')} />
+      <div className={detailsHeaderTitle}>
+        <Favicon src={overviewData?.favicon} />
         <span>{title}</span>
       </div>
       <CloseAllHeaderBtn

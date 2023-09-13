@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { tabs } from '../../../../tests/__sampleData__/tabs';
 
 import { SearchScreen } from './SearchScreen';
 
@@ -19,7 +18,5 @@ export default meta;
 type Story = StoryObj<typeof SearchScreen>;
 
 export const Screen: Story = {
-  args: {
-    tabsData: tabs,
-  },
+  args: {},
 };

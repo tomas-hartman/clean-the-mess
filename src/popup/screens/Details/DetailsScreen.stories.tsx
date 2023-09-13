@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { tabs } from '../../../../tests/__sampleData__/tabs';
 
 import { DetailsScreen } from './DetailsScreen';
 
@@ -20,6 +19,13 @@ type Story = StoryObj<typeof DetailsScreen>;
 
 export const Screen: Story = {
   args: {
-    detailsData: tabs
+    screen: {
+      name: 'details',
+      options: {
+        ids: [77, 80, 92, 97, 99],
+        url: 'https://www.google.com',
+        key: 2,
+      },
+    },
   },
 };
