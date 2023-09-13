@@ -6,9 +6,8 @@
   "scripts": {
     "build:firefox": "npm run build -w packages/firefox",
     "build:chrome": "npm run build -w packages/chrome",
-    "--build:firefox:src": "dir-archiver --src . --dest ./build/firefox/src_clean_the_mess.zip --exclude build dist .vscode .parcel-cache node_modules src/_dev .git **/.DS_Store",
-    "--webext:build:firefox": "web-ext build -a ./build/firefox -s ./dist/firefox/ && npm run build:firefox:src",
-    "--webext:build:chrome": "web-ext build -a ./build/chrome -s ./dist/chrome/",
+    "webext:build:firefox": "npm run webext:build -w packages/firefox",
+    "webext:build:chrome": "npm run webext:build -w packages/chrome",
     "--test": "jest",
     "start:browsers": "npm run chrome && npm run firefox",
     "firefox": "npm run start -w packages/firefox",
@@ -94,6 +93,7 @@
     "polished": "^4.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "rimraf": "^5.0.1",
     "webextension-polyfill": "^0.10.0"
   },
   "targets": {
