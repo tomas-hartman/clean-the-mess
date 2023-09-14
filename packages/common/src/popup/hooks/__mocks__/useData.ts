@@ -1,5 +1,5 @@
-import { detailed } from "../../../../tests/__sampleData__/detailedArray"
-import { tabsOverview } from "../../../../tests/__sampleData__/tabsOverview"
+import { detailed } from "../../../../../../tests/__sampleData__/detailedArray"
+import { tabsOverview } from "../../../../../../tests/__sampleData__/tabsOverview"
 
 export const useData = () => {
   return {
