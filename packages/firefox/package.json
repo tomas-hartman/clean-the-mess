@@ -7,13 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-manifest": "node ../../scripts/merge-manifests.js -f ./manifest.firefox.json  > ./manifest.json",
     "prebuild": "npm run generate-manifest",
-    "build": "rimraf dist && parcel build ./manifest.json --no-content-hash --no-cache --no-source-maps --dist-dir dist",
+    "build": "rimraf dist && parcel build ./manifest.json --no-cache --no-content-hash --no-source-maps --dist-dir dist",
     "start": "web-ext run -s ./dist --bc -c ../../web-ext-config.js",
     "predev": "npm run generate-manifest",
     "dev": "parcel ./manifest.json --dist-dir dist",
-    "prewebext:build": "npm run build",
-    "webext:build": "rimraf ./build && web-ext build -a ./build -s ./dist",
-    "--build:firefox:src": "dir-archiver --src . --dest ./build/firefox/src_clean_the_mess.zip --exclude build dist .vscode .parcel-cache node_modules src/_dev .git **/.DS_Store"
+    "prebuild:release": "npm run build",
+    "build:release": "rimraf ./build && web-ext build -a ./build -s ./dist",
+    "postbuild:release": "npm run build:parcel-src",
+    "build:parcel-src": "parcel build ./manifest.json --no-optimize --dist-dir build/no-optimize && dir-archiver --src build/no-optimize --dest build/src_clean_the_mess.zip && rimraf ./build/no-optimize",
+    "--build:pack-src": "dir-archiver --src ../common/src/ --dest ./build/src_clean_the_mess.zip --includebasedir"
   },
   "dependencies": {
     "webextension-polyfill": "^0.10.0"

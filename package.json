@@ -6,8 +6,8 @@
   "scripts": {
     "build:firefox": "npm run build -w packages/firefox",
     "build:chrome": "npm run build -w packages/chrome",
-    "webext:build:firefox": "npm run webext:build -w packages/firefox",
-    "webext:build:chrome": "npm run webext:build -w packages/chrome",
+    "build:release:firefox": "npm run build:release -w packages/firefox",
+    "build:release:chrome": "npm run build:release -w packages/chrome",
     "test": "jest",
     "start:browsers": "npm run chrome && npm run firefox",
     "firefox": "npm run start -w packages/firefox",

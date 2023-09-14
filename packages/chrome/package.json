@@ -11,8 +11,8 @@
     "start": "web-ext run -t chromium -s ./dist --bc -c ../../web-ext-config.js",
     "predev": "npm run generate-manifest",
     "dev": "parcel ./manifest.json --dist-dir dist",
-    "prewebext:build": "npm run build",
-    "webext:build": "rimraf ./build && web-ext build -a ./build -s ./dist"
+    "prebuild:release": "npm run build",
+    "build:release": "rimraf ./build && web-ext build -a ./build -s ./dist"
   },
   "author": "Tomas Hartman <tomas.hartman@hotmail.com>",
   "license": "ISC"
