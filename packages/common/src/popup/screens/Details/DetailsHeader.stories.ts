@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { DetailsHeader } from './DetailsHeader';
-import overviewData from '../../../_dev/search-dev/overview-data';
+import overviewData from '../../../../dev/search-dev/overview-data';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof DetailsHeader> = {
