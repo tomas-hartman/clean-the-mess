@@ -1,24 +1,24 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 
 // import '../style.scss';
 
-import SearchScreen from '../../../popup/screens/Search/SearchScreen';
-// import { getOverview } from '../../../_modules';
+import { DetailsScreen } from '../../../src/popup/screens/Details/DetailsScreen';
+import { getOverview } from '../../../src/_modules';
 import { tabs } from '../samples/firefox/tabs';
 
-// const overviewData = getOverview(tabs);
+const tabsOverview = getOverview(tabs);
 // const detailsData = getDetailsData(screen, tabsData);
 const closeTabs = () => true;
 const switchToScreen = () => true;
 
 ReactDOM.render(
-  <SearchScreen
-    tabsData={tabs}
+  <DetailsScreen
+    detailsData={tabs}
+    overviewData={tabsOverview[0]}
     className="slide-in"
     switchToScreen={switchToScreen}
     closeTabs={closeTabs}
     isActive
   />,
-  document.getElementsByClassName('dev-wrapper-search')[0],
+  document.getElementsByClassName('dev-wrapper-details')[0],
 );
