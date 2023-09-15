@@ -1,6 +1,6 @@
 {
   "name": "clean-the-mess-firefox",
-  "version": "2.1.0-dev.0",
+  "version": "2.1.0",
   "description": "",
   "devDependencies": {},
   "scripts": {

@@ -9,7 +9,9 @@ With its integrated search feature, Clean the mess! could also be used as a fast
 ## Release
 
 1. `npm run bump-version:__mode__`
-2. `npm run build:release` (or `npm run build:release:__platform__`)
+2. `update changelog` (TBA)
+3. `git commit`, `git tag`, `git push --tags` (TBA)
+4. `npm run build:release` (or `npm run build:release:__platform__`)
 
 ## Development readme (outdated)
 
