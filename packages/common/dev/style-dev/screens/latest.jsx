@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 // import '../style.scss';
 
-import LatestScreen from '../../../popup/screens/Latest';
-import { getLatestUsed, getOverview } from '../../../_modules';
+import LatestScreen from '../../../src/popup/screens/Latest';
+import { getLatestUsed, getOverview } from '../../../src/_modules';
 import { tabs } from '../samples/firefox/tabs';
 
 const overviewData = getOverview(tabs);

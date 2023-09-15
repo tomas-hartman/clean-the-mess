@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import browser from 'webextension-polyfill';
 import { handlePopupListeners } from '../../_modules';
-import { useNavigate, useData } from '../hooks';
+import { useData } from '../hooks';
 import {
   screen as screenStyle,
   overviewScreen as overviewScreenStyle,
@@ -16,6 +16,7 @@ import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
 import { OverviewScreen } from './Overview';
 import { SearchScreen } from './Search';
+import { useNavigate } from '../providers';
 
 export const Router = () => {
   const { closeTabs, overview } = useData();

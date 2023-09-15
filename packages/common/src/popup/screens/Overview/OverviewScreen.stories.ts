@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import overviewData from '../../../_dev/search-dev/overview-data';
+import overviewData from '../../../../dev/search-dev/overview-data';
 
 import { OverviewScreen } from './OverviewScreen';
 

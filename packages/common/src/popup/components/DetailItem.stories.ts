@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { detailed } from "../../../tests/__sampleData__/detailedArray"
+import { detailed } from "../../../../../tests/__sampleData__/detailedArray"
 
 import { DetailsItem } from './DetailItem';
 

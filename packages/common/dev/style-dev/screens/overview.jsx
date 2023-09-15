@@ -2,8 +2,8 @@ import ReactDOM from 'react-dom';
 
 // import '../style.scss';
 
-import { OverviewScreen } from '../../../popup/screens/Overview/OverviewScreen';
-import { getOverview } from '../../../_modules';
+import { OverviewScreen } from '../../../src/popup/screens/Overview/OverviewScreen';
+import { getOverview } from '../../../src/_modules';
 import { tabs } from '../samples/firefox/tabs';
 
 const tabsOverview = getOverview(tabs);

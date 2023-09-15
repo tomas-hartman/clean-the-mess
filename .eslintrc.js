@@ -47,4 +47,12 @@ module.exports = {
     'react/prop-types': 0,
     'react/jsx-curly-brace-presence': ['error'],
   },
+  overrides: [
+    {
+      files: ['./scripts/**/*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
 };

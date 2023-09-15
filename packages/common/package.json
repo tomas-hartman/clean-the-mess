@@ -1,0 +1,32 @@
+{
+  "name": "clean-the-mess-common",
+  "version": "2.1.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "storybook:build": "storybook build"
+  },
+  "author": "Tomas Hartman <tomas.hartman@hotmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.0-rc.3",
+    "@storybook/addon-interactions": "^7.0.0-rc.3",
+    "@storybook/addon-links": "^7.0.0-rc.3",
+    "@storybook/blocks": "^7.0.0-rc.3",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^7.0.0-rc.3",
+    "@storybook/react-webpack5": "^7.0.0-rc.3",
+    "@storybook/testing-library": "^0.0.14-next.1",
+    "storybook": "^7.0.0-rc.3",
+    "storybook-addon-manual-mocks": "^0.1.1"
+  },
+  "dependencies": {
+    "@vanilla-extract/css": "^1.10.0",
+    "@vanilla-extract/recipes": "^0.4.0",
+    "clsx": "^1.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webextension-polyfill": "^0.10.0"
+  }
+}
