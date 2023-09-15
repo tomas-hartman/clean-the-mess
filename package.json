@@ -14,7 +14,9 @@
     "chrome": "npm run start -w packages/chrome",
     "dev:chrome": "npm run dev -w packages/chrome",
     "dev:firefox": "npm run dev -w packages/firefox",
-    "storybook": "npm run storybook -w packages/common"
+    "storybook": "npm run storybook -w packages/common",
+    "bump-version": "npm version prerelease --no-git-tag-version --preid=dev --workspaces",
+    "postbump-version": "./scripts/bump-manifest-version.sh && npm run generate-manifest -w packages/chrome packages/firefox"
   },
   "repository": {
     "type": "git",
