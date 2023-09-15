@@ -1,5 +1,6 @@
 import { OverviewItem as OverviewItemType } from '../../../types';
-import { getHeaderTitle, callWithConfirm, bookmarkAll } from '../../../_modules';
+import { getHeaderTitle, bookmarkAll } from '../../../_modules';
+import { callWithConfirm } from '../../utils';
 import { CloseTabs } from '../../Popup';
 
 export const bookmarkOverviewTabs = (overviewObject: OverviewItemType, oId: number) => {

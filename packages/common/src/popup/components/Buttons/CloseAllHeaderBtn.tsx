@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
-import { callWithConfirm } from '../../../_modules/callWithConfirm';
 import { Button } from './Button';
+import { callWithConfirm } from '../../utils';
 
 type CloseAllHeaderBtnProps = {
   onClick: () => void;
