@@ -6,7 +6,12 @@ Clean the mess! a simple addon that is designed to help you with maintaining ord
 
 With its integrated search feature, Clean the mess! could also be used as a fast and simple tab manager, that lets you control your tabs and always find those you opened a week, a month or a year ago. And of course close those you don't find up to date anymore.
 
-## Development readme
+## Release
+
+1. `npm run bump-version:__mode__`
+2. `npm run build:release` (or `npm run build:release:__platform__`)
+
+## Development readme (outdated)
 
 Bundled and built using `parcel` and `gulp`. `Storybook` is used to develop UI. For testing in browser, `web-ext` is used.
 
@@ -31,7 +36,7 @@ npm run firefox # opens browser where extension can be tested
 
 Dev can be started for one browser at a time only.
 
-### Build
+### Build (outdated)
 
 Can be started for multiple browsers at once.
 

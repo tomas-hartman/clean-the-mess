@@ -8,6 +8,7 @@
     "build:chrome": "npm run build -w packages/chrome",
     "build:release:firefox": "npm run build:release -w packages/firefox",
     "build:release:chrome": "npm run build:release -w packages/chrome",
+    "build:release": "npm run build:release:firefox && npm run build:release:chrome",
     "test": "jest",
     "start:browsers": "npm run chrome && npm run firefox",
     "firefox": "npm run start -w packages/firefox",
@@ -15,8 +16,15 @@
     "dev:chrome": "npm run dev -w packages/chrome",
     "dev:firefox": "npm run dev -w packages/firefox",
     "storybook": "npm run storybook -w packages/common",
-    "bump-version": "npm version prerelease --no-git-tag-version --preid=dev --workspaces",
-    "postbump-version": "./scripts/bump-manifest-version.sh && npm run generate-manifest -w packages/chrome packages/firefox"
+    "bump-version": "npm version $mode --no-git-tag-version --preid=dev --workspaces",
+    "postbump-version": "./scripts/bump-manifest-version.sh && npm run generate-manifest -w packages/chrome -w packages/firefox",
+    "bump-version:patch": "mode=patch npm run bump-version",
+    "bump-version:minor": "mode=minor npm run bump-version",
+    "bump-version:major": "mode=major npm run bump-version",
+    "bump-version:prepatch": "mode=prepatch npm run bump-version",
+    "bump-version:preminor": "mode=preminor npm run bump-version",
+    "bump-version:premajor": "mode=premajor npm run bump-version",
+    "bump-version:prerelease": "mode=prerelease npm run bump-version"
   },
   "repository": {
     "type": "git",
