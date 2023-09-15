@@ -1,4 +1,7 @@
 {
+  "background": {
+    "scripts": ["../common/src/background/background.ts"]
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "addon@cleanthemess.com"
