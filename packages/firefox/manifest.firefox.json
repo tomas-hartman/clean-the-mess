@@ -1,6 +1,11 @@
 {
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@cleanthemess.com"
+    }
+  },
   "commands": {
-    "_execute_browser_action": {
+    "_execute_action": {
       "suggested_key": {
         "default": "Ctrl+Alt+T",
         "mac": "Ctrl+Alt+T"

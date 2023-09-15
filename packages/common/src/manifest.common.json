@@ -1,35 +1,23 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Clean the mess",
   "version": "2.1.0",
   "author": "Tomas Hartman",
   "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
-  "permissions": [
-    "tabs",
-    "bookmarks",
-    "storage"
-  ],
+  "permissions": ["tabs", "bookmarks", "storage"],
   "background": {
-    "scripts": [
-      "../common/src/background/background.ts"
-    ]
+    "service_worker": "../common/src/background/background.ts",
+    "type": "module"
   },
   "options_ui": {
-    "page": "../common/src/options/options.html",
-    "browser_style": true
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "addon@cleanthemess.com"
-    }
+    "page": "../common/src/options/options.html"
   },
   "icons": {
     "16": "../common/src/icons/png/ico-light-16.png",
     "32": "../common/src/icons/png/ico-light-32.png",
     "128": "../common/src/icons/png/ico-light-128.png"
   },
-  "browser_action": {
-    "browser_style": false,
+  "action": {
     "default_icon": {
       "16": "../common/src/icons/png/ico-light-16.png",
       "32": "../common/src/icons/png/ico-light-32.png",
