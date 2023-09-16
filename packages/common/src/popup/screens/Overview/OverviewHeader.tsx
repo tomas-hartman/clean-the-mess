@@ -4,7 +4,7 @@ import { OverviewHeaderLatestItems } from './OverviewHeaderLatestItems';
 import { OverviewHeaderUpperItem } from './OverviewHeaderUpperItem';
 import { overviewHeaderContainer } from './OverviewHeader.css';
 import { useNavigate } from '../../providers';
-import { isChrome } from '../../utils';
+import { isFirefox } from '../../utils';
 
 type OverviewHeaderProps = {
   openTabs: number;
@@ -17,7 +17,7 @@ export const OverviewHeader: VFC<OverviewHeaderProps> = ({ openTabs }) => {
     <div className={overviewHeaderContainer}>
       <OverviewHeaderUpperItem openTabs={openTabs} switchToScreen={switchToScreen} />
       <Separator />
-      {!isChrome && (
+      {isFirefox() && (
         <>
           <OverviewHeaderLatestItems switchToScreen={switchToScreen} />
           <Separator />

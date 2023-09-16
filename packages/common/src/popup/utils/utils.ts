@@ -1,8 +1,2 @@
-export const isChrome = () => {
-  if (process.env.BROWSER_NAME) {
-    return process.env.BROWSER_NAME === 'chrome'
-  }
-
-  // Fallback
-  return false;
-};
+export const isChrome = () => process.env.BROWSER_NAME === 'chrome';
+export const isFirefox = () => process.env.BROWSER_NAME === 'firefox';
