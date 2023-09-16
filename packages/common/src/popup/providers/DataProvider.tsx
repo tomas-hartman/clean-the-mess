@@ -1,4 +1,4 @@
-import { createContext, FC, useCallback, useEffect, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import browser, { Tabs } from 'webextension-polyfill';
 
 type DataContextProps = {
@@ -9,7 +9,7 @@ type DataContextProps = {
 
 export const DataContext = createContext<DataContextProps>({} as DataContextProps);
 
-export const DataProvider: FC = ({ children }) => {
+export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [tabs, setTabs] = useState<Tabs.Tab[]>([]);
   const [refreshToken, setRefreshToken] = useState(0);
 

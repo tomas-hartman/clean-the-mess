@@ -4,12 +4,11 @@ import { OverviewHeaderLatestItems } from './OverviewHeaderLatestItems';
 import { OverviewHeaderUpperItem } from './OverviewHeaderUpperItem';
 import { overviewHeaderContainer } from './OverviewHeader.css';
 import { useNavigate } from '../../providers';
+import { isChrome } from '../../utils';
 
 type OverviewHeaderProps = {
   openTabs: number;
 };
-
-const isChrome = process.env.BROWSER_NAME === 'chrome';
 
 export const OverviewHeader: VFC<OverviewHeaderProps> = ({ openTabs }) => {
   const { switchToScreen } = useNavigate();

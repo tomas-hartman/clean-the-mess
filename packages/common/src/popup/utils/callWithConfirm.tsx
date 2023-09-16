@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom';
 import { Confirm } from '../components/Confirm';
+import { createRoot } from 'react-dom/client';
 
 type Question = 'bookmarkAll' | 'closeTabs';
 
@@ -37,8 +37,9 @@ export const callWithConfirm = (
   };
 
   // TODO: portal?
-  ReactDOM.render(
+  const container = portalRoot.appendChild(portalElement);
+  const root = createRoot(container!); // createRoot(container!) if you use TypeScript
+  root.render(
     <Confirm message={getConfirmableQuestions(question, args)} onConfirm={handleConfirm} onCancel={handleCancel} />,
-    portalRoot.appendChild(portalElement),
   );
 };
