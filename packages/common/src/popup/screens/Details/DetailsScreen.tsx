@@ -1,4 +1,4 @@
-import { VFC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Screen } from '../../../types';
 import { getDetailsData, getHeaderTitle } from '../../../_modules';
 import { DetailsHeader } from './DetailsHeader';
@@ -12,7 +12,7 @@ interface DetailsScreenProps {
   screen: Screen;
 }
 
-export const DetailsScreen: VFC<DetailsScreenProps> = ({ isActive, screen }) => {
+export const DetailsScreen: FC<DetailsScreenProps> = ({ isActive, screen }) => {
   const { tabs, closeTabs, overview } = useData();
   const { switchToScreen } = useNavigate();
 

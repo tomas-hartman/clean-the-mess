@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { FC } from 'react';
 import { Separator } from '../../components/Separator';
 import { OverviewHeaderLatestItems } from './OverviewHeaderLatestItems';
 import { OverviewHeaderUpperItem } from './OverviewHeaderUpperItem';
@@ -10,7 +10,7 @@ type OverviewHeaderProps = {
   openTabs: number;
 };
 
-export const OverviewHeader: VFC<OverviewHeaderProps> = ({ openTabs }) => {
+export const OverviewHeader: FC<OverviewHeaderProps> = ({ openTabs }) => {
   const { switchToScreen } = useNavigate();
 
   return (

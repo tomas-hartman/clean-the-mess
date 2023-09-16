@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import { VFC } from 'react';
+import { FC } from 'react';
 import { separator } from './Separator.css';
 
-export const Separator: VFC = () => {
+export const Separator: FC = () => {
   return <div className={clsx('separator', 'separator-bottom', separator)} />;
 };

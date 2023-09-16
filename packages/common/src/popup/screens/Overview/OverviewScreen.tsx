@@ -1,11 +1,11 @@
-import { VFC } from 'react';
+import { FC } from 'react';
 import { useFavicons } from '../../hooks';
 import { useData } from '../../hooks/useData';
 import { OverviewHeader } from './OverviewHeader';
 import { OverviewItem } from './OverviewItem';
 import { screenList } from './OverviewScreen.css';
 
-export const OverviewScreen: VFC = () => {
+export const OverviewScreen: FC = () => {
   const { tabs, closeTabs, overview } = useData();
 
   const showFavicons = useFavicons();

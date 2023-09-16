@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, VFC } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import type { OverviewItem as OverviewItemType } from '../../../types';
 import { getHeaderTitle } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
@@ -16,7 +16,7 @@ type OverviewItemProps = {
   showFavicon: boolean;
 };
 
-export const OverviewItem: VFC<OverviewItemProps> = ({ itemId, data, showFavicon = true, closeTabs }) => {
+export const OverviewItem: FC<OverviewItemProps> = ({ itemId, data, showFavicon = true, closeTabs }) => {
   const { switchToScreen } = useNavigate();
   const [isHidden, setIsHidden] = useState(true);
 
