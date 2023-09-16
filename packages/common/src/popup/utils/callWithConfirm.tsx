@@ -23,22 +23,19 @@ export const callWithConfirm = (
   onFalse: () => void,
   ...args: (string | number)[]
 ) => {
-  const portalRoot = document.querySelector('#main-container')!; // TODO
-  const portalElement = document.createElement('div');
+  const container = document.getElementById('modal-root');
+  const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 
   const handleConfirm = () => {
     onTrue();
-    portalRoot.removeChild(portalElement);
+    root.unmount();
   };
 
   const handleCancel = () => {
     onFalse();
-    portalRoot.removeChild(portalElement);
+    root.unmount();
   };
 
-  // TODO: portal?
-  const container = portalRoot.appendChild(portalElement);
-  const root = createRoot(container!); // createRoot(container!) if you use TypeScript
   root.render(
     <Confirm message={getConfirmableQuestions(question, args)} onConfirm={handleConfirm} onCancel={handleCancel} />,
   );
