@@ -11,7 +11,7 @@ import {
   overviewSlideIn,
   overviewSlideOut,
 } from './Router.css';
-import { isChrome } from '../utils';
+import { isFirefox } from '../utils';
 import { DetailsScreen } from './Details';
 import { LatestScreen } from './Latest';
 import { OverviewScreen } from './Overview';
@@ -78,7 +78,7 @@ export const Router = () => {
       {overviewScreen}
       {detailsScreen}
       {searchScreen}
-      {!isChrome() && latestScreen}
+      {isFirefox() && latestScreen}
     </>
   );
 };

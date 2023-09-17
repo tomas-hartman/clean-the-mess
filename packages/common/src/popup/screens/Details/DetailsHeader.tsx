@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { FC } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { OverviewItem } from '../../../types';
 import { DetailHeader } from '../../components/DetailHeader';
@@ -13,7 +13,7 @@ interface DetailsHeaderProps {
   closeTabs: CloseTabs;
 }
 
-export const DetailsHeader: VFC<DetailsHeaderProps> = ({ title, overviewData, closeTabs }) => {
+export const DetailsHeader: FC<DetailsHeaderProps> = ({ title, overviewData, closeTabs }) => {
   const { switchToScreen } = useNavigate();
 
   return (

@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { FC } from 'react';
 import { confirmBox, confirmButtonSection, confirmMessage, confirmOverlay } from './Confirm.css';
 import { ConfirmButton } from './ConfirmButton';
 import { Separator } from './Separator';
@@ -9,7 +9,7 @@ interface ConfirmProps {
   onCancel: () => void;
 }
 
-export const Confirm: VFC<ConfirmProps> = ({ message, onConfirm, onCancel }) => {
+export const Confirm: FC<ConfirmProps> = ({ message, onConfirm, onCancel }) => {
   return (
     <div className={confirmOverlay}>
       <div className={confirmBox}>

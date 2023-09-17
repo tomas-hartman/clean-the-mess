@@ -10,7 +10,7 @@
     "build": "BROWSER_NAME=firefox parcel build ./manifest.json --no-cache --no-content-hash --no-source-maps --dist-dir dist",
     "start": "web-ext run -s ./dist --bc -c ../../web-ext-config.js",
     "predev": "npm run generate-manifest",
-    "dev": "BROWSER_NAME=firefox && parcel ./manifest.json --dist-dir dist",
+    "dev": "BROWSER_NAME=firefox parcel ./manifest.json --dist-dir dist",
     "prebuild:release": "npm run build",
     "build:release": "rimraf ./build && web-ext build -a ./build -s ./dist",
     "postbuild:release": "npm run build:parcel-src",

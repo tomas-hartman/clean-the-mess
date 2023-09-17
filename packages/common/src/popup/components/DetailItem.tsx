@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, VFC } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { Tabs } from 'webextension-polyfill';
 
 import { hasIgnoredProtocol, bookmarkTab, goToTab, getFormatedDate } from '../../_modules';
@@ -18,7 +18,7 @@ interface DetailsItemProps {
   showFavicon?: boolean;
 }
 
-export const DetailsItem: VFC<DetailsItemProps> = ({ itemId, data, type, closeTabs, showFavicon = false }) => {
+export const DetailsItem: FC<DetailsItemProps> = ({ itemId, data, type, closeTabs, showFavicon = false }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   const date = getFormatedDate(data.lastAccessed) || '';
