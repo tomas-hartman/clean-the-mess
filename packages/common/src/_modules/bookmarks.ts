@@ -1,15 +1,17 @@
 /* eslint-disable no-await-in-loop */
 import browser, { Tabs } from 'webextension-polyfill';
-import { OverviewItem } from '../types';
+import { OverviewItem } from '../popup';
 import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers';
+import { CLIENT_EVENT, dispatchBackgroundEvent, dispatchClientEvent } from './listeners';
+import { BACKGROUND_EVENT } from '../background';
 
 /**
  * Background
  */
 
 /** Sends bookmark-all message */
-export const bookmarkAll = (overviewObject: OverviewItem, oId: number) => {
-  browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
+export const bookmarkAll = (overviewItem: OverviewItem, oId: number) => {
+  dispatchBackgroundEvent(BACKGROUND_EVENT.BOOKMARK_ALL, { overviewItem, overviewIndex: oId });
 };
 
 const bookmarkTabsToFolder = async (tabIds: number[], parentId: string | null) => {
@@ -80,8 +82,8 @@ const mergeBookmarksInFolder = async (tabIds: number[], foundItems: browser.Book
 };
 
 type BookmarkSetter = {
-  overviewObject: OverviewItem,
-  index: number
+  overviewItem: OverviewItem,
+  overviewIndex: number
 }
 
 /**
@@ -97,41 +99,39 @@ type BookmarkSetter = {
  * @param {Object} _data.overviewObject tabsOverview item
  * @param {number} _data.index tabsOverview id
  */
-export const handleBookmarkAll = async (_data: BookmarkSetter) => {
-  const { overviewObject, index } = _data;
+export const handleBookmarkAll = async ({ overviewIndex, overviewItem }: BookmarkSetter) => {
   const { bookmarks } = browser;
 
 
-  if (!overviewObject.ids) {
+  if (!overviewItem.ids) {
     console.warn("overview object had no ids")
     return;
   }
 
   // It does not merge items in bookmark root
-  if (overviewObject.ids?.length === 1) {
-    await bookmarkTabsToFolder(overviewObject.ids, null);
+  if (overviewItem.ids?.length === 1) {
+    await bookmarkTabsToFolder(overviewItem.ids, null);
     console.log('done');
 
-    // This throws an error in refactor!
-    browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
+    dispatchClientEvent(CLIENT_EVENT.ITEMS_BOOKMARKED, { index: overviewIndex })
 
     return;
   }
 
-  const folderName = overviewObject.url ? (new URL(overviewObject.url)).hostname : "Bookmark folder";
+  const folderName = overviewItem.url ? (new URL(overviewItem.url)).hostname : "Bookmark folder";
   const searchResults = await bookmarks.search({ title: folderName });
 
   if (await searchResults.length === 0) {
     const newFolder = await bookmarks.create({ title: folderName });
 
-    await bookmarkTabsToFolder(overviewObject.ids, newFolder.id);
+    await bookmarkTabsToFolder(overviewItem.ids, newFolder.id);
 
     console.log('Items added to new folder!');
   } else {
-    await mergeBookmarksInFolder(overviewObject.ids, searchResults, folderName);
+    await mergeBookmarksInFolder(overviewItem.ids, searchResults, folderName);
   }
 
-  browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
+  dispatchClientEvent(CLIENT_EVENT.ITEMS_BOOKMARKED, { index: overviewIndex })
 };
 
 /**

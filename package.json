@@ -24,7 +24,8 @@
     "bump-version:prepatch": "mode=prepatch npm run bump-version",
     "bump-version:preminor": "mode=preminor npm run bump-version",
     "bump-version:premajor": "mode=premajor npm run bump-version",
-    "bump-version:prerelease": "mode=prerelease npm run bump-version"
+    "bump-version:prerelease": "mode=prerelease npm run bump-version",
+    "ts:check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

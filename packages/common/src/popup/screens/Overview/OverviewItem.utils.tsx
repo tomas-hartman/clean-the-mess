@@ -1,14 +1,14 @@
-import { OverviewItem as OverviewItemType } from '../../../types';
+import { OverviewItem } from '../../types';
 import { getHeaderTitle, bookmarkAll } from '../../../_modules';
 import { callWithConfirm } from '../../utils';
 import { CloseTabs } from '../../hooks';
 
-export const bookmarkOverviewTabs = (overviewObject: OverviewItemType, oId: number) => {
-  const { url, count } = overviewObject;
+export const bookmarkOverviewTabs = (overviewItem: OverviewItem, oId: number) => {
+  const { url, count } = overviewItem;
   const folderName = getHeaderTitle(url, 'details');
 
   const onTrue = () => {
-    bookmarkAll(overviewObject, oId);
+    bookmarkAll(overviewItem, oId);
   };
 
   const onFalse = () => {
@@ -18,8 +18,8 @@ export const bookmarkOverviewTabs = (overviewObject: OverviewItemType, oId: numb
   callWithConfirm('bookmarkAll', onTrue, onFalse, `${count}`, folderName);
 };
 
-export const closeOverviewTabs = (overviewObject: OverviewItemType, closeTabs: CloseTabs) => {
-  const { ids, count } = overviewObject;
+export const closeOverviewTabs = (overviewItem: OverviewItem, closeTabs: CloseTabs) => {
+  const { ids, count } = overviewItem;
 
   const onFalse = () => {
     console.log('Request to close tabs from overview was declined.');

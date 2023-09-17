@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import browser from 'webextension-polyfill';
-import { handlePopupListeners } from '../../_modules';
+import { CloseTabsInListenerArgs, handlePopupListeners } from '../../_modules';
 import { useData } from '../hooks';
 import {
   screen as screenStyle,
@@ -19,14 +19,13 @@ import { SearchScreen } from './Search';
 import { useNavigate } from '../providers';
 
 export const Router = () => {
-  const { closeTabs, overview } = useData();
+  const { closeTabs: closeCb, overview: overviewData } = useData();
   const { screen } = useNavigate();
 
   /** Listeners from background.js (bookmark all) */
-  /** @todo replace any */
   useEffect(() => {
-    const listenersCb = (message: any) => {
-      handlePopupListeners({ message, closeCb: closeTabs, overviewData: overview });
+    const listenersCb = (message: CloseTabsInListenerArgs['message']) => {
+      handlePopupListeners({ message, closeCb, overviewData });
     };
 
     browser.runtime.onMessage.addListener(listenersCb);
@@ -35,7 +34,7 @@ export const Router = () => {
       // remove listener
       browser.runtime.onMessage.removeListener(listenersCb);
     };
-  }, [overview, closeTabs]);
+  }, [overviewData, closeCb]);
 
   const overviewScreen = useMemo(
     () => (

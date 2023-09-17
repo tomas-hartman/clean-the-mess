@@ -1,24 +1,22 @@
 import browser from 'webextension-polyfill';
 import { handleBookmarkAll } from '../_modules';
+import { updateBadgeText } from './updateBadgeText';
+import { setupOptionsAfterInstall } from '../options/options';
+import { BACKGROUND_EVENT } from './types';
+import { refreshOptions } from './refreshOptions';
 
-/**
- * Listeners to messages from popup.js
- * Popup messages handler. Handles how should be messages from popup.js treated.
- *
- * @example
- * {
- *   type: "bookmark-all" | "get-overview" | ...
- *   data: {}
- * }
- */
 browser.runtime.onMessage.addListener((message) => {
   switch (message.type) {
-    case 'bookmark-all':
+    case BACKGROUND_EVENT.BOOKMARK_ALL:
       handleBookmarkAll(message.data);
       break;
 
-      // This only works in chrome
-    case 'darkScheme':
+    case BACKGROUND_EVENT.REFRESH_OPTIONS:
+      refreshOptions()
+      break;
+
+    // This only works in chrome
+    case BACKGROUND_EVENT.DARK_SCHEME:
       // @ts-expect-error Chrome-only feature TODO
       chrome.browserAction.setIcon({
         path: {
@@ -35,3 +33,15 @@ browser.runtime.onMessage.addListener((message) => {
       break;
   }
 });
+
+browser.runtime.onInstalled.addListener(() => {
+  setupOptionsAfterInstall()
+})
+
+browser.tabs.onUpdated.addListener(() => {
+  updateBadgeText()
+})
+
+browser.tabs.onRemoved.addListener(() => {
+  updateBadgeText()
+})

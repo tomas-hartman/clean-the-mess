@@ -1,5 +1,5 @@
 import { Tabs } from 'webextension-polyfill';
-import { Overview, OverviewItem } from '../types';
+import { Overview, OverviewItem } from '../popup';
 import { getHash } from './helpers';
 
 const getOriginUrl = (tabData: Tabs.Tab) => {
@@ -66,8 +66,6 @@ export const getOverview = (tabs: Tabs.Tab[]): Overview => {
   });
 
   output.sort((a, b) => b.count - a.count);
-
-  // browser.browserAction.setBadgeText({text: `${tabs.length}`});
 
   return output;
 };
