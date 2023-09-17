@@ -1,4 +1,5 @@
 import { ValueOf } from "../../types"
+import { OverviewItem } from "../popup"
 
 export const BACKGROUND_EVENT = {
   "BOOKMARK_ALL": "bookmark-all",
@@ -8,9 +9,11 @@ export const BACKGROUND_EVENT = {
 
 export type BackgroundEvent = ValueOf<typeof BACKGROUND_EVENT>
 
-// type BackgroundEventProps = {
-//   [BackgroundEvent.BOOKMARK_ALL]: {
-//     overviewObject: OverviewItem,
-//     overviewIndex: number
-//   },
-// }
+export type BackgroundMessage = {
+  [BACKGROUND_EVENT.BOOKMARK_ALL]: {
+    overviewItem: OverviewItem,
+    overviewIndex: number
+  },
+  [BACKGROUND_EVENT.REFRESH_OPTIONS]: null,
+  [BACKGROUND_EVENT.DARK_SCHEME]: null,
+}

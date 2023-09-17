@@ -1,6 +1,7 @@
 import browser from 'webextension-polyfill';
 import { OPTION_TYPE, OptionPreference, OptionType } from './types';
 import { BACKGROUND_EVENT, refreshOptions } from '../background';
+import { dispatchBackgroundEvent } from '../_modules';
 
 const getOptionElements = () => ({
   [OPTION_TYPE.SHOW_FAVICONS]: document.querySelector<HTMLInputElement>('#favicons'),
@@ -21,7 +22,7 @@ function saveOptions(e: Event) {
     [OPTION_TYPE.SHOW_TABS_LABEL]: optionElements[OPTION_TYPE.SHOW_TABS_LABEL]?.checked,
   });
 
-  browser.runtime.sendMessage({ type: BACKGROUND_EVENT.REFRESH_OPTIONS });
+  dispatchBackgroundEvent(BACKGROUND_EVENT.REFRESH_OPTIONS)
 }
 
 const createSetBooleanOption = (result: OptionPreference) => (optionType: OptionType, defaultValue = false) => {

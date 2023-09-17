@@ -1,43 +1,51 @@
-import { Overview, OverviewItem } from '../popup';
+import browser from 'webextension-polyfill';
+import { ValueOf } from '../../types';
+import { BackgroundMessage } from '../background';
+import { Overview } from '../popup';
 
-type MessageType = "items-bookmarked"
-
-export const ClientEvent = {
+export const CLIENT_EVENT = {
   "ITEMS_BOOKMARKED": "items-bookmarked"
 } as const
 
-// TODO: improve implementation
-export type Listeners = {
-  [ClientEvent.ITEMS_BOOKMARKED]: {
-    closeCb: () => void;
-    overviewData: Overview;
+export type ClientEvent = ValueOf<typeof CLIENT_EVENT>
+
+type ClientMessage = {
+  [CLIENT_EVENT.ITEMS_BOOKMARKED]: {
+    index: number
   };
 };
 
-type PopupListenersArgs = {
-  message: {
-    type: MessageType
-    data: {
-      index: number
-    }
-  },
-  closeCb: (ids?: number[]) => void,
-  overviewData: OverviewItem[],
+// TODO: ...data creates spread arg, ie. array! Fix!
+export const dispatchBackgroundEvent = <T extends keyof BackgroundMessage, D extends BackgroundMessage[T]>(type: T, ...data: (D extends null ? [] : [data: BackgroundMessage[T]])) => {
+  browser.runtime.sendMessage({ type, data: data[0] });
 }
 
-const closeTabsInListener = (message: PopupListenersArgs["message"], closeCb: PopupListenersArgs["closeCb"], overviewData: OverviewItem[]) => {
-  const { index } = message.data;
+export const dispatchClientEvent = <T extends keyof ClientMessage, D extends ClientMessage[T]>(type: T, ...data: (D extends null ? [] : [data: ClientMessage[T]])) => {
+  browser.runtime.sendMessage({ type, data: data[0] });
+}
+
+type PopupListenersPartialArgs<T extends ClientEvent> = {
+  type: T,
+  data: ClientMessage[T]
+}
+
+export type CloseTabsInListenerArgs = {
+  message: PopupListenersPartialArgs<"items-bookmarked">,
+  closeCb: (ids?: number[]) => void,
+  overviewData: Overview,
+}
+
+const closeTabsInListener = ({ closeCb, message, overviewData }: CloseTabsInListenerArgs) => {
+  const { index } = message.data
   const { ids } = overviewData[index];
   closeCb?.(ids);
 };
 
-export const handlePopupListeners = (args: PopupListenersArgs) => {
-  const { message, closeCb, overviewData } = args;
-
+export const handlePopupListeners = ({ closeCb, message, overviewData }: CloseTabsInListenerArgs) => {
   // Finishes bookmark-all event by closing bookmarked items
   switch (message.type) {
-    case ClientEvent.ITEMS_BOOKMARKED:
-      closeTabsInListener(message, closeCb, overviewData);
+    case CLIENT_EVENT.ITEMS_BOOKMARKED:
+      closeTabsInListener({ message, closeCb, overviewData });
       break;
 
     default:
