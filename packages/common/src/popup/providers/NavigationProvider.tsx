@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from 'react';
-import { ScreenName, Screens, Screen } from '../../types';
+import { ScreenName, Screens, Screen } from '../types';
 
 export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void;
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import browser from 'webextension-polyfill';
+import { OPTION_TYPE } from '../../options';
 
 type Storage = {
   showFavicons: boolean;
@@ -19,7 +20,7 @@ export const useFavicons = () => {
   }, []);
 
   const getValue = useCallback(async () => {
-    const result = await browser.storage.sync.get('showFavicons').catch(onError);
+    const result = await browser.storage.sync.get(OPTION_TYPE.SHOW_FAVICONS).catch(onError);
 
     onSuccess(result as Storage);
   }, [onError, onSuccess]);

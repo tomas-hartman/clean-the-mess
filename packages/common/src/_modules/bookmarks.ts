@@ -1,7 +1,9 @@
 /* eslint-disable no-await-in-loop */
 import browser, { Tabs } from 'webextension-polyfill';
-import { OverviewItem } from '../types';
+import { OverviewItem } from '../popup';
 import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './helpers';
+import { ClientEvent } from './listeners';
+import { BACKGROUND_EVENT } from '../background';
 
 /**
  * Background
@@ -9,7 +11,7 @@ import { isSupportedProtocol, getTabDataFromId, hasIgnoredProtocol } from './hel
 
 /** Sends bookmark-all message */
 export const bookmarkAll = (overviewObject: OverviewItem, oId: number) => {
-  browser.runtime.sendMessage({ type: 'bookmark-all', data: { overviewObject, index: oId } });
+  browser.runtime.sendMessage({ type: BACKGROUND_EVENT.BOOKMARK_ALL, data: { overviewObject, index: oId } });
 };
 
 const bookmarkTabsToFolder = async (tabIds: number[], parentId: string | null) => {
@@ -113,7 +115,7 @@ export const handleBookmarkAll = async (_data: BookmarkSetter) => {
     console.log('done');
 
     // This throws an error in refactor!
-    browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
+    browser.runtime.sendMessage({ type: ClientEvent.ITEMS_BOOKMARKED, data: { index } });
 
     return;
   }
@@ -131,7 +133,7 @@ export const handleBookmarkAll = async (_data: BookmarkSetter) => {
     await mergeBookmarksInFolder(overviewObject.ids, searchResults, folderName);
   }
 
-  browser.runtime.sendMessage({ type: 'items-bookmarked', data: { index } });
+  browser.runtime.sendMessage({ type: ClientEvent.ITEMS_BOOKMARKED, data: { index } });
 };
 
 /**

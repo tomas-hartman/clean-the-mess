@@ -1,6 +1,18 @@
-import { OverviewItem } from "../types";
+import { Overview, OverviewItem } from '../popup';
 
 type MessageType = "items-bookmarked"
+
+export const ClientEvent = {
+  "ITEMS_BOOKMARKED": "items-bookmarked"
+} as const
+
+// TODO: improve implementation
+export type Listeners = {
+  [ClientEvent.ITEMS_BOOKMARKED]: {
+    closeCb: () => void;
+    overviewData: Overview;
+  };
+};
 
 type PopupListenersArgs = {
   message: {
@@ -24,7 +36,7 @@ export const handlePopupListeners = (args: PopupListenersArgs) => {
 
   // Finishes bookmark-all event by closing bookmarked items
   switch (message.type) {
-    case 'items-bookmarked':
+    case ClientEvent.ITEMS_BOOKMARKED:
       closeTabsInListener(message, closeCb, overviewData);
       break;
 

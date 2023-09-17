@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
 import { Tabs } from 'webextension-polyfill';
-import { Screen } from '../types';
+import { Screen } from '../popup';
 import { locale } from './locale';
 
 

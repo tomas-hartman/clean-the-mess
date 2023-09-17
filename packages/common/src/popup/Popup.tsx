@@ -6,7 +6,6 @@ import { createRoot } from 'react-dom/client';
 import { isChrome } from './utils';
 
 // Global theme style
-
 import '../styles/global.css';
 
 if (isChrome()) {

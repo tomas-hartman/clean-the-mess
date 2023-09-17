@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from 'react';
-import { Screen } from '../../../types';
+import { Screen } from '../../types';
 import { getDetailsData, getHeaderTitle } from '../../../_modules';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
-import { OverviewItem } from '../../../types';
+import { OverviewItem } from '../../types';
 import { DetailHeader } from '../../components/DetailHeader';
 import { CloseTabs } from '../../hooks';
 import { detailsHeaderTitle } from './DetailsHeader.css';

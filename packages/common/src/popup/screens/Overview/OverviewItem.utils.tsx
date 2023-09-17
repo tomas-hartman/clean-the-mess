@@ -1,4 +1,4 @@
-import { OverviewItem as OverviewItemType } from '../../../types';
+import { OverviewItem as OverviewItemType } from '../../types';
 import { getHeaderTitle, bookmarkAll } from '../../../_modules';
 import { callWithConfirm } from '../../utils';
 import { CloseTabs } from '../../hooks';
