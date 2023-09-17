@@ -20,7 +20,7 @@ function saveOptions(e: Event) {
   browser.storage.sync.set({
     [OPTION_TYPE.SHOW_FAVICONS]: optionElements[OPTION_TYPE.SHOW_FAVICONS]?.checked,
     [OPTION_TYPE.SHOW_TABS_LABEL]: optionElements[OPTION_TYPE.SHOW_TABS_LABEL]?.checked,
-  });
+  } satisfies Record<OptionType, unknown>);
 
   dispatchBackgroundEvent(BACKGROUND_EVENT.REFRESH_OPTIONS)
 }
@@ -37,7 +37,7 @@ const createSetBooleanOption = (result: OptionPreference) => (optionType: Option
 const defaultInitOptionValues = {
   [OPTION_TYPE.SHOW_FAVICONS]: true,
   [OPTION_TYPE.SHOW_TABS_LABEL]: true,
-}
+} satisfies OptionPreference
 
 export const setupOptionsAfterInstall = () => {
   const mergeOptions = async (prevOptions: Partial<OptionPreference>) => {
