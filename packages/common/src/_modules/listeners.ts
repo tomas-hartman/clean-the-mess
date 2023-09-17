@@ -1,19 +1,19 @@
 import browser from 'webextension-polyfill';
-import { ValueOf } from '../../types';
+import { AssertEnumMatch, ValueOf } from '../../types';
 import { BackgroundMessage } from '../background';
 import { Overview } from '../popup';
 
 export const CLIENT_EVENT = {
-  "ITEMS_BOOKMARKED": "items-bookmarked"
+  "ITEMS_BOOKMARKED": "items-bookmarked",
 } as const
 
 export type ClientEvent = ValueOf<typeof CLIENT_EVENT>
 
-type ClientMessage = {
+type ClientMessage = AssertEnumMatch<typeof CLIENT_EVENT, {
   [CLIENT_EVENT.ITEMS_BOOKMARKED]: {
     index: number
   };
-};
+}>
 
 // TODO: ...data creates spread arg, ie. array! Fix!
 export const dispatchBackgroundEvent = <T extends keyof BackgroundMessage, D extends BackgroundMessage[T]>(type: T, ...data: (D extends null ? [] : [data: BackgroundMessage[T]])) => {
