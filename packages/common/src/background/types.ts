@@ -1,20 +1,19 @@
-import { AssertEnumMatch, ValueOf } from "../../types"
-import { OverviewItem } from "../popup"
+import { EnumGuard, ValueOf } from '../../types';
+import { OverviewItem } from '../popup';
+
+export type BackgroundMessageProps = {
+  bookmarkAll: {
+    overviewItem: OverviewItem;
+    overviewIndex: number;
+  };
+  refreshOptions: null;
+  darkScheme: null;
+};
 
 export const BACKGROUND_EVENT = {
-  "BOOKMARK_ALL": "bookmarks-all",
-  "REFRESH_OPTIONS": "refresh-options",
-  "DARK_SCHEME": "dark-scheme",
-} as const
+  BOOKMARK_ALL: 'bookmarkAll',
+  REFRESH_OPTIONS: 'refreshOptions',
+  DARK_SCHEME: 'darkScheme',
+} as const satisfies EnumGuard<BackgroundMessageProps>;
 
-export type BackgroundEvent = ValueOf<typeof BACKGROUND_EVENT>
-
-export type BackgroundMessage = AssertEnumMatch<typeof BACKGROUND_EVENT, {
-  [BACKGROUND_EVENT.BOOKMARK_ALL]: {
-    overviewItem: OverviewItem,
-    overviewIndex: number
-  },
-  [BACKGROUND_EVENT.REFRESH_OPTIONS]: null,
-  [BACKGROUND_EVENT.DARK_SCHEME]: null,
-}>
-
+export type BackgroundEvent = ValueOf<typeof BACKGROUND_EVENT>;

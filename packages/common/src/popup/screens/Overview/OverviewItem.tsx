@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo, useState } from 'react';
-import type { OverviewItem as OverviewItemType } from '../../types';
+import { SCREEN, type OverviewItem as OverviewItemType } from '../../types';
 import { getHeaderTitle } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
 import { Favicon } from '../../components/Favicon';
@@ -17,7 +17,7 @@ type OverviewItemProps = {
 };
 
 export const OverviewItem: FC<OverviewItemProps> = ({ itemId, data, showFavicon = true, closeTabs }) => {
-  const { switchToScreen } = useNavigate();
+  const { navigate } = useNavigate();
   const [isHidden, setIsHidden] = useState(true);
 
   const { url, count, key, ids, favicon } = data;
@@ -31,12 +31,12 @@ export const OverviewItem: FC<OverviewItemProps> = ({ itemId, data, showFavicon 
   };
 
   const handleDetailClick = useCallback(() => {
-    switchToScreen('details', {
+    navigate(SCREEN.DETAILS, {
       ids,
       url,
       key,
     });
-  }, [ids, key, url, switchToScreen]);
+  }, [ids, key, url, navigate]);
 
   const isBookmarkable = useMemo(() => {
     return !!url && ['Browser tabs'].includes(url) === false;

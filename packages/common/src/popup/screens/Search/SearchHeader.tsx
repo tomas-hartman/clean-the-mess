@@ -6,6 +6,7 @@ import { CloseTabs } from '../../hooks';
 import { searchContainer, searchControls, searchInput } from './SearchHeader.css';
 import clsx from 'clsx';
 import { useNavigate } from '../../providers';
+import { SCREEN } from '../../types';
 
 interface SearchHeaderProps {
   foundTabsData: Tabs.Tab[];
@@ -23,7 +24,7 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
   tabsData,
 }) => {
   const searchRef = useRef<HTMLInputElement | null>(null);
-  const { switchToScreen } = useNavigate();
+  const { navigate } = useNavigate();
 
   const searchCount = foundTabsData.length;
   const ids = foundTabsData.filter((item): item is Required<Tabs.Tab> => item.id !== undefined).map(item => item.id);
@@ -49,7 +50,7 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
 
   return (
     <DetailHeader>
-      <GoBackBtn onClick={() => switchToScreen('overview')} />
+      <GoBackBtn onClick={() => navigate(SCREEN.OVERVIEW)} />
       <div className={clsx('search-container', searchContainer)}>
         <input
           type="search"

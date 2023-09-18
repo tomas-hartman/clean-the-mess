@@ -11,15 +11,15 @@ type OverviewHeaderProps = {
 };
 
 export const OverviewHeader: FC<OverviewHeaderProps> = ({ openTabs }) => {
-  const { switchToScreen } = useNavigate();
+  const { navigate } = useNavigate();
 
   return (
     <div className={overviewHeaderContainer}>
-      <OverviewHeaderUpperItem openTabs={openTabs} switchToScreen={switchToScreen} />
+      <OverviewHeaderUpperItem openTabs={openTabs} navigate={navigate} />
       <Separator />
       {isFirefox() && (
         <>
-          <OverviewHeaderLatestItems switchToScreen={switchToScreen} />
+          <OverviewHeaderLatestItems navigate={navigate} />
           <Separator />
         </>
       )}

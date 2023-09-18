@@ -1,42 +1,48 @@
 import browser from 'webextension-polyfill';
-import { AssertEnumMatch, ValueOf } from '../../types';
-import { BackgroundMessage } from '../background';
+import { EnumGuard, ValueOf } from '../../types';
+import { BackgroundMessageProps } from '../background';
 import { Overview } from '../popup';
 
-export const CLIENT_EVENT = {
-  "ITEMS_BOOKMARKED": "items-bookmarked",
-} as const
-
-export type ClientEvent = ValueOf<typeof CLIENT_EVENT>
-
-type ClientMessage = AssertEnumMatch<typeof CLIENT_EVENT, {
-  [CLIENT_EVENT.ITEMS_BOOKMARKED]: {
-    index: number
+type ClientMessageProps = {
+  itemsBookmarked: {
+    index: number;
   };
-}>
+};
+
+export const CLIENT_EVENT = {
+  ITEMS_BOOKMARKED: 'itemsBookmarked',
+} as const satisfies EnumGuard<ClientMessageProps>;
+
+export type ClientEvent = ValueOf<typeof CLIENT_EVENT>;
 
 // TODO: ...data creates spread arg, ie. array! Fix!
-export const dispatchBackgroundEvent = <T extends keyof BackgroundMessage, D extends BackgroundMessage[T]>(type: T, ...data: (D extends null ? [] : [data: BackgroundMessage[T]])) => {
+export const dispatchBackgroundEvent = <T extends keyof BackgroundMessageProps, D extends BackgroundMessageProps[T]>(
+  type: T,
+  ...data: D extends null ? [] : [data: BackgroundMessageProps[T]]
+) => {
   browser.runtime.sendMessage({ type, data: data[0] });
-}
+};
 
-export const dispatchClientEvent = <T extends keyof ClientMessage, D extends ClientMessage[T]>(type: T, ...data: (D extends null ? [] : [data: ClientMessage[T]])) => {
+export const dispatchClientEvent = <T extends keyof ClientMessageProps, D extends ClientMessageProps[T]>(
+  type: T,
+  ...data: D extends null ? [] : [data: ClientMessageProps[T]]
+) => {
   browser.runtime.sendMessage({ type, data: data[0] });
-}
+};
 
 type PopupListenersPartialArgs<T extends ClientEvent> = {
-  type: T,
-  data: ClientMessage[T]
-}
+  type: T;
+  data: ClientMessageProps[T];
+};
 
 export type CloseTabsInListenerArgs = {
-  message: PopupListenersPartialArgs<"items-bookmarked">,
-  closeCb: (ids?: number[]) => void,
-  overviewData: Overview,
-}
+  message: PopupListenersPartialArgs<'itemsBookmarked'>;
+  closeCb: (ids?: number[]) => void;
+  overviewData: Overview;
+};
 
 const closeTabsInListener = ({ closeCb, message, overviewData }: CloseTabsInListenerArgs) => {
-  const { index } = message.data
+  const { index } = message.data;
   const { ids } = overviewData[index];
   closeCb?.(ids);
 };

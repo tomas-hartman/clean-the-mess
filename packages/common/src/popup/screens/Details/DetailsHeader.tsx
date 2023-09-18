@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
-import { OverviewItem } from '../../types';
+import { OverviewItem, SCREEN } from '../../types';
 import { DetailHeader } from '../../components/DetailHeader';
 import { CloseTabs } from '../../hooks';
 import { detailsHeaderTitle } from './DetailsHeader.css';
@@ -14,11 +14,11 @@ interface DetailsHeaderProps {
 }
 
 export const DetailsHeader: FC<DetailsHeaderProps> = ({ title, overviewData, closeTabs }) => {
-  const { switchToScreen } = useNavigate();
+  const { navigate } = useNavigate();
 
   return (
     <DetailHeader>
-      <GoBackBtn onClick={() => switchToScreen('overview')} />
+      <GoBackBtn onClick={() => navigate(SCREEN.OVERVIEW)} />
       <div className={detailsHeaderTitle}>
         <Favicon src={overviewData?.favicon} />
         <span>{title}</span>

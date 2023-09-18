@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from 'react';
-import { Screen } from '../../types';
+import { SCREEN, ScreenProps } from '../../types';
 import { getDetailsData, getHeaderTitle } from '../../../_modules';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsItem } from '../../components/DetailItem';
@@ -9,12 +9,12 @@ import { useNavigate } from '../../providers';
 
 interface DetailsScreenProps {
   isActive: boolean;
-  screen: Screen;
+  screen: ScreenProps;
 }
 
 export const DetailsScreen: FC<DetailsScreenProps> = ({ isActive, screen }) => {
   const { tabs, closeTabs, overview } = useData();
-  const { switchToScreen } = useNavigate();
+  const { navigate } = useNavigate();
 
   const details = useMemo(() => getDetailsData(screen, tabs), [screen, tabs]);
   const overviewItem = useMemo(
@@ -27,9 +27,9 @@ export const DetailsScreen: FC<DetailsScreenProps> = ({ isActive, screen }) => {
 
   useEffect(() => {
     if (isActive && details.length === 0) {
-      switchToScreen('overview');
+      navigate(SCREEN.OVERVIEW);
     }
-  }, [details, switchToScreen, isActive]);
+  }, [details, navigate, isActive]);
 
   return (
     <>
