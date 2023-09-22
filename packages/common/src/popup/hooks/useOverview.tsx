@@ -10,8 +10,8 @@ export const useOverview = () => {
       return getOverview(tabs);
     }
 
-    return [];
+    return { pinned: null, overview: [] };
   }, [tabs]);
 
-  return { overview };
+  return overview;
 };

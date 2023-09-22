@@ -4,18 +4,16 @@ import { EnumGuard, ValueOf } from '../../types';
 export type OverviewItem = {
   url: Tabs.Tab['url'];
   count: number;
-  ids?: number[];
-  key: number;
+  ids: number[];
+  key: string;
   favicon?: Tabs.Tab['favIconUrl'];
 };
-
-export type Overview = OverviewItem[];
 
 export type ScreensProps = {
   details: {
     ids: OverviewItem['ids'];
     url?: string;
-    key: number;
+    key: string;
   };
   latest: undefined;
   search: undefined;

@@ -13,3 +13,5 @@ export type CamelToSnakeCase<S extends string> = S extends `${infer T}${infer U}
 export type EnumGuard<T extends Record<string, unknown>> = {
   [K in keyof T as `${CamelToSnakeCase<K & string>}`]: K;
 };
+
+export type MakePropRequired<T extends object, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;

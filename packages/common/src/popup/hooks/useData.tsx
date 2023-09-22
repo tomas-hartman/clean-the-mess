@@ -8,12 +8,12 @@ export type CloseTabs = (ids?: number | number[]) => Promise<void>;
 export const useData = () => {
   const { tabs, ...props } = useContext(DataContext);
   const { latestTabs } = useLatestTabs({ numOfLatest: 10 });
-  const { overview } = useOverview();
+  const overview = useOverview();
 
   return {
     tabs,
     latestTabs,
-    overview,
+    ...overview,
     ...props,
   };
 };

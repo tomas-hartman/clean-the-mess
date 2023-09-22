@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 import { EnumGuard, ValueOf } from '../../types';
 import { BackgroundMessageProps } from '../background';
-import { Overview } from '../popup';
+import { OverviewItem } from '../popup';
 
 type ClientMessageProps = {
   itemsBookmarked: {
@@ -38,7 +38,7 @@ type PopupListenersPartialArgs<T extends ClientEvent> = {
 export type CloseTabsInListenerArgs = {
   message: PopupListenersPartialArgs<'itemsBookmarked'>;
   closeCb: (ids?: number[]) => void;
-  overviewData: Overview;
+  overviewData: OverviewItem[];
 };
 
 const closeTabsInListener = ({ closeCb, message, overviewData }: CloseTabsInListenerArgs) => {
