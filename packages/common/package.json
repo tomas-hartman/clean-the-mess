@@ -22,6 +22,7 @@
     "storybook-addon-manual-mocks": "^0.1.1"
   },
   "dependencies": {
+    "@phosphor-icons/core": "^2.0.2",
     "@vanilla-extract/css": "^1.10.0",
     "@vanilla-extract/recipes": "^0.4.0",
     "clsx": "^1.2.1",
