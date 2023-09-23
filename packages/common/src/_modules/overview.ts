@@ -90,7 +90,7 @@ export const getOverview = (tabs: Tabs.Tab[]): Overview => {
             url: 'Pinned tabs',
             count: pinnedIds.length,
             ids: pinnedIds,
-            key: 'pinned',
+            key: getHash('Pinned tabs'),
             favicon: undefined,
           }
         : null,

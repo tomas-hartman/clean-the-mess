@@ -1,12 +1,13 @@
 import { FC, useCallback, useMemo, useState } from 'react';
-import { Tabs } from 'webextension-polyfill';
+import Browser, { Tabs } from 'webextension-polyfill';
 
 import { hasIgnoredProtocol, bookmarkTab, goToTab, getFormatedDate } from '../../_modules';
-import { CloseTabs } from '../hooks';
+import { CloseTabs, useData } from '../hooks';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from './Buttons';
 import { detailItem, detailItemControls } from './DetailItem.css';
 import { DetailItemBody } from './DetailItemBody';
 import { Favicon } from './Favicon';
+import { Button } from './Buttons/Button';
 
 export type DetailItemType = 'url' | 'lastDisplayed';
 
@@ -20,6 +21,8 @@ interface DetailsItemProps {
 
 export const DetailsItem: FC<DetailsItemProps> = ({ itemId, data, type, closeTabs, showFavicon = false }) => {
   const [isHidden, setIsHidden] = useState(true);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const { refreshTabs } = useData();
 
   const date = getFormatedDate(data.lastAccessed) || '';
   const decodedUrl = useMemo(() => (data.url ? decodeURI(data.url) : 'Unknown website'), [data.url]);
@@ -31,6 +34,15 @@ export const DetailsItem: FC<DetailsItemProps> = ({ itemId, data, type, closeTab
   const handleMouseOut = useCallback(() => {
     setIsHidden(true);
   }, []);
+
+  const handleUnlock = useCallback(() => {
+    setIsUnlocked(true);
+  }, []);
+
+  const handleUnpin = useCallback(async () => {
+    await Browser.tabs.update(data.id, { pinned: false });
+    refreshTabs();
+  }, [data.id, refreshTabs]);
 
   const bookmarkCloseTab = useCallback(
     (tabData: Tabs.Tab) => {
@@ -64,13 +76,21 @@ export const DetailsItem: FC<DetailsItemProps> = ({ itemId, data, type, closeTab
 
       <DetailItemBody date={date} decodedUrl={decodedUrl} title={data.title} type={type} />
 
-      <div className={detailItemControls}>
-        {!hasIgnoredProtocol(data.url) && (
-          <BookmarkCloseBtn tab={data} isHidden={isHidden} onClick={() => bookmarkCloseTab(data)} />
-        )}
-        <CloseBtn isHidden={isHidden} onClick={() => handleCloseTab(data.id)} />
-        <GetInBtn isHidden={!isHidden} />
-      </div>
+      {!data.pinned || isUnlocked ? (
+        <div className={detailItemControls}>
+          {!hasIgnoredProtocol(data.url) && (
+            <BookmarkCloseBtn tab={data} isHidden={isHidden} onClick={() => bookmarkCloseTab(data)} />
+          )}
+
+          <CloseBtn isHidden={isHidden} onClick={() => handleCloseTab(data.id)} />
+          <GetInBtn isHidden={!isHidden} />
+        </div>
+      ) : (
+        <>
+          <Button title="Unpin" onClick={handleUnpin} icon="BoldPushPinSlash" size="small" isHidden={isHidden} />
+          <Button title="Unlock to edit" onClick={handleUnlock} icon="BoldLockOpen" size="small" isHidden={isHidden} />
+        </>
+      )}
     </li>
   );
 };

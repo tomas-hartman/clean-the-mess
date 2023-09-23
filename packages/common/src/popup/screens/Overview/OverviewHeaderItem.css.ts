@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { themeContract } from '../../../styles/themes.css';
 
-export const overviewHeaderLatestItems = style({
+export const itemWrapper = style({
   marginTop: '4px',
   display: 'flex',
   justifyContent: 'space-between',
@@ -14,7 +14,14 @@ export const overviewHeaderLatestItems = style({
   },
 });
 
-export const overviewHeaderLatestItemsTitle = style({
+export const titleWrapper = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '8px',
+});
+
+export const title = style({
   display: 'inline-block',
   lineHeight: '20px',
 });

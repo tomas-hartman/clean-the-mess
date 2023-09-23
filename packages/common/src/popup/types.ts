@@ -14,6 +14,7 @@ export type ScreensProps = {
     ids: OverviewItem['ids'];
     url?: string;
     key: string;
+    hasActionButton?: boolean;
   };
   latest: undefined;
   search: undefined;

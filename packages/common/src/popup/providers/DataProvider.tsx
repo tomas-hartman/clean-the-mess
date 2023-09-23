@@ -3,7 +3,7 @@ import browser, { Tabs } from 'webextension-polyfill';
 
 type DataContextProps = {
   tabs: Tabs.Tab[];
-  closeTabs: () => Promise<void>;
+  closeTabs: (ids?: number | number[]) => Promise<void>;
   refreshTabs: () => void;
 };
 

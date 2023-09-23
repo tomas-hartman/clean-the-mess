@@ -1,5 +1,6 @@
 /* eslint-disable no-bitwise */
 import browser from 'webextension-polyfill';
+import { SCREEN, ScreenName } from '../popup';
 
 /**
  * Validates if url with given protocol can be bookmarked
@@ -9,7 +10,7 @@ import browser from 'webextension-polyfill';
 export const isSupportedProtocol = (url?: string): boolean => {
   const supportedProtocols = ['https:', 'http:', 'ftp:', 'file:'];
 
-  if(!url) return false;
+  if (!url) return false;
 
   const urlObj = new URL(url);
 
@@ -25,7 +26,7 @@ export const isSupportedProtocol = (url?: string): boolean => {
 export const hasIgnoredProtocol = (url?: string): boolean => {
   const ignoredProtocols = ['about:', 'moz-extension:', 'chrome:', 'file:'];
 
-  if(!url) return false;
+  if (!url) return false;
 
   const { protocol } = new URL(url);
 
@@ -48,14 +49,18 @@ export const getTabDataFromId = async (id: number) => {
  * @see https://stackoverflow.com/a/57448862/11243775
  * @param {string} str
  */
-export const escapeHTML = (str: string) => str.replace(/[&<>'"]/g,
-  (tag) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '\'': '&#39;',
-    '"': '&quot;',
-  }[tag]) || '');
+export const escapeHTML = (str: string) =>
+  str.replace(
+    /[&<>'"]/g,
+    tag =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;',
+      }[tag] || ''),
+  );
 
 /**
  * Function that converts string to hash. Used to set unique keys in getOverview.
@@ -64,32 +69,33 @@ export const escapeHTML = (str: string) => str.replace(/[&<>'"]/g,
  * @returns {string}
  */
 export const getHash = (value: string): string => {
-  let hash = 0; let i; let
-    chr;
+  let hash = 0;
+  let i;
+  let chr;
   for (i = 0; i < value.length; i += 1) {
     chr = value.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr;
+    hash = (hash << 5) - hash + chr;
     hash |= 0; // Convert to 32bit integer
   }
   return `${hash}`;
 };
 
+type HeaderTitleType = Extract<ScreenName, 'details' | 'latest'>;
 
 // Returns headerTitle for secondary screens
-// TODO: make reasonable with types
-export const getHeaderTitle = (overviewUrl: string | undefined, type: 'details' | 'latest', count?: number) => {
-  if(type === 'details') {
-    if(!overviewUrl) return '';
+export const getHeaderTitle = (overviewUrl: string | undefined, type: HeaderTitleType, count?: number) => {
+  if (type === SCREEN.DETAILS) {
+    if (!overviewUrl) return '';
 
     try {
-      return new URL(overviewUrl).host
+      return new URL(overviewUrl).host;
     } catch {
-      return overviewUrl
+      return overviewUrl;
     }
   }
 
-  if(type === 'latest') {
-    return `${count} longest unused tabs`
+  if (type === SCREEN.LATEST) {
+    return `${count} longest unused tabs`;
   }
 
   return '';
@@ -99,7 +105,7 @@ export const getHeaderTitle = (overviewUrl: string | undefined, type: 'details' 
  * @param {number | undefined} id Tab id
  */
 export const goToTab = async (id: number | undefined) => {
-  if(!id) return;
+  if (!id) return;
 
   await browser.tabs.update(id, { active: true });
 };
