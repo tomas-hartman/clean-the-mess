@@ -1,11 +1,11 @@
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from 'react';
-import { ScreenName, Screens, Screen } from '../types';
+import { ScreenName, ScreensProps, ScreenProps } from '../types';
 
-export type SwitchToScreenType = <T extends ScreenName>(next: T, options?: Screens[T]) => void;
+export type Navigate = <T extends ScreenName>(next: T, options?: ScreensProps[T]) => void;
 
 type RouterContextProps = {
-  screen: Screen;
-  switchToScreen: SwitchToScreenType;
+  screen: ScreenProps;
+  navigate: Navigate;
 };
 
 export const NavigationContext = createContext<RouterContextProps>({
@@ -13,15 +13,15 @@ export const NavigationContext = createContext<RouterContextProps>({
 } as RouterContextProps);
 
 export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [screen, setScreen] = useState<Screen>({ name: 'overview' });
+  const [screen, setScreen] = useState<ScreenProps>({ name: 'overview' });
 
-  const switchToScreen = useCallback((nextScreen, options) => {
-    setScreen({ name: nextScreen, options: options });
+  const navigate = useCallback<Navigate>((nextScreen, options) => {
+    setScreen({ name: nextScreen, options });
   }, []);
 
   const value = {
     screen,
-    switchToScreen,
+    navigate,
   };
 
   return <NavigationContext.Provider value={value}>{children}</NavigationContext.Provider>;

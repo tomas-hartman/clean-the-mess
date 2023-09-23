@@ -1,9 +1,12 @@
 import { createContext, FC, PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import browser, { Tabs } from 'webextension-polyfill';
+import { getRemovableIds } from './DataProvider.utils';
+
+export type CloseTabs = (ids?: number | number[], options?: { keepPinned: boolean }) => Promise<void>;
 
 type DataContextProps = {
   tabs: Tabs.Tab[];
-  closeTabs: () => Promise<void>;
+  closeTabs: CloseTabs;
   refreshTabs: () => void;
 };
 
@@ -19,14 +22,17 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getTabs = useCallback(async () => await browser.tabs.query({ currentWindow: true }), []);
 
-  const closeTabs = useCallback(
-    async (ids?: number | number[]) => {
+  const closeTabs = useCallback<CloseTabs>(
+    async (ids, options) => {
       if (!ids) return;
 
-      await browser.tabs.remove(ids);
+      const keepPinned = options?.keepPinned ?? false;
+      const removableIds = getRemovableIds(ids, tabs, keepPinned);
+
+      await browser.tabs.remove(removableIds);
       refreshTabs();
     },
-    [refreshTabs],
+    [refreshTabs, tabs],
   );
 
   useEffect(() => {

@@ -1,13 +1,14 @@
 import { Tabs } from 'webextension-polyfill';
-import { Overview, OverviewItem } from '../popup';
+import { OverviewItem } from '../popup';
 import { getHash } from './helpers';
+import { MakePropRequired } from '../../types';
 
 const getOriginUrl = (tabData: Tabs.Tab) => {
-  if (!tabData.url) return "Other tabs";
+  if (!tabData.url) return 'Other tabs';
 
   const url = new URL(tabData.url);
 
-  if (!(url.protocol === "http:" || url.protocol === "https:")) {
+  if (!(url.protocol === 'http:' || url.protocol === 'https:')) {
     switch (url.protocol) {
       case 'about:':
       case 'moz-extension:':
@@ -25,11 +26,20 @@ const getOriginUrl = (tabData: Tabs.Tab) => {
   }
 
   if (url.origin) {
-    return url.origin
+    return url.origin;
   }
 
   return 'Other tabs';
 };
+
+type Overview = {
+  pinned: OverviewItem | null;
+  overview: OverviewItem[];
+};
+
+type TabWithId = MakePropRequired<Tabs.Tab, 'id'>;
+
+const hasId = (value: Tabs.Tab): value is TabWithId => 'id' in value && value['id'] !== undefined;
 
 /**
  * Function that creates data structure for overview grouping.
@@ -38,34 +48,52 @@ const getOriginUrl = (tabData: Tabs.Tab) => {
  * @returns {Object[]} Sorted array of objects that are used for overview grouping
  */
 export const getOverview = (tabs: Tabs.Tab[]): Overview => {
-  const output: Required<OverviewItem>[] = [];
+  const output: OverviewItem[] = [];
+  const pinnedIds: number[] = [];
 
-  tabs.forEach((tab) => {
+  tabs.forEach(tab => {
     const originUrl = getOriginUrl(tab);
 
-    if (!tab.pinned && tab.id !== undefined) {
-      if (output.some((website) => website.url === originUrl)) {
-        const index = output.findIndex(
-          (website) => website.url === originUrl,
-        );
+    if (!hasId(tab)) {
+      return;
+    }
 
-        output[index].count += 1;
-        output[index].ids.push(tab.id);
-      } else {
-        const key = getHash(originUrl);
+    if (tab.pinned) {
+      pinnedIds.push(tab.id);
+      return;
+    }
 
-        output.push({
-          url: originUrl,
-          count: 1,
-          ids: [tab.id],
-          key,
-          favicon: tab.favIconUrl,
-        });
-      }
+    if (output.some(website => website.url === originUrl)) {
+      const index = output.findIndex(website => website.url === originUrl);
+
+      output[index].count += 1;
+      output[index].ids.push(tab.id);
+    } else {
+      const key = getHash(originUrl);
+
+      output.push({
+        url: originUrl,
+        count: 1,
+        ids: [tab.id],
+        key,
+        favicon: tab.favIconUrl,
+      });
     }
   });
 
   output.sort((a, b) => b.count - a.count);
 
-  return output;
+  return {
+    pinned:
+      pinnedIds.length > 0
+        ? {
+            url: 'Pinned tabs',
+            count: pinnedIds.length,
+            ids: pinnedIds,
+            key: getHash('Pinned tabs'),
+            favicon: undefined,
+          }
+        : null,
+    overview: output,
+  };
 };

@@ -1,8 +1,7 @@
-import { FC } from 'react';
-import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
-import { OverviewItem } from '../../types';
+import { FC, ReactNode } from 'react';
+import { GoBackBtn } from '../../components/Buttons';
+import { OverviewItem, SCREEN } from '../../types';
 import { DetailHeader } from '../../components/DetailHeader';
-import { CloseTabs } from '../../hooks';
 import { detailsHeaderTitle } from './DetailsHeader.css';
 import { Favicon } from '../../components/Favicon';
 import { useNavigate } from '../../providers';
@@ -10,23 +9,20 @@ import { useNavigate } from '../../providers';
 interface DetailsHeaderProps {
   title: string;
   overviewData?: OverviewItem;
-  closeTabs: CloseTabs;
+  actionBtn?: ReactNode;
 }
 
-export const DetailsHeader: FC<DetailsHeaderProps> = ({ title, overviewData, closeTabs }) => {
-  const { switchToScreen } = useNavigate();
+export const DetailsHeader: FC<DetailsHeaderProps> = ({ title, overviewData, actionBtn }) => {
+  const { navigate } = useNavigate();
 
   return (
     <DetailHeader>
-      <GoBackBtn onClick={() => switchToScreen('overview')} />
+      <GoBackBtn onClick={() => navigate(SCREEN.OVERVIEW)} />
       <div className={detailsHeaderTitle}>
         <Favicon src={overviewData?.favicon} />
         <span>{title}</span>
       </div>
-      <CloseAllHeaderBtn
-        onClick={() => closeTabs(overviewData?.ids)}
-        itemCount={overviewData?.ids && typeof overviewData.ids !== 'number' && overviewData.ids.length}
-      />
+      {actionBtn}
     </DetailHeader>
   );
 };
