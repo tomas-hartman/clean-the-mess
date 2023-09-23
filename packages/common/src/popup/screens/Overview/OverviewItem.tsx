@@ -3,11 +3,10 @@ import { SCREEN, type OverviewItem as OverviewItemType } from '../../types';
 import { getHeaderTitle } from '../../../_modules';
 import { BookmarkAllBtn, CloseAllOverviewBtn, GetInBtn } from '../../components/Buttons';
 import { Favicon } from '../../components/Favicon';
-import { CloseTabs } from '../../hooks';
 import { overviewItem, overviewItemControls, overviewItemCount } from './OverviewItem.css';
 import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
 import { OverviewItemBody } from './OverviewItemBody';
-import { useNavigate } from '../../providers';
+import { CloseTabs, useNavigate } from '../../providers';
 
 type OverviewItemProps = {
   itemId: number;

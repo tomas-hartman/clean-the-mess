@@ -34,7 +34,6 @@ export const SearchScreen: FC<SearchScreenProps> = ({ isActive }) => {
   return (
     <>
       <SearchHeader
-        // oKey={1}
         foundTabsData={result}
         tabsData={tabs}
         performSearch={search}

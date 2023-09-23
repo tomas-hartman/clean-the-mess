@@ -2,10 +2,9 @@ import { FC, useEffect, useRef } from 'react';
 import { Tabs } from 'webextension-polyfill';
 import { CloseAllHeaderBtn, GoBackBtn } from '../../components/Buttons';
 import { DetailHeader } from '../../components/DetailHeader';
-import { CloseTabs } from '../../hooks';
 import { searchContainer, searchControls, searchInput } from './SearchHeader.css';
 import clsx from 'clsx';
-import { useNavigate } from '../../providers';
+import { CloseTabs, useNavigate } from '../../providers';
 import { SCREEN } from '../../types';
 
 interface SearchHeaderProps {
@@ -64,7 +63,7 @@ export const SearchHeader: FC<SearchHeaderProps> = ({
           <span className="search-count">{`(${searchCount})`}</span>
         </div>
       </div>
-      <CloseAllHeaderBtn onClick={() => closeTabs(ids)} itemCount={ids.length} />
+      <CloseAllHeaderBtn onClick={() => closeTabs(ids, { keepPinned: true })} itemCount={ids.length} />
     </DetailHeader>
   );
 };

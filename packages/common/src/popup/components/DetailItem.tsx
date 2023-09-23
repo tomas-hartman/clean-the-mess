@@ -2,12 +2,13 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import Browser, { Tabs } from 'webextension-polyfill';
 
 import { hasIgnoredProtocol, bookmarkTab, goToTab, getFormatedDate } from '../../_modules';
-import { CloseTabs, useData } from '../hooks';
+import { useData } from '../hooks';
 import { GetInBtn, BookmarkCloseBtn, CloseBtn } from './Buttons';
 import { detailItem, detailItemControls } from './DetailItem.css';
 import { DetailItemBody } from './DetailItemBody';
 import { Favicon } from './Favicon';
 import { Button } from './Buttons/Button';
+import { CloseTabs } from '../providers';
 
 export type DetailItemType = 'url' | 'lastDisplayed';
 

@@ -1,7 +1,7 @@
 import { OverviewItem } from '../../types';
 import { getHeaderTitle, bookmarkAll } from '../../../_modules';
 import { callWithConfirm } from '../../utils';
-import { CloseTabs } from '../../hooks';
+import { CloseTabs } from '../../providers';
 
 export const bookmarkOverviewTabs = (overviewItem: OverviewItem, oId: number) => {
   const { url, count } = overviewItem;
