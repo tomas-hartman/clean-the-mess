@@ -24,7 +24,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getTabs = useCallback(async () => await browser.tabs.query({ currentWindow: true }), []);
 
-  const duplicates = useMemo(() => dedupe(tabs), [tabs]);
+  const duplicates = useMemo(() => dedupe(tabs).sort((a, b) => b.tabs.length - a.tabs.length), [tabs]);
 
   const closeTabs = useCallback<CloseTabs>(
     async (ids, options) => {
