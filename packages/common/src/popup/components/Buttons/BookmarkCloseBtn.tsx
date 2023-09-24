@@ -6,7 +6,7 @@ import { Button } from './Button';
 type BookmarkCloseBtnProps = {
   tab: Tabs.Tab;
   onClick: () => void;
-  isHidden: boolean;
+  isHidden?: boolean;
 };
 
 export const BookmarkCloseBtn: FC<BookmarkCloseBtnProps> = ({ tab, onClick: handleClick, isHidden = false }) => {
