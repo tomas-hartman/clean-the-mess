@@ -1,51 +1,47 @@
 import { Tabs } from 'webextension-polyfill';
 
 export type DuplicateGroup = {
-  url?: string;
+  url: string;
   tabs: Tabs.Tab[];
-  // favicon?: string;
+  favicon?: string;
 };
 
-// TODO: Try another approach for better performance
-export const dedupe = (arr: Tabs.Tab[]) => {
-  const { duplicates } = arr.reduce<{ original: Tabs.Tab[]; duplicates: DuplicateGroup[] }>(
-    (prev, current) => {
-      if (prev.original.length < 1) return prev;
+const createMapSetter =
+  (duplicateMap: Map<string, DuplicateGroup>) => (initialMap: Map<string, DuplicateGroup>, tab: Tabs.Tab) => {
+    if (!tab.url) return;
 
-      const { duplicates, rest } = prev.original.reduce<{ duplicates: Tabs.Tab[]; rest: Tabs.Tab[] }>(
-        (prevReduced, item) => {
-          if (item.url === current.url) {
-            return {
-              ...prevReduced,
-              duplicates: [...prevReduced.duplicates, item],
-            };
-          }
+    if (initialMap.has(tab.url)) {
+      const prev = initialMap.get(tab.url);
 
-          return {
-            ...prevReduced,
-            rest: [...prevReduced.rest, item],
-          };
-        },
-        { duplicates: [], rest: [] },
-      );
+      if (!prev) return;
 
-      if (!duplicates[0]) {
-        return prev;
-      }
+      duplicateMap.set(tab.url, {
+        ...prev,
+        tabs: [...prev.tabs, tab],
+      });
 
-      if (duplicates.length <= 1)
-        return {
-          ...prev,
-          original: rest,
-        };
+      return;
+    }
+  };
 
-      return {
-        original: rest,
-        duplicates: [...prev.duplicates, { url: duplicates[0].url, tabs: duplicates }],
-      };
-    },
-    { original: arr, duplicates: [] },
-  );
+export const dedupe = (tabs: Tabs.Tab[]): DuplicateGroup[] => {
+  const duplicates = new Map<string, DuplicateGroup>();
+  const midstep = new Map<string, DuplicateGroup>();
 
-  return duplicates;
+  tabs.forEach(tab => {
+    if (!tab.url) return;
+
+    const mapSetter = createMapSetter(duplicates);
+
+    mapSetter(duplicates, tab);
+    mapSetter(midstep, tab);
+
+    midstep.set(tab.url, {
+      url: tab.url,
+      tabs: [tab],
+      favicon: tab.favIconUrl,
+    });
+  });
+
+  return Array.from(duplicates.values());
 };
