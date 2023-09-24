@@ -14,7 +14,7 @@ type OverviewHeaderProps = {
 
 export const OverviewHeader: FC<OverviewHeaderProps> = ({ openTabs }) => {
   const { navigate } = useNavigate();
-  const { pinned } = useData();
+  const { pinned, duplicates } = useData();
 
   return (
     <div className={overviewHeaderContainer}>
@@ -35,8 +35,11 @@ export const OverviewHeader: FC<OverviewHeaderProps> = ({ openTabs }) => {
           label="Pinned items"
         />
       )}
+      {duplicates.length > 0 && (
+        <OverviewHeaderItem icon="BoldFolders" onClick={() => navigate(SCREEN.DUPLICATES)} label="Duplicated tabs" />
+      )}
 
-      {(isFirefox() || pinned) && <Separator />}
+      {(isFirefox() || pinned || duplicates.length > 0) && <Separator />}
     </div>
   );
 };

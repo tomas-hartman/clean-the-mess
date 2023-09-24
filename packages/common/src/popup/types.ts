@@ -19,6 +19,7 @@ export type ScreensProps = {
   latest: undefined;
   search: undefined;
   overview: undefined;
+  duplicates: undefined;
 };
 
 export const SCREEN = {
@@ -26,6 +27,7 @@ export const SCREEN = {
   DETAILS: 'details',
   LATEST: 'latest',
   SEARCH: 'search',
+  DUPLICATES: 'duplicates',
 } as const satisfies EnumGuard<ScreensProps>;
 
 export type ScreenName = ValueOf<typeof SCREEN>;
