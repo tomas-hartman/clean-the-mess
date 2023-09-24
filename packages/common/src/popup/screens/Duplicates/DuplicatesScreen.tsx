@@ -1,11 +1,24 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useData } from '../../hooks';
 import { screenList } from '../Overview/OverviewScreen.css';
 import { DetailsHeader } from '../Details/DetailsHeader';
 import { DuplicateListItem } from '../../components';
+import { useNavigate } from '../../providers';
+import { SCREEN } from '../../types';
 
-export const DuplicatesScreen: FC = () => {
+type DuplicatesScreenProps = {
+  isActive: boolean;
+};
+
+export const DuplicatesScreen: FC<DuplicatesScreenProps> = ({ isActive }) => {
   const { duplicates } = useData();
+  const { navigate } = useNavigate();
+
+  useEffect(() => {
+    if (isActive && duplicates.length === 0) {
+      navigate(SCREEN.OVERVIEW);
+    }
+  }, [duplicates, navigate, isActive]);
 
   return (
     <>

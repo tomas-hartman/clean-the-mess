@@ -71,10 +71,10 @@ export const Router = () => {
   const duplicatesScreen = useMemo(
     () => (
       <Screen screenName={SCREEN.DUPLICATES}>
-        <DuplicatesScreen />
+        <DuplicatesScreen isActive={screen.name === SCREEN.DUPLICATES} />
       </Screen>
     ),
-    [],
+    [screen.name],
   );
 
   return (
