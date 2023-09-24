@@ -7,6 +7,7 @@ import { DetailedListItemHoverActions } from './DetailedListItemHoverActions';
 
 interface DetailListItemProps {
   data: Tabs.Tab;
+  showFavicon?: boolean;
 }
 
 export const LatestListItem: FC<DetailListItemProps> = ({ data }) => {
@@ -15,10 +16,10 @@ export const LatestListItem: FC<DetailListItemProps> = ({ data }) => {
   return <DetailedListItemBase data={data} secondaryText={date} showFavicon={true} />;
 };
 
-export const DetailListItem: FC<DetailListItemProps> = ({ data }) => {
+export const DetailListItem: FC<DetailListItemProps> = ({ data, showFavicon = false }) => {
   const decodedUrl = useMemo(() => (data.url ? decodeURI(data.url) : 'Unknown website'), [data.url]);
 
-  return <DetailedListItemBase data={data} secondaryText={decodedUrl} showFavicon={false} />;
+  return <DetailedListItemBase data={data} secondaryText={decodedUrl} showFavicon={showFavicon} />;
 };
 
 type DetailedListItemBaseProps = DetailListItemProps & {

@@ -31,7 +31,7 @@ export const OverviewHeader: FC<OverviewHeaderProps> = ({ openTabs }) => {
       {pinned && (
         <OverviewHeaderItem
           icon="BoldPushPin"
-          onClick={() => navigate(SCREEN.DETAILS, { ...pinned, hasActionButton: false })}
+          onClick={() => navigate(SCREEN.DETAILS, { ...pinned, hasActionButton: false, isPinned: true })}
           label="Pinned items"
         />
       )}

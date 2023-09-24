@@ -15,6 +15,7 @@ export type ScreensProps = {
     url?: string;
     key: string;
     hasActionButton?: boolean;
+    isPinned?: boolean;
   };
   latest: undefined;
   search: undefined;
