@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { getHeaderTitle } from '../../../_modules';
-import { useData } from '../../hooks';
+import { useData, useFavicons } from '../../hooks';
 import { screenList } from '../Overview/OverviewScreen.css';
 import { LatestHeader } from './LatestHeader';
 import { LatestListItem } from '../../components';
@@ -10,6 +10,7 @@ import { LatestListItem } from '../../components';
  */
 export const LatestScreen: FC = () => {
   const headerTitle = getHeaderTitle('_', 'latest', 10);
+  const showFavicon = useFavicons();
 
   const { latestTabs } = useData();
 
@@ -18,7 +19,7 @@ export const LatestScreen: FC = () => {
       <LatestHeader title={headerTitle} />
       <ul className={screenList}>
         {latestTabs.map(itemData => (
-          <LatestListItem data={itemData} key={itemData.id} />
+          <LatestListItem data={itemData} key={itemData.id} showFavicon={showFavicon} />
         ))}
       </ul>
     </>
