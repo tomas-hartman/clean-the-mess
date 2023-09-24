@@ -12,18 +12,34 @@ interface DuplicateItemProps {
 export const DuplicateListItem: FC<DuplicateItemProps> = ({ data, showFavicon }) => {
   const { closeTabs } = useData();
 
-  const handleDeduplicate = useCallback(
-    (data: DuplicateGroup) => {
-      const ids = data.tabs
-        .filter(tab => tab.id !== undefined)
-        .map(tab => tab.id || 0)
-        .sort((a, b) => a.id - b.id) // TODO
-        .slice(1);
+  const handleDeduplicate = useCallback(() => {
+    const pinnedTab = data.tabs.findIndex(tab => tab.pinned);
+
+    if (pinnedTab !== -1) {
+      data.tabs.splice(pinnedTab, 1);
+
+      const ids = data.tabs.reduce((prev: number[], current) => {
+        if (current.id) {
+          prev.push(current.id);
+        }
+        return prev;
+      }, []);
 
       closeTabs(ids);
-    },
-    [closeTabs],
-  );
+      return;
+    }
+
+    const ids = data.tabs
+      .sort((a, b) => (!b.id || !a.id ? 0 : b.id - a.id))
+      .slice(1)
+      .reduce((prev: number[], current) => {
+        if (current.id) {
+          prev.push(current.id);
+        }
+        return prev;
+      }, []);
+    closeTabs(ids);
+  }, [closeTabs, data.tabs]);
 
   return (
     <ListItem
@@ -34,7 +50,7 @@ export const DuplicateListItem: FC<DuplicateItemProps> = ({ data, showFavicon })
       hoverActions={
         <Button
           title="Close duplicate tabs and keep oldest tab"
-          onClick={() => handleDeduplicate(data)}
+          onClick={handleDeduplicate}
           icon="Remove"
           size="small"
         />

@@ -48,18 +48,37 @@ export const DuplicateItem: FC<DetailsItemProps> = ({ data }) => {
 
   const handleDeduplicate = useCallback(
     (data: DuplicateGroup) => {
-      const ids = data.tabs
-        .filter(tab => tab.id !== undefined)
-        .sort((a, b) => a.id - b.id) // TODO
-        .map(tab => tab.id || 0)
-        .slice(1);
+      const pinnedTab = data.tabs.findIndex(tab => tab.pinned);
 
+      if (pinnedTab !== -1) {
+        data.tabs.splice(pinnedTab, 1);
+
+        const ids = data.tabs.reduce((prev: number[], current) => {
+          if (current.id) {
+            prev.push(current.id);
+          }
+          return prev;
+        }, []);
+
+        closeTabs(ids);
+        return;
+      }
+
+      const ids = data.tabs
+        .sort((a, b) => (!b.id || !a.id ? 0 : b.id - a.id))
+        .slice(1)
+        .reduce((prev: number[], current) => {
+          if (current.id) {
+            prev.push(current.id);
+          }
+          return prev;
+        }, []);
       closeTabs(ids);
     },
     [closeTabs],
   );
 
-  console.log(data.tabs);
+  // console.log(data.tabs);
 
   return (
     <li
