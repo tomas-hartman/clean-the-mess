@@ -3,7 +3,6 @@ import { EnumGuard, ValueOf } from '../../types';
 
 export type OverviewItem = {
   url: Tabs.Tab['url'];
-  count: number;
   ids: number[];
   key: string;
   favicon?: Tabs.Tab['favIconUrl'];

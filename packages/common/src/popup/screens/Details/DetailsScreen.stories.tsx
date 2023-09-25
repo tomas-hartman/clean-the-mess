@@ -24,7 +24,7 @@ export const Screen: Story = {
       options: {
         ids: [77, 80, 92, 97, 99],
         url: 'https://www.google.com',
-        key: 2,
+        key: '2',
       },
     },
   },
