@@ -356,6 +356,7 @@ export const getOverview4 = tabs => {
   };
 };
 
+// The winner
 export const getOverview4a = tabs => {
   const overviewMap = new Map();
   const pinnedIdsSet = new Set();
@@ -406,45 +407,96 @@ export const getOverview4a = tabs => {
   };
 };
 
+// surprisingly slower than 4a, sometimes slower than 2a
+export const getOverview4b = tabs => {
+  const overviewMap = new Map();
+  const pinnedIdsSet = [];
+
+  for (const tab of tabs) {
+    if (!tab.id) continue;
+
+    const groupName = getOriginUrl(tab);
+
+    if (tab.pinned) {
+      pinnedIdsSet.push(tab.id);
+      continue;
+    }
+
+    if (overviewMap.has(groupName)) {
+      const prev = overviewMap.get(groupName);
+
+      if (!prev) continue;
+
+      prev.ids.push(tab.id);
+      overviewMap.set(groupName, prev);
+      continue;
+    }
+
+    const key = getHash(groupName);
+
+    overviewMap.set(groupName, {
+      key,
+      url: groupName,
+      favicon: tab.favIconUrl,
+      ids: [tab.id],
+    });
+  }
+
+  const pinnedGroup = {
+    url: 'Pinned tabs',
+    count: 0,
+    ids: pinnedIdsSet,
+    key: getHash('Pinned tabs'),
+    favicon: undefined,
+  };
+
+  const overviewGroup = Array.from(overviewMap.values()).sort((a, b) => b.ids.length - a.ids.length);
+
+  return {
+    pinned: pinnedIdsSet.length > 0 ? pinnedGroup : null,
+    overviewGroup,
+  };
+};
+
 // TEST DATA START
 const testPackageBase = [
   ...testChTabs,
   ...testFfTabs,
   ...testTabs,
   ...testChTabs,
-  ...testFfTabs,
-  ...testTabs,
-  ...testChTabs,
-  ...testFfTabs,
-  ...testChTabs,
-  ...testFfTabs,
-  ...testChTabs,
-  ...testFfTabs,
-  ...testChTabs,
-  ...testFfTabs,
+  // ...testFfTabs,
+  // ...testTabs,
+  // ...testChTabs,
+  // ...testFfTabs,
+  // ...testChTabs,
+  // ...testFfTabs,
+  // ...testChTabs,
+  // ...testFfTabs,
+  // ...testChTabs,
+  // ...testFfTabs,
 ];
 
 const testPackage = [
   ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
-  ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
+  // ...testPackageBase,
 ];
 // TEST DATA END
 
@@ -467,6 +519,7 @@ export const runTest3 = createTestRunner(getOverview3);
 export const runTest3a = createTestRunner(getOverview3a);
 export const runTest4 = createTestRunner(getOverview4);
 export const runTest4a = createTestRunner(getOverview4a);
+export const runTest4b = createTestRunner(getOverview4b);
 
 // TEST START
 const results = [
@@ -477,7 +530,11 @@ const results = [
   ['test3a', runTest3a()],
   ['test4', runTest4()],
   ['test4a', runTest4a()],
+  ['test4b', runTest4b()],
 ];
 
-console.log(results);
+const sorted = results.sort(([key1, speed1], [key2, speed2]) => speed1 - speed2);
+
+console.log(sorted);
+
 // TEST END
