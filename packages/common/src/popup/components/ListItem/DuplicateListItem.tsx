@@ -30,7 +30,7 @@ export const DuplicateListItem: FC<DuplicateItemProps> = ({ data, showFavicon })
     }
 
     const ids = data.tabs
-      .sort((a, b) => (!b.id || !a.id ? 0 : b.id - a.id))
+      .sort((a, b) => (!b.id || !a.id ? 0 : a.id - b.id))
       .slice(1)
       .reduce((prev: number[], current) => {
         if (current.id) {
@@ -49,7 +49,7 @@ export const DuplicateListItem: FC<DuplicateItemProps> = ({ data, showFavicon })
       extraActionInfo={<span title={`This url is open in ${data.tabs.length} tabs`}>({data.tabs.length})</span>}
       hoverActions={
         <Button
-          title="Close duplicate tabs and keep oldest tab"
+          title="Close duplicate tabs and keep only the oldest or pinned tab"
           onClick={handleDeduplicate}
           icon="Remove"
           size="small"
