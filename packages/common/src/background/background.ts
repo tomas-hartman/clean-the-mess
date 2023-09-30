@@ -4,27 +4,31 @@ import { updateBadgeText } from './updateBadgeText';
 import { setupOptionsAfterInstall } from '../options/options';
 import { BACKGROUND_EVENT } from './types';
 import { refreshOptions } from './refreshOptions';
+import { isChrome } from '../popup/utils';
 
-browser.runtime.onMessage.addListener((message) => {
+const handleChromeIconChange = () => {
+  isChrome() &&
+    browser.browserAction.setIcon({
+      path: {
+        16: '../icons/png/ico-dark-16.png',
+        32: '../icons/png/ico-dark-32.png',
+        128: '../icons/png/ico-dark-128.png',
+      },
+    });
+};
+
+browser.runtime.onMessage.addListener(message => {
   switch (message.type) {
     case BACKGROUND_EVENT.BOOKMARK_ALL:
       handleBookmarkAll(message.data);
       break;
 
     case BACKGROUND_EVENT.REFRESH_OPTIONS:
-      refreshOptions()
+      refreshOptions();
       break;
 
-    // This only works in chrome
     case BACKGROUND_EVENT.DARK_SCHEME:
-      // @ts-expect-error Chrome-only feature TODO
-      chrome.browserAction.setIcon({
-        path: {
-          16: '../icons/png/ico-dark-16.png',
-          32: '../icons/png/ico-dark-32.png',
-          128: '../icons/png/ico-dark-128.png',
-        },
-      });
+      handleChromeIconChange();
       break;
 
     default:
@@ -35,13 +39,13 @@ browser.runtime.onMessage.addListener((message) => {
 });
 
 browser.runtime.onInstalled.addListener(() => {
-  setupOptionsAfterInstall()
-})
+  setupOptionsAfterInstall();
+});
 
 browser.tabs.onUpdated.addListener(() => {
-  updateBadgeText()
-})
+  updateBadgeText();
+});
 
 browser.tabs.onRemoved.addListener(() => {
-  updateBadgeText()
-})
+  updateBadgeText();
+});

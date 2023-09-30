@@ -3,11 +3,35 @@ import { Tabs } from 'webextension-polyfill';
 import { ScreenProps } from '../popup';
 import { locale } from './locale';
 
-export const getFormatedDate = (lastAccessed?: number) => {
-  if (!lastAccessed) return;
-
+export const getFormatedDate = (lastAccessed: number) => {
   const dateToFormat = new Date(lastAccessed);
   return new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
+};
+
+// This would be replaced with stg. more sophisticated with i18n
+const getPluralizedTimeString = (num: number, str: string) => {
+  const ending = num === 1 ? '' : 's';
+
+  return `Active ${num} ${str + ending} ago`;
+};
+
+export const getTimePassed = (lastAccessed: number) => {
+  const now = new Date().getTime();
+  const difference = now - lastAccessed;
+  const seconds = Math.floor(difference / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const years = Math.floor(days / 365);
+
+  if (years > 0) return getPluralizedTimeString(years, 'year');
+  if (weeks > 0) return getPluralizedTimeString(weeks, 'week');
+  if (days > 0) return getPluralizedTimeString(days, 'day');
+  if (hours > 0) return getPluralizedTimeString(hours, 'hour');
+  if (minutes > 0) return getPluralizedTimeString(minutes, 'minute');
+
+  return getPluralizedTimeString(seconds, 'second');
 };
 
 /**

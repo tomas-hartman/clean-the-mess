@@ -15,6 +15,6 @@ type Story = StoryObj<typeof OverviewScreen>;
 export const Screen: Story = {
   args: {
     overviewData: overviewData,
-    headerData: { openTabs: 15 }
+    headerData: { openTabs: 15 },
   },
 };

@@ -95,7 +95,7 @@ export const getHeaderTitle = (overviewUrl: string | undefined, type: HeaderTitl
   }
 
   if (type === SCREEN.LATEST) {
-    return `${count} longest unused tabs`;
+    return `${count} longest inactive tabs`;
   }
 
   return '';

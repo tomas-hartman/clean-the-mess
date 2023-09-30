@@ -9,9 +9,10 @@ import {
 import { Favicon } from '../Favicon';
 import { Tabs } from 'webextension-polyfill';
 
-type ListItemProps = {
+export type ListItemProps = {
   primaryText: string;
   secondaryText?: string;
+  secondaryTextTitle?: string;
   extraActionInfo?: ReactNode;
   initActions?: ReactNode;
   hoverActions?: ReactNode;
@@ -27,6 +28,7 @@ export type PinnedListItemProps = {
 export const ListItem: FC<ListItemProps> = ({
   primaryText,
   secondaryText,
+  secondaryTextTitle,
   favicon,
   onClick,
   extraActionInfo,
@@ -61,7 +63,7 @@ export const ListItem: FC<ListItemProps> = ({
           {primaryText}
         </span>
         {secondaryText && (
-          <span className={detailItemBodyExtraText} title={secondaryText}>
+          <span className={detailItemBodyExtraText} title={secondaryTextTitle || secondaryText}>
             {secondaryText}
           </span>
         )}
