@@ -12,7 +12,7 @@ export const getFormatedDate = (lastAccessed: number) => {
 const getPluralizedTimeString = (num: number, str: string) => {
   const ending = num === 1 ? '' : 's';
 
-  return `${num} ${str + ending} ago`;
+  return `Active ${num} ${str + ending} ago`;
 };
 
 export const getTimePassed = (lastAccessed: number) => {
