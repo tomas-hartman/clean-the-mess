@@ -12,6 +12,7 @@ import { SearchScreen } from './Search';
 import { useNavigate } from '../providers';
 import { SCREEN } from '../types';
 import { Screen } from './Screen';
+import { DuplicatesScreen } from './Duplicates';
 
 export const Router = () => {
   const { closeTabs: closeCb, overview: overviewData } = useData();
@@ -67,11 +68,21 @@ export const Router = () => {
     [],
   );
 
+  const duplicatesScreen = useMemo(
+    () => (
+      <Screen screenName={SCREEN.DUPLICATES}>
+        <DuplicatesScreen isActive={screen.name === SCREEN.DUPLICATES} />
+      </Screen>
+    ),
+    [screen.name],
+  );
+
   return (
     <>
       {overviewScreen}
       {detailsScreen}
       {searchScreen}
+      {duplicatesScreen}
       {isFirefox() && latestScreen}
     </>
   );

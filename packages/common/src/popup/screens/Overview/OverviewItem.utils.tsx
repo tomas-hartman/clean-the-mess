@@ -4,7 +4,7 @@ import { callWithConfirm } from '../../utils';
 import { CloseTabs } from '../../providers';
 
 export const bookmarkOverviewTabs = (overviewItem: OverviewItem, oId: number) => {
-  const { url, count } = overviewItem;
+  const { url, ids } = overviewItem;
   const folderName = getHeaderTitle(url, 'details');
 
   const onTrue = () => {
@@ -15,18 +15,18 @@ export const bookmarkOverviewTabs = (overviewItem: OverviewItem, oId: number) =>
     console.log('Nothing invoked.');
   };
 
-  callWithConfirm('bookmarkAll', onTrue, onFalse, `${count}`, folderName);
+  callWithConfirm('bookmarkAll', onTrue, onFalse, `${ids.length}`, folderName);
 };
 
 export const closeOverviewTabs = (overviewItem: OverviewItem, closeTabs: CloseTabs) => {
-  const { ids, count } = overviewItem;
+  const { ids } = overviewItem;
 
   const onFalse = () => {
     console.log('Request to close tabs from overview was declined.');
   };
 
-  if (count > 10) {
-    callWithConfirm('closeTabs', () => closeTabs(ids), onFalse, `${count}`);
+  if (ids.length > 10) {
+    callWithConfirm('closeTabs', () => closeTabs(ids), onFalse, `${ids.length}`);
     return;
   }
 

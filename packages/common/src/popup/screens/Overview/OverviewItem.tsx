@@ -19,7 +19,7 @@ export const OverviewItem: FC<OverviewItemProps> = ({ itemId, data, showFavicon 
   const { navigate } = useNavigate();
   const [isHidden, setIsHidden] = useState(true);
 
-  const { url, count, key, ids, favicon } = data;
+  const { url, key, ids, favicon } = data;
 
   const handleMouseOver = () => {
     setIsHidden(false);
@@ -63,7 +63,7 @@ export const OverviewItem: FC<OverviewItemProps> = ({ itemId, data, showFavicon 
       <OverviewItemBody url={url} displayedUrl={displayedUrl} />
 
       <div className={overviewItemControls}>
-        <span className={overviewItemCount}>{`(${count})`}</span>
+        <span className={overviewItemCount}>{`(${ids.length})`}</span>
         {isBookmarkable && <BookmarkAllBtn isHidden={isHidden} onClick={() => bookmarkOverviewTabs(data, itemId)} />}
         <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data, closeTabs)} />
         <GetInBtn isHidden={!isHidden} />

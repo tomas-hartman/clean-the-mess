@@ -3,7 +3,6 @@ import { EnumGuard, ValueOf } from '../../types';
 
 export type OverviewItem = {
   url: Tabs.Tab['url'];
-  count: number;
   ids: number[];
   key: string;
   favicon?: Tabs.Tab['favIconUrl'];
@@ -15,10 +14,12 @@ export type ScreensProps = {
     url?: string;
     key: string;
     hasActionButton?: boolean;
+    isPinned?: boolean;
   };
   latest: undefined;
   search: undefined;
   overview: undefined;
+  duplicates: undefined;
 };
 
 export const SCREEN = {
@@ -26,6 +27,7 @@ export const SCREEN = {
   DETAILS: 'details',
   LATEST: 'latest',
   SEARCH: 'search',
+  DUPLICATES: 'duplicates',
 } as const satisfies EnumGuard<ScreensProps>;
 
 export type ScreenName = ValueOf<typeof SCREEN>;

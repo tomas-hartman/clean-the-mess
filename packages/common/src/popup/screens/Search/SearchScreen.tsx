@@ -1,9 +1,9 @@
 import { FC, useMemo } from 'react';
-import { DetailsItem } from '../../components/DetailItem';
 import { useFavicons, useData, useSearch } from '../../hooks';
 import { screenList } from '../Overview/OverviewScreen.css';
 import { SearchError } from './SearchError';
 import { SearchHeader } from './SearchHeader';
+import { DetailListItem } from '../../components';
 
 type SearchScreenProps = {
   isActive: boolean;
@@ -13,22 +13,11 @@ export const SearchScreen: FC<SearchScreenProps> = ({ isActive }) => {
   const { tabs, closeTabs } = useData();
   const { search, result } = useSearch({ tabs });
 
-  const showFavicons = useFavicons();
-  const type = 'url';
+  const showFavicon = useFavicons();
 
   const foundItems = useMemo(
-    () =>
-      result.map((item, i) => (
-        <DetailsItem
-          itemId={i}
-          data={item}
-          type={type}
-          key={item.id}
-          closeTabs={closeTabs}
-          showFavicon={showFavicons}
-        />
-      )),
-    [closeTabs, result, showFavicons],
+    () => result.map(item => <DetailListItem data={item} key={item.id} showFavicon={showFavicon} />),
+    [result, showFavicon],
   );
 
   return (

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { detailItemBodyText } from '../../components/DetailItem.css';
+import { detailItemBodyText } from '../../components/ListItem/ListItem.css';
 import { overviewItemBody } from './OverviewItem.css';
 
 type OverviewItemBodyProps = {
