@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { LatestListItem } from './DetailedListItem';
+import { LatestListItem } from './LatestListItem';
 import { detailed } from '../../../../../../tests/__sampleData__/detailedArray';
 
 const meta: Meta<typeof LatestListItem> = {
