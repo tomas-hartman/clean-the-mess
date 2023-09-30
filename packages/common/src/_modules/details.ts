@@ -8,6 +8,13 @@ export const getFormatedDate = (lastAccessed: number) => {
   return new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 };
 
+// This would be replaced with stg. more sophisticated with i18n
+const getPluralizedTimeString = (num: number, str: string) => {
+  const ending = num === 1 ? '' : 's';
+
+  return `${num} ${str + ending} ago`;
+};
+
 export const getTimePassed = (lastAccessed: number) => {
   const now = new Date().getTime();
   const difference = now - lastAccessed;
@@ -16,17 +23,15 @@ export const getTimePassed = (lastAccessed: number) => {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
   const weeks = Math.floor(days / 7);
-  const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
 
-  if (years > 0) return `${years} years ago`;
-  if (months > 0) return `${months} months ago`;
-  if (weeks > 0) return `${weeks} weeks ago`;
-  if (days > 0) return `${days} days ago`;
-  if (hours > 0) return `${hours} hours ago`;
-  if (minutes > 0) return `${minutes} mins ago`;
+  if (years > 0) return getPluralizedTimeString(years, 'year');
+  if (weeks > 0) return getPluralizedTimeString(weeks, 'week');
+  if (days > 0) return getPluralizedTimeString(days, 'day');
+  if (hours > 0) return getPluralizedTimeString(hours, 'hour');
+  if (minutes > 0) return getPluralizedTimeString(minutes, 'minute');
 
-  return `${seconds} seconds ago`;
+  return getPluralizedTimeString(seconds, 'second');
 };
 
 /**
