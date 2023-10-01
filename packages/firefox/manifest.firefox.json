@@ -1,0 +1,16 @@
+{
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{324a28fc-ef5d-4e34-aaff-28dacd65b97c}"
+    }
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+T",
+        "mac": "Ctrl+Alt+T"
+      },
+      "description": "Open extension popup"
+    }
+  }
+}

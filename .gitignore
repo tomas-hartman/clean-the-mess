@@ -18,9 +18,13 @@ build/**/src*
 dist/test/*
 dist/firefox/*
 dist/chrome/*
+dist/webpack/*
 dist/.*-temp
 src/dev/style-dev/style.css
 
 # Files generated during development
 src/popup/popup.html
 src/manifest.json
+
+
+**/stories/_example/

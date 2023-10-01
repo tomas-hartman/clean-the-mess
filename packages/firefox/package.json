@@ -1,0 +1,24 @@
+{
+  "name": "clean-the-mess-firefox",
+  "version": "2.1.0",
+  "description": "",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-manifest": "node ../../scripts/merge-manifests.js -f ./manifest.firefox.json  > ./manifest.json",
+    "prebuild": "npm run generate-manifest && rimraf dist",
+    "build": "BROWSER_NAME=firefox parcel build ./manifest.json --no-cache --no-content-hash --no-source-maps --dist-dir dist",
+    "start": "web-ext run -s ./dist --bc -c ../../web-ext-config.js",
+    "predev": "npm run generate-manifest",
+    "dev": "BROWSER_NAME=firefox parcel ./manifest.json --dist-dir dist",
+    "prebuild:release": "npm run build",
+    "build:release": "rimraf ./build && web-ext build -a ./build -s ./dist",
+    "postbuild:release": "npm run build:pack-src",
+    "build:pack-src": "sh ../../scripts/ff-pack-src.sh && dir-archiver --src ./build/src_clean_the_mess --dest ./build/src_clean_the_mess.zip && rimraf ./build/src_clean_the_mess"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.10.0"
+  },
+  "author": "Tomas Hartman <tomas.hartman@hotmail.com>",
+  "license": "ISC"
+}

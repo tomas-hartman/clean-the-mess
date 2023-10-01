@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     webextensions: true,
     es2021: true,
@@ -8,8 +9,18 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
-    'airbnb',
+    'plugin:react-hooks/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:storybook/recommended',
+    'prettier',
   ],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -17,19 +28,31 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    'react', 'jest',
-  ],
+  plugins: ['react', 'jest', '@typescript-eslint'],
   rules: {
-    'linebreak-style': [
+    'linebreak-style': ['error', 'unix'],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
       'error',
-      'unix',
+      {
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: false,
+        argsIgnorePattern: '^_',
+      },
     ],
-    'no-unused-vars': ['error', {
-      vars: 'all', args: 'after-used', ignoreRestSiblings: false, argsIgnorePattern: '^_',
-    }],
     'arrow-body-style': 'off',
+    'import/extensions': 'off',
+    // 'object-curly-spacing': ['error', 'always'],
     'react/prop-types': 0,
-    'import/prefer-default-export': 'off',
+    'react/jsx-curly-brace-presence': ['error'],
   },
+  overrides: [
+    {
+      files: ['./scripts/**/*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
 };

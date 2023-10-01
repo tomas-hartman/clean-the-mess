@@ -1,0 +1,28 @@
+<script>
+  // mocking that we are in the browser context 
+  Object.defineProperty(globalThis, "chrome", {
+    value: {
+      runtime: {
+        id: "mock",
+        onMessage: {
+          addListener: () => true,
+          removeListener: () => true
+        }
+      },
+      bookmarks: {
+        search: () => []
+      },
+      storage: {
+        sync: {
+          get: () => true
+        },
+      },
+      tabs: {
+        query: () => []
+      },
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  })
+</script>
