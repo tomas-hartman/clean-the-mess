@@ -4,24 +4,13 @@
   "version": "2.1.0",
   "author": "Tomas Hartman",
   "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
-  "permissions": [
-    "tabs",
-    "bookmarks",
-    "storage"
-  ],
+  "permissions": ["tabs", "bookmarks", "storage"],
   "background": {
-    "scripts": [
-      "../common/src/background/background.ts"
-    ]
+    "scripts": ["../common/src/background/background.ts"]
   },
   "options_ui": {
     "page": "../common/src/options/options.html",
     "browser_style": true
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "addon@cleanthemess.com"
-    }
   },
   "icons": {
     "16": "../common/src/icons/png/ico-light-16.png",
