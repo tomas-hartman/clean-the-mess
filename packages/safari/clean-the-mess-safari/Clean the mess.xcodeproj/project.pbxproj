@@ -138,11 +138,11 @@
 			isa = PBXGroup;
 			children = (
 				51566CF62ACCB27C0038D1BD /* Shared (App) */,
-				51566CFF2ACCB27D0038D1BD /* Shared (Extension) */,
+				51566CFF2ACCB27D0038D1BD /* Shared (Clean the mess) */,
 				51566D072ACCB27D0038D1BD /* iOS (App) */,
 				51566D182ACCB27D0038D1BD /* macOS (App) */,
-				51566D282ACCB27D0038D1BD /* iOS (Extension) */,
-				51566D322ACCB27E0038D1BD /* macOS (Extension) */,
+				51566D282ACCB27D0038D1BD /* iOS (Clean the mess) */,
+				51566D322ACCB27E0038D1BD /* macOS (Clean the mess) */,
 				51566D062ACCB27D0038D1BD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -168,13 +168,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		51566CFF2ACCB27D0038D1BD /* Shared (Extension) */ = {
+		51566CFF2ACCB27D0038D1BD /* Shared (Clean the mess) */ = {
 			isa = PBXGroup;
 			children = (
 				51566D532ACCB27E0038D1BD /* Resources */,
 				51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */,
 			);
-			path = "Shared (Extension)";
+			path = "Shared (Clean the mess)";
 			sourceTree = "<group>";
 		};
 		51566D062ACCB27D0038D1BD /* Products */ = {
@@ -211,21 +211,21 @@
 			path = "macOS (App)";
 			sourceTree = "<group>";
 		};
-		51566D282ACCB27D0038D1BD /* iOS (Extension) */ = {
+		51566D282ACCB27D0038D1BD /* iOS (Clean the mess) */ = {
 			isa = PBXGroup;
 			children = (
 				51566D292ACCB27D0038D1BD /* Info.plist */,
 			);
-			path = "iOS (Extension)";
+			path = "iOS (Clean the mess)";
 			sourceTree = "<group>";
 		};
-		51566D322ACCB27E0038D1BD /* macOS (Extension) */ = {
+		51566D322ACCB27E0038D1BD /* macOS (Clean the mess) */ = {
 			isa = PBXGroup;
 			children = (
 				51566D332ACCB27E0038D1BD /* Info.plist */,
 				51566D342ACCB27E0038D1BD /* Clean the mess.entitlements */,
 			);
-			path = "macOS (Extension)";
+			path = "macOS (Clean the mess)";
 			sourceTree = "<group>";
 		};
 		51566D532ACCB27E0038D1BD /* Resources */ = {
