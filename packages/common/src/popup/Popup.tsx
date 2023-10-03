@@ -3,13 +3,15 @@ import { NavigationProvider } from './providers';
 import { Router } from './screens/Router';
 import { useColorScheme } from './hooks';
 import { createRoot } from 'react-dom/client';
-import { isChrome } from './utils';
+import { isChrome, isSafari } from './utils';
 
 // Global theme style
 import '../styles/global.css';
 
 if (isChrome()) {
   import('../styles/themesChrome.css');
+} else if (isSafari()) {
+  import('../styles/themesSafari.css');
 } else {
   import('../styles/themesFirefox.css');
 }

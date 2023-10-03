@@ -29,8 +29,46 @@
 		51566D402ACCB27E0038D1BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFE2ACCB27D0038D1BD /* Assets.xcassets */; };
 		51566D412ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */; };
 		51566D422ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */; };
-		51566D552ACCB27E0038D1BD /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51566D542ACCB27E0038D1BD /* manifest.json */; };
-		51566D562ACCB27E0038D1BD /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51566D542ACCB27E0038D1BD /* manifest.json */; };
+		51A3DBC32ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */; };
+		51A3DBC42ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */; };
+		51A3DBC52ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */; };
+		51A3DBC62ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */; };
+		51A3DBC72ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */; };
+		51A3DBC82ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */; };
+		51A3DBC92ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */; };
+		51A3DBCA2ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */; };
+		51A3DBCB2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */; };
+		51A3DBCC2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */; };
+		51A3DBCD2ACCC69B002D16C8 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB42ACCC69B002D16C8 /* manifest.json */; };
+		51A3DBCE2ACCC69B002D16C8 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB42ACCC69B002D16C8 /* manifest.json */; };
+		51A3DBCF2ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */; };
+		51A3DBD02ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */; };
+		51A3DBD12ACCC69B002D16C8 /* options.09cdde90.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */; };
+		51A3DBD22ACCC69B002D16C8 /* options.09cdde90.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */; };
+		51A3DBD32ACCC69B002D16C8 /* options.62161f32.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */; };
+		51A3DBD42ACCC69B002D16C8 /* options.62161f32.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */; };
+		51A3DBD52ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */; };
+		51A3DBD62ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */; };
+		51A3DBD72ACCC69B002D16C8 /* popup.f95ab181.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */; };
+		51A3DBD82ACCC69B002D16C8 /* popup.f95ab181.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */; };
+		51A3DBD92ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */; };
+		51A3DBDA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */; };
+		51A3DBDB2ACCC69B002D16C8 /* background.5e147091.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */; };
+		51A3DBDC2ACCC69B002D16C8 /* background.5e147091.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */; };
+		51A3DBDD2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */; };
+		51A3DBDE2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */; };
+		51A3DBDF2ACCC69B002D16C8 /* options.bd9a632b.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */; };
+		51A3DBE02ACCC69B002D16C8 /* options.bd9a632b.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */; };
+		51A3DBE12ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */; };
+		51A3DBE22ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */; };
+		51A3DBE32ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */; };
+		51A3DBE42ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */; };
+		51A3DBE52ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */; };
+		51A3DBE62ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */; };
+		51A3DBE72ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */; };
+		51A3DBE82ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */; };
+		51A3DBE92ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */; };
+		51A3DBEA2ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,7 +137,26 @@
 		51566D2E2ACCB27E0038D1BD /* Clean the mess Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Clean the mess Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		51566D332ACCB27E0038D1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51566D342ACCB27E0038D1BD /* Clean the mess.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Clean the mess.entitlements"; sourceTree = "<group>"; };
-		51566D542ACCB27E0038D1BD /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../../clean-the-mess/packages/safari/manifest.json"; sourceTree = "<group>"; };
+		51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-dark-128.9cf36fff.png"; path = "../../../dist/ico-dark-128.9cf36fff.png"; sourceTree = "<group>"; };
+		51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-light-16.2703c31a.png"; path = "../../../dist/ico-light-16.2703c31a.png"; sourceTree = "<group>"; };
+		51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = popup.5c36bcee.js; path = ../../../dist/popup.5c36bcee.js; sourceTree = "<group>"; };
+		51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-dark-32.ee3481f9.png"; path = "../../../dist/ico-dark-32.ee3481f9.png"; sourceTree = "<group>"; };
+		51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = themesFirefox.css.c554bd64.css; path = ../../../dist/themesFirefox.css.c554bd64.css; sourceTree = "<group>"; };
+		51A3DBB42ACCC69B002D16C8 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest.json; path = ../../../dist/manifest.json; sourceTree = "<group>"; };
+		51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = themesFirefox.css.77168b8d.js; path = ../../../dist/themesFirefox.css.77168b8d.js; sourceTree = "<group>"; };
+		51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = options.09cdde90.html; path = ../../../dist/options.09cdde90.html; sourceTree = "<group>"; };
+		51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = options.62161f32.js; path = ../../../dist/options.62161f32.js; sourceTree = "<group>"; };
+		51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = popup.a7e5bc4c.html; path = ../../../dist/popup.a7e5bc4c.html; sourceTree = "<group>"; };
+		51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = popup.f95ab181.css; path = ../../../dist/popup.f95ab181.css; sourceTree = "<group>"; };
+		51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = themesChrome.css.cf6c11d2.js; path = ../../../dist/themesChrome.css.cf6c11d2.js; sourceTree = "<group>"; };
+		51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = background.5e147091.js; path = ../../../dist/background.5e147091.js; sourceTree = "<group>"; };
+		51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-light-128.4071fe93.png"; path = "../../../dist/ico-light-128.4071fe93.png"; sourceTree = "<group>"; };
+		51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = options.bd9a632b.js; path = ../../../dist/options.bd9a632b.js; sourceTree = "<group>"; };
+		51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = themesSafari.css.75de3c8b.css; path = ../../../dist/themesSafari.css.75de3c8b.css; sourceTree = "<group>"; };
+		51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-dark-16.0ee3d660.png"; path = "../../../dist/ico-dark-16.0ee3d660.png"; sourceTree = "<group>"; };
+		51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-light-32.ae475670.png"; path = "../../../dist/ico-light-32.ae475670.png"; sourceTree = "<group>"; };
+		51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = themesSafari.css.3827f5a0.js; path = ../../../dist/themesSafari.css.3827f5a0.js; sourceTree = "<group>"; };
+		51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = themesChrome.css.6a4217c7.css; path = ../../../dist/themesChrome.css.6a4217c7.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +228,7 @@
 		51566CFF2ACCB27D0038D1BD /* Shared (Clean the mess) */ = {
 			isa = PBXGroup;
 			children = (
-				51566D532ACCB27E0038D1BD /* Resources */,
+				51A3DBAE2ACCC647002D16C8 /* Resources */,
 				51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */,
 			);
 			path = "Shared (Clean the mess)";
@@ -228,14 +285,32 @@
 			path = "macOS (Clean the mess)";
 			sourceTree = "<group>";
 		};
-		51566D532ACCB27E0038D1BD /* Resources */ = {
+		51A3DBAE2ACCC647002D16C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				51566D542ACCB27E0038D1BD /* manifest.json */,
+				51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */,
+				51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */,
+				51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */,
+				51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */,
+				51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */,
+				51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */,
+				51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */,
+				51A3DBB42ACCC69B002D16C8 /* manifest.json */,
+				51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */,
+				51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */,
+				51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */,
+				51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */,
+				51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */,
+				51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */,
+				51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */,
+				51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */,
+				51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */,
+				51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */,
+				51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */,
+				51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */,
 			);
-			name = Resources;
-			path = "Shared (Extension)";
-			sourceTree = SOURCE_ROOT;
+			path = Resources;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -389,7 +464,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51566D562ACCB27E0038D1BD /* manifest.json in Resources */,
+				51A3DBC72ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */,
+				51A3DBD32ACCC69B002D16C8 /* options.62161f32.js in Resources */,
+				51A3DBC52ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */,
+				51A3DBE72ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */,
+				51A3DBCF2ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */,
+				51A3DBD72ACCC69B002D16C8 /* popup.f95ab181.css in Resources */,
+				51A3DBC92ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */,
+				51A3DBDF2ACCC69B002D16C8 /* options.bd9a632b.js in Resources */,
+				51A3DBDB2ACCC69B002D16C8 /* background.5e147091.js in Resources */,
+				51A3DBD92ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */,
+				51A3DBE52ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */,
+				51A3DBD12ACCC69B002D16C8 /* options.09cdde90.html in Resources */,
+				51A3DBE12ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */,
+				51A3DBE32ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */,
+				51A3DBD52ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */,
+				51A3DBDD2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */,
+				51A3DBE92ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */,
+				51A3DBC32ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */,
+				51A3DBCD2ACCC69B002D16C8 /* manifest.json in Resources */,
+				51A3DBCB2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +491,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51566D552ACCB27E0038D1BD /* manifest.json in Resources */,
+				51A3DBC82ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */,
+				51A3DBD42ACCC69B002D16C8 /* options.62161f32.js in Resources */,
+				51A3DBC62ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */,
+				51A3DBE82ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */,
+				51A3DBD02ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */,
+				51A3DBD82ACCC69B002D16C8 /* popup.f95ab181.css in Resources */,
+				51A3DBCA2ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */,
+				51A3DBE02ACCC69B002D16C8 /* options.bd9a632b.js in Resources */,
+				51A3DBDC2ACCC69B002D16C8 /* background.5e147091.js in Resources */,
+				51A3DBDA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */,
+				51A3DBE62ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */,
+				51A3DBD22ACCC69B002D16C8 /* options.09cdde90.html in Resources */,
+				51A3DBE22ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */,
+				51A3DBE42ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */,
+				51A3DBD62ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */,
+				51A3DBDE2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */,
+				51A3DBEA2ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */,
+				51A3DBC42ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */,
+				51A3DBCE2ACCC69B002D16C8 /* manifest.json in Resources */,
+				51A3DBCC2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,6 +789,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -713,6 +827,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -743,13 +858,14 @@
 		51566D4D2ACCB27E0038D1BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Clean the mess.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "macOS (Clean the mess)/Clean the mess.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess Extension";
+				INFOPLIST_FILE = "macOS (Clean the mess)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess!";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -774,13 +890,14 @@
 		51566D4E2ACCB27E0038D1BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Clean the mess.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "macOS (Clean the mess)/Clean the mess.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess Extension";
+				INFOPLIST_FILE = "macOS (Clean the mess)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess!";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -811,10 +928,12 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Clean the mess.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -846,10 +965,12 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Clean the mess.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (

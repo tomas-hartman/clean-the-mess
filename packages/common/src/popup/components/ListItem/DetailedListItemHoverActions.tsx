@@ -3,6 +3,7 @@ import { BookmarkCloseBtn, CloseBtn } from '../Buttons';
 import { bookmarkTab, hasIgnoredProtocol } from '../../../_modules';
 import { Tabs } from 'webextension-polyfill';
 import { useData } from '../../hooks';
+import { isSafari } from '../../utils';
 
 type DetailedListItemHoverActionsProps = {
   data: Tabs.Tab;
@@ -28,7 +29,9 @@ export const DetailedListItemHoverActions: FC<DetailedListItemHoverActionsProps>
 
   return (
     <>
-      {!hasIgnoredProtocol(data.url) && <BookmarkCloseBtn tab={data} onClick={() => bookmarkCloseTab(data)} />}
+      {!isSafari() && !hasIgnoredProtocol(data.url) && (
+        <BookmarkCloseBtn tab={data} onClick={() => bookmarkCloseTab(data)} />
+      )}
       <CloseBtn onClick={() => handleCloseTab(data.id)} />
     </>
   );
