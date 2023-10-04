@@ -1,6 +1,8 @@
-import { style } from "@vanilla-extract/css";
+import { style } from '@vanilla-extract/css';
+import { themeUtilsContract } from '../../../styles/themes.css';
 
 export const screenList = style({
   marginTop: 4,
-  overflowY: "auto",
-})
+  overflowY: 'auto',
+  paddingInline: themeUtilsContract.components.listContainerInlinePadding,
+});

@@ -1,7 +1,8 @@
 import { style } from '@vanilla-extract/css';
-import { themeContract } from '../../../styles/themes.css';
+import { themeContract, themeUtilsContract } from '../../../styles/themes.css';
 
 export const itemWrapper = style({
+  borderRadius: themeUtilsContract.radii.listItemBorderRadius,
   marginTop: '4px',
   display: 'flex',
   justifyContent: 'space-between',

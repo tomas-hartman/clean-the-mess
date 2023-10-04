@@ -1,21 +1,23 @@
-import { style } from "@vanilla-extract/css";
-import { themeContract } from "../../styles/themes.css";
+import { style } from '@vanilla-extract/css';
+import { themeContract, themeUtilsContract } from '../../styles/themes.css';
 
 export const detailHeaderContainer = style({
-  paddingTop: 4, // chrome or both
+  paddingTop: themeUtilsContract.components.listContainerBlockPadding, // chrome or both
   backgroundColor: themeContract.palette.headerBackground,
-})
+  paddingInline: themeUtilsContract.components.listContainerInlinePadding,
+});
 
 export const headerContentBase = style({
   display: 'grid',
   alignContent: 'center',
   height: 32,
-  paddingLeft: 4,
-  paddingRight: 4,
-  gap: 4,
-  justifyItems: 'stretch'
-})
+  gap: themeUtilsContract.components.listContainerInlinePadding,
+  justifyItems: 'stretch',
+});
 
-export const detailHeaderContent = style([headerContentBase, {
-  gridTemplateColumns: '32px auto 32px',
-}])
+export const detailHeaderContent = style([
+  headerContentBase,
+  {
+    gridTemplateColumns: '32px auto 32px',
+  },
+]);

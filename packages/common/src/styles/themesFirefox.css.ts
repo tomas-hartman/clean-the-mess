@@ -50,8 +50,8 @@ export const themeFirefoxLightScheme = createGlobalTheme(':root', themeContract,
     searchBackground: firefoxPalette.neutral[3],
     searchFontColor: firefoxPalette.neutral[3],
     confirmButtonBackground: firefoxPalette.transparent[86086],
-    confirmButtonHover: firefoxPalette.transparent[94082]
-  }
+    confirmButtonHover: firefoxPalette.transparent[94082],
+  },
 });
 
 export const themeFirefoxDarkScheme = createGlobalTheme("html[data-theme='dark']", themeContract, {
@@ -75,8 +75,8 @@ export const themeFirefoxDarkScheme = createGlobalTheme("html[data-theme='dark']
     searchBackground: firefoxPalette.neutral[3],
     searchFontColor: firefoxPalette.neutral[3],
     confirmButtonBackground: firefoxPalette.transparent[48076],
-    confirmButtonHover: firefoxPalette.transparent[48054]
-  }
+    confirmButtonHover: firefoxPalette.transparent[48054],
+  },
 });
 
 export const themeFirefoxUtils = createGlobalTheme(':root', themeUtilsContract, {
@@ -86,6 +86,7 @@ export const themeFirefoxUtils = createGlobalTheme(':root', themeUtilsContract, 
   },
   radii: {
     borderRadius: '1px',
+    listItemBorderRadius: '0',
   },
   components: {
     searchBorderRadius: '1px',
@@ -94,6 +95,10 @@ export const themeFirefoxUtils = createGlobalTheme(':root', themeUtilsContract, 
 
     largeButtonSize: '32px',
     smallButtonSize: '20px',
+
+    listItemPadding: '8px 12px',
+    listContainerInlinePadding: '0',
+    listContainerBlockPadding: '4px',
   },
   misc: {
     browser: 'firefox',

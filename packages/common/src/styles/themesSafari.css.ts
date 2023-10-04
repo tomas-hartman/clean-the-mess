@@ -2,11 +2,10 @@ import { createGlobalTheme } from '@vanilla-extract/css';
 import { themeContract, themeUtilsContract } from './themes.css';
 import { transparentize } from 'polished';
 
-// TODO convert for safari
-const firefoxPalette = {
+const safariPalette = {
   accent: {
     1: '#c169ffb9',
-    2: '#663399',
+    2: transparentize(0.2, '#663399'),
     3: '#9932cc', // darkOrchid
   },
   neutral: {
@@ -32,51 +31,51 @@ const firefoxPalette = {
 
 export const themeSafariLightScheme = createGlobalTheme(':root', themeContract, {
   palette: {
-    fontColor: firefoxPalette.neutral[3],
+    fontColor: safariPalette.neutral[3],
     background: 'transparent',
-    headerBackground: firefoxPalette.neutral[100],
-    headerButtonColor: firefoxPalette.transparent[3080],
-    headerButtonHover: firefoxPalette.transparent[94082],
-    overviewHeaderButtonHover: firefoxPalette.transparent[94082],
-    accentHeaderButtonFontColor: firefoxPalette.transparent[3080],
-    accentHeaderButtonBackground: firefoxPalette.neutral[100],
-    accentHeaderButtonHover: firefoxPalette.accent[1],
-    itemSecondaryFontColor: firefoxPalette.neutral[48],
-    itemArrowButtonColor: firefoxPalette.transparent[3020],
-    itemHover: firefoxPalette.transparent[86086],
-    itemButtonColor: firefoxPalette.transparent[3080],
-    itemButtonHover: firefoxPalette.transparent[94082],
-    itemButtonActive: firefoxPalette.transparent[86086],
-    separatorColor: firefoxPalette.neutral[86],
-    searchBackground: firefoxPalette.neutral[3],
-    searchFontColor: firefoxPalette.neutral[3],
-    confirmButtonBackground: firefoxPalette.transparent[86086],
-    confirmButtonHover: firefoxPalette.transparent[94082],
+    headerBackground: 'transparent',
+    headerButtonColor: safariPalette.transparent[3080],
+    headerButtonHover: safariPalette.transparent[94082],
+    overviewHeaderButtonHover: safariPalette.transparent[94082],
+    accentHeaderButtonFontColor: safariPalette.transparent[3080],
+    accentHeaderButtonBackground: safariPalette.neutral[100],
+    accentHeaderButtonHover: safariPalette.accent[1],
+    itemSecondaryFontColor: safariPalette.neutral[48],
+    itemArrowButtonColor: safariPalette.transparent[3020],
+    itemHover: safariPalette.transparent[86086],
+    itemButtonColor: safariPalette.transparent[3080],
+    itemButtonHover: safariPalette.transparent[94082],
+    itemButtonActive: safariPalette.transparent[86086],
+    separatorColor: safariPalette.neutral[86],
+    searchBackground: transparentize(0.4, safariPalette.neutral[3]),
+    searchFontColor: safariPalette.neutral[3],
+    confirmButtonBackground: safariPalette.transparent[86086],
+    confirmButtonHover: safariPalette.transparent[94082],
   },
 });
 
 export const themeSafariDarkScheme = createGlobalTheme("html[data-theme='dark']", themeContract, {
   palette: {
-    fontColor: firefoxPalette.neutral[100],
+    fontColor: safariPalette.neutral[100],
     background: 'transparent',
-    headerBackground: firefoxPalette.neutral[32],
-    headerButtonColor: firefoxPalette.transparent[98080],
-    headerButtonHover: firefoxPalette.transparent[48054],
-    overviewHeaderButtonHover: firefoxPalette.transparent[48054],
-    accentHeaderButtonFontColor: firefoxPalette.transparent[98080],
-    accentHeaderButtonBackground: firefoxPalette.accent[3],
-    accentHeaderButtonHover: firefoxPalette.accent[2],
-    itemSecondaryFontColor: firefoxPalette.neutral[98],
-    itemArrowButtonColor: firefoxPalette.transparent[98050],
-    itemHover: firefoxPalette.accent[2], // accent 1?
-    itemButtonColor: firefoxPalette.transparent[98080],
-    itemButtonHover: firefoxPalette.transparent[48054],
-    itemButtonActive: firefoxPalette.transparent[48076],
-    separatorColor: firefoxPalette.transparent[48054],
-    searchBackground: firefoxPalette.neutral[3],
-    searchFontColor: firefoxPalette.neutral[3],
-    confirmButtonBackground: firefoxPalette.transparent[48076],
-    confirmButtonHover: firefoxPalette.transparent[48054],
+    headerBackground: 'transparent',
+    headerButtonColor: safariPalette.transparent[98080],
+    headerButtonHover: safariPalette.transparent[48054],
+    overviewHeaderButtonHover: safariPalette.transparent[48054],
+    accentHeaderButtonFontColor: safariPalette.transparent[98080],
+    accentHeaderButtonBackground: safariPalette.accent[3],
+    accentHeaderButtonHover: safariPalette.accent[2],
+    itemSecondaryFontColor: safariPalette.neutral[98],
+    itemArrowButtonColor: safariPalette.transparent[98050],
+    itemHover: safariPalette.accent[2], // accent 1?
+    itemButtonColor: safariPalette.transparent[98080],
+    itemButtonHover: safariPalette.transparent[48054],
+    itemButtonActive: safariPalette.transparent[48076],
+    separatorColor: safariPalette.transparent[48054],
+    searchBackground: transparentize(0.4, safariPalette.neutral[3]),
+    searchFontColor: safariPalette.neutral[3],
+    confirmButtonBackground: safariPalette.transparent[48076],
+    confirmButtonHover: safariPalette.transparent[48054],
   },
 });
 
@@ -86,15 +85,20 @@ export const themeSafariUtils = createGlobalTheme(':root', themeUtilsContract, {
     fontFamily: 'inherit',
   },
   radii: {
-    borderRadius: '1px',
+    borderRadius: '6px',
+    listItemBorderRadius: '6px',
   },
   components: {
-    searchBorderRadius: '1px',
+    searchBorderRadius: '6px',
     searchBorder: 'none',
     searchPaddingLeft: '8px',
 
     largeButtonSize: '32px',
     smallButtonSize: '20px',
+
+    listItemPadding: '8px 12px',
+    listContainerInlinePadding: '6px',
+    listContainerBlockPadding: '6px',
   },
   misc: {
     browser: 'safari',

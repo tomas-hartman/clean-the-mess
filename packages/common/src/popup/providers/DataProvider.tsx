@@ -22,8 +22,6 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     setRefreshToken(refreshToken + 1);
   }, [refreshToken]);
 
-  const getTabs = useCallback(async () => await browser.tabs.query({ currentWindow: true }), []);
-
   const duplicates = useMemo(() => dedupe(tabs).sort((a, b) => b.tabs.length - a.tabs.length), [tabs]);
 
   const closeTabs = useCallback<CloseTabs>(
@@ -41,11 +39,12 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     async function getData() {
-      const data = await getTabs();
+      const data = await browser.tabs.query({ currentWindow: true });
+
       setTabs(data);
     }
     getData();
-  }, [getTabs, refreshToken]);
+  }, [refreshToken]);
 
   const value = {
     tabs,

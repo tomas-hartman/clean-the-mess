@@ -1,6 +1,6 @@
-import { createGlobalTheme } from "@vanilla-extract/css";
-import { themeContract, themeUtilsContract } from "./themes.css";
-import { darken, transparentize } from "polished";
+import { createGlobalTheme } from '@vanilla-extract/css';
+import { themeContract, themeUtilsContract } from './themes.css';
+import { darken, transparentize } from 'polished';
 
 // TODO: improve color definitions
 const palette = {
@@ -24,8 +24,8 @@ const palette = {
   color18: '#e8eaed',
   color19: '#acafb1',
   color20: '#5f6368',
-  color21: '#f9f9fa'
-}
+  color21: '#f9f9fa',
+};
 
 const all = {
   colorLinkHoverPurple: palette.color1,
@@ -51,7 +51,7 @@ const all = {
   backButtonHover: palette.color1,
   headerBackgroundHover: palette.color3,
   itemButtonHover: palette.color4,
-}
+};
 
 const dark = {
   colorLinkHover: palette.color10,
@@ -70,7 +70,7 @@ const dark = {
   headerBackgroundHover: palette.color15,
   itemButtonHover: transparentize(0.3, darken(0.1, palette.color10)),
   overviewHeaderButtonHover: palette.color14,
-}
+};
 
 export const themeChromeLightScheme = createGlobalTheme(':root', themeContract, {
   palette: {
@@ -93,9 +93,9 @@ export const themeChromeLightScheme = createGlobalTheme(':root', themeContract, 
     searchBackground: all.searchContainerColor,
     searchFontColor: all.searchInputColor,
     confirmButtonBackground: all.colorEmphasisDark,
-    confirmButtonHover: all.colorEmphasisLight
-  }
-})
+    confirmButtonHover: all.colorEmphasisLight,
+  },
+});
 
 export const themeChromeDarkScheme = createGlobalTheme("html[data-theme='dark']", themeContract, {
   palette: {
@@ -118,9 +118,9 @@ export const themeChromeDarkScheme = createGlobalTheme("html[data-theme='dark']"
     searchBackground: all.searchContainerColor, // chrome: var(--color-alternative-background); - dark!
     searchFontColor: all.searchInputColor,
     confirmButtonBackground: dark.colorEmphasisDark,
-    confirmButtonHover: dark.colorEmphasisLight
-  }
-})
+    confirmButtonHover: dark.colorEmphasisLight,
+  },
+});
 
 export const themeChromeUtils = createGlobalTheme(':root', themeUtilsContract, {
   font: {
@@ -129,6 +129,7 @@ export const themeChromeUtils = createGlobalTheme(':root', themeUtilsContract, {
   },
   radii: {
     borderRadius: '100%',
+    listItemBorderRadius: '0',
   },
   components: {
     searchBorderRadius: '50px',
@@ -137,15 +138,12 @@ export const themeChromeUtils = createGlobalTheme(':root', themeUtilsContract, {
 
     largeButtonSize: '27px',
     smallButtonSize: '22px',
+
+    listItemPadding: '8px 12px',
+    listContainerInlinePadding: '0',
+    listContainerBlockPadding: '4px',
   },
   misc: {
     browser: 'chrome',
   },
 });
-
-
-
-
-
-
-
