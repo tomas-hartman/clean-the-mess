@@ -10,7 +10,7 @@
     "__build": "BROWSER_NAME=safari parcel build ./manifest.json --no-cache --no-content-hash --no-source-maps --dist-dir dist",
     "__start": "web-ext run -s ./dist --bc -c ../../web-ext-config.js",
     "__predev": "npm run generate-manifest",
-    "dev": "BROWSER_NAME=safari parcel ./manifest.json --dist-dir dist",
+    "dev": "BROWSER_NAME=safari parcel ./manifest.json --dist-dir \"clean-the-mess-safari/Shared (Clean the mess)/Resources\"",
     "__prebuild:release": "npm run build",
     "__build:release": "rimraf ./build && web-ext build -a ./build -s ./dist",
     "__postbuild:release": "npm run build:pack-src",

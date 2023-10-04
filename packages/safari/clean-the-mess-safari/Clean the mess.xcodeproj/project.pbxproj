@@ -29,46 +29,48 @@
 		51566D402ACCB27E0038D1BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFE2ACCB27D0038D1BD /* Assets.xcassets */; };
 		51566D412ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */; };
 		51566D422ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */; };
-		51A3DBC32ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */; };
-		51A3DBC42ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */; };
-		51A3DBC52ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */; };
-		51A3DBC62ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */; };
-		51A3DBC72ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */; };
-		51A3DBC82ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */; };
-		51A3DBC92ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */; };
-		51A3DBCA2ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */; };
-		51A3DBCB2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */; };
-		51A3DBCC2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */; };
-		51A3DBCD2ACCC69B002D16C8 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB42ACCC69B002D16C8 /* manifest.json */; };
-		51A3DBCE2ACCC69B002D16C8 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB42ACCC69B002D16C8 /* manifest.json */; };
-		51A3DBCF2ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */; };
-		51A3DBD02ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */; };
-		51A3DBD12ACCC69B002D16C8 /* options.09cdde90.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */; };
-		51A3DBD22ACCC69B002D16C8 /* options.09cdde90.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */; };
-		51A3DBD32ACCC69B002D16C8 /* options.62161f32.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */; };
-		51A3DBD42ACCC69B002D16C8 /* options.62161f32.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */; };
-		51A3DBD52ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */; };
-		51A3DBD62ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */; };
-		51A3DBD72ACCC69B002D16C8 /* popup.f95ab181.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */; };
-		51A3DBD82ACCC69B002D16C8 /* popup.f95ab181.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */; };
-		51A3DBD92ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */; };
-		51A3DBDA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */; };
-		51A3DBDB2ACCC69B002D16C8 /* background.5e147091.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */; };
-		51A3DBDC2ACCC69B002D16C8 /* background.5e147091.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */; };
-		51A3DBDD2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */; };
-		51A3DBDE2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */; };
-		51A3DBDF2ACCC69B002D16C8 /* options.bd9a632b.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */; };
-		51A3DBE02ACCC69B002D16C8 /* options.bd9a632b.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */; };
-		51A3DBE12ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */; };
-		51A3DBE22ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */; };
-		51A3DBE32ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */; };
-		51A3DBE42ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */; };
-		51A3DBE52ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */; };
-		51A3DBE62ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */; };
-		51A3DBE72ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */; };
-		51A3DBE82ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */; };
-		51A3DBE92ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */; };
-		51A3DBEA2ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */; };
+		51A3DC072ACDE0EE002D16C8 /* popup.68a702d9.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF32ACDE0EE002D16C8 /* popup.68a702d9.html */; };
+		51A3DC082ACDE0EE002D16C8 /* popup.68a702d9.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF32ACDE0EE002D16C8 /* popup.68a702d9.html */; };
+		51A3DC092ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF42ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css */; };
+		51A3DC0A2ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF42ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css */; };
+		51A3DC0B2ACDE0EE002D16C8 /* popup.e80e2718.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF52ACDE0EE002D16C8 /* popup.e80e2718.js */; };
+		51A3DC0C2ACDE0EE002D16C8 /* popup.e80e2718.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF52ACDE0EE002D16C8 /* popup.e80e2718.js */; };
+		51A3DC0D2ACDE0EE002D16C8 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF62ACDE0EE002D16C8 /* manifest.json */; };
+		51A3DC0E2ACDE0EE002D16C8 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF62ACDE0EE002D16C8 /* manifest.json */; };
+		51A3DC0F2ACDE0EE002D16C8 /* options.fa3b49be.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF72ACDE0EE002D16C8 /* options.fa3b49be.html */; };
+		51A3DC102ACDE0EE002D16C8 /* options.fa3b49be.html in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF72ACDE0EE002D16C8 /* options.fa3b49be.html */; };
+		51A3DC112ACDE0EE002D16C8 /* options.e87e5351.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF82ACDE0EE002D16C8 /* options.e87e5351.js */; };
+		51A3DC122ACDE0EE002D16C8 /* options.e87e5351.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF82ACDE0EE002D16C8 /* options.e87e5351.js */; };
+		51A3DC132ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF92ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png */; };
+		51A3DC142ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBF92ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png */; };
+		51A3DC152ACDE0EE002D16C8 /* options.d039c271.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFA2ACDE0EE002D16C8 /* options.d039c271.js */; };
+		51A3DC162ACDE0EE002D16C8 /* options.d039c271.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFA2ACDE0EE002D16C8 /* options.d039c271.js */; };
+		51A3DC172ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFB2ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png */; };
+		51A3DC182ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFB2ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png */; };
+		51A3DC192ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFC2ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png */; };
+		51A3DC1A2ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFC2ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png */; };
+		51A3DC1B2ACDE0EE002D16C8 /* popup.b06645c7.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFD2ACDE0EE002D16C8 /* popup.b06645c7.css */; };
+		51A3DC1C2ACDE0EE002D16C8 /* popup.b06645c7.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFD2ACDE0EE002D16C8 /* popup.b06645c7.css */; };
+		51A3DC1D2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFE2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js */; };
+		51A3DC1E2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFE2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js */; };
+		51A3DC1F2ACDE0EE002D16C8 /* themesChrome.css.32059369.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFF2ACDE0EE002D16C8 /* themesChrome.css.32059369.css */; };
+		51A3DC202ACDE0EE002D16C8 /* themesChrome.css.32059369.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DBFF2ACDE0EE002D16C8 /* themesChrome.css.32059369.css */; };
+		51A3DC212ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC002ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css */; };
+		51A3DC222ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC002ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css */; };
+		51A3DC232ACDE0EE002D16C8 /* themesChrome.css.aff70982.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC012ACDE0EE002D16C8 /* themesChrome.css.aff70982.js */; };
+		51A3DC242ACDE0EE002D16C8 /* themesChrome.css.aff70982.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC012ACDE0EE002D16C8 /* themesChrome.css.aff70982.js */; };
+		51A3DC252ACDE0EE002D16C8 /* ico-light-128.0b10233f.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC022ACDE0EE002D16C8 /* ico-light-128.0b10233f.png */; };
+		51A3DC262ACDE0EE002D16C8 /* ico-light-128.0b10233f.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC022ACDE0EE002D16C8 /* ico-light-128.0b10233f.png */; };
+		51A3DC272ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC032ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png */; };
+		51A3DC282ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC032ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png */; };
+		51A3DC292ACDE0EE002D16C8 /* background.b0e7ebd9.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC042ACDE0EE002D16C8 /* background.b0e7ebd9.js */; };
+		51A3DC2A2ACDE0EE002D16C8 /* background.b0e7ebd9.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC042ACDE0EE002D16C8 /* background.b0e7ebd9.js */; };
+		51A3DC2B2ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC052ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js */; };
+		51A3DC2C2ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC052ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js */; };
+		51A3DC2D2ACDE0EE002D16C8 /* ico-light-16.02703aa2.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC062ACDE0EE002D16C8 /* ico-light-16.02703aa2.png */; };
+		51A3DC2E2ACDE0EE002D16C8 /* ico-light-16.02703aa2.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC062ACDE0EE002D16C8 /* ico-light-16.02703aa2.png */; };
+		51A3DC302ACDE27A002D16C8 /* popup.310b0766.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC2F2ACDE27A002D16C8 /* popup.310b0766.css */; };
+		51A3DC312ACDE27A002D16C8 /* popup.310b0766.css in Resources */ = {isa = PBXBuildFile; fileRef = 51A3DC2F2ACDE27A002D16C8 /* popup.310b0766.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,26 +139,27 @@
 		51566D2E2ACCB27E0038D1BD /* Clean the mess Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Clean the mess Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		51566D332ACCB27E0038D1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51566D342ACCB27E0038D1BD /* Clean the mess.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Clean the mess.entitlements"; sourceTree = "<group>"; };
-		51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-dark-128.9cf36fff.png"; path = "../../../dist/ico-dark-128.9cf36fff.png"; sourceTree = "<group>"; };
-		51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-light-16.2703c31a.png"; path = "../../../dist/ico-light-16.2703c31a.png"; sourceTree = "<group>"; };
-		51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = popup.5c36bcee.js; path = ../../../dist/popup.5c36bcee.js; sourceTree = "<group>"; };
-		51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-dark-32.ee3481f9.png"; path = "../../../dist/ico-dark-32.ee3481f9.png"; sourceTree = "<group>"; };
-		51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = themesFirefox.css.c554bd64.css; path = ../../../dist/themesFirefox.css.c554bd64.css; sourceTree = "<group>"; };
-		51A3DBB42ACCC69B002D16C8 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest.json; path = ../../../dist/manifest.json; sourceTree = "<group>"; };
-		51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = themesFirefox.css.77168b8d.js; path = ../../../dist/themesFirefox.css.77168b8d.js; sourceTree = "<group>"; };
-		51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = options.09cdde90.html; path = ../../../dist/options.09cdde90.html; sourceTree = "<group>"; };
-		51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = options.62161f32.js; path = ../../../dist/options.62161f32.js; sourceTree = "<group>"; };
-		51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = popup.a7e5bc4c.html; path = ../../../dist/popup.a7e5bc4c.html; sourceTree = "<group>"; };
-		51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = popup.f95ab181.css; path = ../../../dist/popup.f95ab181.css; sourceTree = "<group>"; };
-		51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = themesChrome.css.cf6c11d2.js; path = ../../../dist/themesChrome.css.cf6c11d2.js; sourceTree = "<group>"; };
-		51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = background.5e147091.js; path = ../../../dist/background.5e147091.js; sourceTree = "<group>"; };
-		51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-light-128.4071fe93.png"; path = "../../../dist/ico-light-128.4071fe93.png"; sourceTree = "<group>"; };
-		51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = options.bd9a632b.js; path = ../../../dist/options.bd9a632b.js; sourceTree = "<group>"; };
-		51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = themesSafari.css.75de3c8b.css; path = ../../../dist/themesSafari.css.75de3c8b.css; sourceTree = "<group>"; };
-		51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-dark-16.0ee3d660.png"; path = "../../../dist/ico-dark-16.0ee3d660.png"; sourceTree = "<group>"; };
-		51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-light-32.ae475670.png"; path = "../../../dist/ico-light-32.ae475670.png"; sourceTree = "<group>"; };
-		51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = themesSafari.css.3827f5a0.js; path = ../../../dist/themesSafari.css.3827f5a0.js; sourceTree = "<group>"; };
-		51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = themesChrome.css.6a4217c7.css; path = ../../../dist/themesChrome.css.6a4217c7.css; sourceTree = "<group>"; };
+		51A3DBF32ACDE0EE002D16C8 /* popup.68a702d9.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = popup.68a702d9.html; sourceTree = "<group>"; };
+		51A3DBF42ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = themesFirefox.css.b5690ee3.css; sourceTree = "<group>"; };
+		51A3DBF52ACDE0EE002D16C8 /* popup.e80e2718.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = popup.e80e2718.js; sourceTree = "<group>"; };
+		51A3DBF62ACDE0EE002D16C8 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		51A3DBF72ACDE0EE002D16C8 /* options.fa3b49be.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = options.fa3b49be.html; sourceTree = "<group>"; };
+		51A3DBF82ACDE0EE002D16C8 /* options.e87e5351.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = options.e87e5351.js; sourceTree = "<group>"; };
+		51A3DBF92ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico-dark-16.8a9f71fa.png"; sourceTree = "<group>"; };
+		51A3DBFA2ACDE0EE002D16C8 /* options.d039c271.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = options.d039c271.js; sourceTree = "<group>"; };
+		51A3DBFB2ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico-dark-32.2f682b0e.png"; sourceTree = "<group>"; };
+		51A3DBFC2ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico-dark-128.92dd686d.png"; sourceTree = "<group>"; };
+		51A3DBFD2ACDE0EE002D16C8 /* popup.b06645c7.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = popup.b06645c7.css; sourceTree = "<group>"; };
+		51A3DBFE2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = themesFirefox.css.f447504c.js; sourceTree = "<group>"; };
+		51A3DBFF2ACDE0EE002D16C8 /* themesChrome.css.32059369.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = themesChrome.css.32059369.css; sourceTree = "<group>"; };
+		51A3DC002ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = themesSafari.css.bb65ca30.css; sourceTree = "<group>"; };
+		51A3DC012ACDE0EE002D16C8 /* themesChrome.css.aff70982.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = themesChrome.css.aff70982.js; sourceTree = "<group>"; };
+		51A3DC022ACDE0EE002D16C8 /* ico-light-128.0b10233f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico-light-128.0b10233f.png"; sourceTree = "<group>"; };
+		51A3DC032ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico-light-32.b0d519e5.png"; sourceTree = "<group>"; };
+		51A3DC042ACDE0EE002D16C8 /* background.b0e7ebd9.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = background.b0e7ebd9.js; sourceTree = "<group>"; };
+		51A3DC052ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = themesSafari.css.6bbb00d2.js; sourceTree = "<group>"; };
+		51A3DC062ACDE0EE002D16C8 /* ico-light-16.02703aa2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico-light-16.02703aa2.png"; sourceTree = "<group>"; };
+		51A3DC2F2ACDE27A002D16C8 /* popup.310b0766.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = popup.310b0766.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,26 +291,27 @@
 		51A3DBAE2ACCC647002D16C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				51A3DBBB2ACCC69B002D16C8 /* background.5e147091.js */,
-				51A3DBBF2ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png */,
-				51A3DBB22ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png */,
-				51A3DBAF2ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png */,
-				51A3DBB02ACCC69B002D16C8 /* ico-light-16.2703c31a.png */,
-				51A3DBC02ACCC69B002D16C8 /* ico-light-32.ae475670.png */,
-				51A3DBBC2ACCC69B002D16C8 /* ico-light-128.4071fe93.png */,
-				51A3DBB42ACCC69B002D16C8 /* manifest.json */,
-				51A3DBB62ACCC69B002D16C8 /* options.09cdde90.html */,
-				51A3DBB72ACCC69B002D16C8 /* options.62161f32.js */,
-				51A3DBBD2ACCC69B002D16C8 /* options.bd9a632b.js */,
-				51A3DBB12ACCC69B002D16C8 /* popup.5c36bcee.js */,
-				51A3DBB82ACCC69B002D16C8 /* popup.a7e5bc4c.html */,
-				51A3DBB92ACCC69B002D16C8 /* popup.f95ab181.css */,
-				51A3DBB52ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js */,
-				51A3DBB32ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css */,
-				51A3DBC22ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css */,
-				51A3DBBA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js */,
-				51A3DBBE2ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css */,
-				51A3DBC12ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js */,
+				51A3DC042ACDE0EE002D16C8 /* background.b0e7ebd9.js */,
+				51A3DC2F2ACDE27A002D16C8 /* popup.310b0766.css */,
+				51A3DBF92ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png */,
+				51A3DBFB2ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png */,
+				51A3DBFC2ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png */,
+				51A3DC062ACDE0EE002D16C8 /* ico-light-16.02703aa2.png */,
+				51A3DC032ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png */,
+				51A3DC022ACDE0EE002D16C8 /* ico-light-128.0b10233f.png */,
+				51A3DBF62ACDE0EE002D16C8 /* manifest.json */,
+				51A3DBFA2ACDE0EE002D16C8 /* options.d039c271.js */,
+				51A3DBF82ACDE0EE002D16C8 /* options.e87e5351.js */,
+				51A3DBF72ACDE0EE002D16C8 /* options.fa3b49be.html */,
+				51A3DBF32ACDE0EE002D16C8 /* popup.68a702d9.html */,
+				51A3DBFD2ACDE0EE002D16C8 /* popup.b06645c7.css */,
+				51A3DBF52ACDE0EE002D16C8 /* popup.e80e2718.js */,
+				51A3DBF42ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css */,
+				51A3DBFE2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js */,
+				51A3DBFF2ACDE0EE002D16C8 /* themesChrome.css.32059369.css */,
+				51A3DC012ACDE0EE002D16C8 /* themesChrome.css.aff70982.js */,
+				51A3DC052ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js */,
+				51A3DC002ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -464,26 +468,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51A3DBC72ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */,
-				51A3DBD32ACCC69B002D16C8 /* options.62161f32.js in Resources */,
-				51A3DBC52ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */,
-				51A3DBE72ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */,
-				51A3DBCF2ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */,
-				51A3DBD72ACCC69B002D16C8 /* popup.f95ab181.css in Resources */,
-				51A3DBC92ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */,
-				51A3DBDF2ACCC69B002D16C8 /* options.bd9a632b.js in Resources */,
-				51A3DBDB2ACCC69B002D16C8 /* background.5e147091.js in Resources */,
-				51A3DBD92ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */,
-				51A3DBE52ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */,
-				51A3DBD12ACCC69B002D16C8 /* options.09cdde90.html in Resources */,
-				51A3DBE12ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */,
-				51A3DBE32ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */,
-				51A3DBD52ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */,
-				51A3DBDD2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */,
-				51A3DBE92ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */,
-				51A3DBC32ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */,
-				51A3DBCD2ACCC69B002D16C8 /* manifest.json in Resources */,
-				51A3DBCB2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */,
+				51A3DC172ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png in Resources */,
+				51A3DC192ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png in Resources */,
+				51A3DC2D2ACDE0EE002D16C8 /* ico-light-16.02703aa2.png in Resources */,
+				51A3DC0D2ACDE0EE002D16C8 /* manifest.json in Resources */,
+				51A3DC1D2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js in Resources */,
+				51A3DC2B2ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js in Resources */,
+				51A3DC252ACDE0EE002D16C8 /* ico-light-128.0b10233f.png in Resources */,
+				51A3DC232ACDE0EE002D16C8 /* themesChrome.css.aff70982.js in Resources */,
+				51A3DC112ACDE0EE002D16C8 /* options.e87e5351.js in Resources */,
+				51A3DC292ACDE0EE002D16C8 /* background.b0e7ebd9.js in Resources */,
+				51A3DC1B2ACDE0EE002D16C8 /* popup.b06645c7.css in Resources */,
+				51A3DC0F2ACDE0EE002D16C8 /* options.fa3b49be.html in Resources */,
+				51A3DC212ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css in Resources */,
+				51A3DC302ACDE27A002D16C8 /* popup.310b0766.css in Resources */,
+				51A3DC1F2ACDE0EE002D16C8 /* themesChrome.css.32059369.css in Resources */,
+				51A3DC092ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css in Resources */,
+				51A3DC072ACDE0EE002D16C8 /* popup.68a702d9.html in Resources */,
+				51A3DC152ACDE0EE002D16C8 /* options.d039c271.js in Resources */,
+				51A3DC272ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png in Resources */,
+				51A3DC132ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png in Resources */,
+				51A3DC0B2ACDE0EE002D16C8 /* popup.e80e2718.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,26 +496,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51A3DBC82ACCC69B002D16C8 /* popup.5c36bcee.js in Resources */,
-				51A3DBD42ACCC69B002D16C8 /* options.62161f32.js in Resources */,
-				51A3DBC62ACCC69B002D16C8 /* ico-light-16.2703c31a.png in Resources */,
-				51A3DBE82ACCC69B002D16C8 /* themesSafari.css.3827f5a0.js in Resources */,
-				51A3DBD02ACCC69B002D16C8 /* themesFirefox.css.77168b8d.js in Resources */,
-				51A3DBD82ACCC69B002D16C8 /* popup.f95ab181.css in Resources */,
-				51A3DBCA2ACCC69B002D16C8 /* ico-dark-32.ee3481f9.png in Resources */,
-				51A3DBE02ACCC69B002D16C8 /* options.bd9a632b.js in Resources */,
-				51A3DBDC2ACCC69B002D16C8 /* background.5e147091.js in Resources */,
-				51A3DBDA2ACCC69B002D16C8 /* themesChrome.css.cf6c11d2.js in Resources */,
-				51A3DBE62ACCC69B002D16C8 /* ico-light-32.ae475670.png in Resources */,
-				51A3DBD22ACCC69B002D16C8 /* options.09cdde90.html in Resources */,
-				51A3DBE22ACCC69B002D16C8 /* themesSafari.css.75de3c8b.css in Resources */,
-				51A3DBE42ACCC69B002D16C8 /* ico-dark-16.0ee3d660.png in Resources */,
-				51A3DBD62ACCC69B002D16C8 /* popup.a7e5bc4c.html in Resources */,
-				51A3DBDE2ACCC69B002D16C8 /* ico-light-128.4071fe93.png in Resources */,
-				51A3DBEA2ACCC69B002D16C8 /* themesChrome.css.6a4217c7.css in Resources */,
-				51A3DBC42ACCC69B002D16C8 /* ico-dark-128.9cf36fff.png in Resources */,
-				51A3DBCE2ACCC69B002D16C8 /* manifest.json in Resources */,
-				51A3DBCC2ACCC69B002D16C8 /* themesFirefox.css.c554bd64.css in Resources */,
+				51A3DC182ACDE0EE002D16C8 /* ico-dark-32.2f682b0e.png in Resources */,
+				51A3DC1A2ACDE0EE002D16C8 /* ico-dark-128.92dd686d.png in Resources */,
+				51A3DC2E2ACDE0EE002D16C8 /* ico-light-16.02703aa2.png in Resources */,
+				51A3DC0E2ACDE0EE002D16C8 /* manifest.json in Resources */,
+				51A3DC1E2ACDE0EE002D16C8 /* themesFirefox.css.f447504c.js in Resources */,
+				51A3DC2C2ACDE0EE002D16C8 /* themesSafari.css.6bbb00d2.js in Resources */,
+				51A3DC262ACDE0EE002D16C8 /* ico-light-128.0b10233f.png in Resources */,
+				51A3DC242ACDE0EE002D16C8 /* themesChrome.css.aff70982.js in Resources */,
+				51A3DC122ACDE0EE002D16C8 /* options.e87e5351.js in Resources */,
+				51A3DC2A2ACDE0EE002D16C8 /* background.b0e7ebd9.js in Resources */,
+				51A3DC1C2ACDE0EE002D16C8 /* popup.b06645c7.css in Resources */,
+				51A3DC102ACDE0EE002D16C8 /* options.fa3b49be.html in Resources */,
+				51A3DC222ACDE0EE002D16C8 /* themesSafari.css.bb65ca30.css in Resources */,
+				51A3DC312ACDE27A002D16C8 /* popup.310b0766.css in Resources */,
+				51A3DC202ACDE0EE002D16C8 /* themesChrome.css.32059369.css in Resources */,
+				51A3DC0A2ACDE0EE002D16C8 /* themesFirefox.css.b5690ee3.css in Resources */,
+				51A3DC082ACDE0EE002D16C8 /* popup.68a702d9.html in Resources */,
+				51A3DC162ACDE0EE002D16C8 /* options.d039c271.js in Resources */,
+				51A3DC282ACDE0EE002D16C8 /* ico-light-32.b0d519e5.png in Resources */,
+				51A3DC142ACDE0EE002D16C8 /* ico-dark-16.8a9f71fa.png in Resources */,
+				51A3DC0C2ACDE0EE002D16C8 /* popup.e80e2718.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
