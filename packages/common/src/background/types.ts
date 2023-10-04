@@ -8,12 +8,14 @@ export type BackgroundMessageProps = {
   };
   refreshOptions: null;
   darkScheme: null;
+  logger: unknown;
 };
 
 export const BACKGROUND_EVENT = {
   BOOKMARK_ALL: 'bookmarkAll',
   REFRESH_OPTIONS: 'refreshOptions',
   DARK_SCHEME: 'darkScheme',
+  LOGGER: 'logger',
 } as const satisfies EnumGuard<BackgroundMessageProps>;
 
 export type BackgroundEvent = ValueOf<typeof BACKGROUND_EVENT>;
