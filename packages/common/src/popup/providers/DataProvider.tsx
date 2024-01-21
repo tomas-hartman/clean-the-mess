@@ -22,7 +22,10 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     setRefreshToken(refreshToken + 1);
   }, [refreshToken]);
 
-  const getTabs = useCallback(async () => await browser.tabs.query({ currentWindow: true }), []);
+  const getTabs = useCallback(async () => {
+    const data = await browser.tabs.query({ currentWindow: true })
+    setTabs(data);
+  }, [setTabs]);
 
   const duplicates = useMemo(() => dedupe(tabs).sort((a, b) => b.tabs.length - a.tabs.length), [tabs]);
 
@@ -34,18 +37,12 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
       const removableIds = getRemovableIds(ids, tabs, keepPinned);
 
       await browser.tabs.remove(removableIds);
-      refreshTabs();
+      await getTabs();
     },
-    [refreshTabs, tabs],
+    [tabs],
   );
 
-  useEffect(() => {
-    async function getData() {
-      const data = await getTabs();
-      setTabs(data);
-    }
-    getData();
-  }, [getTabs, refreshToken]);
+  useEffect(() => getTabs(), [getTabs, refreshToken]);
 
   const value = {
     tabs,
