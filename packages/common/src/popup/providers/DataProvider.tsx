@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import browser, { Tabs } from 'webextension-polyfill';
 import { getRemovableIds } from './DataProvider.utils';
 import { dedupe, DuplicateGroup } from '../../_modules/duplicates';
@@ -8,7 +8,6 @@ export type CloseTabs = (ids?: number | number[], options?: { keepPinned: boolea
 type DataContextProps = {
   tabs: Tabs.Tab[];
   closeTabs: CloseTabs;
-  refreshTabs: () => void;
   duplicates: DuplicateGroup[];
 };
 
@@ -16,11 +15,6 @@ export const DataContext = createContext<DataContextProps>({} as DataContextProp
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [tabs, setTabs] = useState<Tabs.Tab[]>([]);
-  const [refreshToken, setRefreshToken] = useState(0);
-
-  const refreshTabs = useCallback(() => {
-    setRefreshToken(refreshToken + 1);
-  }, [refreshToken]);
 
   const duplicates = useMemo(() => dedupe(tabs).sort((a, b) => b.tabs.length - a.tabs.length), [tabs]);
 
@@ -32,26 +26,35 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
       const removableIds = getRemovableIds(ids, tabs, keepPinned);
 
       await browser.tabs.remove(removableIds);
-      refreshTabs();
     },
-    [refreshTabs, tabs],
+    [tabs],
   );
 
-  useEffect(() => {
-    async function getData() {
-      const data = await browser.tabs.query({ currentWindow: true });
+  const refreshData = useCallback(async () => {
+    const data = await browser.tabs.query({ currentWindow: true });
 
-      setTabs(data);
-    }
-    getData();
-  }, [refreshToken]);
+    setTabs(data);
+  }, []);
+
+  useEffect(() => {
+    refreshData();
+  }, [refreshData]);
+
+  useEffect(() => {
+    browser.tabs.onRemoved.addListener(() => {
+      refreshData();
+    });
+
+    return browser.tabs.onRemoved.removeListener(() => refreshData());
+  }, [refreshData]);
 
   const value = {
     tabs,
     closeTabs,
-    refreshTabs,
     duplicates,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
+
+export const useDataContext = () => useContext(DataContext);

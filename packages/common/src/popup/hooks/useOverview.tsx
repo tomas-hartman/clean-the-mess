@@ -1,9 +1,9 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { getOverview } from '../../_modules';
-import { DataContext } from '../providers/DataProvider';
+import { useDataContext } from '../providers';
 
 export const useOverview = () => {
-  const { tabs } = useContext(DataContext);
+  const { tabs } = useDataContext();
 
   const overview = useMemo(() => {
     if (tabs) {
