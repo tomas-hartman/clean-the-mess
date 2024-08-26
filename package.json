@@ -6,6 +6,7 @@
   "scripts": {
     "build:firefox": "npm run build -w packages/firefox",
     "build:chrome": "npm run build -w packages/chrome",
+    "build:safari": "npm run build -w packages/safari",
     "build:release:firefox": "npm run build:release -w packages/firefox",
     "build:release:chrome": "npm run build:release -w packages/chrome",
     "build:release": "npm run build:release:firefox && npm run build:release:chrome",

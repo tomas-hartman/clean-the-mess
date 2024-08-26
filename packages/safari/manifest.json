@@ -4,9 +4,15 @@
   "version": "2.1.0",
   "author": "Tomas Hartman",
   "description": "Helps with maintaining order within once opened and never-seen-again tabs as well with those visited way too often.",
-  "permissions": ["tabs", "storage"],
+  "permissions": [
+    "tabs",
+    "bookmarks",
+    "storage"
+  ],
   "background": {
-    "scripts": ["../common/src/background/background.ts"]
+    "scripts": [
+      "../common/src/background/background.ts"
+    ]
   },
   "options_ui": {
     "page": "../common/src/options/options.html",
@@ -47,8 +53,8 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Alt+T",
-        "mac": "Ctrl+Alt+T"
+        "default": "Alt+Shift+T",
+        "mac": "Alt+Shift+T"
       },
       "description": "Open extension popup"
     }
