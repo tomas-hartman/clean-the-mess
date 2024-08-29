@@ -4,8 +4,9 @@ import type { Preview } from '@storybook/react';
 import { useColorScheme } from '../src/popup/hooks';
 
 import '../src/styles/global.css';
-import '../src/styles/themesFirefox.css';
+// import '../src/styles/themesFirefox.css';
 // import '../src/styles/themesChrome.css';
+import '../src/styles/themesSafari.css';
 
 const preview: Preview = {
   parameters: {

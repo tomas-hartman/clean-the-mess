@@ -1,0 +1,969 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		51566D092ACCB27D0038D1BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D082ACCB27D0038D1BD /* AppDelegate.swift */; };
+		51566D0B2ACCB27D0038D1BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D0A2ACCB27D0038D1BD /* SceneDelegate.swift */; };
+		51566D0E2ACCB27D0038D1BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51566D0C2ACCB27D0038D1BD /* LaunchScreen.storyboard */; };
+		51566D112ACCB27D0038D1BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51566D0F2ACCB27D0038D1BD /* Main.storyboard */; };
+		51566D1A2ACCB27D0038D1BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D192ACCB27D0038D1BD /* AppDelegate.swift */; };
+		51566D1D2ACCB27D0038D1BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51566D1B2ACCB27D0038D1BD /* Main.storyboard */; };
+		51566D252ACCB27D0038D1BD /* Clean the mess Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 51566D242ACCB27D0038D1BD /* Clean the mess Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		51566D2F2ACCB27E0038D1BD /* Clean the mess Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 51566D2E2ACCB27E0038D1BD /* Clean the mess Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		51566D352ACCB27E0038D1BD /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 51566CF82ACCB27C0038D1BD /* Main.html */; };
+		51566D362ACCB27E0038D1BD /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 51566CF82ACCB27C0038D1BD /* Main.html */; };
+		51566D372ACCB27E0038D1BD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFA2ACCB27C0038D1BD /* Icon.png */; };
+		51566D382ACCB27E0038D1BD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFA2ACCB27C0038D1BD /* Icon.png */; };
+		51566D392ACCB27E0038D1BD /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFB2ACCB27C0038D1BD /* Style.css */; };
+		51566D3A2ACCB27E0038D1BD /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFB2ACCB27C0038D1BD /* Style.css */; };
+		51566D3B2ACCB27E0038D1BD /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFC2ACCB27C0038D1BD /* Script.js */; };
+		51566D3C2ACCB27E0038D1BD /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFC2ACCB27C0038D1BD /* Script.js */; };
+		51566D3D2ACCB27E0038D1BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566CFD2ACCB27C0038D1BD /* ViewController.swift */; };
+		51566D3E2ACCB27E0038D1BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566CFD2ACCB27C0038D1BD /* ViewController.swift */; };
+		51566D3F2ACCB27E0038D1BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFE2ACCB27D0038D1BD /* Assets.xcassets */; };
+		51566D402ACCB27E0038D1BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51566CFE2ACCB27D0038D1BD /* Assets.xcassets */; };
+		51566D412ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */; };
+		51566D422ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		51566D262ACCB27D0038D1BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51566CF22ACCB27C0038D1BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 51566D232ACCB27D0038D1BD;
+			remoteInfo = "Clean the mess Extension (iOS)";
+		};
+		51566D302ACCB27E0038D1BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51566CF22ACCB27C0038D1BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 51566D2D2ACCB27E0038D1BD;
+			remoteInfo = "Clean the mess Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		51566D482ACCB27E0038D1BD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				51566D252ACCB27D0038D1BD /* Clean the mess Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D4F2ACCB27E0038D1BD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				51566D2F2ACCB27E0038D1BD /* Clean the mess Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2A0B089FBB7B4332DDB128F5 /* themesFirefox.css.9396b4d8.js */ = {isa = PBXFileReference; includeInIndex = 1; name = themesFirefox.css.9396b4d8.js; path = ../../../dist/themesFirefox.css.9396b4d8.js; sourceTree = "<group>"; };
+		2D70B32FFAD3D35B6AA77448 /* ico-dark-128.c17237a9.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ico-dark-128.c17237a9.png"; path = "../../../dist/ico-dark-128.c17237a9.png"; sourceTree = "<group>"; };
+		51566CF92ACCB27C0038D1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
+		51566CFA2ACCB27C0038D1BD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		51566CFB2ACCB27C0038D1BD /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		51566CFC2ACCB27C0038D1BD /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		51566CFD2ACCB27C0038D1BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		51566CFE2ACCB27D0038D1BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		51566D052ACCB27D0038D1BD /* Clean the mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clean the mess.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51566D082ACCB27D0038D1BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		51566D0A2ACCB27D0038D1BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		51566D0D2ACCB27D0038D1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		51566D102ACCB27D0038D1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		51566D122ACCB27D0038D1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51566D172ACCB27D0038D1BD /* Clean the mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clean the mess.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51566D192ACCB27D0038D1BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		51566D1C2ACCB27D0038D1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		51566D1E2ACCB27D0038D1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51566D1F2ACCB27D0038D1BD /* Clean the mess.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Clean the mess.entitlements"; sourceTree = "<group>"; };
+		51566D242ACCB27D0038D1BD /* Clean the mess Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Clean the mess Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51566D292ACCB27D0038D1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51566D2E2ACCB27E0038D1BD /* Clean the mess Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Clean the mess Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51566D332ACCB27E0038D1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51566D342ACCB27E0038D1BD /* Clean the mess.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Clean the mess.entitlements"; sourceTree = "<group>"; };
+		60AE9519D853ED8BE9BAA9EA /* ico-dark-32.dd82b91c.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ico-dark-32.dd82b91c.png"; path = "../../../dist/ico-dark-32.dd82b91c.png"; sourceTree = "<group>"; };
+		6E5BFAFCC9E543C110F6AC54 /* themesChrome.css.a0677682.css */ = {isa = PBXFileReference; includeInIndex = 1; name = themesChrome.css.a0677682.css; path = ../../../dist/themesChrome.css.a0677682.css; sourceTree = "<group>"; };
+		73E89762D47325093A0E68CD /* ico-dark-16.9fe4aea5.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ico-dark-16.9fe4aea5.png"; path = "../../../dist/ico-dark-16.9fe4aea5.png"; sourceTree = "<group>"; };
+		82644729000178B00650F747 /* ico-light-16.cab373cc.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ico-light-16.cab373cc.png"; path = "../../../dist/ico-light-16.cab373cc.png"; sourceTree = "<group>"; };
+		84BD61A7F9C7844F502A29DA /* options.149af2d4.html */ = {isa = PBXFileReference; includeInIndex = 1; name = options.149af2d4.html; path = ../../../dist/options.149af2d4.html; sourceTree = "<group>"; };
+		866D2B8419D29511CF6189F4 /* themesSafari.css.947b8529.js */ = {isa = PBXFileReference; includeInIndex = 1; name = themesSafari.css.947b8529.js; path = ../../../dist/themesSafari.css.947b8529.js; sourceTree = "<group>"; };
+		8F22E440304B2CC5A1794EBA /* background.6b1ab00b.css */ = {isa = PBXFileReference; includeInIndex = 1; name = background.6b1ab00b.css; path = ../../../dist/background.6b1ab00b.css; sourceTree = "<group>"; };
+		962369CEAB04AAB4436B4C73 /* options.825f429f.js */ = {isa = PBXFileReference; includeInIndex = 1; name = options.825f429f.js; path = ../../../dist/options.825f429f.js; sourceTree = "<group>"; };
+		A1DD9E0329A9E81C44E18232 /* popup.156c78ad.css */ = {isa = PBXFileReference; includeInIndex = 1; name = popup.156c78ad.css; path = ../../../dist/popup.156c78ad.css; sourceTree = "<group>"; };
+		A3B61B3644E961E558633E35 /* popup.a824e46b.html */ = {isa = PBXFileReference; includeInIndex = 1; name = popup.a824e46b.html; path = ../../../dist/popup.a824e46b.html; sourceTree = "<group>"; };
+		B30DBD3FF7F43BD31EC8457E /* background.3fb45adc.js */ = {isa = PBXFileReference; includeInIndex = 1; name = background.3fb45adc.js; path = ../../../dist/background.3fb45adc.js; sourceTree = "<group>"; };
+		B70F6976757A8A013BBCC5F8 /* themesSafari.css.8755f08d.css */ = {isa = PBXFileReference; includeInIndex = 1; name = themesSafari.css.8755f08d.css; path = ../../../dist/themesSafari.css.8755f08d.css; sourceTree = "<group>"; };
+		B952CE7F1844C7F6BB84226C /* manifest.json */ = {isa = PBXFileReference; includeInIndex = 1; name = manifest.json; path = ../../../dist/manifest.json; sourceTree = "<group>"; };
+		BA243783FE70581AB0315CC0 /* themesChrome.css.83b6a8e9.js */ = {isa = PBXFileReference; includeInIndex = 1; name = themesChrome.css.83b6a8e9.js; path = ../../../dist/themesChrome.css.83b6a8e9.js; sourceTree = "<group>"; };
+		D220E5AFA946BA0BC03A2B0E /* options.5878363f.js */ = {isa = PBXFileReference; includeInIndex = 1; name = options.5878363f.js; path = ../../../dist/options.5878363f.js; sourceTree = "<group>"; };
+		DFD3318DFBF3CA6B6284907C /* popup.3684a119.js */ = {isa = PBXFileReference; includeInIndex = 1; name = popup.3684a119.js; path = ../../../dist/popup.3684a119.js; sourceTree = "<group>"; };
+		E43381A41C70425B45589225 /* ico-light-32.d17e49b7.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ico-light-32.d17e49b7.png"; path = "../../../dist/ico-light-32.d17e49b7.png"; sourceTree = "<group>"; };
+		F7AB1716B3B017DBFC62C9F2 /* themesFirefox.css.b49edbc1.css */ = {isa = PBXFileReference; includeInIndex = 1; name = themesFirefox.css.b49edbc1.css; path = ../../../dist/themesFirefox.css.b49edbc1.css; sourceTree = "<group>"; };
+		FD02FB029C0D08635D0E8BAF /* ico-light-128.a69fd56c.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ico-light-128.a69fd56c.png"; path = "../../../dist/ico-light-128.a69fd56c.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		51566D022ACCB27D0038D1BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D142ACCB27D0038D1BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D212ACCB27D0038D1BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D2B2ACCB27E0038D1BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		51566CF12ACCB27C0038D1BD = {
+			isa = PBXGroup;
+			children = (
+				51566CF62ACCB27C0038D1BD /* Shared (App) */,
+				51566CFF2ACCB27D0038D1BD /* Shared (Clean the mess) */,
+				51566D072ACCB27D0038D1BD /* iOS (App) */,
+				51566D182ACCB27D0038D1BD /* macOS (App) */,
+				51566D282ACCB27D0038D1BD /* iOS (Clean the mess) */,
+				51566D322ACCB27E0038D1BD /* macOS (Clean the mess) */,
+				51566D062ACCB27D0038D1BD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		51566CF62ACCB27C0038D1BD /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				51566CFD2ACCB27C0038D1BD /* ViewController.swift */,
+				51566CFE2ACCB27D0038D1BD /* Assets.xcassets */,
+				51566CF72ACCB27C0038D1BD /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		51566CF72ACCB27C0038D1BD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				51566CF82ACCB27C0038D1BD /* Main.html */,
+				51566CFA2ACCB27C0038D1BD /* Icon.png */,
+				51566CFB2ACCB27C0038D1BD /* Style.css */,
+				51566CFC2ACCB27C0038D1BD /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		51566CFF2ACCB27D0038D1BD /* Shared (Clean the mess) */ = {
+			isa = PBXGroup;
+			children = (
+				51A3DBAE2ACCC647002D16C8 /* Resources */,
+				51566D002ACCB27D0038D1BD /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Clean the mess)";
+			sourceTree = "<group>";
+		};
+		51566D062ACCB27D0038D1BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				51566D052ACCB27D0038D1BD /* Clean the mess.app */,
+				51566D172ACCB27D0038D1BD /* Clean the mess.app */,
+				51566D242ACCB27D0038D1BD /* Clean the mess Extension.appex */,
+				51566D2E2ACCB27E0038D1BD /* Clean the mess Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		51566D072ACCB27D0038D1BD /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				51566D082ACCB27D0038D1BD /* AppDelegate.swift */,
+				51566D0A2ACCB27D0038D1BD /* SceneDelegate.swift */,
+				51566D0C2ACCB27D0038D1BD /* LaunchScreen.storyboard */,
+				51566D0F2ACCB27D0038D1BD /* Main.storyboard */,
+				51566D122ACCB27D0038D1BD /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		51566D182ACCB27D0038D1BD /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				51566D192ACCB27D0038D1BD /* AppDelegate.swift */,
+				51566D1B2ACCB27D0038D1BD /* Main.storyboard */,
+				51566D1E2ACCB27D0038D1BD /* Info.plist */,
+				51566D1F2ACCB27D0038D1BD /* Clean the mess.entitlements */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		51566D282ACCB27D0038D1BD /* iOS (Clean the mess) */ = {
+			isa = PBXGroup;
+			children = (
+				51566D292ACCB27D0038D1BD /* Info.plist */,
+			);
+			path = "iOS (Clean the mess)";
+			sourceTree = "<group>";
+		};
+		51566D322ACCB27E0038D1BD /* macOS (Clean the mess) */ = {
+			isa = PBXGroup;
+			children = (
+				51566D332ACCB27E0038D1BD /* Info.plist */,
+				51566D342ACCB27E0038D1BD /* Clean the mess.entitlements */,
+			);
+			path = "macOS (Clean the mess)";
+			sourceTree = "<group>";
+		};
+		51A3DBAE2ACCC647002D16C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8F22E440304B2CC5A1794EBA /* background.6b1ab00b.css */,
+				F7AB1716B3B017DBFC62C9F2 /* themesFirefox.css.b49edbc1.css */,
+				A1DD9E0329A9E81C44E18232 /* popup.156c78ad.css */,
+				962369CEAB04AAB4436B4C73 /* options.825f429f.js */,
+				B70F6976757A8A013BBCC5F8 /* themesSafari.css.8755f08d.css */,
+				82644729000178B00650F747 /* ico-light-16.cab373cc.png */,
+				84BD61A7F9C7844F502A29DA /* options.149af2d4.html */,
+				BA243783FE70581AB0315CC0 /* themesChrome.css.83b6a8e9.js */,
+				60AE9519D853ED8BE9BAA9EA /* ico-dark-32.dd82b91c.png */,
+				D220E5AFA946BA0BC03A2B0E /* options.5878363f.js */,
+				B30DBD3FF7F43BD31EC8457E /* background.3fb45adc.js */,
+				73E89762D47325093A0E68CD /* ico-dark-16.9fe4aea5.png */,
+				DFD3318DFBF3CA6B6284907C /* popup.3684a119.js */,
+				FD02FB029C0D08635D0E8BAF /* ico-light-128.a69fd56c.png */,
+				B952CE7F1844C7F6BB84226C /* manifest.json */,
+				A3B61B3644E961E558633E35 /* popup.a824e46b.html */,
+				2D70B32FFAD3D35B6AA77448 /* ico-dark-128.c17237a9.png */,
+				6E5BFAFCC9E543C110F6AC54 /* themesChrome.css.a0677682.css */,
+				866D2B8419D29511CF6189F4 /* themesSafari.css.947b8529.js */,
+				2A0B089FBB7B4332DDB128F5 /* themesFirefox.css.9396b4d8.js */,
+				E43381A41C70425B45589225 /* ico-light-32.d17e49b7.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		51566D042ACCB27D0038D1BD /* Clean the mess (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51566D492ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess (iOS)" */;
+			buildPhases = (
+				51566D012ACCB27D0038D1BD /* Sources */,
+				51566D022ACCB27D0038D1BD /* Frameworks */,
+				51566D032ACCB27D0038D1BD /* Resources */,
+				51566D482ACCB27E0038D1BD /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				51566D272ACCB27D0038D1BD /* PBXTargetDependency */,
+			);
+			name = "Clean the mess (iOS)";
+			productName = "Clean the mess (iOS)";
+			productReference = 51566D052ACCB27D0038D1BD /* Clean the mess.app */;
+			productType = "com.apple.product-type.application";
+		};
+		51566D162ACCB27D0038D1BD /* Clean the mess (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51566D502ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess (macOS)" */;
+			buildPhases = (
+				51566D132ACCB27D0038D1BD /* Sources */,
+				51566D142ACCB27D0038D1BD /* Frameworks */,
+				51566D152ACCB27D0038D1BD /* Resources */,
+				51566D4F2ACCB27E0038D1BD /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				51566D312ACCB27E0038D1BD /* PBXTargetDependency */,
+			);
+			name = "Clean the mess (macOS)";
+			productName = "Clean the mess (macOS)";
+			productReference = 51566D172ACCB27D0038D1BD /* Clean the mess.app */;
+			productType = "com.apple.product-type.application";
+		};
+		51566D232ACCB27D0038D1BD /* Clean the mess Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51566D452ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess Extension (iOS)" */;
+			buildPhases = (
+				51566D202ACCB27D0038D1BD /* Sources */,
+				51566D212ACCB27D0038D1BD /* Frameworks */,
+				51566D222ACCB27D0038D1BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Clean the mess Extension (iOS)";
+			productName = "Clean the mess Extension (iOS)";
+			productReference = 51566D242ACCB27D0038D1BD /* Clean the mess Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		51566D2D2ACCB27E0038D1BD /* Clean the mess Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51566D4C2ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess Extension (macOS)" */;
+			buildPhases = (
+				51566D2A2ACCB27E0038D1BD /* Sources */,
+				51566D2B2ACCB27E0038D1BD /* Frameworks */,
+				51566D2C2ACCB27E0038D1BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Clean the mess Extension (macOS)";
+			productName = "Clean the mess Extension (macOS)";
+			productReference = 51566D2E2ACCB27E0038D1BD /* Clean the mess Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		51566CF22ACCB27C0038D1BD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					51566D042ACCB27D0038D1BD = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					51566D162ACCB27D0038D1BD = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					51566D232ACCB27D0038D1BD = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					51566D2D2ACCB27E0038D1BD = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 51566CF52ACCB27C0038D1BD /* Build configuration list for PBXProject "Clean the mess" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 51566CF12ACCB27C0038D1BD;
+			productRefGroup = 51566D062ACCB27D0038D1BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				51566D042ACCB27D0038D1BD /* Clean the mess (iOS) */,
+				51566D162ACCB27D0038D1BD /* Clean the mess (macOS) */,
+				51566D232ACCB27D0038D1BD /* Clean the mess Extension (iOS) */,
+				51566D2D2ACCB27E0038D1BD /* Clean the mess Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		51566D032ACCB27D0038D1BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51566D372ACCB27E0038D1BD /* Icon.png in Resources */,
+				51566D0E2ACCB27D0038D1BD /* LaunchScreen.storyboard in Resources */,
+				51566D352ACCB27E0038D1BD /* Main.html in Resources */,
+				51566D3B2ACCB27E0038D1BD /* Script.js in Resources */,
+				51566D3F2ACCB27E0038D1BD /* Assets.xcassets in Resources */,
+				51566D112ACCB27D0038D1BD /* Main.storyboard in Resources */,
+				51566D392ACCB27E0038D1BD /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D152ACCB27D0038D1BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51566D382ACCB27E0038D1BD /* Icon.png in Resources */,
+				51566D3A2ACCB27E0038D1BD /* Style.css in Resources */,
+				51566D1D2ACCB27D0038D1BD /* Main.storyboard in Resources */,
+				51566D3C2ACCB27E0038D1BD /* Script.js in Resources */,
+				51566D402ACCB27E0038D1BD /* Assets.xcassets in Resources */,
+				51566D362ACCB27E0038D1BD /* Main.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D222ACCB27D0038D1BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D2C2ACCB27E0038D1BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		51566D012ACCB27D0038D1BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51566D3D2ACCB27E0038D1BD /* ViewController.swift in Sources */,
+				51566D092ACCB27D0038D1BD /* AppDelegate.swift in Sources */,
+				51566D0B2ACCB27D0038D1BD /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D132ACCB27D0038D1BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51566D3E2ACCB27E0038D1BD /* ViewController.swift in Sources */,
+				51566D1A2ACCB27D0038D1BD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D202ACCB27D0038D1BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51566D412ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51566D2A2ACCB27E0038D1BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51566D422ACCB27E0038D1BD /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		51566D272ACCB27D0038D1BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 51566D232ACCB27D0038D1BD /* Clean the mess Extension (iOS) */;
+			targetProxy = 51566D262ACCB27D0038D1BD /* PBXContainerItemProxy */;
+		};
+		51566D312ACCB27E0038D1BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 51566D2D2ACCB27E0038D1BD /* Clean the mess Extension (macOS) */;
+			targetProxy = 51566D302ACCB27E0038D1BD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		51566CF82ACCB27C0038D1BD /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51566CF92ACCB27C0038D1BD /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		51566D0C2ACCB27D0038D1BD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51566D0D2ACCB27D0038D1BD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		51566D0F2ACCB27D0038D1BD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51566D102ACCB27D0038D1BD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		51566D1B2ACCB27D0038D1BD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51566D1C2ACCB27D0038D1BD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		51566D432ACCB27E0038D1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		51566D442ACCB27E0038D1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		51566D462ACCB27E0038D1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess.Extension";
+				PRODUCT_NAME = "Clean the mess Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		51566D472ACCB27E0038D1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess.Extension";
+				PRODUCT_NAME = "Clean the mess Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		51566D4A2ACCB27E0038D1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess";
+				PRODUCT_NAME = "Clean the mess";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		51566D4B2ACCB27E0038D1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess";
+				PRODUCT_NAME = "Clean the mess";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		51566D4D2ACCB27E0038D1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Clean the mess)/Clean the mess.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Clean the mess)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess!";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess.Extension";
+				PRODUCT_NAME = "Clean the mess Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		51566D4E2ACCB27E0038D1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Clean the mess)/Clean the mess.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Clean the mess)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess!";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess.Extension";
+				PRODUCT_NAME = "Clean the mess Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		51566D512ACCB27E0038D1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Clean the mess.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess";
+				PRODUCT_NAME = "Clean the mess";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		51566D522ACCB27E0038D1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Clean the mess.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9QW37CK4P;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clean the mess";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Clean-the-mess";
+				PRODUCT_NAME = "Clean the mess";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		51566CF52ACCB27C0038D1BD /* Build configuration list for PBXProject "Clean the mess" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51566D432ACCB27E0038D1BD /* Debug */,
+				51566D442ACCB27E0038D1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51566D452ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51566D462ACCB27E0038D1BD /* Debug */,
+				51566D472ACCB27E0038D1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51566D492ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51566D4A2ACCB27E0038D1BD /* Debug */,
+				51566D4B2ACCB27E0038D1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51566D4C2ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51566D4D2ACCB27E0038D1BD /* Debug */,
+				51566D4E2ACCB27E0038D1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51566D502ACCB27E0038D1BD /* Build configuration list for PBXNativeTarget "Clean the mess (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51566D512ACCB27E0038D1BD /* Debug */,
+				51566D522ACCB27E0038D1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 51566CF22ACCB27C0038D1BD /* Project object */;
+}

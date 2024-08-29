@@ -1,8 +1,9 @@
 import { style } from '@vanilla-extract/css';
+import { themeUtilsContract } from '../../../styles/themes.css';
 
 export const searchError = style({
   height: 'auto',
-  padding: '8px 12px',
+  padding: themeUtilsContract.components.listItemPadding,
   boxSizing: 'border-box',
 
   ':hover': {

@@ -6,6 +6,7 @@
   "scripts": {
     "build:firefox": "npm run build -w packages/firefox",
     "build:chrome": "npm run build -w packages/chrome",
+    "build:safari": "npm run build -w packages/safari",
     "build:release:firefox": "npm run build:release -w packages/firefox",
     "build:release:chrome": "npm run build:release -w packages/chrome",
     "build:release": "npm run build:release:firefox && npm run build:release:chrome",
@@ -13,8 +14,9 @@
     "start:browsers": "npm run chrome && npm run firefox",
     "firefox": "npm run start -w packages/firefox",
     "chrome": "npm run start -w packages/chrome",
-    "dev:chrome": "npm run dev -w packages/chrome",
     "dev:firefox": "npm run dev -w packages/firefox",
+    "dev:chrome": "npm run dev -w packages/chrome",
+    "dev:safari": "npm run dev -w packages/safari",
     "storybook": "npm run storybook -w packages/common",
     "bump-version": "npm version $mode --no-git-tag-version --preid=dev --workspaces",
     "postbump-version": "./scripts/bump-manifest-version.sh && npm run generate-manifest -w packages/chrome -w packages/firefox",
@@ -81,7 +83,7 @@
     "sass-loader": "^13.2.0",
     "style-loader": "^3.3.2",
     "typescript": "^5.2.2",
-    "web-ext": "^6.1.0",
+    "web-ext": "^8.2.0",
     "yargs": "^7.1.2"
   },
   "dependencies": {
@@ -104,6 +106,7 @@
   "workspaces": [
     "packages/chrome",
     "packages/firefox",
+    "packages/safari",
     "packages/common"
   ]
 }

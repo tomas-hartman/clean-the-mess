@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import browser from 'webextension-polyfill';
 import { OPTION_TYPE } from '../../options';
+import { isSafari } from '../utils';
 
 type Storage = {
   showFavicons: boolean;
@@ -10,6 +11,7 @@ export const useFavicons = () => {
   const [showFavicon, setShowFavicon] = useState(false);
 
   const onSuccess = useCallback((result: Storage) => {
+    if (isSafari()) return setShowFavicon(false);
     if (result.showFavicons) {
       setShowFavicon(result.showFavicons);
     }

@@ -1,11 +1,12 @@
 import { style } from '@vanilla-extract/css';
-import { themeContract } from '../../../styles/themes.css';
+import { themeContract, themeUtilsContract } from '../../../styles/themes.css';
 
 export const itemContainer = style({
   listStyle: 'none',
   display: 'flex',
   gap: 8,
   alignItems: 'center',
+  borderRadius: themeUtilsContract.radii.listItemBorderRadius,
 
   ':hover': {
     backgroundColor: themeContract.palette.itemHover,
@@ -15,7 +16,7 @@ export const itemContainer = style({
 export const detailItem = style([
   itemContainer,
   {
-    padding: '8px 12px',
+    padding: themeUtilsContract.components.listItemPadding,
   },
 ]);
 

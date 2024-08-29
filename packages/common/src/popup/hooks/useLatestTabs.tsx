@@ -1,6 +1,6 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { getLatestUsed } from '../../_modules';
-import { DataContext } from '../providers/DataProvider';
+import { useDataContext } from '../providers';
 
 type UseLatestTabsProps = {
   numOfLatest: number;
@@ -8,7 +8,7 @@ type UseLatestTabsProps = {
 
 // TODO: add sort feature!
 export const useLatestTabs = ({ numOfLatest }: UseLatestTabsProps) => {
-  const { tabs } = useContext(DataContext);
+  const { tabs } = useDataContext();
 
   const latestTabs = useMemo(() => {
     if (tabs) {

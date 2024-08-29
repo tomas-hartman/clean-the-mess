@@ -31,6 +31,10 @@ browser.runtime.onMessage.addListener(message => {
       handleChromeIconChange();
       break;
 
+    case BACKGROUND_EVENT.LOGGER:
+      console.log('[LOGGER]', ...message.data);
+      break;
+
     default:
       console.warn('Incorrect message type. Received message:');
       console.log(message);

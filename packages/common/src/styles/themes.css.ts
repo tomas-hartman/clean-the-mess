@@ -10,7 +10,7 @@ export const themeContract = createGlobalThemeContract({
     //   headerButtonBackground: 'palette-header-button-background',
     headerButtonHover: 'palette-header-button-hover',
     //   headerButtonActive: 'palette-header-button-active',
-    overviewHeaderButtonHover: "palette-overview-header-button-hover",
+    overviewHeaderButtonHover: 'palette-overview-header-button-hover',
     accentHeaderButtonFontColor: 'palette-accent-header-button-font-color',
     accentHeaderButtonBackground: 'palette-accent-header-button-background',
     accentHeaderButtonHover: 'palette-accent-header-button-hover',
@@ -18,7 +18,7 @@ export const themeContract = createGlobalThemeContract({
     itemHover: 'palette-item-hover',
     //   itemActive: 'palette-item-active',
     itemSecondaryFontColor: 'palette-item-secondary-font-color',
-    itemArrowButtonColor: "palette-item-arrow-button-color",
+    itemArrowButtonColor: 'palette-item-arrow-button-color',
     itemButtonColor: 'palette-item-button-color',
     //   itemButtonBackground: 'palette-item-button-background',
     itemButtonHover: 'palette-item-button-hover',
@@ -30,7 +30,7 @@ export const themeContract = createGlobalThemeContract({
     confirmButtonBackground: 'palette-confirm-button-background',
     confirmButtonHover: 'palette-confirm-button-hover',
     //   confirmButtonActive: 'palette-confirm-button-active'
-  }
+  },
 });
 
 // {
@@ -52,6 +52,7 @@ export const themeUtilsContract = createGlobalThemeContract({
   },
   radii: {
     borderRadius: 'border-radius',
+    listItemBorderRadius: 'list-item-border-radius',
   },
   components: {
     searchBorderRadius: 'search-border-radius',
@@ -60,6 +61,10 @@ export const themeUtilsContract = createGlobalThemeContract({
 
     largeButtonSize: 'large-button-size',
     smallButtonSize: 'small-button-size',
+
+    listItemPadding: 'list-item-padding',
+    listContainerInlinePadding: 'list-container-inline-padding',
+    listContainerBlockPadding: 'list-container-block-padding',
   },
   misc: {
     browser: 'browser',

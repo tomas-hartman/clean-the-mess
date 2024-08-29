@@ -1,0 +1,23 @@
+{
+  "name": "clean-the-mess-safari",
+  "version": "2.1.0",
+  "description": "",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-manifest": "node ../../scripts/merge-manifests.js -f ./manifest.safari.json  > ./manifest.json",
+    "prebuild": "npm run generate-manifest && rimraf dist",
+    "build": "BROWSER_NAME=safari parcel build ./manifest.json --no-cache --no-content-hash --no-source-maps --dist-dir ./dist && ./scripts/xcode-ref-resources.sh",
+    "predev": "npm run generate-manifest",
+    "dev": "BROWSER_NAME=safari parcel ./manifest.json --dist-dir ./dist && ./scripts/xcode-ref-resources.sh",
+    "__prebuild:release": "npm run build",
+    "__build:release": "rimraf ./build && web-ext build -a ./build -s ./dist",
+    "__postbuild:release": "npm run build:pack-src",
+    "__build:pack-src": "sh ../../scripts/ff-pack-src.sh && dir-archiver --src ./build/src_clean_the_mess --dest ./build/src_clean_the_mess.zip && rimraf ./build/src_clean_the_mess"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.10.0"
+  },
+  "author": "Tomas Hartman <tomas.hartman@hotmail.com>",
+  "license": "ISC"
+}

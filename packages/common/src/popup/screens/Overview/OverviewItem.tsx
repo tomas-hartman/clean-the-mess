@@ -7,6 +7,7 @@ import { overviewItem, overviewItemControls, overviewItemCount } from './Overvie
 import { bookmarkOverviewTabs, closeOverviewTabs } from './OverviewItem.utils';
 import { OverviewItemBody } from './OverviewItemBody';
 import { CloseTabs, useNavigate } from '../../providers';
+import { isSafari } from '../../utils';
 
 type OverviewItemProps = {
   itemId: number;
@@ -64,7 +65,9 @@ export const OverviewItem: FC<OverviewItemProps> = ({ itemId, data, showFavicon 
 
       <div className={overviewItemControls}>
         <span className={overviewItemCount}>{`(${ids.length})`}</span>
-        {isBookmarkable && <BookmarkAllBtn isHidden={isHidden} onClick={() => bookmarkOverviewTabs(data, itemId)} />}
+        {!isSafari() && isBookmarkable && (
+          <BookmarkAllBtn isHidden={isHidden} onClick={() => bookmarkOverviewTabs(data, itemId)} />
+        )}
         <CloseAllOverviewBtn isHidden={isHidden} onClick={() => closeOverviewTabs(data, closeTabs)} />
         <GetInBtn isHidden={!isHidden} />
       </div>
