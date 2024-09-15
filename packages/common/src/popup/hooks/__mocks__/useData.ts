@@ -10,5 +10,4 @@ export const useData = (): ReturnType<typeof mockedUseData> => ({
   duplicates: [{ ...tabsOverview[0], tabs: [detailed[0]] }],
   pinned: overviewData[0],
   closeTabs: () => Promise.resolve(),
-  refreshTabs: () => Promise.resolve(),
 });

@@ -1,14 +1,13 @@
 import { FC, useCallback, useMemo, useState } from 'react';
 import { Button } from '../Buttons/Button';
-import Browser from 'webextension-polyfill';
-import { useData } from '../../hooks';
+import browser from 'webextension-polyfill';
 import { PinnedListItemProps, ListItem } from './ListItem';
 import { goToTab } from '../../../_modules';
 import { DetailedListItemHoverActions } from './DetailedListItemHoverActions';
 
 export const PinnedListItem: FC<PinnedListItemProps> = ({ data, showFavicon }) => {
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const { refreshTabs } = useData();
+  const [isHidden, setIsHidden] = useState(false);
 
   const decodedUrl = useMemo(() => (data.url ? decodeURI(data.url) : 'Unknown website'), [data.url]);
 
@@ -17,9 +16,11 @@ export const PinnedListItem: FC<PinnedListItemProps> = ({ data, showFavicon }) =
   }, []);
 
   const handleUnpin = useCallback(async () => {
-    await Browser.tabs.update(data.id, { pinned: false });
-    refreshTabs();
-  }, [data.id, refreshTabs]);
+    await browser.tabs.update(data.id, { pinned: false });
+    setIsHidden(true);
+  }, [data.id]);
+
+  if (isHidden) return null;
 
   return (
     <ListItem
