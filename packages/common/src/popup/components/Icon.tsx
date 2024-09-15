@@ -17,5 +17,10 @@ type IconProps = {
 export const Icon: FC<IconProps> = ({ name, size }) => {
   const Component = Icons[name];
 
-  return <Component className={clsx('icon', `icon-${size}`)} style={{ height: size, width: size, display: 'flex' }} />;
+  return (
+    <Component
+      className={clsx('icon', `icon-${size}`)}
+      style={{ height: size, width: size, display: 'flex', color: 'inherit' }}
+    />
+  );
 };

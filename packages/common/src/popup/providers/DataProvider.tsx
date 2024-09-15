@@ -1,19 +1,11 @@
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import browser, { Tabs } from 'webextension-polyfill';
 import { getRemovableIds } from './DataProvider.utils';
-import { dedupe, DuplicateGroup } from '../../_modules/duplicates';
+import { dedupe } from '../../_modules/duplicates';
 
 export type CloseTabs = (ids?: number | number[], options?: { keepPinned: boolean }) => Promise<void>;
 
-type DataContextProps = {
-  tabs: Tabs.Tab[];
-  closeTabs: CloseTabs;
-  duplicates: DuplicateGroup[];
-};
-
-export const DataContext = createContext<DataContextProps>({} as DataContextProps);
-
-export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
+const useDataProviderData = () => {
   const [tabs, setTabs] = useState<Tabs.Tab[]>([]);
 
   const duplicates = useMemo(() => dedupe(tabs).sort((a, b) => b.tabs.length - a.tabs.length), [tabs]);
@@ -41,18 +33,28 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [refreshData]);
 
   useEffect(() => {
-    browser.tabs.onRemoved.addListener(() => {
-      refreshData();
-    });
+    browser.tabs.onRemoved.addListener(refreshData);
+    browser.tabs.onUpdated.addListener(refreshData);
 
-    return browser.tabs.onRemoved.removeListener(() => refreshData());
+    return () => {
+      browser.tabs.onRemoved.removeListener(refreshData);
+      browser.tabs.onUpdated.removeListener(refreshData);
+    };
   }, [refreshData]);
 
-  const value = {
+  return {
     tabs,
     closeTabs,
     duplicates,
   };
+};
+
+type DataContextProps = ReturnType<typeof useDataProviderData>;
+
+export const DataContext = createContext({} as DataContextProps);
+
+export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
+  const value = useDataProviderData();
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
