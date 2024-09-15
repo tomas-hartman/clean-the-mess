@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { getFormatedDate, getTimePassed } from '../../../_modules';
+import { getFormattedDate, getTimePassed } from '../../../_modules';
 import { Tabs } from 'webextension-polyfill';
 import { DetailedListItemBase } from './DetailedListItem';
 
@@ -11,19 +11,19 @@ export interface LatestListItemProps {
 export const LatestListItem: FC<LatestListItemProps> = ({ data, showFavicon }) => {
   const lastAccessed = data.lastAccessed;
 
-  const [formatedDate, timePassed] = useMemo(() => {
+  const [formattedDate, timePassed] = useMemo(() => {
     if (!lastAccessed) {
       return ['', ''];
     }
 
-    return [getFormatedDate(lastAccessed), getTimePassed(lastAccessed)];
+    return [getFormattedDate(lastAccessed), getTimePassed(lastAccessed)];
   }, [lastAccessed]);
 
   return (
     <DetailedListItemBase
       data={data}
       secondaryText={timePassed}
-      secondaryTextTitle={formatedDate}
+      secondaryTextTitle={formattedDate}
       showFavicon={showFavicon}
     />
   );

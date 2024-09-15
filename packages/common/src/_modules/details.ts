@@ -3,7 +3,7 @@ import { Tabs } from 'webextension-polyfill';
 import { ScreenProps } from '../popup';
 import { locale } from './locale';
 
-export const getFormatedDate = (lastAccessed: number) => {
+export const getFormattedDate = (lastAccessed: number) => {
   const dateToFormat = new Date(lastAccessed);
   return new Intl.DateTimeFormat(locale.string, locale.options).format(dateToFormat);
 };
