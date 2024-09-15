@@ -3,6 +3,30 @@ import { DuplicateGroup } from '../../../_modules/duplicates';
 import { useData } from '../../hooks';
 import { Button } from '../Buttons/Button';
 import { ListItem } from './ListItem';
+import { Tabs } from 'webextension-polyfill';
+
+const idReducer = (prev: number[], current: Tabs.Tab) => {
+  if (current.id) {
+    prev.push(current.id);
+  }
+  return prev;
+};
+
+const getAllIds = (tabs: Tabs.Tab[]) => {
+  return tabs.reduce(idReducer, []);
+};
+
+const getIdsWithoutOldest = (tabs: Tabs.Tab[]) => {
+  return tabs
+    .sort((a, b) => (!b.id || !a.id ? 0 : a.id - b.id))
+    .slice(1)
+    .reduce(idReducer, []);
+};
+
+const getIdsWithoutPinned = (tabs: Tabs.Tab[], pinnedTabIndex: number) => {
+  const firstPinnedTabId = tabs[pinnedTabIndex].id;
+  return tabs.filter(tab => tab.id !== firstPinnedTabId).reduce(idReducer, []);
+};
 
 interface DuplicateItemProps {
   data: DuplicateGroup;
@@ -13,31 +37,28 @@ export const DuplicateListItem: FC<DuplicateItemProps> = ({ data, showFavicon })
   const { closeTabs } = useData();
 
   const handleDeduplicate = useCallback(() => {
-    const pinnedTab = data.tabs.findIndex(tab => tab.pinned);
+    let ids: number[];
 
-    if (pinnedTab !== -1) {
-      data.tabs.splice(pinnedTab, 1);
-
-      const ids = data.tabs.reduce((prev: number[], current) => {
-        if (current.id) {
-          prev.push(current.id);
-        }
-        return prev;
-      }, []);
-
-      closeTabs(ids);
-      return;
+    const pinnedTabIndex = data.tabs.findIndex(tab => tab.pinned);
+    if (pinnedTabIndex !== -1) {
+      ids = getIdsWithoutPinned(data.tabs, pinnedTabIndex);
+    } else {
+      ids = getIdsWithoutOldest(data.tabs);
     }
 
-    const ids = data.tabs
-      .sort((a, b) => (!b.id || !a.id ? 0 : a.id - b.id))
-      .slice(1)
-      .reduce((prev: number[], current) => {
-        if (current.id) {
-          prev.push(current.id);
-        }
-        return prev;
-      }, []);
+    closeTabs(ids);
+  }, [closeTabs, data.tabs]);
+
+  const handleCloseAll = useCallback(() => {
+    let ids: number[];
+
+    const pinnedTabIndex = data.tabs.findIndex(tab => tab.pinned);
+    if (pinnedTabIndex !== -1) {
+      ids = getIdsWithoutPinned(data.tabs, pinnedTabIndex);
+    } else {
+      ids = getAllIds(data.tabs);
+    }
+
     closeTabs(ids);
   }, [closeTabs, data.tabs]);
 
@@ -48,12 +69,15 @@ export const DuplicateListItem: FC<DuplicateItemProps> = ({ data, showFavicon })
       favicon={showFavicon ? data.favicon : undefined}
       extraActionInfo={<span title={`This url is open in ${data.tabs.length} tabs`}>({data.tabs.length})</span>}
       hoverActions={
-        <Button
-          title="Close duplicate tabs and keep only the oldest or pinned tab"
-          onClick={handleDeduplicate}
-          icon="Remove"
-          size="small"
-        />
+        <>
+          <Button title="Close all tabs except pinned tabs" onClick={handleCloseAll} icon="CloseAllTabs" size="small" />
+          <Button
+            title="Close duplicate tabs and keep only the oldest or pinned tab"
+            onClick={handleDeduplicate}
+            icon="Remove"
+            size="small"
+          />
+        </>
       }
     />
   );

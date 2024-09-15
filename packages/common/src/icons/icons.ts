@@ -21,6 +21,6 @@ export const Icons = {
   Remove,
   Search24,
   ...phosphor,
-};
+} as const;
 
 export type IconName = keyof typeof Icons;

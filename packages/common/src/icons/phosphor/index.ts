@@ -16,4 +16,4 @@ export const phosphor = {
   BoldLockOpen,
   BoldPushPinSlash,
   BoldFolders,
-};
+} as const;
