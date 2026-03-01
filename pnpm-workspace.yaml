@@ -1,0 +1,5 @@
+packages:
+  - packages/chrome
+  - packages/firefox
+  - packages/safari
+  - packages/common
