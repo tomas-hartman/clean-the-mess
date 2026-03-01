@@ -2,10 +2,10 @@ import { Tabs } from 'webextension-polyfill';
 import { OverviewItem } from '../popup';
 import { getHash } from './helpers';
 
-const getOriginUrl = (tabData: Tabs.Tab) => {
-  if (!tabData.url) return 'Other tabs';
+export const getNormalizedUrl = (tabUrl?: string) => {
+  if (!tabUrl) return 'Other tabs';
 
-  const url = new URL(tabData.url);
+  const url = new URL(tabUrl);
 
   if (!(url.protocol === 'http:' || url.protocol === 'https:')) {
     switch (url.protocol) {
@@ -44,7 +44,7 @@ export const getOverview = (tabs: Tabs.Tab[]): Overview => {
   for (const tab of tabs) {
     if (!tab.id) continue;
 
-    const groupName = getOriginUrl(tab);
+    const groupName = getNormalizedUrl(tab.url);
 
     if (tab.pinned) {
       pinnedIdsSet.add(tab.id);
