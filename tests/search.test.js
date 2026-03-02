@@ -8,15 +8,12 @@ describe('Search main functionality', () => {
     ['góógle', 2],
     ['example.com', 1],
     ['respekt.cz', 0],
-  ])(
-    'should look for "%s" and end up with %d entry/ies found',
-    (input, expected) => {
-      const output = search.perform(sampleMinifiedTabs, input);
-      expect(output.length).toBe(expected);
-    },
-  );
+  ])('should look for "%s" and end up with %d entry/ies found', (input, expected) => {
+    const output = search.perform(sampleMinifiedTabs, input);
+    expect(output.length).toBe(expected);
+  });
 
-  it('should return entries in correct (tabs-like) format and have url, title, index, id and pinned props ', () => {
+  it('should return entries in correct (tabs-like) format and have url, title, index, id and pinned props', () => {
     const input = 'example.com';
     const output = search.perform(sampleMinifiedTabs, input);
     const item = output[0];
@@ -41,15 +38,11 @@ describe('cleanUrl()', () => {
     ['www.example.com', ['www', 'example', 'com']],
     ['about:debugging', ['about', 'debugging']],
     ['128.0.0.1:3000', ['128', '0', '0', '1', '3000']],
-
-  ])(
-    'cleanUrl("%s") should return %s',
-    (input, expected) => {
-      const output = search.cleanUrl(input);
-      expect(output).toBeInstanceOf(Array);
-      expect(output).toStrictEqual(expected);
-    },
-  );
+  ])('cleanUrl("%s") should return %s', (input, expected) => {
+    const output = search.cleanUrl(input);
+    expect(output).toBeInstanceOf(Array);
+    expect(output).toStrictEqual(expected);
+  });
 });
 
 describe('standardize()', () => {
@@ -58,16 +51,10 @@ describe('standardize()', () => {
     ['atšķirībā no vulkāniskajiem krāteriem', ['atskiriba', 'no', 'vulkaniskajiem', 'krateriem']],
     ['?!#b@#&?!a?!r?!', ['b', 'a', 'r']],
     ['BARBORA@bulantova123.com', ['barbora', 'bulantova123', 'com']],
-    [
-      'Įlinkdama fechtuotojo pragręžė apvalų arbūzą',
-      ['ilinkdama', 'fechtuotojo', 'pragreze', 'apvalu', 'arbuza'],
-    ],
+    ['Įlinkdama fechtuotojo pragręžė apvalų arbūzą', ['ilinkdama', 'fechtuotojo', 'pragreze', 'apvalu', 'arbuza']],
     ['„Fix, Schwyz!“, quäkt Jürgen blöd Paß.', ['fix', 'schwyz', 'quakt', 'jurgen', 'blod', 'paß']],
-  ])(
-    'standardize("%s") should return %s',
-    (input, expected) => {
-      const output = search.standardize(input);
-      expect(output).toStrictEqual(expected);
-    },
-  );
+  ])('standardize("%s") should return %s', (input, expected) => {
+    const output = search.standardize(input);
+    expect(output).toStrictEqual(expected);
+  });
 });
